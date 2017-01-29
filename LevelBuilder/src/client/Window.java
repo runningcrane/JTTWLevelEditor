@@ -1,6 +1,7 @@
 package client;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -19,12 +20,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class Window extends JFrame {
-
-	private JPanel pnlBase;
+	
 	private JTextField txtHeight;
 	private JTextField txtWidth;
 	private JTextField txtTileSize;
 	private IBuilderToLevelAdapter btlAdapter;	
+	private JPanel pnlDisplayArea;
 
 	/**
 	 * Create the frame.
@@ -39,19 +40,12 @@ public class Window extends JFrame {
 	 */
 	private void initGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		pnlBase = new JPanel();
-		pnlBase.setBorder(new EmptyBorder(5, 5, 5, 5));
-		pnlBase.setLayout(new BorderLayout(0, 0));
-		setContentPane(pnlBase);
-		
-		JPanel pnlControls = new JPanel();		
-		pnlControls.setLayout(new BoxLayout(pnlControls, BoxLayout.Y_AXIS));
-		pnlBase.add(pnlControls, BorderLayout.WEST);
+		setBounds(100, 100, 450, 300);		
+				
 		
 		JPanel pnlDisplayControl = new JPanel();		
-		pnlDisplayControl.setLayout(new GridLayout(4,2));
-		pnlControls.add(pnlDisplayControl);
+		pnlDisplayControl.setLayout(new GridLayout(3,2));
+		getContentPane().add(pnlDisplayControl, BorderLayout.WEST);
 		
 		JLabel lblHeight = new JLabel("Height (px):");
 		pnlDisplayControl.add(lblHeight);
@@ -67,17 +61,9 @@ public class Window extends JFrame {
 		txtWidth = new JTextField();
 		txtWidth.setText("700");
 		pnlDisplayControl.add(txtWidth);
-		txtWidth.setColumns(10);
+		txtWidth.setColumns(10);					
 		
-		JLabel lblTileSize = new JLabel("Tile Size (px):");
-		pnlDisplayControl.add(lblTileSize);
-		
-		txtTileSize = new JTextField();
-		pnlDisplayControl.add(txtTileSize);
-		txtTileSize.setText("50");
-		txtTileSize.setColumns(10);				
-		
-		JPanel pnlDisplayArea = new JPanel() {
+		this.pnlDisplayArea = new JPanel() {
 			/**
 			* 
 			*/
@@ -92,9 +78,11 @@ public class Window extends JFrame {
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g); // Do everything normally done first, e.g.
 											// clear the screen.
-				btlAdapter.render(g);
+				btlAdapter.render(this, g);
 			};
 		}; 
+		pnlDisplayArea.setBackground(Color.CYAN);
+		getContentPane().add(pnlDisplayArea, BorderLayout.CENTER);
 		
 		JButton btnApply = new JButton("Apply");
 		btnApply.addActionListener(new ActionListener() {
@@ -121,12 +109,10 @@ public class Window extends JFrame {
 		
 		pnlDisplayControl.add(btnApply);						
 				
-		pnlDisplayArea.setSize(700, 400);
 		/**
 		 * pnlDisplayArea.setSize(Integer.valueOf(txtWidth.getText()), 
 				Integer.valueOf(txtHeight.getText()));
 		 */
-		pnlBase.add(pnlDisplayArea, BorderLayout.CENTER);
 					
 	}
 	
@@ -134,6 +120,8 @@ public class Window extends JFrame {
 	 * After setting up the frame, make it visible to the user.
 	 */
 	public void start() {
+		btlAdapter.setBg(pnlDisplayArea);
+		
 		setVisible(true);
 	}
 

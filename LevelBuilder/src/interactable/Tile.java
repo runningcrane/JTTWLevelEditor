@@ -7,7 +7,7 @@ public class Tile {
 	private int x;
 	private int y;	
 	private HashMap<String, Property<?>> properties;
-	private Interactable inter;
+	private IInteractable inter;
 	
 	public Tile(int x, int y) {
 		this.x = x;
@@ -25,7 +25,7 @@ public class Tile {
 		return new Point(x,y);
 	}
 	
-	public void setInteractable(Interactable inter) {
+	public void setInteractable(IInteractable inter) {
 		this.inter = inter;
 	}
 	

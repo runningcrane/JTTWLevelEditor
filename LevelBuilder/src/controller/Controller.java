@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 
@@ -16,9 +17,12 @@ public class Controller {
 		window = new Window(new IBuilderToLevelAdapter() {
 
 			@Override
-			public void render(Graphics g) {
-				// TODO Auto-generated method stub
-				
+			public void render(Component panel, Graphics g) {
+				level.render(panel, g);			
+			}
+			
+			public void setBg(Component panel) {
+				level.setBg(panel);
 			}
 			
 		});
@@ -30,8 +34,8 @@ public class Controller {
 	}
 	
 	private void start() {
-		window.start();
 		level.start();
+		window.start();
 	}
 	
 	public static void main(String[] args) {
