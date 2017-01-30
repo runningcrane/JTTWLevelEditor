@@ -21,8 +21,8 @@ public class Controller {
 				level.render(panel, g);			
 			}
 			
-			public void setBg(Component panel) {
-				level.setBg(panel);
+			public void setBg(String path) {
+				level.setBg(path);
 			}
 			
 		});

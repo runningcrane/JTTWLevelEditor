@@ -120,7 +120,7 @@ public class Window extends JFrame {
 	 * After setting up the frame, make it visible to the user.
 	 */
 	public void start() {
-		btlAdapter.setBg(pnlDisplayArea);
+		btlAdapter.setBg("assets/bgSunny.png");
 		
 		setVisible(true);
 	}

@@ -7,6 +7,6 @@ public interface IBuilderToLevelAdapter {
 	
 	public void render(Component panel, Graphics g);
 	
-	public void setBg(Component panel);
+	public void setBg(String path);
 
 }

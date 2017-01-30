@@ -5,7 +5,11 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import interactable.Platform;
@@ -28,25 +32,22 @@ public class Level {
 		mToPixel = 100;		 		
 	}
 	
-	public void setBg(Component panel) {
-		Image bgImage = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("assets/bg/bgSunny.png"));
-		MediaTracker mt = new MediaTracker(panel);
-
-		// Wait for image to load
-		mt.addImage(bgImage, 1);
+	public void setBg(String path) {
+		BufferedImage bgImage;
 		try {
-			mt.waitForAll();
-		} catch (Exception e) {
-			System.out.println("ImagePaintStrategy.init(): Error waiting for image.  Exception = " + e);
+			bgImage = ImageIO.read(new File(path));
+		} catch (IOException e) {
+			System.err.println("File not found: " + path);
+			e.printStackTrace();
+			return;
 		}
-		// bg = new Background(resize(10,bgIcon));
+		
 		bg = new Background(bgImage);
 	}
 	
-	public void render(Component panel, Graphics g) {
-		System.out.println("drawing background");	
+	public void render(Component panel, Graphics g) {			
 		if (bg != null)
-			g.drawImage(bg.getImage(), 300, 100, null);
+			g.drawImage(bg.getImage(), 0, 0, null);
 	}
 	
 	public ImageIcon resize(double widthMeters, ImageIcon original) {

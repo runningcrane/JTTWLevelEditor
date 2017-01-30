@@ -1,17 +1,18 @@
 package noninteractable;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 
 public class Background implements INonInteractable {
 	
-	private Image image;
+	private BufferedImage image;
 	
-	public Background(Image image) {
+	public Background(BufferedImage image) {
 		this.image = image;
 	}
-	public Image getImage() {
+	public BufferedImage getImage() {
 		return this.image;
 	}
 
