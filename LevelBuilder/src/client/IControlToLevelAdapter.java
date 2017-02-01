@@ -28,5 +28,11 @@ public interface IControlToLevelAdapter {
 	 * @param path path to background file
 	 */
 	public void setBg(String path);
+	
+	/**
+	 * Request a new platform to be added.
+	 * @param path
+	 */
+	public void makePlatform(String path);
 
 }

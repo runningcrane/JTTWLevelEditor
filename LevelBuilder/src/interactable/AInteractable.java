@@ -1,52 +1,125 @@
 package interactable;
 
 public abstract class AInteractable {
-	private String imageName;
-	private double centerX;
-	private double centerY;
-	private double imageSizeWidth;
-	private double imageSizeHeight;
+	/**
+	 * Relative path to file.
+	 */
+	private String path;	
+	
+	/**
+	 * Center X position on level in terms of meters. (0,0) is the bottom left.
+	 */
+	private double centerXm;
+	/**
+	 * Center Y position on level in terms of meters. (0,0) is the bottom left.
+	 */
+	private double centerYm;
+	
+	/**
+	 * Width in terms of meters.
+	 */
+	private double widthm;
+	
+	/**
+	 * Height in terms of meters.
+	 */
+	private double heightm;
+	
+	/**
+	 * Hit box width. 
+	 * TODO: Will be replaced by an array of collision box points.
+	 */
 	private double collisionWidth;
+	
+	/**
+	 * Hit box height. 
+	 * TODO: Will be replaced by an array of collision box points.
+	 */
 	private double collisionHeight;
 	
-	protected String getImageName() {
-		return this.imageName;
+	/**
+	 * Defines the collision box of the platform.
+	 */
+	private double[] collisionPoints;
+	
+	/**
+	 * Gets the path to its image.
+	 * @return relative path to image
+	 */
+	public String getPath() {
+		return this.path;
+	}	
+	
+	/**
+	 * Set the relative path to its image.
+	 * @param name relative path name
+	 */
+	protected void setPath(String name) {
+		this.path = name;
 	}
 	
-	protected void setImageName(String name) {
-		this.imageName = name;
+	/**
+	 * Get the center X position on level in terms of meters.
+	 * @return center x position in terms of meters
+	 */
+	protected double getCenterXm() {
+		return this.centerXm;
 	}
 	
-	protected double getCenterX() {
-		return this.centerX;
+	/**
+	 * Set the center X position on level in terms of meters.
+	 * @param xm center X pos on level in terms of meters; 0 is the left boundary
+	 */
+	protected void setCenterXm(double xm) {
+		this.centerXm = xm;
 	}
 	
-	protected void setCenterX(double x) {
-		this.centerX = x;
+	/**
+	 * Get the center Y position on level in terms of meters.
+	 * @param  center Y pos on level in terms of meters
+	 */
+	protected double getCenterYm() {
+		return this.centerYm;
 	}
 	
-	protected double getCenterY() {
-		return this.centerY;
+	/**
+	 * Set the center Y position on level in terms of meters.
+	 * @param ym center Y pos on level in terms of meters; 0 is the south boundary
+	 */
+	protected void setCenterYm(double y) {
+		this.centerYm = y;
+	}	
+	
+	/**
+	 * Get width in terms of meters.
+	 * @return width in meters
+	 */
+	protected double getInGameWidth() {
+		return this.widthm;
 	}
 	
-	protected void setCenterY(double y) {
-		this.centerY = y;
+	/**
+	 * Set width in terms of meters.
+	 * @return width width in meters
+	 */
+	protected void setInGameWidth(double width) {
+		this.widthm = width;
 	}
 	
-	protected double ImageSizeWidth() {
-		return this.imageSizeWidth;
+	/**
+	 * Get height in terms of meters.
+	 * @return height in meters
+	 */
+	protected double getInGameHeight() {
+		return this.heightm;
 	}
 	
-	protected void setImageSizeWidth(double width) {
-		this.imageSizeWidth = width;
-	}
-	
-	protected double getImageSizeHeight() {
-		return this.imageSizeHeight;
-	}
-	
-	protected void setImageSizeHeight(double height) {
-		this.imageSizeHeight = height;	
+	/**
+	 * Set height in terms of meters.
+	 * @return height width in meters
+	 */
+	protected void setInGameHeight(double height) {
+		this.heightm = height;	
 	}
 	
 	protected double getCollisionWidth() {
@@ -63,5 +136,13 @@ public abstract class AInteractable {
 	
 	protected void setCollisionHeight(double height) {
 		this.collisionHeight = height;
-	}		
+	}
+	
+	protected void setCollisionPoints(double[] collisionPoints) {
+		this.collisionPoints = collisionPoints;
+	}
+	
+	protected double[] getCollisionPoints() {
+		return this.collisionPoints;
+	}
 }

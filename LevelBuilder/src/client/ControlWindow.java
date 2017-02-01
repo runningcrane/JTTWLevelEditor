@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
+import javax.swing.JToggleButton;
 
 public class ControlWindow extends JFrame {
 	
@@ -116,10 +117,7 @@ public class ControlWindow extends JFrame {
 		btnBgSunny.setIcon(iiSunny);
 		pnlGrid.add(btnBgSunny);
 		bgRadGroup.add(btnBgSunny);
-		
-		
-		
-		
+				
 		// Player panel
 		
 		JPanel pnlPlayer = new JPanel();
@@ -128,8 +126,62 @@ public class ControlWindow extends JFrame {
 		JPanel pnlForeground = new JPanel();
 		getContentPane().add(pnlForeground, BorderLayout.EAST);
 		
+		
+		// Platforms
+		
 		JPanel pnlPlatform = new JPanel();
 		getContentPane().add(pnlPlatform);
+		
+		JLabel lblPlatform = new JLabel("<html><b>Platforms</b></html>");
+		pnlPlatform.add(lblPlatform);
+			
+		// Platform panel - grid
+		
+		JPanel pnlPlatGrid = new JPanel();
+		pnlPlatGrid.setLayout(new GridLayout(1,3));
+		pnlPlatform.add(pnlPlatGrid);
+		
+		ImageIcon iiPedestal = new ImageIcon("assets/PedestalThumbnail.png");				
+		ImageIcon iiRock1 = new ImageIcon("assets/Rock1Thumbnail.png");				
+		ImageIcon iiRock2 = new ImageIcon("assets/Rock2Thumbnail");	
+		
+		// Platform panel - toggle buttons
+		ButtonGroup platToggleGroup = new ButtonGroup();														
+				
+		JToggleButton tglBtnPedestal = new JToggleButton("Pedestal");
+		tglBtnPedestal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/Pedestal.png");
+			}
+		});
+		tglBtnPedestal.setIcon(iiPedestal);
+		pnlPlatGrid.add(tglBtnPedestal);
+		platToggleGroup.add(tglBtnPedestal);
+		pnlPlatform.add(tglBtnPedestal);
+		
+		JToggleButton tglBtnRock1 = new JToggleButton("Rock1");
+		tglBtnRock1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/Rockl.png");
+			}
+		});
+		tglBtnRock1.setIcon(iiRock1);
+		pnlPlatGrid.add(tglBtnRock1);
+		platToggleGroup.add(tglBtnRock1);
+		pnlPlatform.add(tglBtnRock1);
+		
+		JToggleButton tglBtnRock2 = new JToggleButton("Rock2");
+		tglBtnRock2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/Rock2.png");
+			}
+		});
+		tglBtnRock2.setIcon(iiRock2);
+		pnlPlatGrid.add(tglBtnRock2);
+		platToggleGroup.add(tglBtnRock2);
+		pnlPlatform.add(tglBtnRock2);		
+		
+		// Resize
 		
 		JButton btnResizeScreen = new JButton("Resize");
 		btnResizeScreen.addActionListener(new ActionListener() {

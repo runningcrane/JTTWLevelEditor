@@ -11,9 +11,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
@@ -29,11 +33,15 @@ public class OutputWindow extends JFrame {
 	private IOutputToLevelAdapter otlAdapter;
 	private JTextField txtJsonOutputPath;
 	private JTextField txtPath;
+	
+	private boolean makeNew;
+	private String newPath;
 
 	/**
 	 * Create the frame.
 	 */
-	public OutputWindow(IOutputToLevelAdapter otlAdapter) {		
+	public OutputWindow(IOutputToLevelAdapter otlAdapter) {	
+		this.makeNew = false;
 		this.otlAdapter = otlAdapter;				
 		initGUI();
 		
@@ -43,7 +51,7 @@ public class OutputWindow extends JFrame {
 				// Called upon mouse release			
 		        public void componentResized(ComponentEvent evt) {
 		            Component c = (Component)evt.getSource();
-		            otlAdapter.manualResize(c.getSize().getWidth(), c.getSize().getHeight());
+		            otlAdapter.manualResize(c.getSize().getWidth(), c.getSize().getHeight());		            
 		        }
 		});
 	}
@@ -81,6 +89,7 @@ public class OutputWindow extends JFrame {
 					file.write(otlAdapter.makeJSON().toJSONString());
 					file.flush();
 					file.close();
+					System.out.println("Output JSON written to bin root");
 				} catch (IOException e1) {					
 					e1.printStackTrace();
 				}			
@@ -98,7 +107,78 @@ public class OutputWindow extends JFrame {
 				super.paintComponent(g);
 				otlAdapter.render(this, g);
 			}
-		};
+		};		
+
+		pnlContent.addMouseListener(new MouseListener() {
+		    @Override
+			public void mouseClicked(MouseEvent e) {
+				if (makeNew) {
+				    int xp = e.getX();
+				    int yp = e.getY();
+				    // I am not sure what the coordinate system is, though.
+				    
+				    // Pop up dialog here to get the expected width in meters
+				    String width = JOptionPane.showInputDialog(null, "Input width of the image (meters)");
+				    double wp;
+				    try {
+				    	wp = Double.parseDouble(width);
+				    } catch (NullPointerException nulle) {
+				    	// Default to 2m width.
+				    	wp = 2;
+						nulle.printStackTrace();
+				    } catch (NumberFormatException numbe) {
+				    	System.out.println("Not a valid number.");
+				    	wp = 2;
+				    	numbe.printStackTrace();
+				    }
+				    
+				    // Pop up dialog here to get the expected size in meters
+				    String height = JOptionPane.showInputDialog(null, "Input height of the image (meters)");
+				    double hp;
+				    try {
+				    	hp = Double.parseDouble(height);
+				    } catch (NullPointerException nulle) {
+				    	// Default to 2m width.
+				    	hp = 2;
+						nulle.printStackTrace();
+				    } catch (NumberFormatException numbe) {
+				    	System.out.println("Not a valid number.");
+				    	hp = 2;
+				    	numbe.printStackTrace();
+				    }				    
+				    
+				    // Pop up dialog box to make collision box.
+				    
+				    // otlAdapter.makeNewPlatform(newPath, xp, yp, wp, hp)
+				}
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}		    
+		});
+		
+		
 		getContentPane().add(pnlContent, BorderLayout.CENTER);
 	}
 	/**
@@ -115,8 +195,7 @@ public class OutputWindow extends JFrame {
 	 * @param hm height in pixels
 	 */
 	public void setDimensions(int wm, int hm) {		
-		this.setSize(wm, hm);
-		System.out.println("New size is " + contentPane.getWidth() + " x " + contentPane.getHeight());
+		this.setSize(wm, hm);		
 	}
 		
 	
@@ -126,5 +205,10 @@ public class OutputWindow extends JFrame {
 	public void redraw() {
 		pnlContent.repaint();
 	}	
+	
+	public void setActive(String path) {
+		this.makeNew = true;
+		this.newPath = path;
+	}
 
 }

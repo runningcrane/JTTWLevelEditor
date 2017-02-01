@@ -199,6 +199,15 @@ public class LevelManager {
 	}
 	
 	/**
+	 * The user wants to add a platform. Tell the output window to request focus,
+	 * and what kind of platform to make.
+	 * @param path
+	 */
+	public void setActive(String path) {
+		ltoAdapter.makePlatform(path);
+	}
+	
+	/**
 	 * Outputs a JSON file.
 	 * TODO: I really should be checking these return types. 
 	 */

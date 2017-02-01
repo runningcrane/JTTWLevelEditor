@@ -62,6 +62,11 @@ public class Controller {
 			public void setBg(String path) {
 				level.setBg(path);
 			}
+
+			@Override
+			public void makePlatform(String path) {
+				level.setActive(path);
+			}
 			
 		});
 		
@@ -100,6 +105,11 @@ public class Controller {
 			@Override
 			public void redraw() {
 				outputWindow.redraw();				
+			}
+
+			@Override
+			public void makePlatform(String path) {
+				outputWindow.setActive(path);				
 			}		
 			
 		}, new ILevelToLayerAdapter() {
