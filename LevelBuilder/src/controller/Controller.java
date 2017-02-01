@@ -80,6 +80,11 @@ public class Controller {
 			public JSONObject makeJSON() {
 				return level.makeJSON();
 			}
+
+			@Override
+			public void manualResize(double wp, double hp) {
+				level.manualResize(wp, hp);				
+			}
 			
 		});
 		

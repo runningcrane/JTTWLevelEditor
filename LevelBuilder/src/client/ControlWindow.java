@@ -54,7 +54,7 @@ public class ControlWindow extends JFrame {
 		pnlResize.add(lblHeight);
 		
 		txtHeight = new JTextField();
-		txtHeight.setText("400");
+		txtHeight.setText("4");
 		pnlResize.add(txtHeight);
 		txtHeight.setColumns(10);
 		
@@ -62,7 +62,7 @@ public class ControlWindow extends JFrame {
 		pnlResize.add(lblWidth);
 		
 		txtWidth = new JTextField();
-		txtWidth.setText("700");
+		txtWidth.setText("7");
 		pnlResize.add(txtWidth);
 		txtWidth.setColumns(10);					
 		

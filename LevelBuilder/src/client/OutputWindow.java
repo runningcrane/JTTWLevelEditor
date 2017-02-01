@@ -1,6 +1,7 @@
 package client;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 
@@ -11,6 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
@@ -30,14 +33,26 @@ public class OutputWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public OutputWindow(IOutputToLevelAdapter otlAdapter) {
-		this.otlAdapter = otlAdapter;		
+	public OutputWindow(IOutputToLevelAdapter otlAdapter) {		
+		this.otlAdapter = otlAdapter;				
 		initGUI();
+		
+		// Listen for manual resizing of the frame by the user
+		this.addComponentListener(new ComponentAdapter() 
+		{  
+				// Called upon mouse release			
+		        public void componentResized(ComponentEvent evt) {
+		            Component c = (Component)evt.getSource();
+		            otlAdapter.manualResize(c.getSize().getWidth(), c.getSize().getHeight());
+		        }
+		});
 	}
 	
 	public void initGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		setLayout(new BorderLayout());
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -99,8 +114,9 @@ public class OutputWindow extends JFrame {
 	 * @param wm width in pixels
 	 * @param hm height in pixels
 	 */
-	public void setDimensions(int wm, int hm) {
-		pnlContent.setSize(wm, hm);
+	public void setDimensions(int wm, int hm) {		
+		this.setSize(wm, hm);
+		System.out.println("New size is " + contentPane.getWidth() + " x " + contentPane.getHeight());
 	}
 		
 	

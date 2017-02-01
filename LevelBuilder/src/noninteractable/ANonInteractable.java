@@ -1,7 +1,7 @@
 package noninteractable;
 
 public abstract class ANonInteractable implements INonInteractable {
-	private String imageName;
+	private String path;	
 	private double centerX;
 	private double centerY;
 	private double imageSizeWidth;
@@ -9,12 +9,12 @@ public abstract class ANonInteractable implements INonInteractable {
 	private double collisionWidth;
 	private double collisionHeight;
 	
-	protected String getImageName() {
-		return this.imageName;
-	}
+	public String getPath() {
+		return this.path;
+	}	
 	
-	protected void setImageName(String name) {
-		this.imageName = name;
+	protected void setPath(String name) {
+		this.path = name;
 	}
 	
 	protected double getCenterX() {

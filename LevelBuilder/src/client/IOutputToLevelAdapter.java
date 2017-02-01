@@ -20,4 +20,11 @@ public interface IOutputToLevelAdapter {
 	 */
 	public JSONObject makeJSON();
 	
+	/**
+	 * Update the imagery on the screen due to a manual resize by user.
+	 * @param wp new width in pixels
+	 * @param hp new height in pixels
+	 */
+	public void manualResize(double wp, double hp);
+	
 }

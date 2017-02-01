@@ -13,10 +13,9 @@ public class Background extends ANonInteractable {
 	private ImageIcon rescaledImage;
 	
 	
-	public Background(BufferedImage image, String imageName, double wm, double hm) {
+	public Background(BufferedImage image, String path, double wm, double hm) {
 		this.image = image;
-		// TOOD: Regex out the assets/blahblah/image.png
-		this.setImageName(imageName);
+		this.setPath(path);
 		this.setImageSizeWidth(wm);
 		this.setImageSizeHeight(hm);
 	}
@@ -41,7 +40,8 @@ public class Background extends ANonInteractable {
 	@Override
 	public JSONObject getJSON() {
 		JSONObject obj = new JSONObject();
-		obj.put("imageName", this.getImageName());
+		// TODO: Regex out the assets/blahblah/image.png in JSON
+		obj.put("imageName", this.getPath());
 		obj.put("centerX", 0);
 		obj.put("centerY", 0);
 		obj.put("imageSizeWidth", 0);
@@ -53,6 +53,7 @@ public class Background extends ANonInteractable {
 	}
 	
 	public JSONObject anticipatedJSON() {
+		// TODO: Regex out the assets/blahblah/image.png in JSON
 		JSONObject obj = new JSONObject();
 		return obj;
 	}

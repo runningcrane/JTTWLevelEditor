@@ -129,7 +129,7 @@ public class LevelManager {
 		}
 		
 		this.bg = new Background(bgImage, path, this.wm, this.hm);
-		this.bg.setRescaled(resize(this.wm, bgImage));
+		this.bg.setRescaled(resize(bgImage));
 	}
 	
 	/**
@@ -147,12 +147,16 @@ public class LevelManager {
 	
 	/**
 	 * Request output window to change its size.
-	 * @param wm
-	 * @param hm
+	 * @param wm width in in-game meters
+	 * @param hm height in in-game meters
 	 */
 	public void setLevelDimensions(double wm, double hm) {
-		// TODO: Translate meters to pixels.
-		ltoAdapter.setDimensions((int)(wm * mToPixel), (int)(hm * mToPixel));		
+		ltoAdapter.setDimensions((int)(wm * mToPixel), (int)(hm * mToPixel));	
+		this.wm = wm;
+		this.hm = hm;
+		
+		// Need to resize the background based on whichever scale is the biggest
+		this.setBg(this.bg.getPath());
 	}
 	/**
 	 * Scales an image to in-game meters size.
@@ -160,12 +164,28 @@ public class LevelManager {
 	 * @param original contains image in original pixel dimensions
 	 * @return
 	 */
-	public ImageIcon resize(double widthMeters, BufferedImage original) {
-		double expectedWidth = widthMeters * this.mToPixel;
-		double scale = expectedWidth/original.getWidth(); 
-		return new ImageIcon(original.getScaledInstance((int)(original.getWidth() * scale), 
-				(int)(original.getWidth() * scale),
+	public ImageIcon resize(BufferedImage original) {			
+		double expectedWidth = this.wm * this.mToPixel;
+		double widthScale = expectedWidth/original.getWidth();
+		
+		double expectedHeight = this.hm * this.mToPixel;
+		double heightScale = expectedHeight/original.getHeight();		
+		
+		return new ImageIcon(original.getScaledInstance((int)(original.getWidth() * widthScale), 
+				(int)(original.getHeight() * heightScale),
 				java.awt.Image.SCALE_SMOOTH));
+	}
+	
+	/**
+	 * Manual call to reset the level dimensions.
+	 * @param wp width in pixels
+	 * @param hp height in pixels
+	 */
+	public void manualResize(double wp, double hp) {
+		this.wm = wp / this.mToPixel;
+		this.hm = hp / this.mToPixel;
+		
+		this.setBg(this.bg.getPath());		
 	}
 
 	/**
