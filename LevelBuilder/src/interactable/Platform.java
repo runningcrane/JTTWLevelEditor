@@ -5,22 +5,24 @@ import java.awt.geom.Point2D.Double;
 
 import javax.swing.ImageIcon;
 
-public class Platform implements IInteractable {
+import org.json.simple.JSONObject;
+
+public class Platform extends AInteractable {
 	
 	public Platform () {
 		
 	}
 
-	@Override
-	public Image getImage() {
-		// TODO Auto-generated method stub
-		return null;
+	public JSONObject getJSON() {
+		JSONObject obj = new JSONObject();
+		obj.put("imageName", this.getImageName());
+		obj.put("centerX", 0);
+		obj.put("centerY", 0);
+		obj.put("imageSizeWidth", 0);
+		obj.put("imageSizeHeight", 0);
+		obj.put("collisionWidth", 0);
+		obj.put("collisionHeight", 0);	
+		
+		return obj;
 	}
-
-	@Override
-	public Double getPosition() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

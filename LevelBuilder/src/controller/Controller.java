@@ -4,38 +4,111 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 
-import client.IBuilderToLevelAdapter;
-import client.Window;
-import server.Level;
-import server.ILevelToBuilderAdapter;
+import org.json.simple.JSONObject;
 
+import client.IControlToLevelAdapter;
+import client.ILayerToLevelAdapter;
+import client.IOutputToLevelAdapter;
+import client.LayerWindow;
+import client.OutputWindow;
+import client.ControlWindow;
+import server.LevelManager;
+import server.ILevelToLayerAdapter;
+import server.ILevelToOutputAdapter;
+import server.ILevelToControlAdapter;
+
+/**
+ * Controller of this MVC system. Start the program here.
+ * @author Melinda Crane
+ */
 public class Controller {
-	Window window;
-	Level level;
+	/**
+	 * Control panel gives level-editing/placement options.
+	 */
+	ControlWindow controlWindow;
 	
+	/**
+	 * Layer panel informs which objects are on the screen and allows postedits.
+	 */
+	LayerWindow layerWindow;
+	
+	/**
+	 * Panel on which the mock level is displayed.
+	 */
+	OutputWindow outputWindow;
+	
+	/**
+	 * Model that manages the various parts of the Level.
+	 */
+	LevelManager level;
+	
+	/**
+	 * Constructor for the Controller.
+	 */
 	public Controller() {
-		window = new Window(new IBuilderToLevelAdapter() {
+		controlWindow = new ControlWindow(new IControlToLevelAdapter() {
 
 			@Override
-			public void render(Component panel, Graphics g) {
-				level.render(panel, g);			
+			public void togglePlayer(String name, boolean status) {
+				level.togglePlayer(name, status);				
+			}
+
+			@Override
+			public void setLevelDimensions(double wm, double hm) {
+				level.setLevelDimensions(wm, hm);				
 			}
 			
+			@Override
 			public void setBg(String path) {
 				level.setBg(path);
 			}
 			
 		});
 		
-		level = new Level(new ILevelToBuilderAdapter() {
+		layerWindow = new LayerWindow(new ILayerToLevelAdapter() {
+
+			
+		});
+		
+		outputWindow = new OutputWindow(new IOutputToLevelAdapter() {
+			@Override
+			public void render(Component panel, Graphics g) {
+				level.render(panel, g);			
+			}
+
+			@Override
+			public JSONObject makeJSON() {
+				return level.makeJSON();
+			}
+			
+		});
+		
+		level = new LevelManager(new ILevelToControlAdapter() {
+			
+		}, new ILevelToOutputAdapter() {
+
+			@Override
+			public void setDimensions(int wm, int hm) {
+				outputWindow.setDimensions(wm, hm);				
+			}
+
+			@Override
+			public void redraw() {
+				outputWindow.redraw();				
+			}		
+			
+		}, new ILevelToLayerAdapter() {
 			
 		});
 		
 	}
 	
 	private void start() {
+
+		outputWindow.start();
 		level.start();
-		window.start();
+		controlWindow.start();
+		layerWindow.start();
 	}
 	
 	public static void main(String[] args) {
