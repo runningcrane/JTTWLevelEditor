@@ -10,15 +10,34 @@ import org.json.simple.JSONObject;
 public class Background extends ANonInteractable {
 	
 	private BufferedImage image;
+	private ImageIcon rescaledImage;
 	
-	public Background(BufferedImage image, String imageName) {
+	
+	public Background(BufferedImage image, String imageName, double wm, double hm) {
 		this.image = image;
 		// TOOD: Regex out the assets/blahblah/image.png
 		this.setImageName(imageName);
+		this.setImageSizeWidth(wm);
+		this.setImageSizeHeight(hm);
 	}
+	
 	public BufferedImage getImage() {
 		return this.image;
 	}	
+	
+	public ImageIcon getRescaled() {
+		return this.rescaledImage;
+	}
+	
+	public void setRescaled(ImageIcon rescaled) {
+		this.rescaledImage = rescaled;
+	}
+	
+	public void setDimensions(double wm, double hm) {
+		this.setImageSizeWidth(wm);
+		this.setImageSizeHeight(hm);
+	}
+	
 	@Override
 	public JSONObject getJSON() {
 		JSONObject obj = new JSONObject();
@@ -30,6 +49,11 @@ public class Background extends ANonInteractable {
 		obj.put("collisionWidth", 0);
 		obj.put("collisionHeight", 0);	
 		
+		return obj;
+	}
+	
+	public JSONObject anticipatedJSON() {
+		JSONObject obj = new JSONObject();
 		return obj;
 	}
 

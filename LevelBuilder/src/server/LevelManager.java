@@ -38,6 +38,10 @@ public class LevelManager {
 	 */
 	private Background bg;
 	
+	private double wm;
+	
+	private double hm;
+	
 	/**
 	 * Foreground array.
 	 */
@@ -96,6 +100,10 @@ public class LevelManager {
 		
 		this.timeSlice = 50; // update every 50 milliseconds
 		this.timer = new Timer(timeSlice, listen);
+		
+		// TODO: Replace later. This is a manual set of width and height of the background.
+		this.wm = 7;
+		this.hm = 4;
 	}
 	
 	/**
@@ -120,7 +128,8 @@ public class LevelManager {
 			return;
 		}
 		
-		this.bg = new Background(bgImage, path);
+		this.bg = new Background(bgImage, path, this.wm, this.hm);
+		this.bg.setRescaled(resize(this.wm, bgImage));
 	}
 	
 	/**
@@ -130,8 +139,10 @@ public class LevelManager {
 	 */
 	public void render(Component panel, Graphics g) {
 		// Draw background
-		if (bg != null)			
-			g.drawImage(bg.getImage(), 0, 0, null);
+		//if (bg != null)			
+			//g.drawImage(bg.getImage(), 0, 0, null);
+		if (bg.getRescaled() != null)
+			g.drawImage(bg.getRescaled().getImage(), 0, 0, null);
 	}
 	
 	/**
@@ -149,11 +160,11 @@ public class LevelManager {
 	 * @param original contains image in original pixel dimensions
 	 * @return
 	 */
-	public ImageIcon resize(double widthMeters, ImageIcon original) {
+	public ImageIcon resize(double widthMeters, BufferedImage original) {
 		double expectedWidth = widthMeters * this.mToPixel;
-		double scale = expectedWidth/original.getIconWidth(); 
-		return new ImageIcon(original.getImage().getScaledInstance((int)(original.getIconWidth() * scale), 
-				(int)(original.getIconWidth() * scale),
+		double scale = expectedWidth/original.getWidth(); 
+		return new ImageIcon(original.getScaledInstance((int)(original.getWidth() * scale), 
+				(int)(original.getWidth() * scale),
 				java.awt.Image.SCALE_SMOOTH));
 	}
 
