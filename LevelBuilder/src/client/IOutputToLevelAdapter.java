@@ -27,4 +27,14 @@ public interface IOutputToLevelAdapter {
 	 */
 	public void manualResize(double wp, double hp);
 	
+	/**
+	 * Request a platform to be made.
+	 * @param path path to image file
+	 * @param xp x position in pixels
+	 * @param yp y position in pixels
+	 * @param wm expected width in in-game meters
+	 * @param hm expected height in in-game meters
+	 */
+	public void makePlatform(String path, double xp, double yp, double wm, double hm);
+	
 }

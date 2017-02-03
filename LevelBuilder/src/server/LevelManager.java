@@ -104,6 +104,10 @@ public class LevelManager {
 		// TODO: Replace later. This is a manual set of width and height of the background.
 		this.wm = 7;
 		this.hm = 4;
+		
+		// Instantiate various lists.
+		this.plats = new ArrayList<Platform>();
+		this.fg = new ArrayList<INonInteractable>();
 	}
 	
 	/**
@@ -129,7 +133,7 @@ public class LevelManager {
 		}
 		
 		this.bg = new Background(bgImage, path, this.wm, this.hm);
-		this.bg.setRescaled(resize(bgImage));
+		this.bg.setRescaled(resize(bgImage, this.wm, this.hm));
 	}
 	
 	/**
@@ -139,10 +143,15 @@ public class LevelManager {
 	 */
 	public void render(Component panel, Graphics g) {
 		// Draw background
-		//if (bg != null)			
-			//g.drawImage(bg.getImage(), 0, 0, null);
 		if (bg.getRescaled() != null)
 			g.drawImage(bg.getRescaled().getImage(), 0, 0, null);
+		
+		// Draw platforms
+		plats.forEach((plat) -> {
+			// Unfortunately drawImage draws on the top left, not center, so adjustments are made.
+			g.drawImage(plat.getRescaled().getImage(), (int)(plat.getCenterXm() - plat.getInGameWidth()),
+					(int)(plat.getCenterYm() - plat.getInGameHeight()), null);
+		});
 	}
 	
 	/**
@@ -164,11 +173,11 @@ public class LevelManager {
 	 * @param original contains image in original pixel dimensions
 	 * @return
 	 */
-	public ImageIcon resize(BufferedImage original) {			
-		double expectedWidth = this.wm * this.mToPixel;
+	public ImageIcon resize(BufferedImage original, double wm, double hm) {			
+		double expectedWidth = wm * this.mToPixel;
 		double widthScale = expectedWidth/original.getWidth();
 		
-		double expectedHeight = this.hm * this.mToPixel;
+		double expectedHeight = hm * this.mToPixel;
 		double heightScale = expectedHeight/original.getHeight();		
 		
 		return new ImageIcon(original.getScaledInstance((int)(original.getWidth() * widthScale), 
@@ -186,6 +195,32 @@ public class LevelManager {
 		this.hm = hp / this.mToPixel;
 		
 		this.setBg(this.bg.getPath());		
+	}
+	
+	/**
+	 * Makes a new platform object.
+	 * @param path 
+	 * @param xp xpixel location on screen
+	 * @param yp ypixel location on screen
+	 * @param wm expected width in in-game meters
+	 * @param hm expected height in in-game meters
+	 */
+	public void makePlatform(String path, double xp, double yp, double wm, double hm) {
+		Platform platform = new Platform(path, wm, hm, xp / this.mToPixel, yp / this.mToPixel);						
+		BufferedImage image;
+		try {
+			image = ImageIO.read(new File(path));
+		} catch (IOException e) {
+			System.err.println("File not found: " + path);
+			e.printStackTrace();
+			return;
+		}
+		
+		platform.setImage(image);
+		platform.setRescaled(resize(image, wm, hm));
+		
+		plats.add(platform);
+		
 	}
 
 	/**
@@ -224,8 +259,11 @@ public class LevelManager {
 		// Background first
 		list.add(this.bg.getJSON());
 		
-		// Platforms next
-		// plats.forEach((platform) -> list.add(platform.getJSON()));	
+		// Platforms next	
+		plats.forEach((platform) -> list.add(platform.getJSON()));	
+		
+		// Foreground afterwards
+		fg.forEach((foregroundObj) -> list.add(foregroundObj.getJSON()));
 		
 		return list;
 	}

@@ -119,37 +119,36 @@ public class OutputWindow extends JFrame {
 				    
 				    // Pop up dialog here to get the expected width in meters
 				    String width = JOptionPane.showInputDialog(null, "Input width of the image (meters)");
-				    double wp;
+				    double wm;
 				    try {
-				    	wp = Double.parseDouble(width);
+				    	wm = Double.parseDouble(width);
 				    } catch (NullPointerException nulle) {
 				    	// Default to 2m width.
-				    	wp = 2;
+				    	wm = 2;
 						nulle.printStackTrace();
 				    } catch (NumberFormatException numbe) {
 				    	System.out.println("Not a valid number.");
-				    	wp = 2;
+				    	wm = 2;
 				    	numbe.printStackTrace();
 				    }
 				    
 				    // Pop up dialog here to get the expected size in meters
 				    String height = JOptionPane.showInputDialog(null, "Input height of the image (meters)");
-				    double hp;
+				    double hm;
 				    try {
-				    	hp = Double.parseDouble(height);
+				    	hm = Double.parseDouble(height);
 				    } catch (NullPointerException nulle) {
 				    	// Default to 2m width.
-				    	hp = 2;
+				    	hm = 2;
 						nulle.printStackTrace();
 				    } catch (NumberFormatException numbe) {
 				    	System.out.println("Not a valid number.");
-				    	hp = 2;
+				    	hm = 2;
 				    	numbe.printStackTrace();
 				    }				    
 				    
-				    // Pop up dialog box to make collision box.
-				    
-				    // otlAdapter.makeNewPlatform(newPath, xp, yp, wp, hp)
+				    // Pop up dialog box to make collision box.				    
+				    otlAdapter.makePlatform(newPath, xp, yp, wm, hm);
 				}
 			}
 

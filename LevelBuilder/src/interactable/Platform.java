@@ -1,24 +1,51 @@
 package interactable;
 
 import java.awt.Image;
+import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class Platform extends AInteractable {		
+import client.CollisionWindow;
+
+public class Platform extends AInteractable {
+	
+	private CollisionWindow settings;
+	private BufferedImage image;
+	private ImageIcon rescaledImage;
 	
 	public Platform (String path, double cxm, double cym,
-			double wm, double hm, double[] collisionPoints) {
+			double wm, double hm) {
 		this.setPath(path);
 		this.setCenterXm(cxm);
 		this.setCenterYm(cym);
 		this.setInGameWidth(wm);
-		this.setInGameHeight(hm);
-		this.setCollisionPoints(collisionPoints);
+		this.setInGameHeight(hm);		
+		this.settings = new CollisionWindow (path, wm, hm, cxm, cym);
+		this.settings.start();
+	}
+	
+	public BufferedImage getImage() {
+		return this.image;
+	}	
+	
+	public void setImage(BufferedImage image) {
+		this.image = image;
+	}	
+	
+	public ImageIcon getRescaled() {
+		return this.rescaledImage;
+	}
+	
+	public void setRescaled(ImageIcon rescaled) {
+		this.rescaledImage = rescaled;
 	}
 
 	public JSONObject getJSON() {
@@ -39,8 +66,15 @@ public class Platform extends AInteractable {
 		obj.put("imageSizeHeight", this.getInGameHeight());
 		
 		// Replace the below with collision points.
-		obj.put("collisionWidth", 0);
-		obj.put("collisionHeight", 0);	
+		JSONArray pointsList = new JSONArray();
+		ArrayList<Point2D.Double> points = this.settings.returnPoints();
+		points.forEach((point) -> {
+			JSONObject couple = new JSONObject();
+			couple.put("x", point.getX());
+			couple.put("y", point.getY());
+			pointsList.add(couple);
+		});		
+		obj.put("collisionPoints", pointsList);		
 		
 		return obj;
 	}

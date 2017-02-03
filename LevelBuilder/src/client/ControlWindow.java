@@ -203,8 +203,7 @@ public class ControlWindow extends JFrame {
 					return;
 				}
 				
-				// TODO: negative numbers check
-				
+				// TODO: negative numbers check				
 				ctlAdapter.setLevelDimensions(width, height);
 			}
 		});

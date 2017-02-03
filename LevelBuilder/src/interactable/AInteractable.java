@@ -1,5 +1,8 @@
 package interactable;
 
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+
 public abstract class AInteractable {
 	/**
 	 * Relative path to file.
@@ -40,7 +43,7 @@ public abstract class AInteractable {
 	/**
 	 * Defines the collision box of the platform.
 	 */
-	private double[] collisionPoints;
+	private ArrayList<Point2D.Double> collisionPoints;
 	
 	/**
 	 * Gets the path to its image.
@@ -62,7 +65,7 @@ public abstract class AInteractable {
 	 * Get the center X position on level in terms of meters.
 	 * @return center x position in terms of meters
 	 */
-	protected double getCenterXm() {
+	public double getCenterXm() {
 		return this.centerXm;
 	}
 	
@@ -78,7 +81,7 @@ public abstract class AInteractable {
 	 * Get the center Y position on level in terms of meters.
 	 * @param  center Y pos on level in terms of meters
 	 */
-	protected double getCenterYm() {
+	public double getCenterYm() {
 		return this.centerYm;
 	}
 	
@@ -94,7 +97,7 @@ public abstract class AInteractable {
 	 * Get width in terms of meters.
 	 * @return width in meters
 	 */
-	protected double getInGameWidth() {
+	public double getInGameWidth() {
 		return this.widthm;
 	}
 	
@@ -110,7 +113,7 @@ public abstract class AInteractable {
 	 * Get height in terms of meters.
 	 * @return height in meters
 	 */
-	protected double getInGameHeight() {
+	public double getInGameHeight() {
 		return this.heightm;
 	}
 	
@@ -138,11 +141,11 @@ public abstract class AInteractable {
 		this.collisionHeight = height;
 	}
 	
-	protected void setCollisionPoints(double[] collisionPoints) {
+	protected void setCollisionPoints(ArrayList<Point2D.Double> collisionPoints) {
 		this.collisionPoints = collisionPoints;
 	}
 	
-	protected double[] getCollisionPoints() {
+	protected ArrayList<Point2D.Double> getCollisionPoints() {
 		return this.collisionPoints;
 	}
 }

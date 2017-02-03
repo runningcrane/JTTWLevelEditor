@@ -90,6 +90,11 @@ public class Controller {
 			public void manualResize(double wp, double hp) {
 				level.manualResize(wp, hp);				
 			}
+
+			@Override
+			public void makePlatform(String path, double xp, double yp, double wm, double hm) {
+				level.makePlatform(path, xp, yp, wm, hm);				
+			}
 			
 		});
 		
