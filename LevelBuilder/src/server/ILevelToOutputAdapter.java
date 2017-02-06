@@ -19,5 +19,11 @@ public interface ILevelToOutputAdapter {
 	 * @param path path to platform image
 	 */
 	public void makePlatform(String path);
+	
+	/**
+	 * Set the flavor text of the level.
+	 * @param levelName name of the level loaded in
+	 */
+	public void setLevelName(String levelName);
 
 }

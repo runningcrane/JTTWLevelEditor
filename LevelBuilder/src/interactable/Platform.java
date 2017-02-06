@@ -26,6 +26,7 @@ public class Platform extends AInteractable {
 		this.setPath(path);
 		this.setCenterXm(cxm);
 		this.setCenterYm(cym);
+		System.out.println("Setting platform center to " + cxm + ", " + cym + "; meters");
 		this.setInGameWidth(wm);
 		this.setInGameHeight(hm);		
 		this.settings = new CollisionWindow (path, wm, hm, cxm, cym);

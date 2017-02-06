@@ -1,5 +1,6 @@
 package server;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -7,10 +8,15 @@ import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -18,6 +24,8 @@ import javax.swing.Timer;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import interactable.Platform;
 import noninteractable.Background;
@@ -50,7 +58,9 @@ public class LevelManager {
 	/**
 	 * Platform array.
 	 */
-	private ArrayList<Platform> plats;
+	private Map<Integer, Platform> plats;
+	
+	private int ticket;
 	
 	/**
 	 * Adapter to communicate with the controls panel.
@@ -89,6 +99,7 @@ public class LevelManager {
 		this.ltlAdapter = ltlAdapter;
 		
 		this.mToPixel = 100;		
+		this.ticket = 1;
 		
 		// Call upon the layer view to update itself frequently
 		ActionListener listen = new ActionListener() {
@@ -106,7 +117,7 @@ public class LevelManager {
 		this.hm = 4;
 		
 		// Instantiate various lists.
-		this.plats = new ArrayList<Platform>();
+		this.plats = new HashMap<Integer, Platform>();
 		this.fg = new ArrayList<INonInteractable>();
 	}
 	
@@ -147,11 +158,20 @@ public class LevelManager {
 			g.drawImage(bg.getRescaled().getImage(), 0, 0, null);
 		
 		// Draw platforms
-		plats.forEach((plat) -> {
-			// Unfortunately drawImage draws on the top left, not center, so adjustments are made.
-			g.drawImage(plat.getRescaled().getImage(), (int)(plat.getCenterXm() - plat.getInGameWidth()),
-					(int)(plat.getCenterYm() - plat.getInGameHeight()), null);
-		});
+		
+		plats.forEach((number, plat) -> {
+			// Unfortunately drawImage draws on the top left, not center, so adjustments are made.			
+			g.drawImage(plat.getRescaled().getImage(), (int)((plat.getCenterXm() - plat.getInGameWidth()/2) * this.mToPixel),
+					(int)((plat.getCenterYm() - plat.getInGameHeight()/2) * this.mToPixel), null);
+			
+			// Draw the label on top of it. In the center, maybe?
+			g.setColor(Color.MAGENTA);
+			g.fillOval((int)(plat.getCenterXm() * this.mToPixel), (int)(plat.getCenterYm() * this.mToPixel), 15, 15);
+			// Label point
+			g.setColor(Color.BLACK);
+			g.drawString(Integer.toString(number), (int)(plat.getCenterXm() * this.mToPixel + 5), 
+					(int)(plat.getCenterYm() * this.mToPixel + 10));
+		});				
 	}
 	
 	/**
@@ -206,7 +226,7 @@ public class LevelManager {
 	 * @param hm expected height in in-game meters
 	 */
 	public void makePlatform(String path, double xp, double yp, double wm, double hm) {
-		Platform platform = new Platform(path, wm, hm, xp / this.mToPixel, yp / this.mToPixel);						
+		Platform platform = new Platform(path, xp / this.mToPixel, yp / this.mToPixel, wm, hm);						
 		BufferedImage image;
 		try {
 			image = ImageIO.read(new File(path));
@@ -219,7 +239,10 @@ public class LevelManager {
 		platform.setImage(image);
 		platform.setRescaled(resize(image, wm, hm));
 		
-		plats.add(platform);
+		plats.put(this.ticket, platform);
+		this.ticket++;
+		
+		// Let the layer window know a platform has been made
 		
 	}
 
@@ -244,28 +267,107 @@ public class LevelManager {
 	
 	/**
 	 * Outputs a JSON file.
-	 * TODO: I really should be checking these return types. 
+	 * @param levelName name of the level
+	 * @return JSON to be outputted 
 	 */
-	public JSONObject makeJSON() {
+	public JSONObject makeJSON(String levelName) {
 		JSONObject json = new JSONObject();
 		JSONArray platList = getPlatList();
-		json.put("platforms", platList);
+		json.put("levelName", levelName);
+		json.put("background", this.bg.anticipatedJSON());
+		json.put("platforms", platList);		
 		return json;
 	}
 	
+	/**
+	 * Reads in a level from its JSON.	 
+	 * @param levelPath path to the level JSON	 
+	 */
+	public void readJSON(String levelPath) {
+		JSONParser parser = new JSONParser();
+		Object obj;
+		try {
+			obj = parser.parse(new FileReader(levelPath));
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found: " + levelPath);
+			e.printStackTrace();
+			return;
+		} catch (IOException e) {
+			System.out.println("Illegal path: " + levelPath);
+			e.printStackTrace();
+			return;
+		} catch (ParseException e) {
+			System.out.println("Cannot parse JSON at: " + levelPath);
+			e.printStackTrace();
+			return;
+		}
+		
+		// Begin parsing
+		JSONObject level = (JSONObject) obj;
+		String name = (String) level.get("levelName");
+		setLevelName(name);
+		
+		JSONObject bg = (JSONObject) level.get("background");
+		makeBackground(bg);
+		
+		JSONArray plats = (JSONArray) level.get("platforms");
+		makePlatList(plats);
+		
+		// Reset LevelManager, etc variables
+		
+	}
+	
+	public void setLevelName(String name) {		
+		ltoAdapter.setLevelName(name);
+	}
+	
+	
+	public void makeBackground(JSONObject bg) {
+		String imageName = (String)bg.get("imageName");
+		double levelWidth = (double)bg.get("levelWidth");
+		double levelHeight = (double)bg.get("levelHeight");
+		
+		// Set wm, hm.
+		this.wm = levelWidth / this.mToPixel;
+		this.hm = levelHeight / this.mToPixel;
+		
+		// Set the background.
+		setBg("assets/" + imageName);
+		
+		// Set the dimensions.
+		setLevelDimensions(this.wm, this.hm);
+	}
+	
 	public JSONArray getPlatList() {
-		JSONArray list = new JSONArray();
+		JSONArray list = new JSONArray();		
 		
-		// Background first
-		list.add(this.bg.getJSON());
-		
-		// Platforms next	
-		plats.forEach((platform) -> list.add(platform.getJSON()));	
-		
-		// Foreground afterwards
-		fg.forEach((foregroundObj) -> list.add(foregroundObj.getJSON()));
+		// Add all present platforms	
+		plats.forEach((number, platform) -> list.add(platform.getJSON()));	
 		
 		return list;
+	}
+	
+	public void makePlatList(JSONArray list) {
+		// First, empty any platforms that might've existed
+		this.plats.clear();
+		
+		// Now, reset ticket
+		this.ticket = 1;
+		
+		for (Object obj : list) {
+			JSONObject plat = (JSONObject) obj;
+			// Further parsing here
+			String path = "assets/" + (String)plat.get("imageName");				
+			double cxm = (double)plat.get("centerX");
+			double cym = (double)plat.get("centerY");
+			double wm = (double)plat.get("imageSizeWidth");
+			double hm = (double)plat.get("imageSizeHeight");
+					
+			this.plats.put(this.ticket, new Platform(path, cxm, cym, wm, hm));
+			
+			// Update ticket
+			this.ticket++;
+		}
 	}
 	
 	public JSONArray getCharList() {
@@ -276,11 +378,18 @@ public class LevelManager {
 		
 	}
 	
-	public JSONArray getFGList() {
-		JSONArray list = new JSONArray();
+	public void makeCharList() {
 		
-		// TODO: Then foreground objects.
-		return null;
+	}
+	
+	public JSONArray getFGList() {
+		JSONArray list = new JSONArray();		
+		fg.forEach((foregroundObj) -> list.add(foregroundObj.getJSON()));
+		return list;
+		
+	}
+	
+	public void makeFGList() {
 		
 	}
 

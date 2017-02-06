@@ -45,27 +45,31 @@ public class ControlWindow extends JFrame {
 		setBounds(100, 100, 450, 300);		
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		
-		JPanel pnlResize = new JPanel();				
+		JPanel pnlResize = new JPanel();			
+		pnlResize.setLayout(new BoxLayout(pnlResize, BoxLayout.Y_AXIS));
 		getContentPane().add(pnlResize, BorderLayout.WEST);
 		
 		JLabel lblTitleLabel = new JLabel("<html><b>Game Window Size</b></html>");
 		pnlResize.add(lblTitleLabel);
 		
-		JLabel lblHeight = new JLabel("Height (m):");
-		pnlResize.add(lblHeight);
-		
-		txtHeight = new JTextField();
-		txtHeight.setText("4");
-		pnlResize.add(txtHeight);
-		txtHeight.setColumns(10);
+		JPanel pnlRControls = new JPanel();
+		pnlResize.add(pnlRControls);
 		
 		JLabel lblWidth = new JLabel("Width (m):");
-		pnlResize.add(lblWidth);
+		pnlRControls.add(lblWidth);
 		
 		txtWidth = new JTextField();
-		txtWidth.setText("7");
-		pnlResize.add(txtWidth);
+		pnlRControls.add(txtWidth);
+		txtWidth.setText("13");
 		txtWidth.setColumns(10);					
+		
+		JLabel lblHeight = new JLabel("Height (m):");
+		pnlRControls.add(lblHeight);
+		
+		txtHeight = new JTextField();
+		pnlRControls.add(txtHeight);
+		txtHeight.setText("6");
+		txtHeight.setColumns(10);
 		
 		// Background panel		
 		JPanel pnlBackground = new JPanel();
@@ -143,7 +147,7 @@ public class ControlWindow extends JFrame {
 		
 		ImageIcon iiPedestal = new ImageIcon("assets/PedestalThumbnail.png");				
 		ImageIcon iiRock1 = new ImageIcon("assets/Rock1Thumbnail.png");				
-		ImageIcon iiRock2 = new ImageIcon("assets/Rock2Thumbnail");	
+		ImageIcon iiRock2 = new ImageIcon("assets/Rock2Thumbnail.png");	
 		
 		// Platform panel - toggle buttons
 		ButtonGroup platToggleGroup = new ButtonGroup();														
@@ -157,18 +161,18 @@ public class ControlWindow extends JFrame {
 		tglBtnPedestal.setIcon(iiPedestal);
 		pnlPlatGrid.add(tglBtnPedestal);
 		platToggleGroup.add(tglBtnPedestal);
-		pnlPlatform.add(tglBtnPedestal);
+		// pnlPlatform.add(tglBtnPedestal);
 		
 		JToggleButton tglBtnRock1 = new JToggleButton("Rock1");
 		tglBtnRock1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/Rockl.png");
+				ctlAdapter.makePlatform("assets/Rock1.png");
 			}
 		});
 		tglBtnRock1.setIcon(iiRock1);
 		pnlPlatGrid.add(tglBtnRock1);
 		platToggleGroup.add(tglBtnRock1);
-		pnlPlatform.add(tglBtnRock1);
+		// pnlPlatform.add(tglBtnRock1);
 		
 		JToggleButton tglBtnRock2 = new JToggleButton("Rock2");
 		tglBtnRock2.addActionListener(new ActionListener() {
@@ -179,7 +183,7 @@ public class ControlWindow extends JFrame {
 		tglBtnRock2.setIcon(iiRock2);
 		pnlPlatGrid.add(tglBtnRock2);
 		platToggleGroup.add(tglBtnRock2);
-		pnlPlatform.add(tglBtnRock2);		
+		// pnlPlatform.add(tglBtnRock2);		
 		
 		// Resize
 		

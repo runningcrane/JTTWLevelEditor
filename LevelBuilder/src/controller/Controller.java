@@ -82,10 +82,15 @@ public class Controller {
 			}
 
 			@Override
-			public JSONObject makeJSON() {
-				return level.makeJSON();
+			public JSONObject makeJSON(String levelName) {
+				return level.makeJSON(levelName);
 			}
 
+			@Override
+			public void readJSON(String levelPath) {
+				level.readJSON(levelPath);				
+			}
+			
 			@Override
 			public void manualResize(double wp, double hp) {
 				level.manualResize(wp, hp);				
@@ -115,6 +120,11 @@ public class Controller {
 			@Override
 			public void makePlatform(String path) {
 				outputWindow.setActive(path);				
+			}
+
+			@Override
+			public void setLevelName(String levelName) {
+				outputWindow.setLevelName(levelName);				
 			}		
 			
 		}, new ILevelToLayerAdapter() {

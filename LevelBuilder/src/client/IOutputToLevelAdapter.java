@@ -16,9 +16,16 @@ public interface IOutputToLevelAdapter {
 	
 	/**
 	 * Request JSON form of level.
+	 * @param levelName name of the level
 	 * @return JSON representation of the level
 	 */
-	public JSONObject makeJSON();
+	public JSONObject makeJSON(String levelName);
+	
+	/**
+	 * Recreate a level from its JSON.
+	 * @param levelName path of the level's JSON
+	 */
+	public void readJSON(String levelPath);
 	
 	/**
 	 * Update the imagery on the screen due to a manual resize by user.

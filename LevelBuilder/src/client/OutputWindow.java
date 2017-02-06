@@ -32,16 +32,20 @@ public class OutputWindow extends JFrame {
 	private JPanel pnlContent;
 	private IOutputToLevelAdapter otlAdapter;
 	private JTextField txtJsonOutputPath;
-	private JTextField txtPath;
+	private JTextField txtOutputPath;
+	private JLabel lblCurLevel;
 	
 	private boolean makeNew;
+	private boolean editOld;
 	private String newPath;
+	private JTextField txtInputPath;
 
 	/**
 	 * Create the frame.
 	 */
 	public OutputWindow(IOutputToLevelAdapter otlAdapter) {	
 		this.makeNew = false;
+		this.editOld = false;
 		this.otlAdapter = otlAdapter;				
 		initGUI();
 		
@@ -58,8 +62,8 @@ public class OutputWindow extends JFrame {
 	
 	public void initGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		setLayout(new BorderLayout());
+		setBounds(100, 100, 600, 300);
+		getContentPane().setLayout(new BorderLayout());
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -69,13 +73,13 @@ public class OutputWindow extends JFrame {
 		JPanel pnlControls = new JPanel();
 		getContentPane().add(pnlControls, BorderLayout.NORTH);
 		
-		JLabel lblPath = new JLabel("JSON Output Path");
-		pnlControls.add(lblPath);
+		JLabel lblOutputPath = new JLabel("JSON Output Path");
+		pnlControls.add(lblOutputPath);
 		
-		txtPath = new JTextField();
-		txtPath.setText("level.json");
-		pnlControls.add(txtPath);
-		txtPath.setColumns(10);
+		txtOutputPath = new JTextField();
+		txtOutputPath.setText("level.json");
+		pnlControls.add(txtOutputPath);
+		txtOutputPath.setColumns(10);
 		
 		JButton btnMakeJSON = new JButton("Output JSON");
 		btnMakeJSON.addActionListener(new ActionListener() {
@@ -85,8 +89,8 @@ public class OutputWindow extends JFrame {
 				 */
 				FileWriter file;
 				try {
-					file = new FileWriter(txtPath.getText());
-					file.write(otlAdapter.makeJSON().toJSONString());
+					file = new FileWriter(txtOutputPath.getText());
+					file.write(otlAdapter.makeJSON(txtOutputPath.getText().substring(0, txtOutputPath.getText().length() - 5)).toJSONString());
 					file.flush();
 					file.close();
 					System.out.println("Output JSON written to bin root");
@@ -96,6 +100,25 @@ public class OutputWindow extends JFrame {
 			}
 		});
 		pnlControls.add(btnMakeJSON);
+		
+		lblCurLevel = new JLabel("<html><b><u>New Level</u></b></html>");
+		pnlControls.add(lblCurLevel);
+		
+		JLabel lblLoadPath = new JLabel("Level Path");
+		pnlControls.add(lblLoadPath);
+		
+		txtInputPath = new JTextField();
+		txtInputPath.setText("level.json");
+		pnlControls.add(txtInputPath);
+		txtInputPath.setColumns(10);
+		JButton btnReadJSON = new JButton("Load Level");
+		btnReadJSON.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				otlAdapter.readJSON(txtInputPath.getText());
+			}
+		});
+				
+		pnlControls.add(btnReadJSON);
 		
 		pnlContent = new JPanel() {
 			/**
@@ -115,7 +138,7 @@ public class OutputWindow extends JFrame {
 				if (makeNew) {
 				    int xp = e.getX();
 				    int yp = e.getY();
-				    // I am not sure what the coordinate system is, though.
+				    System.out.println("Requesting center point " + xp + ", " + yp + "; pixels.");
 				    
 				    // Pop up dialog here to get the expected width in meters
 				    String width = JOptionPane.showInputDialog(null, "Input width of the image (meters)");
@@ -146,9 +169,16 @@ public class OutputWindow extends JFrame {
 				    	hm = 2;
 				    	numbe.printStackTrace();
 				    }				    
-				    
+				    				   
 				    // Pop up dialog box to make collision box.				    
 				    otlAdapter.makePlatform(newPath, xp, yp, wm, hm);
+				    
+				} else if (editOld) {
+					int xp = e.getX();
+				    int yp = e.getY();
+				    System.out.println("Requesting center point " + xp + ", " + yp + "; pixels.");
+				    // TODO: Put back in when LayerWindow is up and working.
+					// otlAdapter.editCenter(xp, yp);
 				}
 			}
 
@@ -208,6 +238,10 @@ public class OutputWindow extends JFrame {
 	public void setActive(String path) {
 		this.makeNew = true;
 		this.newPath = path;
+	}
+	
+	public void setLevelName(String name) {
+		lblCurLevel.setText(name);
 	}
 
 }
