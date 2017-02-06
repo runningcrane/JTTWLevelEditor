@@ -98,7 +98,7 @@ public class Controller {
 
 			@Override
 			public void makePlatform(String path, double xp, double yp, double wm, double hm) {
-				level.makePlatform(path, xp, yp, wm, hm);				
+				level.makePlatform(path, xp, yp, wm, hm, null);				
 			}
 			
 		});

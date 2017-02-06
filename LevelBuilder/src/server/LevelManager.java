@@ -225,8 +225,18 @@ public class LevelManager {
 	 * @param wm expected width in in-game meters
 	 * @param hm expected height in in-game meters
 	 */
-	public void makePlatform(String path, double xp, double yp, double wm, double hm) {
-		Platform platform = new Platform(path, xp / this.mToPixel, yp / this.mToPixel, wm, hm);						
+	public void makePlatform(String path, double xp, double yp, double wm, double hm,
+			ArrayList<Point2D.Double> points) {
+		Platform platform;
+		
+		// Are we making a new platform, or is this a platform that already has a collision box?
+		if (points == null) {
+			platform = new Platform(path, xp / this.mToPixel, yp / this.mToPixel, wm, hm, false);
+		} else {
+			platform = new Platform(path, xp / this.mToPixel, yp / this.mToPixel, wm, hm, true);
+			platform.setCollisionBox(points);
+		}
+		
 		BufferedImage image;
 		try {
 			image = ImageIO.read(new File(path));
@@ -355,6 +365,9 @@ public class LevelManager {
 		// Now, reset ticket
 		this.ticket = 1;
 		
+		// Collision box array
+		ArrayList<Point2D.Double> points = new ArrayList<Point2D.Double>();
+		
 		for (Object obj : list) {
 			JSONObject plat = (JSONObject) obj;
 			// Further parsing here
@@ -363,8 +376,15 @@ public class LevelManager {
 			double cym = (double)plat.get("centerY");
 			double wm = (double)plat.get("imageSizeWidth");
 			double hm = (double)plat.get("imageSizeHeight");
+			JSONArray collisionPoints = (JSONArray)plat.get("collisionPoints");
 			
-			makePlatform(path, cxm * this.mToPixel, cym * this.mToPixel, wm, hm);
+			// Get the points out of the array
+			for (Object p : collisionPoints) {
+				JSONObject point = (JSONObject) p;
+				points.add(new Point2D.Double((double)point.get("x"), (double)point.get("y")));
+			}
+			
+			makePlatform(path, cxm * this.mToPixel, cym * this.mToPixel, wm, hm, points);
 								
 		}
 	}

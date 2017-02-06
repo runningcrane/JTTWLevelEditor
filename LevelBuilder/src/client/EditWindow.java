@@ -12,9 +12,11 @@ import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class EditWindow extends JPanel {
@@ -84,5 +86,5 @@ public class EditWindow extends JPanel {
 
 	public void start() {
 		setVisible(true);
-	}
+	}	
 }

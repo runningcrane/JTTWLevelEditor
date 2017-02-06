@@ -223,4 +223,8 @@ public class CollisionWindow extends JFrame {
 		this.setVisible(false);
 		return correctedPoints;
 	}
+	
+	public void startWithPoints(ArrayList<Point2D.Double> points) {
+		this.points = points;
+	}
 }

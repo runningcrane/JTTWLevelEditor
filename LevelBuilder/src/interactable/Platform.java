@@ -22,15 +22,25 @@ public class Platform extends AInteractable {
 	private ImageIcon rescaledImage;
 	
 	public Platform (String path, double cxm, double cym,
-			double wm, double hm) {
+			double wm, double hm, boolean loadedBox) {
 		this.setPath(path);
 		this.setCenterXm(cxm);
 		this.setCenterYm(cym);
 		System.out.println("Setting platform center to " + cxm + ", " + cym + "; meters");
 		this.setInGameWidth(wm);
-		this.setInGameHeight(hm);		
+		this.setInGameHeight(hm);
+		
 		this.settings = new CollisionWindow (path, wm, hm, cxm, cym);
-		this.settings.start();
+		
+		if (!loadedBox) {
+			this.settings.start();
+		}
+	}
+	
+	
+	public void setCollisionBox(ArrayList<Point2D.Double> points) {
+		this.setCollisionPoints(points);
+		this.settings.startWithPoints(points);
 	}
 	
 	public BufferedImage getImage() {
