@@ -280,14 +280,17 @@ public class LevelManager {
 	 * @param levelName name of the level
 	 * @return JSON to be outputted 
 	 */
-	public JSONObject makeJSON(String levelName) {
+	public JSONObject makeJSON(String levelName, boolean polygon) {
+		System.out.println("Writing with collision = " + polygon);
 		JSONObject json = new JSONObject();
-		JSONArray platList = getPlatList();
+		JSONArray platList = getPlatList(polygon);
 		json.put("levelName", levelName);
-		json.put("background", this.bg.anticipatedJSON());
-		json.put("platforms", platList);		
+		json.put("background", this.bg.getJSON());		
+		json.put("platforms", platList);
+		json.put("polygonCollision", polygon);
 		return json;
 	}
+
 	
 	/**
 	 * Reads in a level from its JSON.	 
@@ -320,8 +323,12 @@ public class LevelManager {
 		JSONObject bg = (JSONObject) level.get("background");
 		makeBackground(bg);
 		
+		JSONObject polyobj = (JSONObject) obj;
+		Boolean polygon = (Boolean) level.get("polygonCollision");
+		System.out.println("Collision: " + polygon);
+		
 		JSONArray plats = (JSONArray) level.get("platforms");
-		makePlatList(plats);
+		makePlatList(plats, polygon);
 		
 		// Reset LevelManager, etc variables
 		
@@ -334,8 +341,8 @@ public class LevelManager {
 	
 	public void makeBackground(JSONObject bg) {
 		String imageName = (String)bg.get("imageName");
-		double levelWidth = (double)bg.get("levelWidth");
-		double levelHeight = (double)bg.get("levelHeight");
+		double levelWidth = (double)bg.get("width");
+		double levelHeight = (double)bg.get("height");
 		
 		// Set wm, hm.
 		this.wm = levelWidth;
@@ -349,16 +356,18 @@ public class LevelManager {
 		System.out.println("Dimensions set to " + this.wm + "x" + this.hm);
 	}
 	
-	public JSONArray getPlatList() {
+	public JSONArray getPlatList(boolean polygon) {
 		JSONArray list = new JSONArray();		
 		
 		// Add all present platforms	
-		plats.forEach((number, platform) -> list.add(platform.getJSON()));	
+		plats.forEach((number, platform) -> {
+			list.add(platform.getJSON(polygon));			
+		});	
 		
 		return list;
 	}
 	
-	public void makePlatList(JSONArray list) {
+	public void makePlatList(JSONArray list, boolean polygon) {
 		// First, empty any platforms that might've existed
 		this.plats.clear();
 		
@@ -376,12 +385,23 @@ public class LevelManager {
 			double cym = (double)plat.get("centerY");
 			double wm = (double)plat.get("imageSizeWidth");
 			double hm = (double)plat.get("imageSizeHeight");
-			JSONArray collisionPoints = (JSONArray)plat.get("collisionPoints");
 			
-			// Get the points out of the array
-			for (Object p : collisionPoints) {
-				JSONObject point = (JSONObject) p;
-				points.add(new Point2D.Double((double)point.get("x"), (double)point.get("y")));
+			if (polygon) {
+				JSONArray collisionPoints = (JSONArray)plat.get("collisionPoints");
+				
+				// Get the points out of the array
+				for (Object p : collisionPoints) {
+					JSONObject point = (JSONObject) p;
+					points.add(new Point2D.Double((double)point.get("x"), (double)point.get("y")));
+				}
+			} else {
+				// Box collision; make two points based onthe width and height.
+				double collisionWidth = (double)plat.get("collisionWidth");
+				double collisionHeight = (double)plat.get("collisionHeight");
+				points.add(new Point2D.Double(cxm * this.mToPixel - 0.5 * collisionWidth * this.mToPixel,
+						cym * this.mToPixel - 0.5 * collisionHeight * this.mToPixel));
+				points.add(new Point2D.Double(cxm * this.mToPixel + 0.5 * collisionWidth * this.mToPixel,
+						cym * this.mToPixel + 0.5 * collisionHeight * this.mToPixel));
 			}
 			
 			makePlatform(path, cxm * this.mToPixel, cym * this.mToPixel, wm, hm, points);

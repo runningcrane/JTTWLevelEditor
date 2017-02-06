@@ -83,7 +83,7 @@ public class Controller {
 
 			@Override
 			public JSONObject makeJSON(String levelName) {
-				return level.makeJSON(levelName);
+				return level.makeJSON(levelName, false);
 			}
 
 			@Override

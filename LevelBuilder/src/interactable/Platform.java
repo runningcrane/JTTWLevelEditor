@@ -58,8 +58,8 @@ public class Platform extends AInteractable {
 	public void setRescaled(ImageIcon rescaled) {
 		this.rescaledImage = rescaled;
 	}
-
-	public JSONObject getJSON() {
+	
+	public JSONObject getJSON(boolean polygon) {
 		JSONObject obj = new JSONObject();
 		
 		// Regex out the path to just get the image name.
@@ -85,7 +85,21 @@ public class Platform extends AInteractable {
 			couple.put("y", point.getY());
 			pointsList.add(couple);
 		});		
-		obj.put("collisionPoints", pointsList);		
+		
+		if (polygon) {
+			obj.put("collisionPoints", pointsList);	
+		} else {
+			if (pointsList.size() != 2) {
+				System.err.println("ERROR: two points needed for bounded box");
+			} else {
+				Point2D.Double p1 = points.get(0);
+				Point2D.Double p2 = points.get(1);
+				double width = Math.abs(p1.getX() - p2.getX()); 
+				double height = Math.abs(p1.getY() - p2.getY());
+				obj.put("collisionWidth", width);
+				obj.put("collisionHeight", height);
+			}
+		}
 		
 		return obj;
 	}

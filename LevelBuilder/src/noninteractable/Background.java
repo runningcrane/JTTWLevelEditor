@@ -43,34 +43,10 @@ public class Background extends ANonInteractable {
 		this.setCenterXm(wm/2);
 		this.setInGameHeight(hm);
 		this.setCenterYm(hm/2);
-	}
-	
-	@SuppressWarnings("unchecked") // Assuming we are using JSON correctly here.
-	@Override
-	public JSONObject getJSON() {
-		JSONObject obj = new JSONObject();
-		
-		// Regex out the path to just get the image name.
-		System.out.println("path: " + this.getPath());
-		Pattern endOfPath = Pattern.compile("[\\w\\s]+\\.png|\\.jpg");
-		Matcher m = endOfPath.matcher(this.getPath());
-		String imageName;
-		imageName = m.find() ? m.group() : "MATCHING ERROR";
-		System.out.println("image name: " + imageName);
-		
-		obj.put("imageName", imageName);
-		obj.put("centerX", this.getCenterXm());
-		obj.put("centerY", this.getCenterYm());
-		obj.put("imageSizeWidth", this.getInGameWidth());
-		obj.put("imageSizeHeight", this.getInGameHeight());
-		obj.put("collisionWidth", 0);
-		obj.put("collisionHeight", 0);	
-		
-		return obj;
-	}
+	}	
 	
 	@SuppressWarnings("unchecked")
-	public JSONObject anticipatedJSON() {
+	public JSONObject getJSON() {
 		// TODO: Regex out the assets/blahblah/image.png in JSON
 		JSONObject obj = new JSONObject();
 		
@@ -85,8 +61,8 @@ public class Background extends ANonInteractable {
 		obj.put("imageName", imageName);
 		obj.put("centerX", this.getCenterXm());
 		obj.put("centerY", this.getCenterYm());
-		obj.put("levelWidth", this.getInGameWidth());
-		obj.put("levelHeight", this.getInGameHeight());
+		obj.put("width", this.getInGameWidth());
+		obj.put("height", this.getInGameHeight());
 		return obj;
 	}
 
