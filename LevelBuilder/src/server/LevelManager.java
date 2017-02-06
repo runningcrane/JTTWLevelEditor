@@ -328,14 +328,15 @@ public class LevelManager {
 		double levelHeight = (double)bg.get("levelHeight");
 		
 		// Set wm, hm.
-		this.wm = levelWidth / this.mToPixel;
-		this.hm = levelHeight / this.mToPixel;
+		this.wm = levelWidth;
+		this.hm = levelHeight;
 		
 		// Set the background.
 		setBg("assets/" + imageName);
 		
 		// Set the dimensions.
 		setLevelDimensions(this.wm, this.hm);
+		System.out.println("Dimensions set to " + this.wm + "x" + this.hm);
 	}
 	
 	public JSONArray getPlatList() {
@@ -362,11 +363,9 @@ public class LevelManager {
 			double cym = (double)plat.get("centerY");
 			double wm = (double)plat.get("imageSizeWidth");
 			double hm = (double)plat.get("imageSizeHeight");
-					
-			this.plats.put(this.ticket, new Platform(path, cxm, cym, wm, hm));
 			
-			// Update ticket
-			this.ticket++;
+			makePlatform(path, cxm * this.mToPixel, cym * this.mToPixel, wm, hm);
+								
 		}
 	}
 	
