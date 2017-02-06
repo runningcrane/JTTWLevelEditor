@@ -60,6 +60,11 @@ public class LevelManager {
 	 */
 	private Map<Integer, Platform> plats;
 	
+	/**
+	 * Character array.
+	 */
+	private Map<String, Point2D.Double> charLocs; 
+	
 	private int ticket;
 	
 	/**
@@ -284,10 +289,13 @@ public class LevelManager {
 		System.out.println("Writing with collision = " + polygon);
 		JSONObject json = new JSONObject();
 		JSONArray platList = getPlatList(polygon);
+		//JSONObject charLocs = getCharLocs(this.charLocs);
+		
 		json.put("levelName", levelName);
 		json.put("background", this.bg.getJSON());		
 		json.put("platforms", platList);
 		json.put("polygonCollision", polygon);
+		//json.put("charactersStart", charLocs);
 		return json;
 	}
 
@@ -323,7 +331,6 @@ public class LevelManager {
 		JSONObject bg = (JSONObject) level.get("background");
 		makeBackground(bg);
 		
-		JSONObject polyobj = (JSONObject) obj;
 		Boolean polygon = (Boolean) level.get("polygonCollision");
 		System.out.println("Collision: " + polygon);
 		
@@ -395,7 +402,7 @@ public class LevelManager {
 					points.add(new Point2D.Double((double)point.get("x"), (double)point.get("y")));
 				}
 			} else {
-				// Box collision; make two points based onthe width and height.
+				// Box collision; make two points based on the width and height.
 				double collisionWidth = (double)plat.get("collisionWidth");
 				double collisionHeight = (double)plat.get("collisionHeight");
 				points.add(new Point2D.Double(cxm * this.mToPixel - 0.5 * collisionWidth * this.mToPixel,

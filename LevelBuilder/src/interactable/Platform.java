@@ -75,6 +75,7 @@ public class Platform extends AInteractable {
 		obj.put("centerY", this.getCenterYm());
 		obj.put("imageSizeWidth", this.getInGameWidth());
 		obj.put("imageSizeHeight", this.getInGameHeight());
+		obj.put("moveable", false); // TODO: This will change when moveability is implemented. 
 		
 		// Replace the below with collision points.
 		JSONArray pointsList = new JSONArray();

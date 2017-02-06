@@ -125,7 +125,65 @@ public class ControlWindow extends JFrame {
 		// Player panel
 		
 		JPanel pnlPlayer = new JPanel();
-		getContentPane().add(pnlPlayer, BorderLayout.SOUTH);
+		pnlPlayer.setLayout(new BoxLayout(pnlPlayer, BoxLayout.Y_AXIS));
+		
+		getContentPane().add(pnlPlayer, BorderLayout.SOUTH);		
+		
+		JLabel lblPlayer = new JLabel("<html><b>Players</b></html>");
+		pnlPlayer.add(lblPlayer);
+		
+		// Player panel - icons
+		JPanel pnlCharGrid = new JPanel();
+		pnlCharGrid.setLayout(new GridLayout(2,2));
+		pnlPlayer.add(pnlCharGrid);
+		
+		ImageIcon iiMonkey = new ImageIcon("assets/MonkeyThumbnail.png");				
+		ImageIcon iiMonk = new ImageIcon("assets/MonkThumbnail.png");				
+		ImageIcon iiPig = new ImageIcon("assets/PigThumbnail.png");	
+		ImageIcon iiSandy = new ImageIcon("assets/SandyThumbnail.png");
+		
+		// Player panel - toggle buttons
+		ButtonGroup charToggleGroup = new ButtonGroup();														
+				
+		JToggleButton tglMonkey = new JToggleButton("Monkey");
+		tglMonkey.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {				
+				ctlAdapter.setCharacter(tglMonkey.isSelected());
+			}
+		});
+		tglMonkey.setIcon(iiMonkey);
+		pnlCharGrid.add(tglMonkey);
+		charToggleGroup.add(tglMonkey);
+		
+		JToggleButton tglMonk = new JToggleButton("Monk");
+		tglMonk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.setCharacter(tglMonk.isSelected());
+			}
+		});
+		tglMonk.setIcon(iiMonk);
+		pnlCharGrid.add(tglMonk);
+		charToggleGroup.add(tglMonk);
+		
+		JToggleButton tglPig = new JToggleButton("Pig");
+		tglPig.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.setCharacter(tglPig.isSelected());
+			}
+		});
+		tglPig.setIcon(iiPig);
+		pnlCharGrid.add(tglPig);
+		charToggleGroup.add(tglPig);
+		
+		JToggleButton tglSandy = new JToggleButton("Sandy");
+		tglSandy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.setCharacter(tglSandy.isSelected());
+			}
+		});
+		tglSandy.setIcon(iiSandy);
+		pnlCharGrid.add(tglSandy);
+		charToggleGroup.add(tglSandy);
 		
 		JPanel pnlForeground = new JPanel();
 		getContentPane().add(pnlForeground, BorderLayout.EAST);
@@ -134,6 +192,7 @@ public class ControlWindow extends JFrame {
 		// Platforms
 		
 		JPanel pnlPlatform = new JPanel();
+		pnlPlatform.setLayout(new BoxLayout(pnlPlatform, BoxLayout.Y_AXIS));
 		getContentPane().add(pnlPlatform);
 		
 		JLabel lblPlatform = new JLabel("<html><b>Platforms</b></html>");
@@ -160,8 +219,7 @@ public class ControlWindow extends JFrame {
 		});
 		tglBtnPedestal.setIcon(iiPedestal);
 		pnlPlatGrid.add(tglBtnPedestal);
-		platToggleGroup.add(tglBtnPedestal);
-		// pnlPlatform.add(tglBtnPedestal);
+		platToggleGroup.add(tglBtnPedestal); 
 		
 		JToggleButton tglBtnRock1 = new JToggleButton("Rock1");
 		tglBtnRock1.addActionListener(new ActionListener() {
@@ -172,7 +230,6 @@ public class ControlWindow extends JFrame {
 		tglBtnRock1.setIcon(iiRock1);
 		pnlPlatGrid.add(tglBtnRock1);
 		platToggleGroup.add(tglBtnRock1);
-		// pnlPlatform.add(tglBtnRock1);
 		
 		JToggleButton tglBtnRock2 = new JToggleButton("Rock2");
 		tglBtnRock2.addActionListener(new ActionListener() {
@@ -182,8 +239,7 @@ public class ControlWindow extends JFrame {
 		});
 		tglBtnRock2.setIcon(iiRock2);
 		pnlPlatGrid.add(tglBtnRock2);
-		platToggleGroup.add(tglBtnRock2);
-		// pnlPlatform.add(tglBtnRock2);		
+		platToggleGroup.add(tglBtnRock2);	
 		
 		// Resize
 		
