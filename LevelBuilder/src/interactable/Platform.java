@@ -21,6 +21,15 @@ public class Platform extends AInteractable {
 	private BufferedImage image;
 	private ImageIcon rescaledImage;
 	
+	/**
+	 * 
+	 * @param path path to image
+	 * @param cxm in COCOS coordinates
+	 * @param cym in COCOS coordinates
+	 * @param wm width (in meters)
+	 * @param hm height (in meters)
+	 * @param loadedBox there exists a pre-loaded collision box
+	 */
 	public Platform (String path, double cxm, double cym,
 			double wm, double hm, boolean loadedBox) {
 		this.setPath(path);

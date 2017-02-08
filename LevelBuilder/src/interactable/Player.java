@@ -34,6 +34,11 @@ public class Player extends Character {
 		this.present = present;		
 	}
 	
+	/**
+	 * 
+	 * @param cxm in COCOS coordinates
+	 * @param cym in COCOS coordinates
+	 */
 	public void setCenter(double cxm, double cym) {
 		this.setCenterXm(cxm);
 		this.setCenterYm(cym);

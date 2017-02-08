@@ -189,7 +189,8 @@ public class LevelManager {
 			 * Since CenterXm/CenterYm are in swing-orientation, reverse the ys to get them in cocos.
 			 */
 			int cxm = (int)((plat.getCenterXm() - plat.getInGameWidth()/2) * this.mToPixel);
-			int cym = (int)((plat.getCenterYm() - plat.getInGameHeight()/2) * this.mToPixel);
+			// the .cym of the platform is in cocos coordinates. Do this.hm - in order to get swing coordinates.
+			int cym = (int)(this.hm - (plat.getCenterYm() - plat.getInGameHeight()/2) * this.mToPixel);
 			System.out.println("Upper left position: " + cxm + ", " + cym + ";m");
 			
 			g.drawImage(plat.getRescaled().getImage(), cxm, cym, null);
@@ -267,9 +268,9 @@ public class LevelManager {
 		
 		// Are we making a new platform, or is this a platform that already has a collision box?
 		if (points == null) {
-			platform = new Platform(path, xp / this.mToPixel, yp / this.mToPixel, wm, hm, false);
+			platform = new Platform(path, xp / this.mToPixel, this.hm - yp / this.mToPixel, wm, hm, false);
 		} else {
-			platform = new Platform(path, xp / this.mToPixel, yp / this.mToPixel, wm, hm, true);
+			platform = new Platform(path, xp / this.mToPixel, this.hm - yp / this.mToPixel, wm, hm, true);
 			platform.setCollisionBox(points);
 		}
 		
