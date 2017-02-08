@@ -73,7 +73,7 @@ public abstract class AInteractable {
 	 * Set the center X position on level in terms of meters.
 	 * @param xm center X pos on level in terms of meters; 0 is the left boundary
 	 */
-	protected void setCenterXm(double xm) {
+	public void setCenterXm(double xm) {
 		this.centerXm = xm;
 	}
 	
@@ -89,7 +89,7 @@ public abstract class AInteractable {
 	 * Set the center Y position on level in terms of meters.
 	 * @param ym center Y pos on level in terms of meters; 0 is the south boundary
 	 */
-	protected void setCenterYm(double y) {
+	public void setCenterYm(double y) {
 		this.centerYm = y;
 	}	
 	

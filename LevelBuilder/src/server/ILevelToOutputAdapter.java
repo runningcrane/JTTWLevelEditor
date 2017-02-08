@@ -25,5 +25,11 @@ public interface ILevelToOutputAdapter {
 	 * @param levelName name of the level loaded in
 	 */
 	public void setLevelName(String levelName);
+	
+	/**
+	 * Character name to edit position of. 
+	 * @param playerName name of the player to edit
+	 */
+	public void setCharPos(String playerName);
 
 }

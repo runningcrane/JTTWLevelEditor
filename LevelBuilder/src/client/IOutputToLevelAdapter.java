@@ -44,4 +44,12 @@ public interface IOutputToLevelAdapter {
 	 */
 	public void makePlatform(String path, double xp, double yp, double wm, double hm);
 	
+	/**
+	 * Update a character's position.
+	 * @param name name of character to edit
+	 * @param xp x position in pixels
+	 * @param yp y position in pixels
+	 */
+	public void setPlayerPosition(String name, double xp, double yp);
+	
 }

@@ -100,6 +100,11 @@ public class Controller {
 			public void makePlatform(String path, double xp, double yp, double wm, double hm) {
 				level.makePlatform(path, xp, yp, wm, hm, null);				
 			}
+
+			@Override
+			public void setPlayerPosition(String name, double xp, double yp) {
+				level.setPlayerPosition(name, xp, yp);
+			}
 			
 		});
 		
@@ -121,10 +126,15 @@ public class Controller {
 			public void makePlatform(String path) {
 				outputWindow.setActive(path);				
 			}
-
+			
 			@Override
 			public void setLevelName(String levelName) {
 				outputWindow.setLevelName(levelName);				
+			}
+
+			@Override
+			public void setCharPos(String playerName) {
+				outputWindow.setCharPos(playerName);				
 			}		
 			
 		}, new ILevelToLayerAdapter() {

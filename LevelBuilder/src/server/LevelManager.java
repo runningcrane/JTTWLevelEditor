@@ -28,6 +28,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import interactable.Platform;
+import interactable.Player;
 import noninteractable.Background;
 import noninteractable.INonInteractable;
 
@@ -63,7 +64,7 @@ public class LevelManager {
 	/**
 	 * Character array.
 	 */
-	private Map<String, Point2D.Double> charLocs; 
+	private Map<String, Player> players; 
 	
 	private int ticket;
 	
@@ -124,6 +125,23 @@ public class LevelManager {
 		// Instantiate various lists.
 		this.plats = new HashMap<Integer, Platform>();
 		this.fg = new ArrayList<INonInteractable>();
+		
+		// Set up the players.
+		players = new HashMap<String, Player>();
+		
+		// String path, String name, double cxm, double cym, boolean present
+		
+		Player monkey = new Player(null, "Monkey", 0, 0, false);		
+		players.put("Monkey", monkey);
+
+		Player monk = new Player(null, "Monk", 0, 0, false);		
+		players.put("Monk", monk);
+		
+		Player pig = new Player(null, "Piggy", 0, 0, false);		
+		players.put("Piggy", pig);
+		
+		Player sandy = new Player(null, "Sandy", 0, 0, false);	
+		players.put("Sandy", sandy);
 	}
 	
 	/**
@@ -162,12 +180,19 @@ public class LevelManager {
 		if (bg.getRescaled() != null)
 			g.drawImage(bg.getRescaled().getImage(), 0, 0, null);
 		
-		// Draw platforms
-		
+		// Draw platforms		
 		plats.forEach((number, plat) -> {
-			// Unfortunately drawImage draws on the top left, not center, so adjustments are made.			
-			g.drawImage(plat.getRescaled().getImage(), (int)((plat.getCenterXm() - plat.getInGameWidth()/2) * this.mToPixel),
-					(int)((plat.getCenterYm() - plat.getInGameHeight()/2) * this.mToPixel), null);
+			/*
+			 * Unfortunately drawImage draws on the top left, not center, so adjustments are made.
+			 * Also unfortunately, cocos uses a different orientation system than swing. 
+			 * Namely, the y is flipped in direction.			
+			 * Since CenterXm/CenterYm are in swing-orientation, reverse the ys to get them in cocos.
+			 */
+			int cxm = (int)((plat.getCenterXm() - plat.getInGameWidth()/2) * this.mToPixel);
+			int cym = (int)((plat.getCenterYm() - plat.getInGameHeight()/2) * this.mToPixel);
+			System.out.println("Upper left position: " + cxm + ", " + cym + ";m");
+			
+			g.drawImage(plat.getRescaled().getImage(), cxm, cym, null);
 			
 			// Draw the label on top of it. In the center, maybe?
 			g.setColor(Color.MAGENTA);
@@ -177,6 +202,11 @@ public class LevelManager {
 			g.drawString(Integer.toString(number), (int)(plat.getCenterXm() * this.mToPixel + 5), 
 					(int)(plat.getCenterYm() * this.mToPixel + 10));
 		});				
+		
+		// Draw characters
+		for (int i = 0; i < 4; i++) {
+			//this.players[i]
+		}
 	}
 	
 	/**
@@ -233,6 +263,7 @@ public class LevelManager {
 	public void makePlatform(String path, double xp, double yp, double wm, double hm,
 			ArrayList<Point2D.Double> points) {
 		Platform platform;
+		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym appropriately.
 		
 		// Are we making a new platform, or is this a platform that already has a collision box?
 		if (points == null) {
@@ -260,6 +291,12 @@ public class LevelManager {
 		// Let the layer window know a platform has been made
 		
 	}
+	
+	public void setPlayerPosition(String name, double xp, double yp) {
+		System.out.println("Received; setting " + name + " to " + xp / this.mToPixel + ", " + yp / this.mToPixel + "; m");
+		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym.
+		this.players.get(name).setCenter(xp / this.mToPixel, this.hm - yp / this.mToPixel);
+	}
 
 	/**
 	 * Toggle players. 
@@ -268,8 +305,17 @@ public class LevelManager {
 	 * @param status state of existance or not
 	 */
 	public void togglePlayer(String name, boolean status) {
+		if (status) {
+			System.out.println("Setting " + name + " to " + status);
+			this.players.get(name).setPresent(true);
+			
+			ltoAdapter.setCharPos(name);
+		} else {
+			this.players.get(name).setPresent(false);
+		}
 		
 	}
+	
 	
 	/**
 	 * The user wants to add a platform. Tell the output window to request focus,
@@ -289,10 +335,12 @@ public class LevelManager {
 		System.out.println("Writing with collision = " + polygon);
 		JSONObject json = new JSONObject();
 		JSONArray platList = getPlatList(polygon);
+		JSONObject charList = getCharList();
 		//JSONObject charLocs = getCharLocs(this.charLocs);
 		
 		json.put("levelName", levelName);
-		json.put("background", this.bg.getJSON());		
+		json.put("background", this.bg.getJSON());
+		json.put("characters", charList);
 		json.put("platforms", platList);
 		json.put("polygonCollision", polygon);
 		//json.put("charactersStart", charLocs);
@@ -337,7 +385,38 @@ public class LevelManager {
 		JSONArray plats = (JSONArray) level.get("platforms");
 		makePlatList(plats, polygon);
 		
+		JSONObject characters = (JSONObject) level.get("characters");
+		setCharacters(characters);
+		
 		// Reset LevelManager, etc variables
+		
+	}
+	
+	public void setCharacters(JSONObject chars) {
+		// TODO: This could be done in a foreach loop if we used a JSONArray... talk to Bryce
+		JSONObject monkey = (JSONObject)chars.get("Monkey");
+		double cxm = (double)monkey.get("startingXPos");
+		double cym = (double)monkey.get("startingYPos");
+		boolean present = (boolean)monkey.get("present");
+		this.players.replace("Monkey", new Player(null, "Monkey", cxm, cym, present));
+		
+		JSONObject monk = (JSONObject)chars.get("Monk");
+		double monkcxm = (double)monk.get("startingXPos");
+		double monkcym = (double)monk.get("startingYPos");
+		boolean monkpresent = (boolean)monk.get("present");
+		this.players.replace("Monk", new Player(null, "Monk", monkcxm, monkcym, monkpresent));
+		
+		JSONObject pig = (JSONObject)chars.get("Piggy");
+		double pigcxm = (double)pig.get("startingXPos");
+		double pigcym = (double)pig.get("startingYPos");
+		boolean pigpresent = (boolean)pig.get("present");
+		this.players.replace("Piggy", new Player(null, "Pig", pigcxm, pigcym, pigpresent));
+		
+		JSONObject sandy = (JSONObject)chars.get("Sandy");
+		double sandycxm = (double)sandy.get("startingXPos");
+		double sandycym = (double)sandy.get("startingYPos");
+		boolean sandypresent = (boolean)sandy.get("present");
+		this.players.replace("Sandy", new Player(null, "Sandy", sandycxm, sandycym, sandypresent));
 		
 	}
 	
@@ -416,13 +495,16 @@ public class LevelManager {
 		}
 	}
 	
-	public JSONArray getCharList() {
-		JSONArray list = new JSONArray();
+	public JSONObject getCharList() {
+		JSONObject obj = new JSONObject();
 		
-		// TODO: Characters would be next if I had them in.
-		return null;
+		this.players.forEach((name, character) -> {
+			obj.put(name, character.getJSON());
+		});
 		
+		return obj;		
 	}
+	
 	
 	public void makeCharList() {
 		

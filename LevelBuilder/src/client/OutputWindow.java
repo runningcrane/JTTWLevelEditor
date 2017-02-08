@@ -37,6 +37,7 @@ public class OutputWindow extends JFrame {
 	
 	private boolean makeNew;
 	private boolean editOld;
+	private boolean setPlayerStartPos;
 	private String newPath;
 	private JTextField txtInputPath;
 
@@ -46,6 +47,7 @@ public class OutputWindow extends JFrame {
 	public OutputWindow(IOutputToLevelAdapter otlAdapter) {	
 		this.makeNew = false;
 		this.editOld = false;
+		this.setPlayerStartPos = false;
 		this.otlAdapter = otlAdapter;				
 		initGUI();
 		
@@ -173,12 +175,27 @@ public class OutputWindow extends JFrame {
 				    // Pop up dialog box to make collision box.				    
 				    otlAdapter.makePlatform(newPath, xp, yp, wm, hm);
 				    
+				    // No longer need to make a new platform
+				    makeNew = false;
+				    
 				} else if (editOld) {
 					int xp = e.getX();
 				    int yp = e.getY();
 				    System.out.println("Requesting center point " + xp + ", " + yp + "; pixels.");
 				    // TODO: Put back in when LayerWindow is up and working.
 					// otlAdapter.editCenter(xp, yp);
+				    editOld = false;
+				    
+				} else if (setPlayerStartPos) {
+					int xp = e.getX();
+				    int yp = e.getY();
+				    System.out.println("Requesting starting point " + xp + ", " + yp + "; pixels.");
+				    
+				    // Send position to level manager
+				    otlAdapter.setPlayerPosition(newPath, xp, yp);
+				    
+					// No longer need to set position
+					setPlayerStartPos = false;
 				}
 			}
 
@@ -237,7 +254,19 @@ public class OutputWindow extends JFrame {
 	
 	public void setActive(String path) {
 		this.makeNew = true;
+		this.editOld = false;
+		this.setPlayerStartPos = false;
 		this.newPath = path;
+	}
+	
+	public void setCharPos(String name) {		
+		// Ask for the position of the character.
+		System.out.println("Requesting new position for " + name);
+		this.setPlayerStartPos = true;
+		this.makeNew = false;
+		this.editOld = false;	
+		this.newPath = name;
+		
 	}
 	
 	public void setLevelName(String name) {
