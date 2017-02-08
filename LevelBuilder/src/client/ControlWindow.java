@@ -60,7 +60,7 @@ public class ControlWindow extends JFrame {
 		
 		txtWidth = new JTextField();
 		pnlRControls.add(txtWidth);
-		txtWidth.setText("13");
+		txtWidth.setText("8");
 		txtWidth.setColumns(10);					
 		
 		JLabel lblHeight = new JLabel("Height (m):");

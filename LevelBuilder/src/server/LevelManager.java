@@ -187,13 +187,11 @@ public class LevelManager {
 			 * Also unfortunately, cocos uses a different orientation system than swing. 
 			 * Namely, the y is flipped in direction.			
 			 * Since CenterXm/CenterYm are in swing-orientation, reverse the ys to get them in cocos.
-			 */
-			int cxm = (int)((plat.getCenterXm() - plat.getInGameWidth()/2) * this.mToPixel);
-			// the .cym of the platform is in cocos coordinates. Do this.hm - in order to get swing coordinates.
-			int cym = (int)(this.hm - (plat.getCenterYm() - plat.getInGameHeight()/2) * this.mToPixel);
-			System.out.println("Upper left position: " + cxm + ", " + cym + ";m");
+			 */		
+			double ulxp = (plat.getCenterXm() - plat.getInGameWidth()/2.0) * this.mToPixel;
+			double ulyp = ((this.hm - (plat.getCenterYm())) - plat.getInGameHeight() /2.0) * this.mToPixel;				
 			
-			g.drawImage(plat.getRescaled().getImage(), cxm, cym, null);
+			g.drawImage(plat.getRescaled().getImage(), (int)ulxp, (int)ulyp, null);
 			
 			// Draw the label on top of it. In the center, maybe?
 			g.setColor(Color.MAGENTA);
@@ -256,8 +254,8 @@ public class LevelManager {
 	/**
 	 * Makes a new platform object.
 	 * @param path 
-	 * @param xp xpixel location on screen
-	 * @param yp ypixel location on screen
+	 * @param xp xpixel location on screen [swing coordinates]
+	 * @param yp ypixel location on screen [swing coordinates]
 	 * @param wm expected width in in-game meters
 	 * @param hm expected height in in-game meters
 	 */

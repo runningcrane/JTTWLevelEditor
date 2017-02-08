@@ -13,6 +13,14 @@ import client.CollisionWindow;
 public class Player extends Character {
 	private boolean present;
 	
+	/**
+	 * Make a new Player Character.
+	 * @param path path to the imagefile.
+	 * @param name name of character
+	 * @param cxm x position in meters [COCOS coordinates]
+	 * @param cym y position in meters [COCOS coordinates]
+	 * @param present whether the player is part of the level or not
+	 */
 	public Player (String path, String name, double cxm, double cym, boolean present) {		
 		this.setPath(path);		
 		this.setName(name);
