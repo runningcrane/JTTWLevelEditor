@@ -44,7 +44,7 @@ public class LevelManager {
 	private double mToPixel;
 	
 	/**
-	 * Viewport offset.
+	 * Viewport offset (px).
 	 */
 	private Point2D.Double vpOffset;
 	
@@ -352,9 +352,11 @@ public class LevelManager {
 		
 		// Are we making a new platform, or is this a platform that already has a collision box?
 		if (points == null) {
-			platform = new Platform(path, xp / this.mToPixel, this.hm - yp / this.mToPixel, wm, hm, false);
+			platform = new Platform(path, (xp - this.vpOffset.getX())/ this.mToPixel, 
+					this.hm - (yp - this.vpOffset.getY()) / this.mToPixel, wm, hm, false);
 		} else {
-			platform = new Platform(path, xp / this.mToPixel, this.hm - yp / this.mToPixel, wm, hm, true);
+			platform = new Platform(path, (xp - this.vpOffset.getX()) / this.mToPixel, 
+					this.hm - (yp - this.vpOffset.getY()) / this.mToPixel, wm, hm, true);
 			platform.setCollisionBox(points);
 		}
 		
@@ -386,7 +388,8 @@ public class LevelManager {
 	public void setCharacterPosition(String name, double xp, double yp) {
 		System.out.println("Received; setting " + name + " to " + xp / this.mToPixel + ", " + yp / this.mToPixel + "; m");
 		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym.
-		this.characters.get(name).setCenter(xp / this.mToPixel, this.hm - yp / this.mToPixel);
+		this.characters.get(name).setCenter((xp - this.vpOffset.getX()) / this.mToPixel,
+				this.hm - (yp - this.vpOffset.getY()) / this.mToPixel);
 	}
 
 	/**
