@@ -24,8 +24,8 @@ public class Platform extends AInteractable {
 	/**
 	 * 
 	 * @param path path to image
-	 * @param cxm in COCOS coordinates
-	 * @param cym in COCOS coordinates
+	 * @param cxm in COCOS coordinates [m]
+	 * @param cym in COCOS coordinates [m]
 	 * @param wm width (in meters)
 	 * @param hm height (in meters)
 	 * @param loadedBox there exists a pre-loaded collision box
@@ -50,6 +50,16 @@ public class Platform extends AInteractable {
 	public void setCollisionBox(ArrayList<Point2D.Double> points) {
 		this.setCollisionPoints(points);
 		this.settings.startWithPoints(points);
+	}
+	
+	/**
+	 * Manually change the center of the platform.
+	 * @param cxm in COCOS coordinates [m]
+	 * @param cym in COCOS coordinates [m]
+	 */
+	public void setCenter(double cxm, double cym) {
+		this.setCenterXm(cxm);
+		this.setCenterYm(cym);
 	}
 	
 	public BufferedImage getImage() {

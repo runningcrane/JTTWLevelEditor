@@ -77,6 +77,21 @@ public class Controller {
 		
 		layerWindow = new LayerWindow(new ILayerToLevelAdapter() {
 
+			@Override
+			public void editPlatCenter(int ticket) {
+				level.editPlatCenter(ticket);				
+			}
+
+			@Override
+			public void editPlatCollisionBox(int ticket) {
+				level.editPlatCollisionBox(ticket);				
+			}
+
+			@Override
+			public void removePlat(int ticket) {
+				level.removePlat(ticket);				
+			}
+
 			
 		});
 		
@@ -115,6 +130,12 @@ public class Controller {
 			public void changeOffset(double xm, double ym) {
 				level.changeOffset(xm, ym);				
 			}
+
+			@Override
+			public void editPlatCenter(int ticket, double xp, double yp) {
+				level.editPlatCenterRes(ticket, xp, yp);
+				
+			}
 			
 		});
 		
@@ -145,9 +166,20 @@ public class Controller {
 			@Override
 			public void setCharPos(String playerName) {
 				outputWindow.setCharPos(playerName);				
+			}
+
+			@Override
+			public void setPlatPos(int ticket) {
+				outputWindow.setPlatPos(ticket);
+				
 			}		
 			
 		}, new ILevelToLayerAdapter() {
+
+			@Override
+			public void addEdit(int ticket) {
+				layerWindow.addPlatformEdit(ticket);				
+			}
 			
 		});
 		

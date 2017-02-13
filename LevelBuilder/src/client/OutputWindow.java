@@ -37,9 +37,10 @@ public class OutputWindow extends JFrame {
 	private JLabel lblCurLevel;
 	
 	private boolean makeNew;
-	private boolean editOld;
+	private boolean editOldPlat;
 	private boolean setPlayerStartPos;
 	private String newPath;
+	private int ticket;
 	private JTextField txtInputPath;
 	
 	private double offset;
@@ -49,8 +50,9 @@ public class OutputWindow extends JFrame {
 	 */
 	public OutputWindow(IOutputToLevelAdapter otlAdapter) {
 		this.offset = 1.5;
+		this.ticket = 0;
 		this.makeNew = false;
-		this.editOld = false;
+		this.editOldPlat = false;
 		this.setPlayerStartPos = false;
 		this.otlAdapter = otlAdapter;			
 		initGUI();
@@ -242,13 +244,12 @@ public class OutputWindow extends JFrame {
 				    // No longer need to make a new platform
 				    makeNew = false;
 				    
-				} else if (editOld) {
+				} else if (editOldPlat) {
 					int xp = e.getX();
 				    int yp = e.getY();
 				    System.out.println("Requesting center point " + xp + ", " + yp + "; pixels.");
-				    // TODO: Put back in when LayerWindow is up and working.
-					// otlAdapter.editCenter(xp, yp);
-				    editOld = false;
+					otlAdapter.editPlatCenter(ticket, xp, yp);
+				    editOldPlat = false;
 				    
 				} else if (setPlayerStartPos) {
 					int xp = e.getX();
@@ -315,7 +316,7 @@ public class OutputWindow extends JFrame {
 	
 	public void setActive(String path) {
 		this.makeNew = true;
-		this.editOld = false;
+		this.editOldPlat = false;
 		this.setPlayerStartPos = false;
 		this.newPath = path;
 	}
@@ -325,13 +326,24 @@ public class OutputWindow extends JFrame {
 		System.out.println("Requesting new position for " + name);
 		this.setPlayerStartPos = true;
 		this.makeNew = false;
-		this.editOld = false;	
+		this.editOldPlat = false;	
 		this.newPath = name;
 		
 	}
 	
 	public void setLevelName(String name) {
 		lblCurLevel.setText(name);
+	}
+	
+	/**
+	 * LevelManager requests ticket to have a new position.
+	 * @param ticket identifier of the platform
+	 */
+	public void setPlatPos(int ticket) {
+		this.ticket = ticket;
+		this.editOldPlat = true;
+		this.makeNew = false;
+		this.setPlayerStartPos = false;
 	}
 
 }

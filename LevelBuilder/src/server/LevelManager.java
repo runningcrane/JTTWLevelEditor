@@ -390,24 +390,12 @@ public class LevelManager {
 		platform.setRescaled(resize(image, wm, hm));
 		
 		plats.put(this.ticket, platform);
+		ltlAdapter.addEdit(this.ticket);
 		this.ticket++;
 		
 		// Let the layer window know a platform has been made
 		
-	}
-	
-	/**
-	 * Set the character to a new position.
-	 * @param name name of character to set
-	 * @param xp x position of character [swing vp, pixel]
-	 * @param yp y position of character [swing vp, pixel]
-	 */
-	public void setCharacterPosition(String name, double xp, double yp) {
-		System.out.println("Received; setting " + name + " to " + xp / this.mToPixel + ", " + yp / this.mToPixel + "; m");
-		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym.
-		this.characters.get(name).setCenter((xp - this.vpOffset.getX()) / this.mToPixel,
-				this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel);
-	}
+	}	
 
 	/**
 	 * Toggle players. 	
@@ -434,6 +422,55 @@ public class LevelManager {
 	public void setActive(String path) {
 		ltoAdapter.makePlatform(path);
 	}
+	
+	// START EDITING SECTION
+	
+	/**
+	 * Ask the OutputWindow for new center coordinates.
+	 * @param ticket platform identifier
+	 */
+	public void editPlatCenter(int ticket) {
+		ltoAdapter.setPlatPos(ticket);				
+	}
+
+	/**
+	 * OutputWindow just called this method to set the platform's new center.
+	 * @param ticket platform identifier
+	 * @param xp x position [swing vp, pixel]
+	 * @param yp y position [swing vp, pixel]
+	 */
+	public void editPlatCenterRes(int ticket, double xp, double yp) {
+		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym.
+		this.plats.get(ticket).setCenter((xp - this.vpOffset.getX()) / this.mToPixel,
+						this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel);		
+	}
+	
+	public void editPlatCollisionBox(int ticket) {
+		//this.plats.get(ticket).setPlatCollisionBox();			
+	}
+
+	public void removePlat(int ticket) {
+		this.plats.remove(ticket);			
+	}
+	
+	/**
+	 * Set the character to a new position.
+	 * @param name name of character to set
+	 * @param xp x position of character [swing vp, pixel]
+	 * @param yp y position of character [swing vp, pixel]
+	 */
+	public void setCharacterPosition(String name, double xp, double yp) {
+		System.out.println("Received; setting " + name + " to " + xp / this.mToPixel + ", " + yp / this.mToPixel + "; m");
+		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym.
+		this.characters.get(name).setCenter((xp - this.vpOffset.getX()) / this.mToPixel,
+				this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel);
+	}
+	
+	
+	// END EDITING SECTION
+	
+	
+	// START JSON SECTION
 	
 	/**
 	 * Outputs a JSON file.
@@ -636,5 +673,7 @@ public class LevelManager {
 	public void makeFGList() {
 		
 	}
+	
+	// END JSON SECTION
 
 }

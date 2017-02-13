@@ -18,7 +18,7 @@ public interface ILevelToOutputAdapter {
 	 * Listen in for the position of a new platform with the given path.
 	 * @param path path to platform image
 	 */
-	public void makePlatform(String path);
+	public void makePlatform(String path);		
 	
 	/**
 	 * Set the flavor text of the level.
@@ -31,5 +31,7 @@ public interface ILevelToOutputAdapter {
 	 * @param playerName name of the player to edit
 	 */
 	public void setCharPos(String playerName);
+	
+	public void setPlatPos(int ticket);
 
 }
