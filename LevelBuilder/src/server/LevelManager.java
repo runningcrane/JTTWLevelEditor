@@ -440,13 +440,13 @@ public class LevelManager {
 	 * @param yp y position [swing vp, pixel]
 	 */
 	public void editPlatCenterRes(int ticket, double xp, double yp) {
-		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym.
+		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym.		
 		this.plats.get(ticket).setCenter((xp - this.vpOffset.getX()) / this.mToPixel,
 						this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel);		
 	}
 	
 	public void editPlatCollisionBox(int ticket) {
-		//this.plats.get(ticket).setPlatCollisionBox();			
+		this.plats.get(ticket).editPlatCollisionBox();			
 	}
 
 	public void removePlat(int ticket) {

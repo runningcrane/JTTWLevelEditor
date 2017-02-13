@@ -202,6 +202,11 @@ public class CollisionWindow extends JFrame {
 	public void start() {
 		setVisible(true);
 	}
+	
+	public void setNewCenter(double newCxm, double newCym) {
+		this.trueCenterXm = newCxm;
+		this.trueCenterYm = newCym;
+	}
 
 	public ArrayList<Point2D.Double> returnPoints() {
 		/*

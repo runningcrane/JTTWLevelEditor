@@ -46,10 +46,13 @@ public class Platform extends AInteractable {
 		}
 	}
 	
-	
 	public void setCollisionBox(ArrayList<Point2D.Double> points) {
 		this.setCollisionPoints(points);
 		this.settings.startWithPoints(points);
+	}
+	
+	public void editPlatCollisionBox() {
+		this.settings.setVisible(true);
 	}
 	
 	/**
@@ -57,9 +60,12 @@ public class Platform extends AInteractable {
 	 * @param cxm in COCOS coordinates [m]
 	 * @param cym in COCOS coordinates [m]
 	 */
-	public void setCenter(double cxm, double cym) {
+	public void setCenter(double cxm, double cym) {		
 		this.setCenterXm(cxm);
 		this.setCenterYm(cym);
+		
+		// Edit where the CollisionWindow is too
+		this.settings.setNewCenter(cxm, cym);
 	}
 	
 	public BufferedImage getImage() {
