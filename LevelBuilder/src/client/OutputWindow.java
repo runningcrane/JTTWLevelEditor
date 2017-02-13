@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -40,15 +41,18 @@ public class OutputWindow extends JFrame {
 	private boolean setPlayerStartPos;
 	private String newPath;
 	private JTextField txtInputPath;
+	
+	private double offset;
 
 	/**
 	 * Create the frame.
 	 */
-	public OutputWindow(IOutputToLevelAdapter otlAdapter) {	
+	public OutputWindow(IOutputToLevelAdapter otlAdapter) {
+		this.offset = 1.5;
 		this.makeNew = false;
 		this.editOld = false;
 		this.setPlayerStartPos = false;
-		this.otlAdapter = otlAdapter;				
+		this.otlAdapter = otlAdapter;			
 		initGUI();
 		
 		// Listen for manual resizing of the frame by the user
@@ -122,6 +126,65 @@ public class OutputWindow extends JFrame {
 				
 		pnlControls.add(btnReadJSON);
 		
+		JPanel pnlOutput = new JPanel(new BorderLayout());
+		getContentPane().add(pnlOutput, BorderLayout.CENTER);
+		
+		JPanel pnlWest = new JPanel();
+		pnlOutput.add(pnlWest, BorderLayout.WEST);
+		
+		JButton btnWest = new JButton("");
+		btnWest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Go left in swing meters
+				otlAdapter.changeOffset(offset, 0);
+			}
+		});
+		ImageIcon iiWest = new ImageIcon("assets/arWest.png");
+		btnWest.setIcon(iiWest);
+		pnlWest.add(btnWest);
+		
+		JPanel pnlEast = new JPanel();
+		pnlOutput.add(pnlEast, BorderLayout.EAST);
+		
+		JButton btnEast = new JButton("");
+		btnEast.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Go right in swing meters
+				otlAdapter.changeOffset(-1 * offset, 0);
+			}
+		});
+		ImageIcon iiEast = new ImageIcon("assets/arEast.png");
+		btnEast.setIcon(iiEast);
+		pnlEast.add(btnEast);
+		
+		JPanel pnlNorth = new JPanel();
+		pnlOutput.add(pnlNorth, BorderLayout.NORTH);
+		
+		JButton btnNorth = new JButton("");
+		btnNorth.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// Go up in swing meters
+				otlAdapter.changeOffset(0, offset);
+			}
+		});
+		ImageIcon iiNorth = new ImageIcon("assets/arNorth.png");
+		btnNorth.setIcon(iiNorth);
+		pnlNorth.add(btnNorth);
+		
+		JPanel pnlSouth = new JPanel();
+		pnlOutput.add(pnlSouth, BorderLayout.SOUTH);
+		
+		JButton btnSouth = new JButton("");
+		btnSouth.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Go down in swing meters
+				otlAdapter.changeOffset(0, -1 * offset);
+			}
+		});
+		ImageIcon iiSouth = new ImageIcon("assets/arSouth.png");
+		btnSouth.setIcon(iiSouth);
+		pnlSouth.add(btnSouth);
+		
 		pnlContent = new JPanel() {
 			/**
 			 * UID for serialization.
@@ -133,6 +196,7 @@ public class OutputWindow extends JFrame {
 				otlAdapter.render(this, g);
 			}
 		};		
+		pnlOutput.add(pnlContent, BorderLayout.CENTER);
 
 		pnlContent.addMouseListener(new MouseListener() {
 		    @Override
@@ -223,9 +287,6 @@ public class OutputWindow extends JFrame {
 				
 			}		    
 		});
-		
-		
-		getContentPane().add(pnlContent, BorderLayout.CENTER);
 	}
 	/**
 	 * After setting up the frame, make it visible to the user.

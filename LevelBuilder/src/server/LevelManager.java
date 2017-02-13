@@ -44,6 +44,11 @@ public class LevelManager {
 	private double mToPixel;
 	
 	/**
+	 * Viewport offset.
+	 */
+	private Point2D.Double vpOffset;
+	
+	/**
 	 * Background object. 
 	 */
 	private Background bg;
@@ -122,6 +127,7 @@ public class LevelManager {
 		this.ltlAdapter = ltlAdapter;
 		
 		this.mToPixel = 100;		
+		this.vpOffset = new Point2D.Double(0, 0);
 		this.ticket = 1;
 		
 		// Call upon the layer view to update itself frequently
@@ -243,29 +249,51 @@ public class LevelManager {
 			 * Since CenterXm/CenterYm are in swing-orientation, reverse the ys to get them in cocos.
 			 */		
 			double ulxp = (plat.getCenterXm() - plat.getInGameWidth()/2.0) * this.mToPixel;
-			double ulyp = ((this.hm - (plat.getCenterYm())) - plat.getInGameHeight() /2.0) * this.mToPixel;				
+			double ulyp = ((this.hm - (plat.getCenterYm())) - plat.getInGameHeight() /2.0) * this.mToPixel;			
+			Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
 			
-			g.drawImage(plat.getRescaled().getImage(), (int)ulxp, (int)ulyp, null);
+			g.drawImage(plat.getRescaled().getImage(), (int)vpulp.getX(), (int)vpulp.getY(), null);
 			
 			// Draw the label on top of it. In the center, maybe?
 			g.setColor(Color.MAGENTA);
-			g.fillOval((int)(plat.getCenterXm() * this.mToPixel), (int)((this.hm - (plat.getCenterYm())) * this.mToPixel), 15, 15);
+			Point2D.Double vplp = getViewportCoordinates(plat.getCenterXm() * this.mToPixel,
+					(this.hm - (plat.getCenterYm())) * this.mToPixel);
+			g.fillOval((int)(vplp.getX()), (int)(vplp.getY()), 15, 15);
+			
 			// Label point
 			g.setColor(Color.BLACK);
-			g.drawString(Integer.toString(number), (int)(plat.getCenterXm() * this.mToPixel + 5), 
-					(int)((this.hm - (plat.getCenterYm())) * this.mToPixel + 10));
+			Point2D.Double vplbp = getViewportCoordinates(plat.getCenterXm() * this.mToPixel + 5, 
+					(this.hm - (plat.getCenterYm())) * this.mToPixel + 10);
+			g.drawString(Integer.toString(number), (int)(vplbp.getX()), 
+					(int)(vplbp.getY()));
 		});				
 		
 		// Draw player characters
 		characters.forEach((name, player) -> {
 			if (player.getPresent()) {
 				double ulxp = (player.getCenterXm() - player.getInGameWidth()/2.0) * this.mToPixel;
-				double ulyp = ((this.hm - (player.getCenterYm())) - player.getInGameHeight() /2.0) * this.mToPixel;							
-				g.drawImage(player.getRescaled().getImage(), (int)ulxp, (int)ulyp, null);
+				double ulyp = ((this.hm - (player.getCenterYm())) - player.getInGameHeight() /2.0) * this.mToPixel;	
+				Point2D.Double vpcp = getViewportCoordinates(ulxp, ulyp);				
+				g.drawImage(player.getRescaled().getImage(), (int)vpcp.getX(), (int)vpcp.getY(), null);
 			}
 		});
 	}
 	
+	/**
+	 * For rendering purposes. Offsets the real world coordinates by the viewport offset.
+	 * @param x real world swing coordinate
+	 * @param y real world swing coordinate
+	 * @return (x,y) viewport swing coordanites
+	 */
+	public Point2D.Double getViewportCoordinates(double x, double y) {
+		return new Point2D.Double(x + this.vpOffset.getX(), y + this.vpOffset.getY());
+	}
+	
+	public void changeOffset(double xm, double ym) {
+		
+		this.vpOffset = new Point2D.Double(this.vpOffset.getX() + xm * this.mToPixel, 
+				this.vpOffset.getY() + ym * this.mToPixel);
+	}
 	/**
 	 * Request output window to change its size.
 	 * @param wm width in in-game meters

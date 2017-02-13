@@ -52,4 +52,11 @@ public interface IOutputToLevelAdapter {
 	 */
 	public void setPlayerPosition(String name, double xp, double yp);
 	
+	/**
+	 * Move the viewport by the specified offset.
+	 * @param xm x offset in meters
+	 * @param ym y offset in meters
+	 */
+	public void changeOffset(double xm, double ym);
+	
 }

@@ -105,6 +105,11 @@ public class Controller {
 			public void setPlayerPosition(String name, double xp, double yp) {
 				level.setCharacterPosition(name, xp, yp);
 			}
+
+			@Override
+			public void changeOffset(double xm, double ym) {
+				level.changeOffset(xm, ym);				
+			}
 			
 		});
 		

@@ -1,5 +1,6 @@
 package interactable;
 
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import org.json.simple.JSONObject;
