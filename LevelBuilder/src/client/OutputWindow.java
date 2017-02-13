@@ -204,7 +204,7 @@ public class OutputWindow extends JFrame {
 				if (makeNew) {
 				    int xp = e.getX();
 				    int yp = e.getY();
-				    System.out.println("Requesting center point " + xp + ", " + yp + "; pixels.");
+				    System.out.println("Requesting center point " + xp + ", " + yp + "; swing vp pixels.");
 				    
 				    // Pop up dialog here to get the expected width in meters
 				    String width = JOptionPane.showInputDialog(null, "Input width of the image (meters)");

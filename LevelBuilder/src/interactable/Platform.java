@@ -35,7 +35,7 @@ public class Platform extends AInteractable {
 		this.setPath(path);
 		this.setCenterXm(cxm);
 		this.setCenterYm(cym);
-		System.out.println("Setting platform center to " + cxm + ", " + cym + "; meters");
+		System.out.println("Setting platform center to " + cxm + ", " + cym + "; cocos world meters");
 		this.setInGameWidth(wm);
 		this.setInGameHeight(hm);
 		
@@ -99,7 +99,7 @@ public class Platform extends AInteractable {
 		if (polygon) {
 			obj.put("collisionPoints", pointsList);	
 		} else {
-			if (pointsList.size() != 2) {
+			if (pointsList.size() < 2) {
 				System.err.println("ERROR: two points needed for bounded box");
 			} else {
 				Point2D.Double p1 = points.get(0);

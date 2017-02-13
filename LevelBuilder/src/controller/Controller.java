@@ -59,6 +59,11 @@ public class Controller {
 			}
 			
 			@Override
+			public void setViewportDimensions(double wm, double hm) {
+				level.setViewportDimensions(wm, hm);				
+			}
+			
+			@Override
 			public void setBg(String path) {
 				level.setBg(path);
 			}
@@ -66,7 +71,7 @@ public class Controller {
 			@Override
 			public void makePlatform(String path) {
 				level.setActive(path);
-			}
+			}			
 			
 		});
 		

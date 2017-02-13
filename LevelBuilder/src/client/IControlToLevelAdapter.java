@@ -10,11 +10,18 @@ import java.awt.Graphics;
 public interface IControlToLevelAdapter {				
 	
 	/**
+	 * Request to resize actual level.
+	 * @param wm width in meters
+	 * @param hm height in meters
+	 */
+	public void setLevelDimensions(double wm, double hm);	
+	
+	/**
 	 * Request to resize OutputWindow.
 	 * @param wm width in meters
 	 * @param hm height in meters
 	 */
-	public void setLevelDimensions(double wm, double hm);		
+	public void setViewportDimensions(double wm, double hm);
 	
 	/**
 	 * Toggle whether a character is in this scene.

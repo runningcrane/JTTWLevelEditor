@@ -25,8 +25,10 @@ import javax.swing.JToggleButton;
 
 public class ControlWindow extends JFrame {
 	
-	private JTextField txtHeight;
-	private JTextField txtWidth;
+	private JTextField txtLHeight;
+	private JTextField txtLWidth;
+	private JTextField txtVPHeight;
+	private JTextField txtVPWidth;
 	private IControlToLevelAdapter ctlAdapter;	
 
 	/**
@@ -45,31 +47,49 @@ public class ControlWindow extends JFrame {
 		setBounds(100, 100, 450, 300);		
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		
-		JPanel pnlResize = new JPanel();			
-		pnlResize.setLayout(new BoxLayout(pnlResize, BoxLayout.Y_AXIS));
-		getContentPane().add(pnlResize, BorderLayout.WEST);
+		JPanel pnlLevelResize = new JPanel();			
+		pnlLevelResize.setLayout(new BoxLayout(pnlLevelResize, BoxLayout.Y_AXIS));
+		getContentPane().add(pnlLevelResize, BorderLayout.WEST);
 		
 		JLabel lblTitleLabel = new JLabel("<html><b>Game Window Size</b></html>");
-		pnlResize.add(lblTitleLabel);
+		pnlLevelResize.add(lblTitleLabel);
 		
 		JPanel pnlRControls = new JPanel();
-		pnlResize.add(pnlRControls);
+		pnlLevelResize.add(pnlRControls);
 		
-		JLabel lblWidth = new JLabel("Width (m):");
-		pnlRControls.add(lblWidth);
+		// Level
+		JLabel lblLWidth = new JLabel("LWidth (m):");
+		pnlRControls.add(lblLWidth);
 		
-		txtWidth = new JTextField();
-		pnlRControls.add(txtWidth);
-		txtWidth.setText("8");
-		txtWidth.setColumns(10);					
+		txtLWidth = new JTextField();
+		pnlRControls.add(txtLWidth);
+		txtLWidth.setText("8");
+		txtLWidth.setColumns(10);					
 		
-		JLabel lblHeight = new JLabel("Height (m):");
-		pnlRControls.add(lblHeight);
+		JLabel lblLHeight = new JLabel("LHeight (m):");
+		pnlRControls.add(lblLHeight);
 		
-		txtHeight = new JTextField();
-		pnlRControls.add(txtHeight);
-		txtHeight.setText("6");
-		txtHeight.setColumns(10);
+		txtLHeight = new JTextField();
+		pnlRControls.add(txtLHeight);
+		txtLHeight.setText("6");
+		txtLHeight.setColumns(10);
+		
+		// VP
+		JLabel lblVPWidth = new JLabel("VPWidth (m):");
+		pnlRControls.add(lblVPWidth);
+		
+		txtVPWidth = new JTextField();
+		pnlRControls.add(txtLWidth);
+		txtVPWidth.setText("8");
+		txtVPWidth.setColumns(10);					
+		
+		JLabel lblVPHeight = new JLabel("VPHeight (m):");
+		pnlRControls.add(lblVPHeight);
+		
+		txtVPHeight = new JTextField();
+		pnlRControls.add(txtVPHeight);
+		txtVPHeight.setText("6");
+		txtVPHeight.setColumns(10);
 		
 		// Background panel		
 		JPanel pnlBackground = new JPanel();
@@ -243,12 +263,12 @@ public class ControlWindow extends JFrame {
 		
 		// Resize
 		
-		JButton btnResizeScreen = new JButton("Resize");
-		btnResizeScreen.addActionListener(new ActionListener() {
+		JButton btnResizeLevel = new JButton("Resize Level");
+		btnResizeLevel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				double width;
 				try {
-					width = Double.valueOf(txtWidth.getText());
+					width = Double.valueOf(txtLWidth.getText());
 				} catch (NumberFormatException e) {			
 					JOptionPane.showMessageDialog(new JFrame("JOptionPane showMessageDialouge"), 
 							"Width must be an number.");
@@ -256,7 +276,7 @@ public class ControlWindow extends JFrame {
 				}
 				int height;
 				try {
-					height = Integer.valueOf(txtHeight.getText());
+					height = Integer.valueOf(txtLHeight.getText());
 				} catch (NumberFormatException e) {
 					JOptionPane.showMessageDialog(new JFrame("JOptionPane showMessageDialouge"), 
 							"Height must be an number.");
@@ -268,7 +288,33 @@ public class ControlWindow extends JFrame {
 			}
 		});
 		
-		pnlResize.add(btnResizeScreen);						
+		JButton btnResizeScreen = new JButton("Resize VP");
+		btnResizeScreen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				double width;
+				try {
+					width = Double.valueOf(txtLWidth.getText());
+				} catch (NumberFormatException e) {			
+					JOptionPane.showMessageDialog(new JFrame("JOptionPane showMessageDialouge"), 
+							"Width must be an number.");
+					return;
+				}
+				int height;
+				try {
+					height = Integer.valueOf(txtLHeight.getText());
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(new JFrame("JOptionPane showMessageDialouge"), 
+							"Height must be an number.");
+					return;
+				}
+				
+				// TODO: negative numbers check				
+				ctlAdapter.setViewportDimensions(width, height);
+			}
+		});
+		
+		pnlLevelResize.add(btnResizeScreen);
+		pnlLevelResize.add(btnResizeLevel);
 				
 		/**
 		 * pnlDisplayArea.setSize(Integer.valueOf(txtWidth.getText()), 

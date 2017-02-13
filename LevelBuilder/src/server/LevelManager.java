@@ -56,12 +56,22 @@ public class LevelManager {
 	/**
 	 * Level width (meters).
 	 */
-	private double wm;
+	private double lvwm;
 	
 	/**
 	 * Level height (meters).
 	 */
-	private double hm;
+	private double lvhm;
+	
+	/**
+	 * Viewport width (meters).	
+	 */
+	private double vpwm;
+	
+	/**
+	 * Viewport height (meters).
+	 */
+	private double vphm;
 	
 	/**
 	 * Foreground array.
@@ -142,8 +152,10 @@ public class LevelManager {
 		this.timer = new Timer(timeSlice, listen);
 		
 		// TODO: Replace later. This is a manual set of width and height of the background.
-		this.wm = 7;
-		this.hm = 4;
+		this.vpwm = 8;
+		this.vphm = 6;
+		this.lvwm = 8;
+		this.lvhm = 6;
 		
 		// Instantiate various lists.
 		this.plats = new HashMap<Integer, Platform>();
@@ -226,8 +238,8 @@ public class LevelManager {
 			return;
 		}
 		
-		this.bg = new Background(bgImage, path, this.wm, this.hm);
-		this.bg.setRescaled(resize(bgImage, this.wm, this.hm));
+		this.bg = new Background(bgImage, path, this.lvwm, this.lvhm);
+		this.bg.setRescaled(resize(bgImage, this.lvwm, this.lvhm));
 	}
 	
 	/**
@@ -249,7 +261,7 @@ public class LevelManager {
 			 * Since CenterXm/CenterYm are in swing-orientation, reverse the ys to get them in cocos.
 			 */		
 			double ulxp = (plat.getCenterXm() - plat.getInGameWidth()/2.0) * this.mToPixel;
-			double ulyp = ((this.hm - (plat.getCenterYm())) - plat.getInGameHeight() /2.0) * this.mToPixel;			
+			double ulyp = ((this.lvhm - plat.getCenterYm()) - plat.getInGameHeight() /2.0) * this.mToPixel;			
 			Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
 			
 			g.drawImage(plat.getRescaled().getImage(), (int)vpulp.getX(), (int)vpulp.getY(), null);
@@ -257,13 +269,13 @@ public class LevelManager {
 			// Draw the label on top of it. In the center, maybe?
 			g.setColor(Color.MAGENTA);
 			Point2D.Double vplp = getViewportCoordinates(plat.getCenterXm() * this.mToPixel,
-					(this.hm - (plat.getCenterYm())) * this.mToPixel);
+					(this.lvhm - (plat.getCenterYm())) * this.mToPixel);
 			g.fillOval((int)(vplp.getX()), (int)(vplp.getY()), 15, 15);
 			
 			// Label point
 			g.setColor(Color.BLACK);
 			Point2D.Double vplbp = getViewportCoordinates(plat.getCenterXm() * this.mToPixel + 5, 
-					(this.hm - (plat.getCenterYm())) * this.mToPixel + 10);
+					(this.lvhm - (plat.getCenterYm())) * this.mToPixel + 10);
 			g.drawString(Integer.toString(number), (int)(vplbp.getX()), 
 					(int)(vplbp.getY()));
 		});				
@@ -272,7 +284,7 @@ public class LevelManager {
 		characters.forEach((name, player) -> {
 			if (player.getPresent()) {
 				double ulxp = (player.getCenterXm() - player.getInGameWidth()/2.0) * this.mToPixel;
-				double ulyp = ((this.hm - (player.getCenterYm())) - player.getInGameHeight() /2.0) * this.mToPixel;	
+				double ulyp = ((this.lvhm - (player.getCenterYm())) - player.getInGameHeight() /2.0) * this.mToPixel;	
 				Point2D.Double vpcp = getViewportCoordinates(ulxp, ulyp);				
 				g.drawImage(player.getRescaled().getImage(), (int)vpcp.getX(), (int)vpcp.getY(), null);
 			}
@@ -299,13 +311,18 @@ public class LevelManager {
 	 * @param wm width in in-game meters
 	 * @param hm height in in-game meters
 	 */
-	public void setLevelDimensions(double wm, double hm) {
-		ltoAdapter.setDimensions((int)(wm * mToPixel), (int)(hm * mToPixel));	
-		this.wm = wm;
-		this.hm = hm;
+	public void setLevelDimensions(double wm, double hm) {			
+		this.lvwm = wm;
+		this.lvhm = hm;
 		
 		// Need to resize the background based on whichever scale is the biggest
 		this.setBg(this.bg.getPath());
+	}
+	
+	public void setViewportDimensions(double wm, double hm) {
+		ltoAdapter.setDimensions((int)(wm * mToPixel), (int)(hm * mToPixel));
+		this.vpwm = wm;
+		this.vphm = hm;
 	}
 	/**
 	 * Scales an image to in-game meters size.
@@ -331,8 +348,8 @@ public class LevelManager {
 	 * @param hp height in pixels
 	 */
 	public void manualResize(double wp, double hp) {
-		this.wm = wp / this.mToPixel;
-		this.hm = hp / this.mToPixel;
+		this.lvwm = wp / this.mToPixel;
+		this.lvhm = hp / this.mToPixel;
 		
 		this.setBg(this.bg.getPath());		
 	}
@@ -340,8 +357,8 @@ public class LevelManager {
 	/**
 	 * Makes a new platform object.
 	 * @param path 
-	 * @param xp xpixel location on screen [swing coordinates]
-	 * @param yp ypixel location on screen [swing coordinates]
+	 * @param xp xpixel location on screen [swing vp coordinates]
+	 * @param yp ypixel location on screen [swing vp coordinates]
 	 * @param wm expected width in in-game meters
 	 * @param hm expected height in in-game meters
 	 */
@@ -352,11 +369,11 @@ public class LevelManager {
 		
 		// Are we making a new platform, or is this a platform that already has a collision box?
 		if (points == null) {
-			platform = new Platform(path, (xp - this.vpOffset.getX())/ this.mToPixel, 
-					this.hm - (yp - this.vpOffset.getY()) / this.mToPixel, wm, hm, false);
+			platform = new Platform(path, (xp - this.vpOffset.getX()) / this.mToPixel, 
+					this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel, wm, hm, false);
 		} else {
 			platform = new Platform(path, (xp - this.vpOffset.getX()) / this.mToPixel, 
-					this.hm - (yp - this.vpOffset.getY()) / this.mToPixel, wm, hm, true);
+					this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel, wm, hm, true);
 			platform.setCollisionBox(points);
 		}
 		
@@ -382,14 +399,14 @@ public class LevelManager {
 	/**
 	 * Set the character to a new position.
 	 * @param name name of character to set
-	 * @param xp x position of character [swing, pixel]
-	 * @param yp y position of character [swing, pixel]
+	 * @param xp x position of character [swing vp, pixel]
+	 * @param yp y position of character [swing vp, pixel]
 	 */
 	public void setCharacterPosition(String name, double xp, double yp) {
 		System.out.println("Received; setting " + name + " to " + xp / this.mToPixel + ", " + yp / this.mToPixel + "; m");
 		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym.
 		this.characters.get(name).setCenter((xp - this.vpOffset.getX()) / this.mToPixel,
-				this.hm - (yp - this.vpOffset.getY()) / this.mToPixel);
+				this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel);
 	}
 
 	/**
@@ -464,6 +481,8 @@ public class LevelManager {
 		}
 		
 		// Begin parsing
+		this.vpOffset = new Point2D.Double(0, 0);
+		
 		JSONObject level = (JSONObject) obj;
 		String name = (String) level.get("levelName");
 		setLevelName(name);
@@ -527,15 +546,15 @@ public class LevelManager {
 		double levelHeight = (double)bg.get("height");
 		
 		// Set wm, hm.
-		this.wm = levelWidth;
-		this.hm = levelHeight;
+		this.lvwm = levelWidth;
+		this.lvhm = levelHeight;
 		
 		// Set the background.
 		setBg("assets/" + imageName);
 		
 		// Set the dimensions.
-		setLevelDimensions(this.wm, this.hm);
-		System.out.println("Dimensions set to " + this.wm + "x" + this.hm);
+		setLevelDimensions(this.lvwm, this.lvhm);
+		System.out.println("Dimensions set to " + this.lvwm + "x" + this.lvhm);
 	}
 	
 	public JSONArray getPlatList(boolean polygon) {
@@ -586,7 +605,8 @@ public class LevelManager {
 						cym * this.mToPixel + 0.5 * collisionHeight * this.mToPixel));
 			}
 			
-			makePlatform(path, cxm * this.mToPixel, cym * this.mToPixel, wm, hm, points);
+			// makePlatform takes swing coordinates, so m is translated to px and y is flipped.
+			makePlatform(path, cxm * this.mToPixel, (this.lvhm - cym) * this.mToPixel, wm, hm, points);
 								
 		}
 	}
