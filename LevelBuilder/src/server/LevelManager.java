@@ -27,6 +27,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import interactable.Enemy;
 import interactable.Platform;
 import interactable.Player;
 import noninteractable.Background;
@@ -47,8 +48,14 @@ public class LevelManager {
 	 */
 	private Background bg;
 	
+	/**
+	 * Level width (meters).
+	 */
 	private double wm;
 	
+	/**
+	 * Level height (meters).
+	 */
 	private double hm;
 	
 	/**
@@ -64,8 +71,16 @@ public class LevelManager {
 	/**
 	 * Character array.
 	 */
-	private Map<String, Player> players; 
+	private Map<String, Player> characters;
 	
+	/**
+	 * NPC array.
+	 */
+	private Map<String, Enemy> npcs; 
+	
+	/**
+	 * Counter used to label editable objects on output window.
+	 */
 	private int ticket;
 	
 	/**
@@ -97,6 +112,8 @@ public class LevelManager {
 	 * Constructor for this level manager.
 	 * Takes in adapters to each necessary editing window.
 	 * @param ltbAdapter
+	 * @param ltoAdapter
+	 * @param ltlAdapter
 	 */
 	public LevelManager(ILevelToControlAdapter ltbAdapter, ILevelToOutputAdapter ltoAdapter,
 			ILevelToLayerAdapter ltlAdapter) {
@@ -126,28 +143,65 @@ public class LevelManager {
 		this.plats = new HashMap<Integer, Platform>();
 		this.fg = new ArrayList<INonInteractable>();
 		
-		// Set up the players.
-		players = new HashMap<String, Player>();
+		// Set up the player characters.
+		characters = new HashMap<String, Player>();
 		
 		// String path, String name, double cxm, double cym, boolean present
 		
-		Player monkey = new Player(null, "Monkey", 0, 0, false);		
-		players.put("Monkey", monkey);
+		Player monkey = new Player("assets/Monkey.png", "Monkey", 0, 0, false);
+		BufferedImage monkeyBI;
+		try {
+			monkeyBI = ImageIO.read(new File("assets/Monkey.png"));
+		} catch (IOException e) {
+			System.err.println("File not found: " + "assets/Monkey.png");
+			e.printStackTrace();
+			return;
+		}
+		monkey.setRescaled(resize(monkeyBI, 0.7, 1.7));
+		characters.put("Monkey", monkey);		
 
-		Player monk = new Player(null, "Monk", 0, 0, false);		
-		players.put("Monk", monk);
+		Player monk = new Player("assets/Monk.png", "Monk", 0, 0, false);		
+		BufferedImage monkBI;
+		try {
+			monkBI = ImageIO.read(new File("assets/Monk.png"));
+		} catch (IOException e) {
+			System.err.println("File not found: " + "assets/Monk.png");
+			e.printStackTrace();
+			return;
+		}
+		monk.setRescaled(resize(monkBI, 0.7, 1.7));
+		characters.put("Monk", monk);
 		
-		Player pig = new Player(null, "Piggy", 0, 0, false);		
-		players.put("Piggy", pig);
+		Player pig = new Player("assets/Piggy.png", "Piggy", 0, 0, false);
+		BufferedImage pigBI;
+		try {
+			pigBI = ImageIO.read(new File("assets/Piggy.png"));
+		} catch (IOException e) {
+			System.err.println("File not found: " + "assets/Piggy.png");
+			e.printStackTrace();
+			return;
+		}
+		pig.setRescaled(resize(pigBI, 0.7, 1.7));
+		characters.put("Piggy", pig);
 		
-		Player sandy = new Player(null, "Sandy", 0, 0, false);	
-		players.put("Sandy", sandy);
+		Player sandy = new Player("assets/Sandy.png", "Sandy", 0, 0, false);
+		BufferedImage sandyBI;
+		try {
+			sandyBI = ImageIO.read(new File("assets/Sandy.png"));
+		} catch (IOException e) {
+			System.err.println("File not found: " + "assets/Sandy.png");
+			e.printStackTrace();
+			return;
+		}
+		sandy.setRescaled(resize(sandyBI, 0.7, 1.7));
+		characters.put("Sandy", sandy);		
+		
 	}
 	
 	/**
 	 * After constructor is done initializing, start operations.
 	 */
-	public void start() {		
+	public void start() {			
 		setBg("assets/bgSunny.png");
 		this.timer.start();
 	}
@@ -195,17 +249,21 @@ public class LevelManager {
 			
 			// Draw the label on top of it. In the center, maybe?
 			g.setColor(Color.MAGENTA);
-			g.fillOval((int)(plat.getCenterXm() * this.mToPixel), (int)(plat.getCenterYm() * this.mToPixel), 15, 15);
+			g.fillOval((int)(plat.getCenterXm() * this.mToPixel), (int)((this.hm - (plat.getCenterYm())) * this.mToPixel), 15, 15);
 			// Label point
 			g.setColor(Color.BLACK);
 			g.drawString(Integer.toString(number), (int)(plat.getCenterXm() * this.mToPixel + 5), 
-					(int)(plat.getCenterYm() * this.mToPixel + 10));
+					(int)((this.hm - (plat.getCenterYm())) * this.mToPixel + 10));
 		});				
 		
-		// Draw characters
-		for (int i = 0; i < 4; i++) {
-			//this.players[i]
-		}
+		// Draw player characters
+		characters.forEach((name, player) -> {
+			if (player.getPresent()) {
+				double ulxp = (player.getCenterXm() - player.getInGameWidth()/2.0) * this.mToPixel;
+				double ulyp = ((this.hm - (player.getCenterYm())) - player.getInGameHeight() /2.0) * this.mToPixel;							
+				g.drawImage(player.getRescaled().getImage(), (int)ulxp, (int)ulyp, null);
+			}
+		});
 	}
 	
 	/**
@@ -291,26 +349,30 @@ public class LevelManager {
 		
 	}
 	
-	public void setPlayerPosition(String name, double xp, double yp) {
+	/**
+	 * Set the character to a new position.
+	 * @param name name of character to set
+	 * @param xp x position of character [swing, pixel]
+	 * @param yp y position of character [swing, pixel]
+	 */
+	public void setCharacterPosition(String name, double xp, double yp) {
 		System.out.println("Received; setting " + name + " to " + xp / this.mToPixel + ", " + yp / this.mToPixel + "; m");
 		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym.
-		this.players.get(name).setCenter(xp / this.mToPixel, this.hm - yp / this.mToPixel);
+		this.characters.get(name).setCenter(xp / this.mToPixel, this.hm - yp / this.mToPixel);
 	}
 
 	/**
-	 * Toggle players. 
-	 * TODO: This is work for later.	
+	 * Toggle players. 	
 	 * @param name name of character to toggle
 	 * @param status state of existance or not
 	 */
 	public void togglePlayer(String name, boolean status) {
 		if (status) {
 			System.out.println("Setting " + name + " to " + status);
-			this.players.get(name).setPresent(true);
-			
+			this.characters.get(name).setPresent(true);			
 			ltoAdapter.setCharPos(name);
 		} else {
-			this.players.get(name).setPresent(false);
+			this.characters.get(name).setPresent(false);
 		}
 		
 	}
@@ -397,25 +459,29 @@ public class LevelManager {
 		double cxm = (double)monkey.get("startingXPos");
 		double cym = (double)monkey.get("startingYPos");
 		boolean present = (boolean)monkey.get("present");
-		this.players.replace("Monkey", new Player(null, "Monkey", cxm, cym, present));
+		this.characters.get("Monkey").setCenter(cxm, cym);
+		this.characters.get("Monkey").setPresent(present);		
 		
 		JSONObject monk = (JSONObject)chars.get("Monk");
 		double monkcxm = (double)monk.get("startingXPos");
 		double monkcym = (double)monk.get("startingYPos");
 		boolean monkpresent = (boolean)monk.get("present");
-		this.players.replace("Monk", new Player(null, "Monk", monkcxm, monkcym, monkpresent));
+		this.characters.get("Monk").setCenter(monkcxm, monkcym);
+		this.characters.get("Monk").setPresent(monkpresent);
 		
 		JSONObject pig = (JSONObject)chars.get("Piggy");
 		double pigcxm = (double)pig.get("startingXPos");
 		double pigcym = (double)pig.get("startingYPos");
 		boolean pigpresent = (boolean)pig.get("present");
-		this.players.replace("Piggy", new Player(null, "Pig", pigcxm, pigcym, pigpresent));
+		this.characters.get("Piggy").setCenter(pigcxm, pigcym);
+		this.characters.get("Piggy").setPresent(pigpresent);
 		
 		JSONObject sandy = (JSONObject)chars.get("Sandy");
 		double sandycxm = (double)sandy.get("startingXPos");
 		double sandycym = (double)sandy.get("startingYPos");
 		boolean sandypresent = (boolean)sandy.get("present");
-		this.players.replace("Sandy", new Player(null, "Sandy", sandycxm, sandycym, sandypresent));
+		this.characters.get("Sandy").setCenter(sandycxm, sandycym);
+		this.characters.get("Sandy").setPresent(sandypresent);
 		
 	}
 	
@@ -497,7 +563,7 @@ public class LevelManager {
 	public JSONObject getCharList() {
 		JSONObject obj = new JSONObject();
 		
-		this.players.forEach((name, character) -> {
+		this.characters.forEach((name, character) -> {
 			obj.put(name, character.getJSON());
 		});
 		

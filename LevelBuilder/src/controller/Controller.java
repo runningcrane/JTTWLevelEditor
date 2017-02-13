@@ -103,7 +103,7 @@ public class Controller {
 
 			@Override
 			public void setPlayerPosition(String name, double xp, double yp) {
-				level.setPlayerPosition(name, xp, yp);
+				level.setCharacterPosition(name, xp, yp);
 			}
 			
 		});

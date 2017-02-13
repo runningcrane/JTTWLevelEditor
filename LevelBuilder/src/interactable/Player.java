@@ -1,17 +1,13 @@
 package interactable;
 
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.json.simple.JSONArray;
+import java.awt.image.BufferedImage;
+import javax.swing.ImageIcon;
 import org.json.simple.JSONObject;
-
-import client.CollisionWindow;
 
 public class Player extends Character {
 	private boolean present;
+	private BufferedImage image;
+	private ImageIcon rescaledImage;
 	
 	/**
 	 * Make a new Player Character.
@@ -33,17 +29,58 @@ public class Player extends Character {
 		this.setInGameHeight(1.7);				
 				
 	}
+
+	/**
+	 * Get image representing the player.
+	 * @return player image
+	 */
+	public BufferedImage getImage() {
+		return this.image;
+	}	
 	
-	public Player() {
-		this.present = false;
+	/**
+	 * Set the image that represents this player.
+	 * @param image player image
+	 */
+	public void setImage(BufferedImage image) {
+		this.image = image;
+	}	
+	
+	/**
+	 * Get the rescaled image for rendering on the output window.
+	 * @return the rescaled image
+	 */
+	public ImageIcon getRescaled() {
+		return this.rescaledImage;
 	}
 	
+	/**
+	 * Sets the rescaled image for rendering on the output window.
+	 * @param rescaled rescaled image
+	 */
+	public void setRescaled(ImageIcon rescaled) {
+		this.rescaledImage = rescaled;
+	}
+	
+	/**
+	 * Set whether the character is present in the level or not.
+	 * @param present boolean that is true if the character is present
+	 */
 	public void setPresent(boolean present) {
 		this.present = present;		
 	}
 	
 	/**
-	 * 
+	 * Returns whether the character is present in the level or not.
+	 * @return boolean that is true if the character is present
+	 */
+	public boolean getPresent() {
+		return this.present;
+	}
+	
+	/**
+	 * Set where the center of the character spawns. 
+	 * TODO: This might change to feet in the future to avoid mental math.
 	 * @param cxm in COCOS coordinates
 	 * @param cym in COCOS coordinates
 	 */
@@ -52,6 +89,10 @@ public class Player extends Character {
 		this.setCenterYm(cym);
 	}
 	
+	/**
+	 * Get JSON of this player.
+	 * @return JSON representation of the player
+	 */
 	public JSONObject getJSON() {		
 		JSONObject properties = new JSONObject();
 		
