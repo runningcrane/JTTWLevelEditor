@@ -19,12 +19,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 public class EditWindow extends JPanel {
 
 	private JPanel contentPane;
 	private int ticket;
 	private BufferedImage image;
+	private JTextField txtWidth;
+	private JTextField txtHeight;
 	
 	public EditWindow getThis() {
 		return this;
@@ -45,7 +48,7 @@ public class EditWindow extends JPanel {
 	public void initGUI() {
 		setLayout(new GridLayout(3, 1, 0, 0));
 				
-		JButton btnMove = new JButton("Move");
+		JButton btnMove = new JButton("New center");
 		btnMove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -56,13 +59,34 @@ public class EditWindow extends JPanel {
 		add(lblTicket);
 		add(btnMove);
 		
-		JButton btnCollision = new JButton("Edit Box");
+		JButton btnCollision = new JButton("Edit collision");
 		btnCollision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
-		});
+		});		
 		add(btnCollision);
+		
+		JLabel lblWidth = new JLabel("Width (m):");
+		add(lblWidth);
+		
+		txtWidth = new JTextField();
+		add(txtWidth);
+		txtWidth.setColumns(10);
+		
+		JButton btnDimensions = new JButton("Change dimensions");
+		btnDimensions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		add(btnDimensions);
+		
+		JLabel lblNewLabel = new JLabel("Height (m):");
+		add(lblNewLabel);
+		
+		txtHeight = new JTextField();
+		add(txtHeight);
+		txtHeight.setColumns(10);
 		
 		JButton btnDelete = new JButton("Remove");
 		btnDelete.addActionListener(new ActionListener() {

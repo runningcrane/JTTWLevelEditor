@@ -390,7 +390,7 @@ public class LevelManager {
 		platform.setRescaled(resize(image, wm, hm));
 		
 		plats.put(this.ticket, platform);
-		ltlAdapter.addEdit(this.ticket);
+		ltlAdapter.addEdit(this.ticket, wm, hm);
 		this.ticket++;
 		
 		// Let the layer window know a platform has been made
@@ -447,6 +447,14 @@ public class LevelManager {
 	
 	public void editPlatCollisionBox(int ticket) {
 		this.plats.get(ticket).editPlatCollisionBox();			
+	}
+	
+	public void editPlatDim(int ticket, double wm, double hm) {
+		this.plats.get(ticket).editPlatDim(wm, hm);
+		
+		// Rescale the image
+		System.out.println("New size: " + wm + " , " + hm);
+		this.plats.get(ticket).setRescaled(resize(this.plats.get(ticket).getImage(), wm, hm));
 	}
 
 	public void removePlat(int ticket) {

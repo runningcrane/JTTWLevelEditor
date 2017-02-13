@@ -55,6 +55,14 @@ public class Platform extends AInteractable {
 		this.settings.setVisible(true);
 	}
 	
+	public void editPlatDim(double wm, double hm) {
+		this.setInGameWidth(wm);
+		this.setInGameHeight(hm);
+		
+		// Edit the wm and hm of the CollisionWindow too
+		this.settings.setImageSize(wm, hm);
+	}
+	
 	/**
 	 * Manually change the center of the platform.
 	 * @param cxm in COCOS coordinates [m]

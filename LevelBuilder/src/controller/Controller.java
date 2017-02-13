@@ -92,6 +92,11 @@ public class Controller {
 				level.removePlat(ticket);				
 			}
 
+			@Override
+			public void changeDimPlat(int ticket, double wm, double hm) {
+				level.editPlatDim(ticket, wm, hm);				
+			}
+
 			
 		});
 		
@@ -177,8 +182,8 @@ public class Controller {
 		}, new ILevelToLayerAdapter() {
 
 			@Override
-			public void addEdit(int ticket) {
-				layerWindow.addPlatformEdit(ticket);				
+			public void addEdit(int ticket, double wm, double hm) {
+				layerWindow.addPlatformEdit(ticket, wm, hm);				
 			}
 			
 		});

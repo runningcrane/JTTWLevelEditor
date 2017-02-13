@@ -58,6 +58,16 @@ public class CollisionWindow extends JFrame {
 	}
 	
 	
+	public void setImageSize(double wm, double hm) {
+		this.centerXp = wm * this.scale * 0.5;
+		this.centerYp = hm * this.scale * 0.5;
+		
+		this.rescaledImage = new ImageIcon(
+				this.image.getScaledInstance((int)(this.image.getWidth() * this.scale * wm /this.image.getWidth()), 
+				(int)(this.image.getHeight() * this.scale * hm /this.image.getHeight()),
+				java.awt.Image.SCALE_SMOOTH));
+	}
+	
 	/**
 	 * Create the frame.
 	 */
