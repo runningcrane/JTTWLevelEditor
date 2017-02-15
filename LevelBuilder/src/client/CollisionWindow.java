@@ -15,28 +15,22 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import controller.Controller;
-
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JComboBox;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
-import java.awt.Dimension;
 import javax.swing.UIManager;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class CollisionWindow extends JFrame {
 
+	private static final long serialVersionUID = 2282951544415198068L;
 	private JPanel contentPane;
 	private ArrayList<Point2D.Double> points;
 	private double centerXp;
 	private double centerYp;
-	private double trueCenterXm;
-	private double trueCenterYm;
 	private double scale = 100; // pxs per meter.
 	private BufferedImage image;
 	private ImageIcon rescaledImage;
@@ -77,8 +71,6 @@ public class CollisionWindow extends JFrame {
 		points = new ArrayList<Point2D.Double>();
 		this.centerXp = wm * this.scale * 0.5;
 		this.centerYp = hm * this.scale * 0.5;
-		this.trueCenterXm = cxm;
-		this.trueCenterYm = cym;	
 		
 		try {
 			this.image = ImageIO.read(new File(path));
@@ -154,17 +146,16 @@ public class CollisionWindow extends JFrame {
 				// Draw points on screen
 				int[] iter = {1};
 				points.forEach((point) -> {
+					int circleDiameter = 15;
 					// Draw point
 					g.setColor(Color.MAGENTA);
-					g.fillOval((int)point.getX(), (int)point.getY(), 15, 15);
+					// First two coordinates at the upper left of the oval (circle really).
+					g.fillOval((int)point.getX() - circleDiameter/2, (int)point.getY() - circleDiameter/2, circleDiameter, circleDiameter);
 					// Label point
 					g.setColor(Color.BLACK);
-					g.drawString(Integer.toString(iter[0]), (int)point.getX() + 5, (int)point.getY() + 10);
+					g.drawString(Integer.toString(iter[0]), (int)point.getX() - 3, (int)point.getY() + 5);
 					iter[0]++;
 				});
-				// g.fillOval((int)centerXp, (int)centerYp, 10, 10);
-				
-
 			}
 		};	
 		pnlDisplay.setBackground(UIManager.getColor("Button.background"));
@@ -212,11 +203,6 @@ public class CollisionWindow extends JFrame {
 	public void start() {
 		setVisible(true);
 	}
-	
-	public void setNewCenter(double newCxm, double newCym) {
-		this.trueCenterXm = newCxm;
-		this.trueCenterYm = newCym;
-	}
 
 	public ArrayList<Point2D.Double> returnPoints() {
 		/*
@@ -225,9 +211,9 @@ public class CollisionWindow extends JFrame {
 		 * Cocos2dx's origin is in the *bottom left*, not *top left*.
 		 * Thus each point's ym must be subtracted from the height.
 		 */
-		ArrayList<Point2D.Double> correctedPoints = new ArrayList<Point2D.Double>(); 
-		double xOffsetm = this.trueCenterXm - (this.centerXp / this.scale);
-		double yOffsetm = this.trueCenterYm - (this.centerYp / this.scale);
+		ArrayList<Point2D.Double> correctedPoints = new ArrayList<Point2D.Double>();
+		double xOffsetm = - (this.centerXp / this.scale);
+		double yOffsetm = - (this.centerYp / this.scale);
 		
 		double hm = this.centerYp * 2 / this.scale;
 			

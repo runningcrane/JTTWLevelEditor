@@ -71,9 +71,6 @@ public class Platform extends AInteractable {
 	public void setCenter(double cxm, double cym) {		
 		this.setCenterXm(cxm);
 		this.setCenterYm(cym);
-		
-		// Edit where the CollisionWindow is too
-		this.settings.setNewCenter(cxm, cym);
 	}
 	
 	public BufferedImage getImage() {
