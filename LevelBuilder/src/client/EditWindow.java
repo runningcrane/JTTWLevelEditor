@@ -44,60 +44,17 @@ public class EditWindow extends JPanel {
 	
 	
 	public void initGUI() {
-		setLayout(new GridLayout(3, 1, 0, 0));
-				
-		JButton btnMove = new JButton("New center");
-		btnMove.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
-		
-		JLabel lblTicket = new JLabel("#" + this.ticket);
-		add(lblTicket);
-		add(btnMove);
-		
-		JButton btnCollision = new JButton("Edit collision");
-		btnCollision.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});		
-		add(btnCollision);
-		
-		JLabel lblWidth = new JLabel("Width (m):");
-		add(lblWidth);
-		
-		JTextField txtWidth = new JTextField();
-		JTextField txtHeight = new JTextField();
-		add(txtWidth);
-		txtWidth.setColumns(10);
-		
-		JButton btnDimensions = new JButton("Change dimensions");
-		btnDimensions.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		add(btnDimensions);
-		
-		JLabel lblNewLabel = new JLabel("Height (m):");
-		add(lblNewLabel);
-				
-		add(txtHeight);
-		txtHeight.setColumns(10);
-		
-		JButton btnDelete = new JButton("Remove");
-		btnDelete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		btnDelete.setBackground(Color.RED);
-		btnDelete.setForeground(Color.WHITE);
-		add(btnDelete);		
+		// To be filled in by LayerWindow.
 	}
 
 	public void start() {
 		setVisible(true);
 	}	
+	
+	/**
+	 * Used when loading in a JSON file. We need a way to get rid of this window AND its JSON separator.
+	 */
+	public void manualRemove() {
+		// To be filled in in LayerWindow
+	}
 }

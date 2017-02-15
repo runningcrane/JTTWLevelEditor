@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -74,8 +75,8 @@ public class LayerWindow extends JFrame {
 				JLabel lblWidth = new JLabel("Width (m):");
 				add(lblWidth);
 				
-				JTextField txtWidth = new JTextField();
-				JTextField txtHeight = new JTextField();
+				JTextField txtWidth = new JTextField(Double.toString(wm));
+				JTextField txtHeight = new JTextField(Double.toString(hm));
 				add(txtWidth);
 				txtWidth.setColumns(10);
 				
@@ -133,7 +134,14 @@ public class LayerWindow extends JFrame {
 				btnDelete.setBackground(Color.RED);
 				btnDelete.setForeground(Color.WHITE);
 				add(btnDelete);						
+			}					
+			
+			@Override
+			public void manualRemove() {
+				System.out.println("Removing #" + ticket + "...");
+				removeEditWindow(ticket, jsep);
 			}
+			
 		};
 		
 		contentPane.add(newWindow);
@@ -165,11 +173,22 @@ public class LayerWindow extends JFrame {
 		contentPane.remove(this.edits.get(ticket));
 		contentPane.remove(jsep);
 		
+		// Remove from the edits list		
+		edits.remove(ticket);
+		
 		// Refresh the layer.
 		contentPane.repaint();
 	}
 	
 	public void removeAllWindows() {
+		// Call upon the edits to remove themselves and separators
+		Integer[] keys = this.edits.keySet().toArray(new Integer[this.edits.size()]);
+		for (int i = 0; i < keys.length; i++) {
+			EditWindow toRemove = this.edits.get(keys[i]);
+			toRemove.manualRemove();
+		}
+		
+		// ...Just to be sure, clear the list. It should be cleared, but just in case. 
 		this.edits.clear();
 		
 		// Refresh the layer.

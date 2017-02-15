@@ -554,8 +554,10 @@ public class LevelManager {
 		this.npcs.clear();
 		
 		// Clear the current list of platforms. 
-		// By the way, they need to be removed from the LayerWindow as well.
 		this.plats.clear();
+		
+		// By the way, they need to be removed from the LayerWindow as well.
+		this.ltlAdapter.removeAllWindows();
 		
 		// Reset the ticketer.
 		this.ticket = 1;
