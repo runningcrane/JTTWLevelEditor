@@ -24,10 +24,8 @@ import javax.swing.JTextField;
 public class EditWindow extends JPanel {
 
 	private JPanel contentPane;
-	private int ticket;
+	protected int ticket;
 	private BufferedImage image;
-	private JTextField txtWidth;
-	private JTextField txtHeight;
 	
 	public EditWindow getThis() {
 		return this;
@@ -55,7 +53,7 @@ public class EditWindow extends JPanel {
 			}
 		});
 		
-		JLabel lblTicket = new JLabel("Ticket #");
+		JLabel lblTicket = new JLabel("#" + this.ticket);
 		add(lblTicket);
 		add(btnMove);
 		
@@ -70,7 +68,8 @@ public class EditWindow extends JPanel {
 		JLabel lblWidth = new JLabel("Width (m):");
 		add(lblWidth);
 		
-		txtWidth = new JTextField();
+		JTextField txtWidth = new JTextField();
+		JTextField txtHeight = new JTextField();
 		add(txtWidth);
 		txtWidth.setColumns(10);
 		
@@ -83,8 +82,7 @@ public class EditWindow extends JPanel {
 		
 		JLabel lblNewLabel = new JLabel("Height (m):");
 		add(lblNewLabel);
-		
-		txtHeight = new JTextField();
+				
 		add(txtHeight);
 		txtHeight.setColumns(10);
 		

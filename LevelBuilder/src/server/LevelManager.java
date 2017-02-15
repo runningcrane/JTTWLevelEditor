@@ -154,15 +154,15 @@ public class LevelManager {
 		// TODO: Replace later. This is a manual set of width and height of the background.
 		this.vpwm = 8;
 		this.vphm = 6;
-		this.lvwm = 8;
-		this.lvhm = 6;
+		this.lvwm = 20;
+		this.lvhm = 15;
 		
 		// Instantiate various lists.
 		this.plats = new HashMap<Integer, Platform>();
 		this.fg = new ArrayList<INonInteractable>();
 		
 		// Set up the player characters.
-		characters = new HashMap<String, Player>();
+		characters = new HashMap<String, Player>();		
 		
 		// String path, String name, double cxm, double cym, boolean present
 		
@@ -214,6 +214,8 @@ public class LevelManager {
 		sandy.setRescaled(resize(sandyBI, 0.7, 1.7));
 		characters.put("Sandy", sandy);		
 		
+		// Initialize the NPCs.
+		npcs = new HashMap<String, Enemy>();
 	}
 	
 	/**
@@ -249,8 +251,10 @@ public class LevelManager {
 	 */
 	public void render(Component panel, Graphics g) {
 		// Draw background
-		if (bg.getRescaled() != null)
-			g.drawImage(bg.getRescaled().getImage(), 0, 0, null);
+		if (bg.getRescaled() != null) {
+			Point2D.Double vpbg = getViewportCoordinates(0, 0);
+			g.drawImage(bg.getRescaled().getImage(), (int)vpbg.getX(), (int)vpbg.getY(), null);
+		}
 		
 		// Draw platforms		
 		plats.forEach((number, plat) -> {
@@ -348,10 +352,7 @@ public class LevelManager {
 	 * @param hp height in pixels
 	 */
 	public void manualResize(double wp, double hp) {
-		this.lvwm = wp / this.mToPixel;
-		this.lvhm = hp / this.mToPixel;
-		
-		this.setBg(this.bg.getPath());		
+		this.setViewportDimensions( wp / this.mToPixel, hp / this.mToPixel);	
 	}
 	
 	/**
@@ -525,8 +526,8 @@ public class LevelManager {
 			return;
 		}
 		
-		// Begin parsing
-		this.vpOffset = new Point2D.Double(0, 0);
+		// Begin parsing		
+		clearAndSet();
 		
 		JSONObject level = (JSONObject) obj;
 		String name = (String) level.get("levelName");
@@ -546,6 +547,21 @@ public class LevelManager {
 		
 		// Reset LevelManager, etc variables
 		
+	}
+	
+	public void clearAndSet() {
+		// Reset the NPCs.
+		this.npcs.clear();
+		
+		// Clear the current list of platforms. 
+		// By the way, they need to be removed from the LayerWindow as well.
+		this.plats.clear();
+		
+		// Reset the ticketer.
+		this.ticket = 1;
+		
+		// Reset the viewpoint starting point.
+		this.vpOffset = new Point2D.Double(0, 0);
 	}
 	
 	public void setCharacters(JSONObject chars) {
@@ -614,12 +630,6 @@ public class LevelManager {
 	}
 	
 	public void makePlatList(JSONArray list, boolean polygon) {
-		// First, empty any platforms that might've existed
-		this.plats.clear();
-		
-		// Now, reset ticket
-		this.ticket = 1;
-		
 		// Collision box array
 		ArrayList<Point2D.Double> points = new ArrayList<Point2D.Double>();
 		

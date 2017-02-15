@@ -20,10 +20,9 @@ public class Background extends ANonInteractable {
 		this.setPath(path);
 		
 		// Set dimension-related fields
-		this.setInGameWidth(wm);
-		this.setCenterXm(wm/2);		
+		System.out.println("Background size now " + wm + " x " + hm);
+		this.setInGameWidth(wm);	
 		this.setInGameHeight(hm);
-		this.setCenterYm(hm/2);
 	}
 	
 	public BufferedImage getImage() {
@@ -40,9 +39,7 @@ public class Background extends ANonInteractable {
 	
 	public void setDimensions(double wm, double hm) {
 		this.setInGameWidth(wm);
-		this.setCenterXm(wm/2);
 		this.setInGameHeight(hm);
-		this.setCenterYm(hm/2);
 	}	
 	
 	@SuppressWarnings("unchecked")
@@ -59,8 +56,6 @@ public class Background extends ANonInteractable {
 		System.out.println("image name: " + imageName);
 				
 		obj.put("imageName", imageName);
-		obj.put("centerX", this.getCenterXm());
-		obj.put("centerY", this.getCenterYm());
 		obj.put("width", this.getInGameWidth());
 		obj.put("height", this.getInGameHeight());
 		return obj;

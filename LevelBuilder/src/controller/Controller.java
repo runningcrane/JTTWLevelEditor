@@ -186,6 +186,10 @@ public class Controller {
 				layerWindow.addPlatformEdit(ticket, wm, hm);				
 			}
 			
+			public void removeAllWindows() {
+				layerWindow.removeAllWindows();
+			}
+			
 		});
 		
 	}

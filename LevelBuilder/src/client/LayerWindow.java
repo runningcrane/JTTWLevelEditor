@@ -53,19 +53,17 @@ public class LayerWindow extends JFrame {
 				setLayout(new GridLayout(3, 1, 0, 0));
 				
 				JButton btnMove = new JButton("New center");
-				btnMove.setPreferredSize(new Dimension(100, 25));
 				btnMove.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						ltlAdapter.editPlatCenter(ticket);
 					}
 				});
 				
-				JLabel lblTicket = new JLabel("Ticket #");
+				JLabel lblTicket = new JLabel("#" + this.ticket);
 				add(lblTicket);
 				add(btnMove);
 				
 				JButton btnCollision = new JButton("Edit collision");
-				btnCollision.setPreferredSize(new Dimension(100, 25));
 				btnCollision.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						ltlAdapter.editPlatCollisionBox(ticket);
@@ -77,14 +75,11 @@ public class LayerWindow extends JFrame {
 				add(lblWidth);
 				
 				JTextField txtWidth = new JTextField();
-				txtWidth.setText(Double.toString(initWM));
 				JTextField txtHeight = new JTextField();
-				txtHeight.setText(Double.toString(initHM));
 				add(txtWidth);
 				txtWidth.setColumns(10);
 				
 				JButton btnDimensions = new JButton("Change dimensions");
-				btnDimensions.setPreferredSize(new Dimension(100, 25));
 				btnDimensions.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						double wm;
@@ -122,18 +117,17 @@ public class LayerWindow extends JFrame {
 				
 				JLabel lblNewLabel = new JLabel("Height (m):");
 				add(lblNewLabel);
-				
+								
 				add(txtHeight);
 				txtHeight.setColumns(10);
 				
 				JButton btnDelete = new JButton("Remove");
-				btnDelete.setPreferredSize(new Dimension(100, 25));
 				btnDelete.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						ltlAdapter.removePlat(ticket);
 						
 						// Remove this EditWindow.
-						removeEditWindow(ticket, jsep);					
+						removeEditWindow(ticket, jsep);	
 					}
 				});
 				btnDelete.setBackground(Color.RED);
@@ -170,6 +164,13 @@ public class LayerWindow extends JFrame {
 	public void removeEditWindow(int ticket, JSeparator jsep) {
 		contentPane.remove(this.edits.get(ticket));
 		contentPane.remove(jsep);
+		
+		// Refresh the layer.
+		contentPane.repaint();
+	}
+	
+	public void removeAllWindows() {
+		this.edits.clear();
 		
 		// Refresh the layer.
 		contentPane.repaint();

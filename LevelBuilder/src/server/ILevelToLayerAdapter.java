@@ -8,4 +8,10 @@ public interface ILevelToLayerAdapter {
 	 * @param initial hm
 	 */
 	public void addEdit(int ticket, double wm, double hm);
+	
+	
+	/**
+	 * Remove all edit panels.
+	 */
+	public void removeAllWindows();
 }

@@ -25,6 +25,11 @@ import javax.swing.JToggleButton;
 
 public class ControlWindow extends JFrame {
 	
+	/**
+	 * UID for serialization.
+	 */
+	private static final long serialVersionUID = 2761055324358420713L;
+	
 	private JTextField txtLHeight;
 	private JTextField txtLWidth;
 	private JTextField txtVPHeight;
@@ -55,6 +60,7 @@ public class ControlWindow extends JFrame {
 		pnlLevelResize.add(lblTitleLabel);
 		
 		JPanel pnlRControls = new JPanel();
+		pnlRControls.setLayout(new GridLayout(2,4));
 		pnlLevelResize.add(pnlRControls);
 		
 		// Level
@@ -63,7 +69,7 @@ public class ControlWindow extends JFrame {
 		
 		txtLWidth = new JTextField();
 		pnlRControls.add(txtLWidth);
-		txtLWidth.setText("8");
+		txtLWidth.setText("20");
 		txtLWidth.setColumns(10);					
 		
 		JLabel lblLHeight = new JLabel("LHeight (m):");
@@ -71,7 +77,7 @@ public class ControlWindow extends JFrame {
 		
 		txtLHeight = new JTextField();
 		pnlRControls.add(txtLHeight);
-		txtLHeight.setText("6");
+		txtLHeight.setText("15");
 		txtLHeight.setColumns(10);
 		
 		// VP
@@ -79,7 +85,7 @@ public class ControlWindow extends JFrame {
 		pnlRControls.add(lblVPWidth);
 		
 		txtVPWidth = new JTextField();
-		pnlRControls.add(txtLWidth);
+		pnlRControls.add(txtVPWidth);
 		txtVPWidth.setText("8");
 		txtVPWidth.setColumns(10);					
 		
@@ -105,8 +111,7 @@ public class ControlWindow extends JFrame {
 		pnlBackground.add(pnlGrid);
 		
 		// Background panel - grid
-		ImageIcon iiSunny = new ImageIcon("assets/bgSunnyThumbnail.png");				
-		ImageIcon iiGround = new ImageIcon("assets/bgGroundThumbnail.png");				
+		ImageIcon iiSunny = new ImageIcon("assets/bgSunnyThumbnail.png");									
 		ImageIcon iiCloud = new ImageIcon("assets/bgCloudThumbnail.png");		
 		
 		// Background panel - radio buttons
@@ -122,15 +127,6 @@ public class ControlWindow extends JFrame {
 		pnlGrid.add(btnBgCloudy);
 		bgRadGroup.add(btnBgCloudy);
 		
-		JButton btnBgGround = new JButton("Ground");
-		btnBgGround.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ctlAdapter.setBg("assets/bgGround.png");
-			}
-		});
-		btnBgGround.setIcon(iiGround);
-		pnlGrid.add(btnBgGround);
-		bgRadGroup.add(btnBgGround);
 		
 		JButton btnBgSunny = new JButton("Sunny");
 		btnBgSunny.addActionListener(new ActionListener() {
@@ -227,6 +223,7 @@ public class ControlWindow extends JFrame {
 		ImageIcon iiPedestal = new ImageIcon("assets/PedestalThumbnail.png");				
 		ImageIcon iiRock1 = new ImageIcon("assets/Rock1Thumbnail.png");				
 		ImageIcon iiRock2 = new ImageIcon("assets/Rock2Thumbnail.png");	
+		ImageIcon iiBlueGround = new ImageIcon("assets/blueGroundThumbnail.png");	
 		
 		// Platform panel - toggle buttons
 		ButtonGroup platToggleGroup = new ButtonGroup();														
@@ -261,9 +258,19 @@ public class ControlWindow extends JFrame {
 		pnlPlatGrid.add(tglBtnRock2);
 		platToggleGroup.add(tglBtnRock2);	
 		
+		JToggleButton btnBlueGround = new JToggleButton("BlueGround");
+		btnBlueGround.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ctlAdapter.makePlatform("assets/blueGround.png");
+			}
+		});
+		btnBlueGround.setIcon(iiBlueGround);	
+		pnlPlatGrid.add(btnBlueGround);
+		platToggleGroup.add(btnBlueGround);
+		
 		// Resize
 		
-		JButton btnResizeLevel = new JButton("Resize Level");
+		JButton btnResizeLevel = new JButton("Level Resize");
 		btnResizeLevel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				double width;
@@ -288,12 +295,12 @@ public class ControlWindow extends JFrame {
 			}
 		});
 		
-		JButton btnResizeScreen = new JButton("Resize VP");
+		JButton btnResizeScreen = new JButton("VP Resize");
 		btnResizeScreen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				double width;
 				try {
-					width = Double.valueOf(txtLWidth.getText());
+					width = Double.valueOf(txtVPWidth.getText());
 				} catch (NumberFormatException e) {			
 					JOptionPane.showMessageDialog(new JFrame("JOptionPane showMessageDialouge"), 
 							"Width must be an number.");
@@ -301,7 +308,7 @@ public class ControlWindow extends JFrame {
 				}
 				int height;
 				try {
-					height = Integer.valueOf(txtLHeight.getText());
+					height = Integer.valueOf(txtVPHeight.getText());
 				} catch (NumberFormatException e) {
 					JOptionPane.showMessageDialog(new JFrame("JOptionPane showMessageDialouge"), 
 							"Height must be an number.");
