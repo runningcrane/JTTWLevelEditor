@@ -486,7 +486,7 @@ public class LevelManager {
 	 * @param levelName name of the level
 	 * @return JSON to be outputted 
 	 */
-	public JSONObject makeJSON(String levelName, boolean polygon) {
+	public JSONObject makeJSON(String levelName, String nextName, boolean polygon) {
 		System.out.println("Writing with collision = " + polygon);
 		JSONObject json = new JSONObject();
 		JSONArray platList = getPlatList(polygon);
@@ -494,6 +494,7 @@ public class LevelManager {
 		//JSONObject charLocs = getCharLocs(this.charLocs);
 		
 		json.put("levelName", levelName);
+		json.put("nextLevelName", nextName);
 		json.put("background", this.bg.getJSON());
 		json.put("characters", charList);
 		json.put("platforms", platList);
@@ -532,6 +533,9 @@ public class LevelManager {
 		JSONObject level = (JSONObject) obj;
 		String name = (String) level.get("levelName");
 		setLevelName(name);
+		
+		String nextName = (String) level.get("nextLevelName");
+		setNextName(nextName);
 		
 		JSONObject bg = (JSONObject) level.get("background");
 		makeBackground(bg);
@@ -600,6 +604,10 @@ public class LevelManager {
 	
 	public void setLevelName(String name) {		
 		ltoAdapter.setLevelName(name);
+	}
+	
+	public void setNextName(String name) {		
+		ltoAdapter.setNextName(name);
 	}
 	
 	

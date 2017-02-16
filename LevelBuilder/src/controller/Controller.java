@@ -107,8 +107,8 @@ public class Controller {
 			}
 
 			@Override
-			public JSONObject makeJSON(String levelName) {
-				return level.makeJSON(levelName, false);
+			public JSONObject makeJSON(String levelName, String nextName) {
+				return level.makeJSON(levelName, nextName, false);
 			}
 
 			@Override
@@ -169,6 +169,12 @@ public class Controller {
 			}
 
 			@Override
+			public void setNextName(String nextName) {
+				outputWindow.setNextName(nextName);
+				
+			}		
+			
+			@Override
 			public void setCharPos(String playerName) {
 				outputWindow.setCharPos(playerName);				
 			}
@@ -177,7 +183,7 @@ public class Controller {
 			public void setPlatPos(int ticket) {
 				outputWindow.setPlatPos(ticket);
 				
-			}		
+			}
 			
 		}, new ILevelToLayerAdapter() {
 

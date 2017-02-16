@@ -26,6 +26,12 @@ public interface ILevelToOutputAdapter {
 	 */
 	public void setLevelName(String levelName);
 	
+	/*
+	 * Set the flavor text of what the next level is.
+	 * @param nextName name of the next level following this
+	 */
+	public void setNextName(String nextName);
+	
 	/**
 	 * Character name to edit position of. 
 	 * @param playerName name of the player to edit

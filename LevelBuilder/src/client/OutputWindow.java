@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -50,6 +51,7 @@ public class OutputWindow extends JFrame {
 	private JTextField txtInputPath;
 	
 	private double offset;
+	private JTextField txtNextLevel;
 
 	/**
 	 * Create the frame.
@@ -84,18 +86,22 @@ public class OutputWindow extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
+		lblCurLevel = new JLabel("<html><b><u>New Level</u></b></html>");
+		contentPane.add(lblCurLevel, BorderLayout.SOUTH);
+		
 		JPanel pnlControls = new JPanel();
+		pnlControls.setLayout(new GridLayout(3,3));
 		getContentPane().add(pnlControls, BorderLayout.NORTH);
 		
-		JLabel lblOutputPath = new JLabel("JSON Output Path");
+		JLabel lblOutputPath = new JLabel("LevelName");
 		pnlControls.add(lblOutputPath);
 		
 		txtOutputPath = new JTextField();
-		txtOutputPath.setText("level.json");
+		txtOutputPath.setText("level");
 		pnlControls.add(txtOutputPath);
 		txtOutputPath.setColumns(10);
 		
-		JButton btnMakeJSON = new JButton("Output JSON");
+		JButton btnMakeJSON = new JButton("Make");
 		btnMakeJSON.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				/*
@@ -103,8 +109,9 @@ public class OutputWindow extends JFrame {
 				 */
 				FileWriter file;
 				try {
-					file = new FileWriter(txtOutputPath.getText());
-					file.write(otlAdapter.makeJSON(txtOutputPath.getText().substring(0, txtOutputPath.getText().length() - 5)).toJSONString());
+					file = new FileWriter(txtOutputPath.getText() + ".json");
+					file.write(otlAdapter
+							.makeJSON(txtOutputPath.getText(),txtNextLevel.getText()).toJSONString());
 					file.flush();
 					file.close();
 					System.out.println("Output JSON written to bin root");
@@ -115,20 +122,28 @@ public class OutputWindow extends JFrame {
 		});
 		pnlControls.add(btnMakeJSON);
 		
-		lblCurLevel = new JLabel("<html><b><u>New Level</u></b></html>");
-		pnlControls.add(lblCurLevel);
+		JLabel lblNextName = new JLabel("NextLevelName");
+		pnlControls.add(lblNextName);
 		
-		JLabel lblLoadPath = new JLabel("Level Path");
+		txtNextLevel = new JTextField();
+		txtNextLevel.setText("nextLevel");
+		pnlControls.add(txtNextLevel);
+		txtNextLevel.setColumns(10);
+		
+		JLabel lblBlank = new JLabel("");
+		pnlControls.add(lblBlank);
+		
+		JLabel lblLoadPath = new JLabel("Load LevelName");
 		pnlControls.add(lblLoadPath);
 		
 		txtInputPath = new JTextField();
-		txtInputPath.setText("level.json");
+		txtInputPath.setText("nextLevel");
 		pnlControls.add(txtInputPath);
 		txtInputPath.setColumns(10);
 		JButton btnReadJSON = new JButton("Load Level");
 		btnReadJSON.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				otlAdapter.readJSON(txtInputPath.getText());
+				otlAdapter.readJSON(txtInputPath.getText() + ".json");
 			}
 		});
 				
@@ -339,6 +354,12 @@ public class OutputWindow extends JFrame {
 	
 	public void setLevelName(String name) {
 		lblCurLevel.setText(name);
+		txtOutputPath.setText(name);
+	}
+	
+	public void setNextName(String name) {
+		txtNextLevel.setText(name);
+		txtInputPath.setText(name);
 	}
 	
 	/**
