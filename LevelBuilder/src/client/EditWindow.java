@@ -21,6 +21,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+/**
+ * Window that holds information for a specific object (probably a platform)
+ * on screen. This is more of a skeletal; the implementation is done as an 
+ * annonymous inner class in LayerWindow.
+ * 
+ * @author melindacrane
+ */
 public class EditWindow extends JPanel {
 
 	private JPanel contentPane;

@@ -21,7 +21,12 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
+/**
+ * One of the three main windows. LayerWindow holds the "layers" of the level;
+ * namely, EditWindows that can modify their respective object.
+ * 
+ * @author melindacrane
+ */
 public class LayerWindow extends JFrame {
 
 	private JPanel contentPane;

@@ -23,6 +23,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 
+/**
+ * One of the three main windows; this window holds objects to be put into the level
+ * and some level logic (dimensions of level, for example).
+ * 
+ * @author melindacrane
+ */
 public class ControlWindow extends JFrame {
 	
 	/**

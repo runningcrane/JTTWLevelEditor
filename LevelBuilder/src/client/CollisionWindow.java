@@ -24,6 +24,11 @@ import javax.swing.UIManager;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Helper window for setting a collision box for an image.
+ * 
+ * @author melindacrane
+ */
 public class CollisionWindow extends JFrame {
 
 	private static final long serialVersionUID = 2282951544415198068L;

@@ -27,6 +27,12 @@ import org.json.simple.JSONObject;
 
 //import org.json.simple.JSONObject;
 
+/**
+ * One of the three main windows; OutputWindow is the window on which the level is drawn.
+ * It also has some level-saving/level-outputting logic and lets one look around the level.
+ * 
+ * @author melindacrane
+ */
 public class OutputWindow extends JFrame {
 
 	private JPanel contentPane;
