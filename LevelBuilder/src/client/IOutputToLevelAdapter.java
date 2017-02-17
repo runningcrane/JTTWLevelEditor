@@ -62,6 +62,14 @@ public interface IOutputToLevelAdapter {
 	public void editPlatCenter(int ticket, double xp, double yp);
 	
 	/**
+	 * Update a moving platform's endpoint.
+	 * @param ticket identifier of the platform
+	 * @param xp x position in pixels
+	 * @param yp y position in pixels
+	 */
+	public void setEndpointPlat(int ticket, double xp, double yp);
+	
+	/**
 	 * Move the viewport by the specified offset.
 	 * @param xm x offset in meters
 	 * @param ym y offset in meters

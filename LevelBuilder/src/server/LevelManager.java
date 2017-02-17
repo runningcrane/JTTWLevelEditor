@@ -27,6 +27,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.sun.javafx.geom.Line2D;
+
 import interactable.Enemy;
 import interactable.Platform;
 import interactable.Player;
@@ -294,6 +296,27 @@ public class LevelManager {
 					(this.lvhm - (plat.getCenterYm())) * this.mToPixel + 10);
 			g.drawString(Integer.toString(number), (int)(vplbp.getX()), 
 					(int)(vplbp.getY()));
+			
+			// If moveable, show its endpoint and a line to its endpoint.
+			if (plat.isMoveable()) {
+				Point2D.Double vplbep = getViewportCoordinates(plat.getEndX() * this.mToPixel + 5, 
+						(this.lvhm - (plat.getEndY())) * this.mToPixel + 10);
+				
+				// Draw the line first.	
+				g.setColor(Color.MAGENTA);
+		        g.drawLine((int)vplp.getX(), (int)vplp.getY(), (int)vplbep.getX(), (int)vplbep.getY());
+		        
+		        // Then draw the endpoint.
+		        g.setColor(Color.RED);
+		        g.fillOval((int)(vplbep.getX()), (int)(vplbep.getY()), 15, 15);
+		        
+		        // Then label it.
+		        g.setColor(Color.BLACK);
+				Point2D.Double vplbnep = getViewportCoordinates(plat.getEndX() * this.mToPixel + 5, 
+						(this.lvhm - (plat.getEndY())) * this.mToPixel + 10);
+				g.drawString(Integer.toString(number) + "EP", (int)(vplbnep.getX()), 
+						(int)(vplbnep.getY()));
+			}
 		});				
 		
 		// Draw player characters
@@ -483,10 +506,6 @@ public class LevelManager {
 		ltoAdapter.makePlatform(path);
 	}
 	
-	public void makeEndpointPlat(int ticket) {
-		// TODO: this.ltoAdapter.makeEndpointPlat(ticket);
-	}
-	
 	public void setPhysicsPlat(int ticket, double scK) {
 		this.plats.get(ticket).setPhysics(scK);
 	}
@@ -531,6 +550,16 @@ public class LevelManager {
 
 	public void removePlat(int ticket) {
 		this.plats.remove(ticket);			
+	}
+	
+	public void makeEndpointPlat(int ticket) {
+		this.ltoAdapter.makeEndpointPlat(ticket);
+	}
+	
+	public void setEndpointPlat(int ticket, double xp, double yp) {
+		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym.		
+		this.plats.get(ticket).setEndpoint((xp - this.vpOffset.getX()) / this.mToPixel,
+								this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel);		
 	}
 	
 	/**

@@ -29,6 +29,9 @@ public class Platform extends AInteractable {
 	private double scK;
 	private double velocity;
 	
+	/**
+	 * In terms of [cocos, m].
+	 */
 	private Point2D.Double endpoint;
 	
 	
@@ -135,6 +138,18 @@ public class Platform extends AInteractable {
 	
 	public void setRescaled(ImageIcon rescaled) {
 		this.rescaledImage = rescaled;
+	}
+	
+	public boolean isMoveable() {
+		return this.moveable;
+	}
+	
+	public double getEndX() {
+		return this.endpoint.getX();
+	}
+	
+	public double getEndY() {
+		return this.endpoint.getY();
 	}
 	
 	public JSONObject getJSON(boolean polygon) {

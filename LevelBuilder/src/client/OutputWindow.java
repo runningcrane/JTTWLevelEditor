@@ -47,6 +47,7 @@ public class OutputWindow extends JFrame {
 	private boolean editOldPlat;
 	private boolean setPlayerStartPos;
 	private boolean markEOL;
+	private boolean setPlatEndpoint;
 	
 	private String newPath;
 	private int ticket;
@@ -64,6 +65,7 @@ public class OutputWindow extends JFrame {
 		this.editOldPlat = false;
 		this.makeNew = false;
 		this.markEOL = false;		
+		this.setPlatEndpoint = false;
 		this.setPlayerStartPos = false;
 		this.otlAdapter = otlAdapter;			
 		initGUI();
@@ -298,6 +300,15 @@ public class OutputWindow extends JFrame {
 				    
 				    // No longer need to makeNew
 				    markEOL = false;
+				} else if (setPlatEndpoint) {
+					int xp = e.getX();
+				    int yp = e.getY();				    
+				    
+				    // Send position to level manager
+				    otlAdapter.setEndpointPlat(ticket, xp, yp);
+				    
+					// Don't need to make the endpoint anymore
+					setPlatEndpoint = false;
 				}
 			}
 
@@ -353,8 +364,9 @@ public class OutputWindow extends JFrame {
 	public void setActive(String path) {
 		this.makeNew = true;
 		this.editOldPlat = false;
-		this.setPlayerStartPos = false;
 		this.markEOL = false;
+		this.setPlatEndpoint = false;
+		this.setPlayerStartPos = false;
 		this.newPath = path;
 	}
 	
@@ -362,9 +374,10 @@ public class OutputWindow extends JFrame {
 		// Ask for the position of the character.
 		System.out.println("Requesting new position for " + name);
 		this.setPlayerStartPos = true;
+		this.editOldPlat = false;
 		this.makeNew = false;
-		this.markEOL = false;
-		this.editOldPlat = false;	
+		this.markEOL = false;		
+		this.setPlatEndpoint = false;
 		this.newPath = name;
 		
 	}
@@ -388,6 +401,7 @@ public class OutputWindow extends JFrame {
 		this.editOldPlat = true;
 		this.makeNew = false;
 		this.markEOL = false;
+		this.setPlatEndpoint = false;		
 		this.setPlayerStartPos = false;
 	}
 
@@ -395,6 +409,20 @@ public class OutputWindow extends JFrame {
 		this.markEOL = true;
 		this.editOldPlat = false;
 		this.makeNew = false;
+		this.setPlatEndpoint = false;		
+		this.setPlayerStartPos = false;
+	}
+	
+	/**
+	 * Request an endpoint for a moving platform.
+	 * @param ticket
+	 */
+	public void setEndpointPlat(int ticket) {
+		this.ticket = ticket;
+		this.setPlatEndpoint = true;		
+		this.editOldPlat = false;
+		this.makeNew = false;
+		this.markEOL = false;
 		this.setPlayerStartPos = false;
 	}
 }

@@ -191,6 +191,11 @@ public class Controller {
 			public void setEOL(double xp, double yp) {
 				level.setEOL(xp, yp);			
 			}
+
+			@Override
+			public void setEndpointPlat(int ticket, double xp, double yp) {
+				level.setEndpointPlat(ticket, xp, yp);				
+			}
 			
 		});
 		
@@ -243,6 +248,12 @@ public class Controller {
 			@Override
 			public void markEOL() {
 				outputWindow.markEOL();				
+			}
+
+			@Override
+			public void makeEndpointPlat(int ticket) {
+				outputWindow.setEndpointPlat(ticket);
+				
 			}
 			
 		}, new ILevelToLayerAdapter() {
