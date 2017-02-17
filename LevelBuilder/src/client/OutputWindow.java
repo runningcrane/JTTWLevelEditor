@@ -78,7 +78,7 @@ public class OutputWindow extends JFrame {
 	
 	public void initGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 300);
+		setBounds(350, 50, 600, 600);
 		getContentPane().setLayout(new BorderLayout());
 		
 		contentPane = new JPanel();
@@ -314,7 +314,7 @@ public class OutputWindow extends JFrame {
 	 * After setting up the frame, make it visible to the user.
 	 */
 	public void start() {		
-		setTitle("GameView");
+		setTitle("GameView");		
 		setVisible(true);
 	}
 	
@@ -325,8 +325,7 @@ public class OutputWindow extends JFrame {
 	 */
 	public void setDimensions(int wm, int hm) {		
 		this.setSize(wm, hm);		
-	}
-		
+	}		
 	
 	/**
 	 * Redraws the panel with any new/deleted art.

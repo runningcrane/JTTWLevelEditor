@@ -9,6 +9,8 @@ import java.awt.Graphics;
  */
 public interface IControlToLevelAdapter {				
 	
+	public void setMToPixel(double mToPixel);
+	
 	/**
 	 * Request to resize actual level.
 	 * @param wm width in meters

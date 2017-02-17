@@ -41,6 +41,7 @@ public class ControlWindow extends JFrame {
 	private JTextField txtVPHeight;
 	private JTextField txtVPWidth;
 	private IControlToLevelAdapter ctlAdapter;	
+	private JTextField txtMToPixel;
 
 	/**
 	 * Create the frame.
@@ -55,7 +56,7 @@ public class ControlWindow extends JFrame {
 	 */
 	private void initGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);		
+		setBounds(50, 50, 300, 700);		
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		
 		JPanel pnlLevelResize = new JPanel();			
@@ -66,7 +67,7 @@ public class ControlWindow extends JFrame {
 		pnlLevelResize.add(lblTitleLabel);
 		
 		JPanel pnlRControls = new JPanel();
-		pnlRControls.setLayout(new GridLayout(2,4));
+		pnlRControls.setLayout(new GridLayout(3,4));
 		pnlLevelResize.add(pnlRControls);
 		
 		// Level
@@ -102,6 +103,91 @@ public class ControlWindow extends JFrame {
 		pnlRControls.add(txtVPHeight);
 		txtVPHeight.setText("6");
 		txtVPHeight.setColumns(10);
+		
+		JLabel lblMToPixel = new JLabel("mToPixel");
+		pnlRControls.add(lblMToPixel);
+		
+		txtMToPixel = new JTextField();
+		txtMToPixel.setText("100");
+		txtMToPixel.setToolTipText("");
+		pnlRControls.add(txtMToPixel);
+		txtMToPixel.setColumns(10);
+		
+		JPanel pnlControlButtons = new JPanel();
+		getContentPane().add(pnlControlButtons);
+		
+		JButton btnMToPixel = new JButton("Change mToPixel");
+		btnMToPixel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				double mToPixel;
+				try {
+					mToPixel = Double.valueOf(txtMToPixel.getText());
+				} catch (NumberFormatException e) {			
+					JOptionPane.showMessageDialog(new JFrame("JOptionPane showMessageDialouge"), 
+							"mToPixel must be a number");
+					return;
+				}				
+				
+				// TODO: negative numbers check				
+				ctlAdapter.setMToPixel(mToPixel);			
+			}
+		});
+		pnlControlButtons.add(btnMToPixel);
+		
+		// Resize
+		
+		JButton btnResizeScreen = new JButton("VP Resize");
+		pnlControlButtons.add(btnResizeScreen);	
+		btnResizeScreen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				double width;
+				try {
+					width = Double.valueOf(txtVPWidth.getText());
+				} catch (NumberFormatException e) {			
+					JOptionPane.showMessageDialog(new JFrame("JOptionPane showMessageDialouge"), 
+							"Width must be an number.");
+					return;
+				}
+				int height;
+				try {
+					height = Integer.valueOf(txtVPHeight.getText());
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(new JFrame("JOptionPane showMessageDialouge"), 
+							"Height must be an number.");
+					return;
+				}
+				
+				// TODO: negative numbers check				
+				ctlAdapter.setViewportDimensions(width, height);
+			}
+		});
+		
+		JButton btnResizeLevel = new JButton("Level Resize");
+		pnlControlButtons.add(btnResizeLevel);
+		btnResizeLevel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				double width;
+				try {
+					width = Double.valueOf(txtLWidth.getText());
+				} catch (NumberFormatException e) {			
+					JOptionPane.showMessageDialog(new JFrame("JOptionPane showMessageDialouge"), 
+							"Width must be an number.");
+					return;
+				}
+				int height;
+				try {
+					height = Integer.valueOf(txtLHeight.getText());
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(new JFrame("JOptionPane showMessageDialouge"), 
+							"Height must be an number.");
+					return;
+				}
+				
+				// TODO: negative numbers check				
+				ctlAdapter.setLevelDimensions(width, height);
+			}
+		});
+		
 		
 		// Background panel		
 		JPanel pnlBackground = new JPanel();
@@ -273,61 +359,6 @@ public class ControlWindow extends JFrame {
 		btnBlueGround.setIcon(iiBlueGround);	
 		pnlPlatGrid.add(btnBlueGround);
 		platToggleGroup.add(btnBlueGround);
-		
-		// Resize
-		
-		JButton btnResizeLevel = new JButton("Level Resize");
-		btnResizeLevel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				double width;
-				try {
-					width = Double.valueOf(txtLWidth.getText());
-				} catch (NumberFormatException e) {			
-					JOptionPane.showMessageDialog(new JFrame("JOptionPane showMessageDialouge"), 
-							"Width must be an number.");
-					return;
-				}
-				int height;
-				try {
-					height = Integer.valueOf(txtLHeight.getText());
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(new JFrame("JOptionPane showMessageDialouge"), 
-							"Height must be an number.");
-					return;
-				}
-				
-				// TODO: negative numbers check				
-				ctlAdapter.setLevelDimensions(width, height);
-			}
-		});
-		
-		JButton btnResizeScreen = new JButton("VP Resize");
-		btnResizeScreen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				double width;
-				try {
-					width = Double.valueOf(txtVPWidth.getText());
-				} catch (NumberFormatException e) {			
-					JOptionPane.showMessageDialog(new JFrame("JOptionPane showMessageDialouge"), 
-							"Width must be an number.");
-					return;
-				}
-				int height;
-				try {
-					height = Integer.valueOf(txtVPHeight.getText());
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(new JFrame("JOptionPane showMessageDialouge"), 
-							"Height must be an number.");
-					return;
-				}
-				
-				// TODO: negative numbers check				
-				ctlAdapter.setViewportDimensions(width, height);
-			}
-		});
-		
-		pnlLevelResize.add(btnResizeScreen);
-		pnlLevelResize.add(btnResizeLevel);
 				
 		/**
 		 * pnlDisplayArea.setSize(Integer.valueOf(txtWidth.getText()), 
@@ -341,8 +372,16 @@ public class ControlWindow extends JFrame {
 	 */
 	public void start() {
 		setTitle("Controls");
-		setSize(200, 550);
+		//setSize(200, 550);
 		setVisible(true);
+	}
+	
+	/**
+	 * Show the JSON-provided mToPixel ratio.
+	 * @param mToPixel in-game meters-to-pixels ratio
+	 */
+	public void setMToPixel(double mToPixel) {
+		txtMToPixel.setText(Double.toString(mToPixel));
 	}
 
 }

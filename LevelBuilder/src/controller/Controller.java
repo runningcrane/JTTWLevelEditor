@@ -47,6 +47,10 @@ public class Controller {
 	 */
 	public Controller() {
 		controlWindow = new ControlWindow(new IControlToLevelAdapter() {
+			@Override
+			public void setMToPixel(double mToPixel) {
+				level.setMToPixel(mToPixel);				
+			}			
 
 			@Override
 			public void togglePlayer(String name, boolean status) {
@@ -71,7 +75,7 @@ public class Controller {
 			@Override
 			public void makePlatform(String path) {
 				level.setActive(path);
-			}			
+			}
 			
 		});
 		
@@ -145,6 +149,11 @@ public class Controller {
 		});
 		
 		level = new LevelManager(new ILevelToControlAdapter() {
+
+			@Override
+			public void setMToPixel(double mToPixel) {
+				controlWindow.setMToPixel(mToPixel);				
+			}
 			
 		}, new ILevelToOutputAdapter() {
 

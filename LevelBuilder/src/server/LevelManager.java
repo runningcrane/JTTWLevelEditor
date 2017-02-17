@@ -101,7 +101,7 @@ public class LevelManager {
 	/**
 	 * Adapter to communicate with the controls panel.
 	 */
-	private ILevelToControlAdapter ltbAdapter;
+	private ILevelToControlAdapter ltcAdapter;
 	
 	/**
 	 * Adapter to communicate with the output panel.
@@ -132,7 +132,7 @@ public class LevelManager {
 	 */
 	public LevelManager(ILevelToControlAdapter ltbAdapter, ILevelToOutputAdapter ltoAdapter,
 			ILevelToLayerAdapter ltlAdapter) {
-		this.ltbAdapter = ltbAdapter;
+		this.ltcAdapter = ltbAdapter;
 		this.ltoAdapter = ltoAdapter;
 		this.ltlAdapter = ltlAdapter;
 		
@@ -175,6 +175,7 @@ public class LevelManager {
 			e.printStackTrace();
 			return;
 		}
+		monkey.setImage(monkeyBI);
 		monkey.setRescaled(resize(monkeyBI, 0.7, 1.7));
 		characters.put("Monkey", monkey);		
 
@@ -187,6 +188,7 @@ public class LevelManager {
 			e.printStackTrace();
 			return;
 		}
+		monk.setImage(monkBI);
 		monk.setRescaled(resize(monkBI, 0.7, 1.7));
 		characters.put("Monk", monk);
 		
@@ -199,6 +201,7 @@ public class LevelManager {
 			e.printStackTrace();
 			return;
 		}
+		pig.setImage(pigBI);
 		pig.setRescaled(resize(pigBI, 0.7, 1.7));
 		characters.put("Piggy", pig);
 		
@@ -211,6 +214,7 @@ public class LevelManager {
 			e.printStackTrace();
 			return;
 		}
+		sandy.setImage(sandyBI);
 		sandy.setRescaled(resize(sandyBI, 0.7, 1.7));
 		characters.put("Sandy", sandy);		
 		
@@ -310,6 +314,21 @@ public class LevelManager {
 		this.vpOffset = new Point2D.Double(this.vpOffset.getX() + xm * this.mToPixel, 
 				this.vpOffset.getY() + ym * this.mToPixel);
 	}
+	
+	/**
+	 * Request output window to change the number of pixels in a meter.
+	 * @param mToPixel
+	 */
+	public void setMToPixel(double mToPixel) {
+		this.mToPixel = mToPixel;
+		
+		// Unfortunately this requires resetting ALL of the rescaled images.		
+		this.plats.forEach((ticket, plat) -> plat.setRescaled(resize(plat.getImage(), plat.getInGameWidth(), plat.getInGameHeight())));		
+		this.characters.forEach((name, player) -> player.setRescaled(resize(player.getImage(), 0.7, 1.7)));
+		// this.npcs.forEach((name, enemy) -> enemy.setRescaled(resize(enemy.getImage(), enemy.getInGameWidth(), enemy.getInGameHeight())));
+		this.bg.setRescaled(resize(this.bg.getImage(), this.lvwm, this.lvhm));		 
+	}
+	
 	/**
 	 * Request output window to change its size.
 	 * @param wm width in in-game meters
@@ -495,6 +514,7 @@ public class LevelManager {
 		
 		json.put("levelName", levelName);
 		json.put("nextLevelName", nextName);
+		json.put("mToPixel", this.mToPixel);
 		json.put("background", this.bg.getJSON());
 		json.put("characters", charList);
 		json.put("platforms", platList);
@@ -535,7 +555,7 @@ public class LevelManager {
 		setLevelName(name);
 		
 		String nextName = (String) level.get("nextLevelName");
-		setNextName(nextName);
+		setNextName(nextName);		
 		
 		JSONObject bg = (JSONObject) level.get("background");
 		makeBackground(bg);
@@ -549,7 +569,9 @@ public class LevelManager {
 		JSONObject characters = (JSONObject) level.get("characters");
 		setCharacters(characters);
 		
-		// Reset LevelManager, etc variables
+		// Resize last
+		double mToPixel = (Double) level.get("mToPixel");
+		jsonSetMToPixel(mToPixel);
 		
 	}
 	
@@ -608,6 +630,11 @@ public class LevelManager {
 	
 	public void setNextName(String name) {		
 		ltoAdapter.setNextName(name);
+	}
+	
+	public void jsonSetMToPixel(double mToPixel) {
+		setMToPixel(mToPixel);
+		ltcAdapter.setMToPixel(mToPixel);
 	}
 	
 	
