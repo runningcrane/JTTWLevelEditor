@@ -401,8 +401,9 @@ public class LevelManager {
 	 * @param yp ypixel location on screen [swing vp coordinates]
 	 * @param wm expected width in in-game meters
 	 * @param hm expected height in in-game meters
+	 * @return a reference to the platform. The JSON parser needs this
 	 */
-	public void makePlatform(String path, double xp, double yp, double wm, double hm,
+	public Platform makePlatform(String path, double xp, double yp, double wm, double hm,
 			ArrayList<Point2D.Double> points) {
 		Platform platform;
 		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym appropriately.
@@ -423,7 +424,7 @@ public class LevelManager {
 		} catch (IOException e) {
 			System.err.println("File not found: " + path);
 			e.printStackTrace();
-			return;
+			return null;
 		}
 		
 		platform.setImage(image);
@@ -431,11 +432,12 @@ public class LevelManager {
 		
 		plats.put(this.ticket, platform);
 		ltlAdapter.addEdit(this.ticket, wm, hm);
-		this.ticket++;
+		this.ticket++;	
 		
-		// Let the layer window know a platform has been made
-		
+		return platform;
 	}	
+	
+	// TOGGLE SECTION - BEGIN
 
 	/**
 	 * Toggle players. 	
@@ -453,6 +455,24 @@ public class LevelManager {
 		
 	}
 	
+	public void toggleDisappearsPlat(int ticket, boolean selected) {
+		// Update the specified platform.
+		this.plats.get(ticket).setDisappears(selected);
+	}
+	
+	public void toggleMoveablePlat(int ticket, boolean selected) {
+		this.plats.get(ticket).setMoveable(selected);
+	}
+	
+	public void toggleSinkablePlat(int ticket, boolean selected) {
+		this.plats.get(ticket).setSinkable(selected);
+	}
+	
+	public void toggleClimbablePlat(int ticket, boolean selected) {
+		this.plats.get(ticket).setClimbable(selected);
+	}
+			
+	// TOGGLE SECTION - END
 	
 	/**
 	 * The user wants to add a platform. Tell the output window to request focus,
@@ -461,6 +481,18 @@ public class LevelManager {
 	 */
 	public void setActive(String path) {
 		ltoAdapter.makePlatform(path);
+	}
+	
+	public void makeEndpointPlat(int ticket) {
+		// TODO: this.ltoAdapter.makeEndpointPlat(ticket);
+	}
+	
+	public void setPhysicsPlat(int ticket, double scK) {
+		this.plats.get(ticket).setPhysics(scK);
+	}
+	
+	public void setVelocityPlat(int ticket, double velocity) {
+		this.plats.get(ticket).setVelocity(velocity);
 	}
 	
 	// START EDITING SECTION
@@ -631,8 +663,7 @@ public class LevelManager {
 		this.vpOffset = new Point2D.Double(0, 0);
 	}
 	
-	public void setCharacters(JSONObject chars) {
-		// TODO: This could be done in a foreach loop if we used a JSONArray... talk to Bryce
+	public void setCharacters(JSONObject chars) {		
 		JSONObject monkey = (JSONObject)chars.get("Monkey");
 		double cxm = (double)monkey.get("startingXPos");
 		double cym = (double)monkey.get("startingYPos");
@@ -737,8 +768,30 @@ public class LevelManager {
 			}
 			
 			// makePlatform takes swing coordinates, so m is translated to px and y is flipped.
-			makePlatform(path, cxm * this.mToPixel, (this.lvhm - cym) * this.mToPixel, wm, hm, points);
-								
+			Platform newPlat = makePlatform(path, cxm * this.mToPixel, (this.lvhm - cym) * this.mToPixel, wm, hm, points);
+			
+			// Set the other fields of the platform.
+			boolean disappears = (boolean)plat.get("disappears");
+			newPlat.setDisappears(disappears);
+			
+			boolean moveable = (boolean)plat.get("moveable");
+			newPlat.setMoveable(moveable);
+			
+			boolean sinkable = (boolean)plat.get("sinkable");
+			newPlat.setSinkable(sinkable);
+			
+			boolean climbable = (boolean)plat.get("climbable");
+			newPlat.setClimbable(climbable);
+			
+			double scK = (double)plat.get("springCK");
+			newPlat.setPhysics(scK);
+			
+			double velocity = (double)plat.get("velocity");
+			newPlat.setVelocity(velocity);
+			
+			double endX = (double)plat.get("endX");
+			double endY = (double)plat.get("endY");
+			newPlat.setEndpoint(endX, endY);
 		}
 	}
 	

@@ -21,6 +21,17 @@ public class Platform extends AInteractable {
 	private BufferedImage image;
 	private ImageIcon rescaledImage;
 	
+	private boolean disappears;
+	private boolean moveable;
+	private boolean sinkable;
+	private boolean climbable;
+	
+	private double scK;
+	private double velocity;
+	
+	private Point2D.Double endpoint;
+	
+	
 	/**
 	 * 
 	 * @param path path to image
@@ -32,6 +43,7 @@ public class Platform extends AInteractable {
 	 */
 	public Platform (String path, double cxm, double cym,
 			double wm, double hm, boolean loadedBox) {
+		// Take in the given arguments.
 		this.setPath(path);
 		this.setCenterXm(cxm);
 		this.setCenterYm(cym);
@@ -39,6 +51,14 @@ public class Platform extends AInteractable {
 		this.setInGameWidth(wm);
 		this.setInGameHeight(hm);
 		
+		// Initialize the others.
+		this.disappears = false;
+		this.moveable = false;
+		this.sinkable = false;
+		this.climbable = false;
+		this.scK = 1.0;
+		this.velocity = 1.0;
+		this.endpoint = new Point2D.Double(0, 0);			
 		this.settings = new CollisionWindow (path, wm, hm, cxm, cym);
 		
 		if (!loadedBox) {
@@ -73,6 +93,34 @@ public class Platform extends AInteractable {
 		this.setCenterYm(cym);
 	}
 	
+	public void setDisappears(boolean selected) {
+		this.disappears = selected;
+	}
+	
+	public void setMoveable(boolean selected) {
+		this.moveable = selected;
+	}
+
+	public void setSinkable(boolean selected) {
+		this.sinkable = selected;
+	}
+
+	public void setClimbable(boolean selected) {
+		this.climbable = selected;
+	}
+	
+	public void setPhysics(double scK) {
+		this.scK = scK;
+	}
+	
+	public void setVelocity(double velocity) {
+		this.velocity = velocity;
+	}
+	
+	public void setEndpoint(double x, double y) {
+		this.endpoint = new Point2D.Double(x, y);
+	}
+	
 	public BufferedImage getImage() {
 		return this.image;
 	}	
@@ -105,7 +153,14 @@ public class Platform extends AInteractable {
 		obj.put("centerY", this.getCenterYm());
 		obj.put("imageSizeWidth", this.getInGameWidth());
 		obj.put("imageSizeHeight", this.getInGameHeight());
-		obj.put("moveable", false); // TODO: This will change when moveability is implemented. 
+		obj.put("disappears", this.disappears);
+		obj.put("moveable", this.moveable); 
+		obj.put("sinkable", this.sinkable);
+		obj.put("climbable", this.climbable);
+		obj.put("springCK", this.scK);
+		obj.put("velocity", this.velocity);
+		obj.put("endX", this.endpoint.getX());
+		obj.put("endY", this.endpoint.getY());
 		
 		// Replace the below with collision points.
 		JSONArray pointsList = new JSONArray();

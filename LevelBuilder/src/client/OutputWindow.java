@@ -287,6 +287,7 @@ public class OutputWindow extends JFrame {
 				    
 					// No longer need to set position
 					setPlayerStartPos = false;
+					
 				} else if (markEOL) {
 					int xp = e.getX();
 				    int yp = e.getY();

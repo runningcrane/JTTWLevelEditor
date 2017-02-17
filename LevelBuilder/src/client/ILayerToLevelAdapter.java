@@ -9,7 +9,7 @@ public interface ILayerToLevelAdapter {
 	
 	public void changeDimPlat(int ticket, double wm, double hm);
 	
-	public void toggleSelectedPlat(int ticket, boolean selected);
+	public void toggleDisappearsPlat(int ticket, boolean selected);
 	
 	public void makeEndpointPlat(int ticket);
 	

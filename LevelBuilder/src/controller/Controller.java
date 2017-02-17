@@ -105,16 +105,16 @@ public class Controller {
 			public void changeDimPlat(int ticket, double wm, double hm) {
 				level.editPlatDim(ticket, wm, hm);				
 			}
-
-			@Override
-			public void toggleSelectedPlat(int ticket, boolean selected) {
-				level.toggleSelectedPlat(ticket, selected);
-				
-			}
-
+			
 			@Override
 			public void makeEndpointPlat(int ticket) {
 				level.makeEndpointPlat(ticket);
+			}
+
+			@Override
+			public void toggleDisappearsPlat(int ticket, boolean selected) {
+				level.toggleDisappearsPlat(ticket, selected);
+				
 			}
 
 			@Override

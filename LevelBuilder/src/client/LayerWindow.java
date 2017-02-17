@@ -113,7 +113,7 @@ public class LayerWindow extends JFrame {
 				        boolean selected = abstractButton.getModel().isSelected();
 				        
 				        // Go update that platform
-				        ltlAdapter.toggleSelectedPlat(ticket, selected);
+				        ltlAdapter.toggleDisappearsPlat(ticket, selected);
 				      }
 				});
 				pnlDisappears.add(chckbxDisappears);
