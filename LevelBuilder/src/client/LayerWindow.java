@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -55,37 +57,157 @@ public class LayerWindow extends JFrame {
 			private static final long serialVersionUID = 8116441836763125578L;
 
 			@Override
-			public void initGUI() {
-				setLayout(new GridLayout(3, 1, 0, 0));
+			public void initGUI() {	
+				setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+				
+				JPanel pnlPosition = new JPanel();
+				pnlPosition.setLayout(new GridLayout(3,3,0,0));
+				add(pnlPosition);
+				
+				
+				JLabel lblTicket = new JLabel("<html><b><u>#" + this.ticket + "</u></b></html>");
+				pnlPosition.add(lblTicket);
 				
 				JButton btnMove = new JButton("New center");
-				btnMove.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						ltlAdapter.editPlatCenter(ticket);
-					}
-				});
-				
-				JLabel lblTicket = new JLabel("#" + this.ticket);
-				add(lblTicket);
-				add(btnMove);
+				pnlPosition.add(btnMove);
 				
 				JButton btnCollision = new JButton("Edit collision");
-				btnCollision.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						ltlAdapter.editPlatCollisionBox(ticket);
-					}
-				});		
-				add(btnCollision);
+				pnlPosition.add(btnCollision);
 				
 				JLabel lblWidth = new JLabel("Width (m):");
-				add(lblWidth);
+				pnlPosition.add(lblWidth);
 				
 				JTextField txtWidth = new JTextField(Double.toString(wm));
-				JTextField txtHeight = new JTextField(Double.toString(hm));
-				add(txtWidth);
+				pnlPosition.add(txtWidth);
 				txtWidth.setColumns(10);
 				
 				JButton btnDimensions = new JButton("Change dimensions");
+				pnlPosition.add(btnDimensions);
+				
+				JLabel lblHeight = new JLabel("Height (m):");
+				pnlPosition.add(lblHeight);
+				JTextField txtHeight = new JTextField(Double.toString(hm));
+				pnlPosition.add(txtHeight);
+				txtHeight.setColumns(10);
+				
+				JButton btnDelete = new JButton("Remove");
+				pnlPosition.add(btnDelete);
+				btnDelete.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ltlAdapter.removePlat(ticket);
+						
+						// Remove this EditWindow.
+						removeEditWindow(ticket, jsep);	
+					}
+				});
+				btnDelete.setBackground(Color.RED);
+				btnDelete.setForeground(Color.WHITE);
+				
+				JPanel pnlDisappears = new JPanel();
+				add(pnlDisappears);
+				
+				JCheckBox chckbxDisappears = new JCheckBox("Disappears");
+				chckbxDisappears.addActionListener(new ActionListener() {
+				      public void actionPerformed(ActionEvent actionEvent) {
+				        AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+				        boolean selected = abstractButton.getModel().isSelected();
+				        
+				        // Go update that platform
+				        ltlAdapter.toggleSelectedPlat(ticket, selected);
+				      }
+				});
+				pnlDisappears.add(chckbxDisappears);
+				
+				JPanel pnlMoveable = new JPanel();
+				pnlMoveable.setLayout(new GridLayout(3,2));
+				add(pnlMoveable);
+				
+				JCheckBox chckbxMoveable = new JCheckBox("Moving");
+				chckbxMoveable.addActionListener(new ActionListener() {
+				      public void actionPerformed(ActionEvent actionEvent) {
+				        AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+				        boolean selected = abstractButton.getModel().isSelected();
+				        
+				        // Go update that platform
+				        ltlAdapter.toggleMoveablePlat(ticket, selected);
+				      }
+				});
+				pnlMoveable.add(chckbxMoveable);
+				
+				JButton btnEndPoint = new JButton("Set endpoint");
+				btnEndPoint.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						
+						// Make the endpoint of the path this platform travels.
+						ltlAdapter.makeEndpointPlat(ticket);
+					}
+				});
+				pnlMoveable.add(btnEndPoint);
+				
+				JLabel lblVelocity = new JLabel("Velocity (m/s):");
+				pnlMoveable.add(lblVelocity);
+				
+				JTextField txtVelocity = new JTextField();
+				txtVelocity.setText("0.5");
+				pnlMoveable.add(txtVelocity);
+				txtVelocity.setColumns(10);
+				
+				JButton btnUpdateVelocity = new JButton("Set velocity");
+				btnUpdateVelocity.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						double velocity = Double.parseDouble(txtVelocity.getText());
+						ltlAdapter.setVelocityPlat(ticket, velocity);
+					}
+				});
+				pnlMoveable.add(btnUpdateVelocity);
+				
+				JPanel pnlSinkable = new JPanel();
+				add(pnlSinkable);
+				
+				JCheckBox chckbxSinkable = new JCheckBox("Sinkable");
+				chckbxSinkable.addActionListener(new ActionListener() {
+				      public void actionPerformed(ActionEvent actionEvent) {
+				        AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+				        boolean selected = abstractButton.getModel().isSelected();
+				        
+				        // Go update that platform
+				        ltlAdapter.toggleSinkablePlat(ticket, selected);
+				      }
+				});
+				pnlSinkable.add(chckbxSinkable);
+				
+				JLabel lblscK = new JLabel("Spring constant K:");
+				pnlSinkable.add(lblscK);
+				
+				JTextField txtSCK = new JTextField();
+				txtSCK.setText("1.0");
+				pnlSinkable.add(txtSCK);
+				txtSCK.setColumns(10);
+				
+				JButton btnPhysics = new JButton("Set physics");
+				btnPhysics.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						double sck = Double.parseDouble(txtSCK.getText());
+						ltlAdapter.setPhysicsPlat(ticket, sck);
+					}
+				});
+				pnlSinkable.add(btnPhysics);
+				
+				JPanel pnlClimbable = new JPanel();
+				add(pnlClimbable);
+				
+				JCheckBox chckbxClimbable = new JCheckBox("Climbable");
+				chckbxClimbable.addActionListener(new ActionListener() {
+				      public void actionPerformed(ActionEvent actionEvent) {
+				        AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+				        boolean selected = abstractButton.getModel().isSelected();
+				        
+				        // Go update that platform
+				        ltlAdapter.toggleClimbablePlat(ticket, selected);
+				      }
+				});
+				pnlClimbable.add(chckbxClimbable);
+				
 				btnDimensions.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						double wm;
@@ -119,26 +241,18 @@ public class LayerWindow extends JFrame {
 					    ltlAdapter.changeDimPlat(ticket, wm, hm);
 					}
 				});
-				add(btnDimensions);
 				
-				JLabel lblNewLabel = new JLabel("Height (m):");
-				add(lblNewLabel);
-								
-				add(txtHeight);
-				txtHeight.setColumns(10);
-				
-				JButton btnDelete = new JButton("Remove");
-				btnDelete.addActionListener(new ActionListener() {
+				btnCollision.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ltlAdapter.removePlat(ticket);
-						
-						// Remove this EditWindow.
-						removeEditWindow(ticket, jsep);	
+						ltlAdapter.editPlatCollisionBox(ticket);
 					}
 				});
-				btnDelete.setBackground(Color.RED);
-				btnDelete.setForeground(Color.WHITE);
-				add(btnDelete);						
+				
+				btnMove.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						ltlAdapter.editPlatCenter(ticket);
+					}
+				});												
 			}					
 			
 			@Override

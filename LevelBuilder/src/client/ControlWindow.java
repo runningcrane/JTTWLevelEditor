@@ -114,21 +114,6 @@ public class ControlWindow extends JFrame {
 		pnlRControls.add(txtMToPixel);
 		txtMToPixel.setColumns(10);
 		
-		JPanel pnlEOL = new JPanel();
-		pnlEOL.setLayout(new BoxLayout(pnlEOL, BoxLayout.Y_AXIS));
-		getContentPane().add(pnlEOL);
-		
-		JLabel lblEOL = new JLabel("<html><b>End of Level</b></html>");
-		pnlEOL.add(lblEOL);
-		
-		JButton btnEOL = new JButton("Mark EOL");
-		btnEOL.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.markEOL();
-			}
-		});
-		pnlEOL.add(btnEOL);
-		
 		JPanel pnlControlButtons = new JPanel();
 		getContentPane().add(pnlControlButtons);
 		
@@ -203,6 +188,21 @@ public class ControlWindow extends JFrame {
 				ctlAdapter.setLevelDimensions(width, height);
 			}
 		});
+		
+		JPanel pnlEOL = new JPanel();
+		pnlEOL.setLayout(new BoxLayout(pnlEOL, BoxLayout.Y_AXIS));
+		getContentPane().add(pnlEOL);
+		
+		JLabel lblEOL = new JLabel("<html><b>End of Level</b></html>");
+		pnlEOL.add(lblEOL);
+		
+		JButton btnEOL = new JButton("Mark EOL");
+		btnEOL.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.markEOL();
+			}
+		});
+		pnlEOL.add(btnEOL);
 		
 		
 		// Background panel		

@@ -106,6 +106,42 @@ public class Controller {
 				level.editPlatDim(ticket, wm, hm);				
 			}
 
+			@Override
+			public void toggleSelectedPlat(int ticket, boolean selected) {
+				level.toggleSelectedPlat(ticket, selected);
+				
+			}
+
+			@Override
+			public void makeEndpointPlat(int ticket) {
+				level.makeEndpointPlat(ticket);
+			}
+
+			@Override
+			public void toggleMoveablePlat(int ticket, boolean selected) {
+				level.toggleMoveablePlat(ticket, selected);
+			}
+
+			@Override
+			public void toggleSinkablePlat(int ticket, boolean selected) {
+				level.toggleSinkablePlat(ticket, selected);
+			}
+
+			@Override
+			public void toggleClimbablePlat(int ticket, boolean selected) {
+				level.toggleClimbablePlat(ticket, selected);
+			}
+
+			@Override
+			public void setPhysicsPlat(int ticket, double scK) {
+				level.setPhysicsPlat(ticket, scK);
+			}
+
+			@Override
+			public void setVelocityPlat(int ticket, double velocity) {
+				level.setVelocityPlat(ticket, velocity);
+			}
+
 			
 		});
 		
