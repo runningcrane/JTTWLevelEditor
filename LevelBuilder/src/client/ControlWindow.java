@@ -2,6 +2,7 @@ package client;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -43,6 +44,13 @@ public class ControlWindow extends JFrame {
 	private JTextField txtVPWidth;
 	private IControlToLevelAdapter ctlAdapter;	
 	private JTextField txtMToPixel;
+	
+	private JPanel pnlBack;	
+	private JScrollPane scrPaneScroll;
+	
+	// Dimensions
+	Dimension dimFrame = new Dimension(300,500);
+	Dimension dimButton = new Dimension(68, 70);	
 
 	/**
 	 * Create the frame.
@@ -60,15 +68,25 @@ public class ControlWindow extends JFrame {
 		setBounds(50, 50, 300, 700);		
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		
+		pnlBack = new JPanel();
+		scrPaneScroll = new JScrollPane(pnlBack);
+		scrPaneScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		
+		pnlBack.setBorder(new EmptyBorder(5, 5, 5, 5));
+		pnlBack.setLayout(new BoxLayout(pnlBack, BoxLayout.Y_AXIS));
+		getContentPane().add(scrPaneScroll);		
+		
 		JPanel pnlLevelResize = new JPanel();			
 		pnlLevelResize.setLayout(new BoxLayout(pnlLevelResize, BoxLayout.Y_AXIS));
-		getContentPane().add(pnlLevelResize, BorderLayout.WEST);
+		pnlBack.add(pnlLevelResize, BorderLayout.WEST);
 		
 		JLabel lblTitleLabel = new JLabel("<html><b>Game Window Size</b></html>");
 		pnlLevelResize.add(lblTitleLabel);
 		
 		JPanel pnlRControls = new JPanel();
 		pnlRControls.setLayout(new GridLayout(3,4));
+		Dimension dimPanel = new Dimension(250, 100);
+		pnlRControls.setPreferredSize(dimPanel);
 		pnlLevelResize.add(pnlRControls);
 		
 		// Level
@@ -115,7 +133,8 @@ public class ControlWindow extends JFrame {
 		txtMToPixel.setColumns(10);
 		
 		JPanel pnlControlButtons = new JPanel();
-		getContentPane().add(pnlControlButtons);
+		pnlControlButtons.setPreferredSize(new Dimension(50,60));
+		pnlBack.add(pnlControlButtons);
 		
 		JButton btnMToPixel = new JButton("Change mToPixel");
 		btnMToPixel.addActionListener(new ActionListener() {
@@ -191,7 +210,8 @@ public class ControlWindow extends JFrame {
 		
 		JPanel pnlEOL = new JPanel();
 		pnlEOL.setLayout(new BoxLayout(pnlEOL, BoxLayout.Y_AXIS));
-		getContentPane().add(pnlEOL);
+		pnlEOL.setPreferredSize(new Dimension(50,50));
+		pnlBack.add(pnlEOL);
 		
 		JLabel lblEOL = new JLabel("<html><b>End of Level</b></html>");
 		pnlEOL.add(lblEOL);
@@ -207,9 +227,10 @@ public class ControlWindow extends JFrame {
 		
 		// Background panel		
 		JPanel pnlBackground = new JPanel();
+		pnlBackground.setPreferredSize(dimPanel);
 		pnlBackground.setLayout(new BoxLayout(pnlBackground, BoxLayout.Y_AXIS));
 		
-		getContentPane().add(pnlBackground, BorderLayout.NORTH);
+		pnlBack.add(pnlBackground, BorderLayout.NORTH);
 		
 		JLabel lblBackground = new JLabel("<html><b>Background</b></html>");
 		pnlBackground.add(lblBackground);	
@@ -232,6 +253,7 @@ public class ControlWindow extends JFrame {
 			}
 		});
 		btnBgCloudy.setIcon(iiCloud);
+		btnBgCloudy.setPreferredSize(dimButton);
 		pnlGrid.add(btnBgCloudy);
 		bgRadGroup.add(btnBgCloudy);
 		
@@ -243,6 +265,7 @@ public class ControlWindow extends JFrame {
 			}
 		});
 		btnBgSunny.setIcon(iiSunny);
+		btnBgSunny.setPreferredSize(dimButton);
 		pnlGrid.add(btnBgSunny);
 		bgRadGroup.add(btnBgSunny);
 				
@@ -251,7 +274,7 @@ public class ControlWindow extends JFrame {
 		JPanel pnlPlayer = new JPanel();
 		pnlPlayer.setLayout(new BoxLayout(pnlPlayer, BoxLayout.Y_AXIS));
 		
-		getContentPane().add(pnlPlayer, BorderLayout.SOUTH);		
+		pnlBack.add(pnlPlayer, BorderLayout.SOUTH);		
 		
 		JLabel lblPlayer = new JLabel("<html><b>Players</b></html>");
 		pnlPlayer.add(lblPlayer);
@@ -276,6 +299,7 @@ public class ControlWindow extends JFrame {
 			}
 		});
 		tglMonkey.setIcon(iiMonkey);
+		tglMonkey.setPreferredSize(dimButton);
 		pnlCharGrid.add(tglMonkey);
 		charToggleGroup.add(tglMonkey);
 		
@@ -286,6 +310,7 @@ public class ControlWindow extends JFrame {
 			}
 		});
 		tglMonk.setIcon(iiMonk);
+		tglMonk.setPreferredSize(dimButton);
 		pnlCharGrid.add(tglMonk);
 		charToggleGroup.add(tglMonk);
 		
@@ -296,6 +321,7 @@ public class ControlWindow extends JFrame {
 			}
 		});
 		tglPig.setIcon(iiPig);
+		tglPig.setPreferredSize(dimButton);
 		pnlCharGrid.add(tglPig);
 		charToggleGroup.add(tglPig);
 		
@@ -306,18 +332,19 @@ public class ControlWindow extends JFrame {
 			}
 		});
 		tglSandy.setIcon(iiSandy);
+		tglSandy.setPreferredSize(dimButton);
 		pnlCharGrid.add(tglSandy);
 		charToggleGroup.add(tglSandy);
 		
 		JPanel pnlForeground = new JPanel();
-		getContentPane().add(pnlForeground, BorderLayout.EAST);
+		pnlBack.add(pnlForeground, BorderLayout.EAST);
 		
 		
 		// Platforms
 		
 		JPanel pnlPlatform = new JPanel();
 		pnlPlatform.setLayout(new BoxLayout(pnlPlatform, BoxLayout.Y_AXIS));
-		getContentPane().add(pnlPlatform);
+		pnlBack.add(pnlPlatform);
 		
 		JLabel lblPlatform = new JLabel("<html><b>Platforms</b></html>");
 		pnlPlatform.add(lblPlatform);
@@ -325,12 +352,15 @@ public class ControlWindow extends JFrame {
 		// Platform panel - grid
 		
 		JPanel pnlPlatGrid = new JPanel();
-		pnlPlatGrid.setLayout(new GridLayout(1,3));
+		pnlPlatGrid.setLayout(new GridLayout(2,4));
 		pnlPlatform.add(pnlPlatGrid);
 		
 		ImageIcon iiPedestal = new ImageIcon("assets/PedestalThumbnail.png");				
 		ImageIcon iiRock1 = new ImageIcon("assets/Rock1Thumbnail.png");				
-		ImageIcon iiRock2 = new ImageIcon("assets/Rock2Thumbnail.png");	
+		ImageIcon iiRock2 = new ImageIcon("assets/Rock2Thumbnail.png");
+		ImageIcon iiRock3 = new ImageIcon("assets/Rock3Thumbnail.png");	
+		ImageIcon iiRock4 = new ImageIcon("assets/Rock4Thumbnail.png");	
+		ImageIcon iiRock5 = new ImageIcon("assets/Rock5Thumbnail.png");	
 		ImageIcon iiBlueGround = new ImageIcon("assets/blueGroundThumbnail.png");	
 		
 		// Platform panel - toggle buttons
@@ -343,6 +373,7 @@ public class ControlWindow extends JFrame {
 			}
 		});
 		tglBtnPedestal.setIcon(iiPedestal);
+		tglBtnPedestal.setPreferredSize(dimButton);
 		pnlPlatGrid.add(tglBtnPedestal);
 		platToggleGroup.add(tglBtnPedestal); 
 		
@@ -353,6 +384,7 @@ public class ControlWindow extends JFrame {
 			}
 		});
 		tglBtnRock1.setIcon(iiRock1);
+		tglBtnRock1.setPreferredSize(dimButton);
 		pnlPlatGrid.add(tglBtnRock1);
 		platToggleGroup.add(tglBtnRock1);
 		
@@ -363,8 +395,42 @@ public class ControlWindow extends JFrame {
 			}
 		});
 		tglBtnRock2.setIcon(iiRock2);
+		tglBtnRock2.setPreferredSize(dimButton);
 		pnlPlatGrid.add(tglBtnRock2);
 		platToggleGroup.add(tglBtnRock2);	
+		
+		JToggleButton tglBtnRock3 = new JToggleButton("Rock3");
+		tglBtnRock3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/Rock3.png");
+			}
+		});
+		tglBtnRock3.setIcon(iiRock3);
+		tglBtnRock3.setPreferredSize(dimButton);
+		pnlPlatGrid.add(tglBtnRock3);
+		platToggleGroup.add(tglBtnRock3);
+		
+		JToggleButton tglBtnRock4 = new JToggleButton("Rock4");
+		tglBtnRock4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/Rock4.png");
+			}
+		});
+		tglBtnRock4.setIcon(iiRock4);
+		tglBtnRock4.setPreferredSize(dimButton);
+		pnlPlatGrid.add(tglBtnRock4);
+		platToggleGroup.add(tglBtnRock4);
+		
+		JToggleButton tglBtnRock5 = new JToggleButton("Rock5");
+		tglBtnRock5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/Rock5.png");
+			}
+		});
+		tglBtnRock5.setIcon(iiRock5);
+		tglBtnRock5.setPreferredSize(dimButton);
+		pnlPlatGrid.add(tglBtnRock5);
+		platToggleGroup.add(tglBtnRock5);
 		
 		JToggleButton btnBlueGround = new JToggleButton("BlueGround");
 		btnBlueGround.addActionListener(new ActionListener() {
@@ -372,14 +438,15 @@ public class ControlWindow extends JFrame {
 				ctlAdapter.makePlatform("assets/blueGround.png");
 			}
 		});
-		btnBlueGround.setIcon(iiBlueGround);	
+		btnBlueGround.setIcon(iiBlueGround);
+		btnBlueGround.setPreferredSize(dimButton);
 		pnlPlatGrid.add(btnBlueGround);
 		platToggleGroup.add(btnBlueGround);
 				
-		/**
-		 * pnlDisplayArea.setSize(Integer.valueOf(txtWidth.getText()), 
-				Integer.valueOf(txtHeight.getText()));
-		 */
+		// Resize the frame.        
+        this.scrPaneScroll.setPreferredSize(dimFrame);
+
+		this.pack();
 					
 	}
 	
