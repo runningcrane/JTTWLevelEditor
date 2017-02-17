@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -32,6 +33,8 @@ import javax.swing.border.EmptyBorder;
 public class LayerWindow extends JFrame {
 
 	private JPanel contentPane;
+	private JPanel pnlBack;	
+	private JScrollPane scrPaneScroll;
 	private ILayerToLevelAdapter ltlAdapter;
 	private HashMap<Integer, EditWindow> edits;
 	private double initWM;
@@ -264,13 +267,15 @@ public class LayerWindow extends JFrame {
 			
 		};
 		
-		contentPane.add(newWindow);
+		pnlBack.add(newWindow);
 		this.edits.put(ticket, newWindow);
 		
 		// Add a line to separate areas.
-		contentPane.add(jsep);
+		pnlBack.add(jsep);
 		
 		// Resize the frame.
+        Dimension d = new Dimension(500,300);
+        this.scrPaneScroll.setPreferredSize(d);
 		this.pack();
 	}
 	
@@ -278,9 +283,14 @@ public class LayerWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(950, 50, 100, 100);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-		setContentPane(contentPane);	
+		pnlBack = new JPanel();
+		scrPaneScroll = new JScrollPane(pnlBack);
+		scrPaneScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		
+		pnlBack.setBorder(new EmptyBorder(5, 5, 5, 5));
+		pnlBack.setLayout(new BoxLayout(pnlBack, BoxLayout.Y_AXIS));
+		setContentPane(contentPane);
+		contentPane.add(scrPaneScroll);		
 	}
 	
 	public void start() {
@@ -290,8 +300,8 @@ public class LayerWindow extends JFrame {
 	}
 	
 	public void removeEditWindow(int ticket, JSeparator jsep) {
-		contentPane.remove(this.edits.get(ticket));
-		contentPane.remove(jsep);
+		pnlBack.remove(this.edits.get(ticket));
+		pnlBack.remove(jsep);
 		
 		// Remove from the edits list		
 		edits.remove(ticket);
