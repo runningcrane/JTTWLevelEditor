@@ -348,6 +348,17 @@ public class ControlWindow extends JFrame {
 		
 		JLabel lblPlatform = new JLabel("<html><b>Platforms</b></html>");
 		pnlPlatform.add(lblPlatform);
+		
+		JPanel pnlRocks = new JPanel();
+		pnlRocks.setLayout(new GridLayout(2,4));
+		pnlPlatform.add(pnlRocks);
+		
+		JPanel pnlClouds = new JPanel();
+		pnlClouds.setLayout(new GridLayout(4,4));
+		pnlPlatform.add(pnlClouds);
+		
+		JPanel pnlSpecials = new JPanel();		
+		pnlPlatform.add(pnlSpecials);
 			
 		// Platform panel - grid
 		
@@ -361,7 +372,12 @@ public class ControlWindow extends JFrame {
 		ImageIcon iiRock3 = new ImageIcon("assets/Rock3Thumbnail.png");	
 		ImageIcon iiRock4 = new ImageIcon("assets/Rock4Thumbnail.png");	
 		ImageIcon iiRock5 = new ImageIcon("assets/Rock5Thumbnail.png");	
-		ImageIcon iiBlueGround = new ImageIcon("assets/blueGroundThumbnail.png");	
+		ImageIcon iiBlueGround = new ImageIcon("assets/blueGroundThumbnail.png");
+		ImageIcon iicanyonR = new ImageIcon("assets/canyonRThumbnail.png");				
+		ImageIcon iicanyonL = new ImageIcon("assets/canyonLThumbnail.png");
+		ImageIcon iiForestGround = new ImageIcon("assets/ForestGroundThumbnail.png");	
+		ImageIcon iiTree1 = new ImageIcon("assets/Tree1Thumbnail.png");
+		ImageIcon iiBuddhaHand = new ImageIcon("assets/BuddhaHandThumbnail.png");
 		
 		// Platform panel - toggle buttons
 		ButtonGroup platToggleGroup = new ButtonGroup();														
@@ -377,6 +393,50 @@ public class ControlWindow extends JFrame {
 		pnlPlatGrid.add(tglBtnPedestal);
 		platToggleGroup.add(tglBtnPedestal); 
 		
+		JToggleButton tglBtncanyonR = new JToggleButton("canyonR");
+		tglBtncanyonR.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/canyonR.png");
+			}
+		});
+		tglBtncanyonR.setIcon(iicanyonR);
+		tglBtncanyonR.setPreferredSize(dimButton);
+		pnlPlatGrid.add(tglBtncanyonR);
+		platToggleGroup.add(tglBtncanyonR); 
+		
+		JToggleButton tglBtncanyonL = new JToggleButton("canyonL");
+		tglBtncanyonL.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/canyonL.png");
+			}
+		});
+		tglBtncanyonL.setIcon(iicanyonL);
+		tglBtncanyonL.setPreferredSize(dimButton);
+		pnlPlatGrid.add(tglBtncanyonL);
+		platToggleGroup.add(tglBtncanyonL); 
+		
+		JToggleButton tglBtnTree1 = new JToggleButton("Tree1");
+		tglBtnTree1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/Tree1.png");
+			}
+		});
+		tglBtnTree1.setIcon(iiTree1);
+		tglBtnTree1.setPreferredSize(dimButton);
+		pnlPlatGrid.add(tglBtnTree1);
+		platToggleGroup.add(tglBtnTree1); 
+		
+		JToggleButton tglBtnForestGround = new JToggleButton("ForestGround");
+		tglBtnForestGround.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/ForestGround.png");
+			}
+		});
+		tglBtnForestGround.setIcon(iiForestGround);
+		tglBtnForestGround.setPreferredSize(dimButton);
+		pnlPlatGrid.add(tglBtnForestGround);
+		platToggleGroup.add(tglBtnForestGround); 
+		
 		JToggleButton tglBtnRock1 = new JToggleButton("Rock1");
 		tglBtnRock1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -385,7 +445,7 @@ public class ControlWindow extends JFrame {
 		});
 		tglBtnRock1.setIcon(iiRock1);
 		tglBtnRock1.setPreferredSize(dimButton);
-		pnlPlatGrid.add(tglBtnRock1);
+		pnlRocks.add(tglBtnRock1);
 		platToggleGroup.add(tglBtnRock1);
 		
 		JToggleButton tglBtnRock2 = new JToggleButton("Rock2");
@@ -396,7 +456,7 @@ public class ControlWindow extends JFrame {
 		});
 		tglBtnRock2.setIcon(iiRock2);
 		tglBtnRock2.setPreferredSize(dimButton);
-		pnlPlatGrid.add(tglBtnRock2);
+		pnlRocks.add(tglBtnRock2);
 		platToggleGroup.add(tglBtnRock2);	
 		
 		JToggleButton tglBtnRock3 = new JToggleButton("Rock3");
@@ -407,7 +467,7 @@ public class ControlWindow extends JFrame {
 		});
 		tglBtnRock3.setIcon(iiRock3);
 		tglBtnRock3.setPreferredSize(dimButton);
-		pnlPlatGrid.add(tglBtnRock3);
+		pnlRocks.add(tglBtnRock3);
 		platToggleGroup.add(tglBtnRock3);
 		
 		JToggleButton tglBtnRock4 = new JToggleButton("Rock4");
@@ -418,7 +478,7 @@ public class ControlWindow extends JFrame {
 		});
 		tglBtnRock4.setIcon(iiRock4);
 		tglBtnRock4.setPreferredSize(dimButton);
-		pnlPlatGrid.add(tglBtnRock4);
+		pnlRocks.add(tglBtnRock4);
 		platToggleGroup.add(tglBtnRock4);
 		
 		JToggleButton tglBtnRock5 = new JToggleButton("Rock5");
@@ -429,7 +489,7 @@ public class ControlWindow extends JFrame {
 		});
 		tglBtnRock5.setIcon(iiRock5);
 		tglBtnRock5.setPreferredSize(dimButton);
-		pnlPlatGrid.add(tglBtnRock5);
+		pnlRocks.add(tglBtnRock5);
 		platToggleGroup.add(tglBtnRock5);
 		
 		JToggleButton btnBlueGround = new JToggleButton("BlueGround");
@@ -442,7 +502,216 @@ public class ControlWindow extends JFrame {
 		btnBlueGround.setPreferredSize(dimButton);
 		pnlPlatGrid.add(btnBlueGround);
 		platToggleGroup.add(btnBlueGround);
-				
+		
+		// Clouds
+		ImageIcon iicldClear = new ImageIcon("assets/cldClearThumbnail.png");				
+		ImageIcon iicldCloud = new ImageIcon("assets/cldCloudThumbnail.png");
+		ImageIcon iicldStormy = new ImageIcon("assets/cldStormyThumbnail.png");	
+		ImageIcon iicldSunset = new ImageIcon("assets/cldSunsetThumbnail.png");
+		
+		JToggleButton tglcldClear = new JToggleButton("cldClear");
+		tglcldClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/cldClear.png");
+			}
+		});
+		tglcldClear.setIcon(iicldClear);
+		tglcldClear.setPreferredSize(dimButton);
+		pnlClouds.add(tglcldClear);
+		platToggleGroup.add(tglcldClear);
+		
+		JToggleButton tglcldCloud = new JToggleButton("cldCloud");
+		tglcldCloud.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/cldCloud.png");
+			}
+		});
+		tglcldCloud.setIcon(iicldCloud);
+		tglcldCloud.setPreferredSize(dimButton);
+		pnlClouds.add(tglcldCloud);
+		platToggleGroup.add(tglcldCloud);
+		
+		JToggleButton tglcldStormy = new JToggleButton("cldStormy");
+		tglcldStormy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/cldStormy.png");
+			}
+		});
+		tglcldStormy.setIcon(iicldStormy);
+		tglcldStormy.setPreferredSize(dimButton);
+		pnlClouds.add(tglcldStormy);
+		platToggleGroup.add(tglcldStormy);
+		
+		JToggleButton tglcldSunset = new JToggleButton("cldSunset");
+		tglcldSunset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/cldSunset.png");
+			}
+		});
+		tglcldSunset.setIcon(iicldSunset);
+		tglcldSunset.setPreferredSize(dimButton);
+		pnlClouds.add(tglcldSunset);
+		platToggleGroup.add(tglcldSunset);
+		
+		ImageIcon iicldClearDiagL = new ImageIcon("assets/cldClearDiagLThumbnail.png");				
+		ImageIcon iicldCloudDiagL = new ImageIcon("assets/cldCloudDiagLThumbnail.png");
+		ImageIcon iicldStormyDiagL = new ImageIcon("assets/cldStormyDiagLThumbnail.png");	
+		ImageIcon iicldSunsetDiagL = new ImageIcon("assets/cldSunsetDiagLThumbnail.png");
+		
+		JToggleButton tglcldClearDiagL = new JToggleButton("cldClearDiagL");
+		tglcldClearDiagL.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/cldClearDiagL.png");
+			}
+		});
+		tglcldClearDiagL.setIcon(iicldClearDiagL);
+		tglcldClearDiagL.setPreferredSize(dimButton);
+		pnlClouds.add(tglcldClearDiagL);
+		platToggleGroup.add(tglcldClearDiagL);
+		
+		JToggleButton tglcldCloudDiagL = new JToggleButton("cldCloudDiagL");
+		tglcldCloudDiagL.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/cldCloudDiagL.png");
+			}
+		});
+		tglcldCloudDiagL.setIcon(iicldCloudDiagL);
+		tglcldCloudDiagL.setPreferredSize(dimButton);
+		pnlClouds.add(tglcldCloudDiagL);
+		platToggleGroup.add(tglcldCloudDiagL);
+		
+		JToggleButton tglcldStormyDiagL = new JToggleButton("cldStormyDiagL");
+		tglcldStormyDiagL.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/cldStormyDiagL.png");
+			}
+		});
+		tglcldStormyDiagL.setIcon(iicldStormyDiagL);
+		tglcldStormyDiagL.setPreferredSize(dimButton);
+		pnlClouds.add(tglcldStormyDiagL);
+		platToggleGroup.add(tglcldStormyDiagL);
+		
+		JToggleButton tglcldSunsetDiagL = new JToggleButton("cldSunsetDiagL");
+		tglcldSunsetDiagL.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/cldSunsetDiagL.png");
+			}
+		});
+		tglcldSunsetDiagL.setIcon(iicldSunsetDiagL);
+		tglcldSunsetDiagL.setPreferredSize(dimButton);
+		pnlClouds.add(tglcldSunsetDiagL);
+		platToggleGroup.add(tglcldSunsetDiagL);
+		
+		ImageIcon iicldClearDiagR = new ImageIcon("assets/cldClearDiagRThumbnail.png");				
+		ImageIcon iicldCloudDiagR = new ImageIcon("assets/cldCloudDiagRThumbnail.png");
+		ImageIcon iicldStormyDiagR = new ImageIcon("assets/cldStormyDiagRThumbnail.png");	
+		ImageIcon iicldSunsetDiagR = new ImageIcon("assets/cldSunsetDiagRThumbnail.png");
+		
+		JToggleButton tglcldClearDiagR = new JToggleButton("cldClearDiagR");
+		tglcldClearDiagR.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/cldClearDiagR.png");
+			}
+		});
+		tglcldClearDiagR.setIcon(iicldClearDiagR);
+		tglcldClearDiagR.setPreferredSize(dimButton);
+		pnlClouds.add(tglcldClearDiagR);
+		platToggleGroup.add(tglcldClearDiagR);
+		
+		JToggleButton tglcldCloudDiagR = new JToggleButton("cldCloudDiagR");
+		tglcldCloudDiagR.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/cldCloudDiagR.png");
+			}
+		});
+		tglcldCloudDiagR.setIcon(iicldCloudDiagR);
+		tglcldCloudDiagR.setPreferredSize(dimButton);
+		pnlClouds.add(tglcldCloudDiagR);
+		platToggleGroup.add(tglcldCloudDiagR);
+		
+		JToggleButton tglcldStormyDiagR = new JToggleButton("cldStormyDiagR");
+		tglcldStormyDiagR.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/cldStormyDiagR.png");
+			}
+		});
+		tglcldStormyDiagR.setIcon(iicldStormyDiagR);
+		tglcldStormyDiagR.setPreferredSize(dimButton);
+		pnlClouds.add(tglcldStormyDiagR);
+		platToggleGroup.add(tglcldStormyDiagR);
+		
+		JToggleButton tglcldSunsetDiagR = new JToggleButton("cldSunsetDiagR");
+		tglcldSunsetDiagR.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/cldSunsetDiagR.png");
+			}
+		});
+		tglcldSunsetDiagR.setIcon(iicldSunsetDiagR);
+		tglcldSunsetDiagR.setPreferredSize(dimButton);
+		pnlClouds.add(tglcldSunsetDiagR);
+		platToggleGroup.add(tglcldSunsetDiagR);
+		
+		ImageIcon iicldClearUp = new ImageIcon("assets/cldClearUpThumbnail.png");				
+		ImageIcon iicldCloudUp = new ImageIcon("assets/cldCloudUpThumbnail.png");
+		ImageIcon iicldStormyUp = new ImageIcon("assets/cldStormyUpThumbnail.png");	
+		ImageIcon iicldSunsetUp = new ImageIcon("assets/cldSunsetUpThumbnail.png");
+		
+		JToggleButton tglcldClearUp = new JToggleButton("cldClearUp");
+		tglcldClearUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/cldClearUp.png");
+			}
+		});
+		tglcldClearUp.setIcon(iicldClearUp);
+		tglcldClearUp.setPreferredSize(dimButton);
+		pnlClouds.add(tglcldClearUp);
+		platToggleGroup.add(tglcldClearUp);
+		
+		JToggleButton tglcldCloudUp = new JToggleButton("cldCloudUp");
+		tglcldCloudUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/cldCloudUp.png");
+			}
+		});
+		tglcldCloudUp.setIcon(iicldCloudUp);
+		tglcldCloudUp.setPreferredSize(dimButton);
+		pnlClouds.add(tglcldCloudUp);
+		platToggleGroup.add(tglcldCloudUp);
+		
+		JToggleButton tglcldStormyUp = new JToggleButton("cldStormyUp");
+		tglcldStormyUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/cldStormyUp.png");
+			}
+		});
+		tglcldStormyUp.setIcon(iicldStormyUp);
+		tglcldStormyUp.setPreferredSize(dimButton);
+		pnlClouds.add(tglcldStormyUp);
+		platToggleGroup.add(tglcldStormyUp);
+		
+		JToggleButton tglcldSunsetUp = new JToggleButton("cldSunsetUp");
+		tglcldSunsetUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/cldSunsetUp.png");
+			}
+		});
+		tglcldSunsetUp.setIcon(iicldSunsetUp);
+		tglcldSunsetUp.setPreferredSize(dimButton);
+		pnlClouds.add(tglcldSunsetUp);
+		platToggleGroup.add(tglcldSunsetUp);
+		
+		// Special images
+		JToggleButton tglBtnBuddhaHand = new JToggleButton("BuddhaHand");
+		tglBtnBuddhaHand.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/BuddhaHand.png");
+			}
+		});
+		tglBtnBuddhaHand.setIcon(iiBuddhaHand);
+		tglBtnBuddhaHand.setPreferredSize(dimButton);
+		pnlSpecials.add(tglBtnBuddhaHand);
+		platToggleGroup.add(tglBtnBuddhaHand); 		
+		
 		// Resize the frame.        
         this.scrPaneScroll.setPreferredSize(dimFrame);
 
