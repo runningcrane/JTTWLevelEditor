@@ -424,9 +424,9 @@ public class LevelManager {
 	 * @param yp ypixel location on screen [swing vp coordinates]
 	 * @param wm expected width in in-game meters
 	 * @param hm expected height in in-game meters
-	 * @return a reference to the platform. The JSON parser needs this
+	 * @return the platform's ticket number
 	 */
-	public Platform makePlatform(String path, double xp, double yp, double wm, double hm,
+	public int makePlatform(String path, double xp, double yp, double wm, double hm,
 			ArrayList<Point2D.Double> points) {
 		Platform platform;
 		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym appropriately.
@@ -447,7 +447,7 @@ public class LevelManager {
 		} catch (IOException e) {
 			System.err.println("File not found: " + path);
 			e.printStackTrace();
-			return null;
+			return -1;
 		}
 		
 		platform.setImage(image);
@@ -457,7 +457,7 @@ public class LevelManager {
 		ltlAdapter.addEdit(this.ticket, wm, hm);
 		this.ticket++;	
 		
-		return platform;
+		return this.ticket - 1;
 	}	
 	
 	// TOGGLE SECTION - BEGIN
@@ -775,8 +775,9 @@ public class LevelManager {
 			String path = "assets/" + (String)plat.get("imageName");				
 			double cxm = (double)plat.get("centerX");
 			double cym = (double)plat.get("centerY");
+			
 			double wm = (double)plat.get("imageSizeWidth");
-			double hm = (double)plat.get("imageSizeHeight");
+			double hm = (double)plat.get("imageSizeHeight");			
 			
 			if (polygon) {
 				JSONArray collisionPoints = (JSONArray)plat.get("collisionPoints");
@@ -797,26 +798,35 @@ public class LevelManager {
 			}
 			
 			// makePlatform takes swing coordinates, so m is translated to px and y is flipped.
-			Platform newPlat = makePlatform(path, cxm * this.mToPixel, (this.lvhm - cym) * this.mToPixel, wm, hm, points);
+			int ticket = makePlatform(path, cxm * this.mToPixel, (this.lvhm - cym) * this.mToPixel, wm, hm, points);
+			Platform newPlat = this.plats.get(ticket);
 			
-			// Set the other fields of the platform.
+			// Set the other fields of the platform and its corresponding settings on load.
+			ltlAdapter.setDimensions(ticket, wm, hm);
+			
 			boolean disappears = (boolean)plat.get("disappears");
 			newPlat.setDisappears(disappears);
+			ltlAdapter.setDisappears(ticket, disappears);			
 			
 			boolean moveable = (boolean)plat.get("moveable");
 			newPlat.setMoveable(moveable);
+			ltlAdapter.setMoveable(ticket, moveable);
 			
 			boolean sinkable = (boolean)plat.get("sinkable");
 			newPlat.setSinkable(sinkable);
+			ltlAdapter.setSinkable(ticket, sinkable);
 			
 			boolean climbable = (boolean)plat.get("climbable");
 			newPlat.setClimbable(climbable);
+			ltlAdapter.setClimbable(ticket, climbable);
 			
 			double scK = (double)plat.get("springCK");
 			newPlat.setPhysics(scK);
+			ltlAdapter.setSCK(ticket, scK);
 			
 			double velocity = (double)plat.get("velocity");
 			newPlat.setVelocity(velocity);
+			ltlAdapter.setVelocity(ticket, velocity);
 			
 			double endX = (double)plat.get("endX");
 			double endY = (double)plat.get("endY");

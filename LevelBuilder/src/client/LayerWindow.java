@@ -77,7 +77,7 @@ public class LayerWindow extends JFrame {
 				JLabel lblWidth = new JLabel("Width (m):");
 				pnlPosition.add(lblWidth);
 				
-				JTextField txtWidth = new JTextField(Double.toString(wm));
+				txtWidth = new JTextField(Double.toString(wm));
 				pnlPosition.add(txtWidth);
 				txtWidth.setColumns(10);
 				
@@ -86,7 +86,8 @@ public class LayerWindow extends JFrame {
 				
 				JLabel lblHeight = new JLabel("Height (m):");
 				pnlPosition.add(lblHeight);
-				JTextField txtHeight = new JTextField(Double.toString(hm));
+				
+				txtHeight = new JTextField(Double.toString(hm));
 				pnlPosition.add(txtHeight);
 				txtHeight.setColumns(10);
 				
@@ -106,7 +107,7 @@ public class LayerWindow extends JFrame {
 				JPanel pnlDisappears = new JPanel();
 				add(pnlDisappears);
 				
-				JCheckBox chckbxDisappears = new JCheckBox("Disappears");
+				chckbxDisappears = new JCheckBox("Disappears");
 				chckbxDisappears.addActionListener(new ActionListener() {
 				      public void actionPerformed(ActionEvent actionEvent) {
 				        AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
@@ -122,7 +123,7 @@ public class LayerWindow extends JFrame {
 				pnlMoveable.setLayout(new GridLayout(3,2));
 				add(pnlMoveable);
 				
-				JCheckBox chckbxMoveable = new JCheckBox("Moving");
+				chckbxMoveable = new JCheckBox("Moving");
 				chckbxMoveable.addActionListener(new ActionListener() {
 				      public void actionPerformed(ActionEvent actionEvent) {
 				        AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
@@ -147,7 +148,7 @@ public class LayerWindow extends JFrame {
 				JLabel lblVelocity = new JLabel("Velocity (m/s):");
 				pnlMoveable.add(lblVelocity);
 				
-				JTextField txtVelocity = new JTextField();
+				txtVelocity = new JTextField();
 				txtVelocity.setText("0.5");
 				pnlMoveable.add(txtVelocity);
 				txtVelocity.setColumns(10);
@@ -164,7 +165,7 @@ public class LayerWindow extends JFrame {
 				JPanel pnlSinkable = new JPanel();
 				add(pnlSinkable);
 				
-				JCheckBox chckbxSinkable = new JCheckBox("Sinkable");
+				chckbxSinkable = new JCheckBox("Sinkable");
 				chckbxSinkable.addActionListener(new ActionListener() {
 				      public void actionPerformed(ActionEvent actionEvent) {
 				        AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
@@ -179,7 +180,7 @@ public class LayerWindow extends JFrame {
 				JLabel lblscK = new JLabel("Spring constant K:");
 				pnlSinkable.add(lblscK);
 				
-				JTextField txtSCK = new JTextField();
+				txtSCK = new JTextField();
 				txtSCK.setText("1.0");
 				pnlSinkable.add(txtSCK);
 				txtSCK.setColumns(10);
@@ -196,7 +197,7 @@ public class LayerWindow extends JFrame {
 				JPanel pnlClimbable = new JPanel();
 				add(pnlClimbable);
 				
-				JCheckBox chckbxClimbable = new JCheckBox("Climbable");
+				chckbxClimbable = new JCheckBox("Climbable");
 				chckbxClimbable.addActionListener(new ActionListener() {
 				      public void actionPerformed(ActionEvent actionEvent) {
 				        AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
@@ -314,4 +315,32 @@ public class LayerWindow extends JFrame {
 		contentPane.repaint();
 	}
 
+	public void setDisappears(int ticket, boolean selected) {
+		this.edits.get(ticket).chckbxDisappears.setSelected(selected);
+	}
+	
+	public void setMoveable(int ticket, boolean selected) {
+		this.edits.get(ticket).chckbxMoveable.setSelected(selected);
+	}
+	
+	public void setClimbable(int ticket, boolean selected) {
+		this.edits.get(ticket).chckbxClimbable.setSelected(selected);
+	}
+	
+	public void setSinkable(int ticket, boolean selected) {
+		this.edits.get(ticket).chckbxSinkable.setSelected(selected);
+	}
+	
+	public void setVelocity(int ticket, double velocity) {
+		this.edits.get(ticket).txtVelocity.setText(Double.toString(velocity));
+	}
+	
+	public void setSCK(int ticket, double scK) {
+		this.edits.get(ticket).txtSCK.setText(Double.toString(scK));
+	}
+	
+	public void setDimensions(int ticket, double wm, double hm) {
+		this.edits.get(ticket).txtWidth.setText(Double.toString(wm));
+		this.edits.get(ticket).txtHeight.setText(Double.toString(hm));
+	}
 }

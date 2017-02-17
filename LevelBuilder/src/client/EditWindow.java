@@ -1,5 +1,6 @@
 package client;
 
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 import java.awt.image.BufferedImage;
@@ -20,6 +21,16 @@ public class EditWindow extends JPanel {
 	
 	protected int ticket;
 	private BufferedImage image;
+	
+	// Things that are set upon loading a level:
+	JCheckBox chckbxDisappears;
+	JCheckBox chckbxMoveable;
+	JCheckBox chckbxSinkable;
+	JCheckBox chckbxClimbable;
+	JTextField txtSCK;
+	JTextField txtVelocity;
+	JTextField txtWidth;
+	JTextField txtHeight;
 
 	
 	public EditWindow getThis() {

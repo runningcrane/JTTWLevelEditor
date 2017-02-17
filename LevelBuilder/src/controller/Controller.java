@@ -266,6 +266,41 @@ public class Controller {
 			public void removeAllWindows() {
 				layerWindow.removeAllWindows();
 			}
+
+			@Override
+			public void setDimensions(int ticket, double wm, double hm) {
+				layerWindow.setDimensions(ticket, wm, hm);				
+			}
+
+			@Override
+			public void setDisappears(int ticket, boolean selected) {
+				layerWindow.setDisappears(ticket, selected);
+			}
+
+			@Override
+			public void setMoveable(int ticket, boolean selected) {
+				layerWindow.setMoveable(ticket, selected);
+			}
+
+			@Override
+			public void setClimbable(int ticket, boolean selected) {
+				layerWindow.setClimbable(ticket, selected);
+			}
+
+			@Override
+			public void setSinkable(int ticket, boolean selected) {
+				layerWindow.setSinkable(ticket, selected);
+			}
+
+			@Override
+			public void setSCK(int ticket, double scK) {
+				layerWindow.setSCK(ticket, scK);
+			}
+
+			@Override
+			public void setVelocity(int ticket, double velocity) {
+				layerWindow.setVelocity(ticket, velocity);
+			}
 			
 		});
 		
