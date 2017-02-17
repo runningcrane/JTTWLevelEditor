@@ -49,6 +49,11 @@ public class LevelManager {
 	private Point2D.Double vpOffset;
 	
 	/**
+	 * EOL location.
+	 */
+	private Point2D.Double eol;
+	
+	/**
 	 * Background object. 
 	 */
 	private Background bg;
@@ -138,6 +143,9 @@ public class LevelManager {
 		
 		this.mToPixel = 100;		
 		this.vpOffset = new Point2D.Double(0, 0);
+		
+		// No real reason to put it to 5,5 other than just to initialize it.
+		this.eol = new Point2D.Double(5, 8);
 		this.ticket = 1;
 		
 		// Call upon the layer view to update itself frequently
@@ -297,13 +305,25 @@ public class LevelManager {
 				g.drawImage(player.getRescaled().getImage(), (int)vpcp.getX(), (int)vpcp.getY(), null);
 			}
 		});
+		
+		// Draw EOL		
+		g.setColor(Color.GREEN);
+		Point2D.Double vpeol = getViewportCoordinates(this.eol.getX() * this.mToPixel,
+				(this.lvhm - (this.eol.getY())) * this.mToPixel);
+		g.fillOval((int)(vpeol.getX()), (int)(vpeol.getY()), 15, 15);
+							
+		g.setColor(Color.BLACK);
+		Point2D.Double vplbeol = getViewportCoordinates(this.eol.getX() * this.mToPixel + 5,
+				(this.lvhm - (this.eol.getY())) * this.mToPixel + 10);
+		g.drawString("EOL", (int)(vplbeol.getX()), 
+				(int)(vplbeol.getY()));
 	}
 	
 	/**
 	 * For rendering purposes. Offsets the real world coordinates by the viewport offset.
 	 * @param x real world swing coordinate
 	 * @param y real world swing coordinate
-	 * @return (x,y) viewport swing coordanites
+	 * @return (x,y) viewport swing coordinates
 	 */
 	public Point2D.Double getViewportCoordinates(double x, double y) {
 		return new Point2D.Double(x + this.vpOffset.getX(), y + this.vpOffset.getY());
@@ -494,6 +514,16 @@ public class LevelManager {
 				this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel);
 	}
 	
+	public void markEOL() {
+		ltoAdapter.markEOL();
+	}
+	
+	public void setEOL(double xp, double yp) {
+		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym.
+		this.eol = new Point2D.Double((xp - this.vpOffset.getX()) / this.mToPixel, 
+				this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel);
+	}
+	
 	
 	// END EDITING SECTION
 	
@@ -512,9 +542,14 @@ public class LevelManager {
 		JSONObject charList = getCharList();
 		//JSONObject charLocs = getCharLocs(this.charLocs);
 		
+		// Level specific items
 		json.put("levelName", levelName);
 		json.put("nextLevelName", nextName);
 		json.put("mToPixel", this.mToPixel);
+		json.put("levelEndX", this.eol.getX());
+		json.put("levelEndY", this.eol.getY());
+		
+		// Makeup-of-level items
 		json.put("background", this.bg.getJSON());
 		json.put("characters", charList);
 		json.put("platforms", platList);
@@ -559,6 +594,10 @@ public class LevelManager {
 		
 		JSONObject bg = (JSONObject) level.get("background");
 		makeBackground(bg);
+		
+		double eolXM = (double) level.get("levelEndX");
+		double eolYM = (double) level.get("levelEndY");
+		this.eol = new Point2D.Double(eolXM, eolYM);
 		
 		Boolean polygon = (Boolean) level.get("polygonCollision");
 		System.out.println("Collision: " + polygon);

@@ -76,6 +76,11 @@ public class Controller {
 			public void makePlatform(String path) {
 				level.setActive(path);
 			}
+
+			@Override
+			public void markEOL() {
+				level.markEOL();				
+			}
 			
 		});
 		
@@ -145,6 +150,11 @@ public class Controller {
 				level.editPlatCenterRes(ticket, xp, yp);
 				
 			}
+
+			@Override
+			public void setEOL(double xp, double yp) {
+				level.setEOL(xp, yp);			
+			}
 			
 		});
 		
@@ -192,6 +202,11 @@ public class Controller {
 			public void setPlatPos(int ticket) {
 				outputWindow.setPlatPos(ticket);
 				
+			}
+
+			@Override
+			public void markEOL() {
+				outputWindow.markEOL();				
 			}
 			
 		}, new ILevelToLayerAdapter() {

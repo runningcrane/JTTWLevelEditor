@@ -68,4 +68,11 @@ public interface IOutputToLevelAdapter {
 	 */
 	public void changeOffset(double xm, double ym);
 	
+	/**
+	 * Update the EOL of the level.
+	 * @param xp
+	 * @param yp
+	 */
+	public void setEOL(double xp, double yp);
+	
 }

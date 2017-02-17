@@ -39,5 +39,7 @@ public interface ILevelToOutputAdapter {
 	public void setCharPos(String playerName);
 	
 	public void setPlatPos(int ticket);
+	
+	public void markEOL();
 
 }

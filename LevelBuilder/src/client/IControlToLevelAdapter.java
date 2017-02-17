@@ -39,6 +39,11 @@ public interface IControlToLevelAdapter {
 	public void setBg(String path);
 	
 	/**
+	 * Request to change the EOL position.
+	 */
+	public void markEOL();
+	
+	/**
 	 * Request a new platform to be added.
 	 * @param path
 	 */

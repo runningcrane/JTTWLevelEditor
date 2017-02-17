@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
+import javax.swing.SwingConstants;
 
 /**
  * One of the three main windows; this window holds objects to be put into the level
@@ -112,6 +113,21 @@ public class ControlWindow extends JFrame {
 		txtMToPixel.setToolTipText("");
 		pnlRControls.add(txtMToPixel);
 		txtMToPixel.setColumns(10);
+		
+		JPanel pnlEOL = new JPanel();
+		pnlEOL.setLayout(new BoxLayout(pnlEOL, BoxLayout.Y_AXIS));
+		getContentPane().add(pnlEOL);
+		
+		JLabel lblEOL = new JLabel("<html><b>End of Level</b></html>");
+		pnlEOL.add(lblEOL);
+		
+		JButton btnEOL = new JButton("Mark EOL");
+		btnEOL.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.markEOL();
+			}
+		});
+		pnlEOL.add(btnEOL);
 		
 		JPanel pnlControlButtons = new JPanel();
 		getContentPane().add(pnlControlButtons);

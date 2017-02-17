@@ -46,6 +46,8 @@ public class OutputWindow extends JFrame {
 	private boolean makeNew;
 	private boolean editOldPlat;
 	private boolean setPlayerStartPos;
+	private boolean markEOL;
+	
 	private String newPath;
 	private int ticket;
 	private JTextField txtInputPath;
@@ -59,8 +61,9 @@ public class OutputWindow extends JFrame {
 	public OutputWindow(IOutputToLevelAdapter otlAdapter) {
 		this.offset = 1.5;
 		this.ticket = 0;
-		this.makeNew = false;
 		this.editOldPlat = false;
+		this.makeNew = false;
+		this.markEOL = false;		
 		this.setPlayerStartPos = false;
 		this.otlAdapter = otlAdapter;			
 		initGUI();
@@ -270,6 +273,8 @@ public class OutputWindow extends JFrame {
 				    int yp = e.getY();
 				    System.out.println("Requesting center point " + xp + ", " + yp + "; pixels.");
 					otlAdapter.editPlatCenter(ticket, xp, yp);
+					
+				    // No longer need to edit center position
 				    editOldPlat = false;
 				    
 				} else if (setPlayerStartPos) {
@@ -282,6 +287,16 @@ public class OutputWindow extends JFrame {
 				    
 					// No longer need to set position
 					setPlayerStartPos = false;
+				} else if (markEOL) {
+					int xp = e.getX();
+				    int yp = e.getY();
+				    System.out.println("EOL point to be at " + xp + ", " + yp + "; pixels.");
+				    
+				    // Send position to level manager
+				    otlAdapter.setEOL(xp, yp);
+				    
+				    // No longer need to makeNew
+				    markEOL = false;
 				}
 			}
 
@@ -338,6 +353,7 @@ public class OutputWindow extends JFrame {
 		this.makeNew = true;
 		this.editOldPlat = false;
 		this.setPlayerStartPos = false;
+		this.markEOL = false;
 		this.newPath = path;
 	}
 	
@@ -346,6 +362,7 @@ public class OutputWindow extends JFrame {
 		System.out.println("Requesting new position for " + name);
 		this.setPlayerStartPos = true;
 		this.makeNew = false;
+		this.markEOL = false;
 		this.editOldPlat = false;	
 		this.newPath = name;
 		
@@ -369,7 +386,14 @@ public class OutputWindow extends JFrame {
 		this.ticket = ticket;
 		this.editOldPlat = true;
 		this.makeNew = false;
+		this.markEOL = false;
 		this.setPlayerStartPos = false;
 	}
 
+	public void markEOL() {
+		this.markEOL = true;
+		this.editOldPlat = false;
+		this.makeNew = false;
+		this.setPlayerStartPos = false;
+	}
 }
