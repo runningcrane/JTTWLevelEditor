@@ -50,7 +50,138 @@ public class LayerWindow extends JFrame {
 	}	
 	
 	public void addVineEdit(int ticket, double wm, double hm, double arcLength) {
+		JSeparator jsep = new JSeparator(SwingConstants.HORIZONTAL);
+		this.initWM = wm;
+		this.initHM = hm;
+		EditWindow newWindow = new EditWindow(ticket) {
+			/**
+			 * UID for serialization.
+			 */
+			private static final long serialVersionUID = 8116441836763125578L;
+
+			@Override
+			public void initGUI() {	
+				setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+				
+				JPanel pnlPosition = new JPanel();
+				pnlPosition.setLayout(new GridLayout(3,4,0,0));
+				add(pnlPosition);
+				
+				
+				JLabel lblTicket = new JLabel("<html><b><u>#" + this.ticket + "</u></b></html>");
+				pnlPosition.add(lblTicket);
+				
+				JButton btnMove = new JButton("New center");
+				pnlPosition.add(btnMove);
+				
+				JLabel lblBlank = new JLabel("");
+				pnlPosition.add(lblBlank);
+				
+				JLabel lblArcl = new JLabel("Arclenght (deg):");
+				pnlPosition.add(lblArcl);
+				
+				txtArcl = new JTextField(Double.toString(arcLength));
+				pnlPosition.add(txtArcl);
+				txtArcl.setColumns(10);
+				
+				JButton btnArcl = new JButton("New arclength");
+				pnlPosition.add(btnArcl);
+				
+				JLabel lblWidth = new JLabel("Width (m):");
+				pnlPosition.add(lblWidth);
+				
+				txtWidth = new JTextField(Double.toString(wm));
+				pnlPosition.add(txtWidth);
+				txtWidth.setColumns(10);
+				
+				JButton btnDimensions = new JButton("Change dimensions");
+				pnlPosition.add(btnDimensions);
+				
+				JLabel lblHeight = new JLabel("Height (m):");
+				pnlPosition.add(lblHeight);
+				
+				txtHeight = new JTextField(Double.toString(hm));
+				pnlPosition.add(txtHeight);
+				txtHeight.setColumns(10);
+				
+				JButton btnDelete = new JButton("Remove");
+				pnlPosition.add(btnDelete);
+				btnDelete.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ltlAdapter.removeVine(ticket);
+						
+						// Remove this EditWindow.
+						removeEditWindow(ticket, jsep);	
+					}
+				});
+				btnDelete.setBackground(Color.RED);
+				btnDelete.setForeground(Color.WHITE);
+				
+				btnDimensions.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						double wm;
+						double hm;
+						
+					    try {
+					    	wm = Double.parseDouble(txtWidth.getText());
+					    } catch (NullPointerException nulle) {
+					    	// Default to 2m width.
+					    	wm = 2;
+							nulle.printStackTrace();
+					    } catch (NumberFormatException numbe) {
+					    	System.out.println("Not a valid number.");
+					    	wm = 2;
+					    	numbe.printStackTrace();
+					    }
+					    
+					    try {
+					    	hm = Double.parseDouble(txtHeight.getText());
+					    } catch (NullPointerException nulle) {
+					    	// Default to 2m width.
+					    	hm = 2;
+							nulle.printStackTrace();
+					    } catch (NumberFormatException numbe) {
+					    	System.out.println("Not a valid number.");
+					    	hm = 2;
+					    	numbe.printStackTrace();
+					    }
+					    
+					    // Valid numbers. Go resize over in LevelManager.
+					    ltlAdapter.changeDimVine(ticket, wm, hm);
+					}
+				});
+				
+				btnArcl.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ltlAdapter.editVineArcl(ticket, Double.parseDouble(txtArcl.getText()));
+					}
+				});
+				
+				btnMove.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						ltlAdapter.editVineCenter(ticket);
+					}
+				});												
+			}					
+			
+			@Override
+			public void manualRemove() {
+				System.out.println("Removing #" + ticket + "...");
+				removeEditWindow(ticket, jsep);
+			}
+			
+		};
 		
+		pnlBack.add(newWindow);
+		this.edits.put(ticket, newWindow);
+		
+		// Add a line to separate areas.
+		pnlBack.add(jsep);
+		
+		// Resize the frame.
+        Dimension d = new Dimension(500,300);
+        this.scrPaneScroll.setPreferredSize(d);
+		this.pack();
 	}
 	
 	public void addPlatformEdit(int ticket, double wm, double hm) {

@@ -42,6 +42,8 @@ public interface ILevelToOutputAdapter {
 	
 	public void setPlatPos(int ticket);
 	
+	public void setVinePos(int ticket);
+	
 	public void markEOL();
 	
 	public void makeEndpointPlat(int ticket);

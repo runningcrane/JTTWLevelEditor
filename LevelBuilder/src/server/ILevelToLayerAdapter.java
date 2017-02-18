@@ -7,7 +7,16 @@ public interface ILevelToLayerAdapter {
 	 * @param initial wm
 	 * @param initial hm
 	 */
-	public void addEdit(int ticket, double wm, double hm);	
+	public void addPlatformEdit(int ticket, double wm, double hm);
+	
+	/**
+	 * Add an edit panel.
+	 * @param ticket
+	 * @param initial wm
+	 * @param initial hm
+	 * @param initial arcLength
+	 */
+	public void addVineEdit(int ticket, double wm, double hm, double arcLength);
 	
 	/**
 	 * Remove all edit panels.

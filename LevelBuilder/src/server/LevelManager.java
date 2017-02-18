@@ -334,7 +334,7 @@ public class LevelManager {
 			
 			g.drawImage(vine.getRescaled().getImage(), (int)vpulp.getX(), (int)vpulp.getY(), null);
 			
-			// Draw the label on top of it. In the center, maybe?
+			// Draw the label on top of it.
 			g.setColor(Color.MAGENTA);
 			Point2D.Double vplp = getViewportCoordinates(vine.getCenterXm() * this.mToPixel,
 					(this.lvhm - (vine.getCenterYm())) * this.mToPixel);
@@ -466,7 +466,8 @@ public class LevelManager {
 		vine.setImage(image);
 		vine.setRescaled(resize(image, wm, hm));
 		
-		vines.put(this.ticket, vine);		
+		vines.put(this.ticket, vine);	
+		ltlAdapter.addVineEdit(this.ticket, wm, hm, arcLength);
 		this.ticket++;	
 		
 		return this.ticket - 1;
@@ -509,7 +510,7 @@ public class LevelManager {
 		platform.setRescaled(resize(image, wm, hm));
 		
 		plats.put(this.ticket, platform);
-		ltlAdapter.addEdit(this.ticket, wm, hm);
+		ltlAdapter.addPlatformEdit(this.ticket, wm, hm);
 		this.ticket++;	
 		
 		return this.ticket - 1;
@@ -578,6 +579,10 @@ public class LevelManager {
 	public void editPlatCenter(int ticket) {
 		ltoAdapter.setPlatPos(ticket);				
 	}
+	
+	public void editVineCenter(int ticket) {
+		ltoAdapter.setVinePos(ticket);
+	}
 
 	/**
 	 * OutputWindow just called this method to set the platform's new center.
@@ -588,6 +593,18 @@ public class LevelManager {
 	public void editPlatCenterRes(int ticket, double xp, double yp) {
 		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym.		
 		this.plats.get(ticket).setCenter((xp - this.vpOffset.getX()) / this.mToPixel,
+						this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel);		
+	}
+	
+	/**
+	 * OutputWindow just called this method to set the vine's new swing center.
+	 * @param ticket platform identifier
+	 * @param xp x position [swing vp, pixel]
+	 * @param yp y position [swing vp, pixel]
+	 */
+	public void editVineCenterRes(int ticket, double xp, double yp) {
+		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym.		
+		this.vines.get(ticket).setCenter((xp - this.vpOffset.getX()) / this.mToPixel,
 						this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel);		
 	}
 	
@@ -602,9 +619,25 @@ public class LevelManager {
 		System.out.println("New size: " + wm + " , " + hm);
 		this.plats.get(ticket).setRescaled(resize(this.plats.get(ticket).getImage(), wm, hm));
 	}
+	
+	public void editVineDim(int ticket, double wm, double hm) {
+		this.vines.get(ticket).editVineDim(wm, hm);
+		
+		// Rescale the image
+		System.out.println("New size: " + wm + " , " + hm);
+		this.vines.get(ticket).setRescaled(resize(this.vines.get(ticket).getImage(), wm, hm));
+	}
+	
+	public void editVineArcl(int ticket, double arcl) {
+		this.vines.get(ticket).editVineArcl(arcl);
+	}
 
 	public void removePlat(int ticket) {
 		this.plats.remove(ticket);			
+	}
+	
+	public void removeVine(int ticket) {
+		this.vines.remove(ticket);			
 	}
 	
 	public void makeEndpointPlat(int ticket) {
@@ -655,6 +688,7 @@ public class LevelManager {
 		System.out.println("Writing with collision = " + polygon);
 		JSONObject json = new JSONObject();
 		JSONArray platList = getPlatList(polygon);
+		JSONArray vineList = getVineList();
 		JSONObject charList = getCharList();
 		//JSONObject charLocs = getCharLocs(this.charLocs);
 		
@@ -669,6 +703,7 @@ public class LevelManager {
 		json.put("background", this.bg.getJSON());
 		json.put("characters", charList);
 		json.put("platforms", platList);
+		json.put("vines", vineList);
 		json.put("polygonCollision", polygon);
 		//json.put("charactersStart", charLocs);
 		return json;
@@ -721,6 +756,9 @@ public class LevelManager {
 		JSONArray plats = (JSONArray) level.get("platforms");
 		makePlatList(plats, polygon);
 		
+		JSONArray vines = (JSONArray) level.get("vines");
+		makeVinesList(vines);
+		
 		JSONObject characters = (JSONObject) level.get("characters");
 		setCharacters(characters);
 		
@@ -737,7 +775,10 @@ public class LevelManager {
 		// Clear the current list of platforms. 
 		this.plats.clear();
 		
-		// By the way, they need to be removed from the LayerWindow as well.
+		// Clear the current list of vines.
+		this.vines.clear();
+		
+		// By the way, they all need to be removed from the LayerWindow as well.
 		this.ltlAdapter.removeAllWindows();
 		
 		// Reset the ticketer.
@@ -819,6 +860,37 @@ public class LevelManager {
 		
 		return list;
 	}
+	
+	public JSONArray getVineList() {
+		JSONArray list = new JSONArray();
+		
+		// Add all present vines
+		vines.forEach((ticket, vine) -> {
+			list.add(vine.getJSON());
+		});
+		
+		return list;
+	}
+	
+	public void makeVinesList(JSONArray list) {
+		
+		for (Object obj : list) {			
+			JSONObject vine = (JSONObject) obj;
+			
+			// Further parsing here						
+			double cxm = (double)vine.get("swingCenterX");
+			double cym = (double)vine.get("swingCenterY");
+			
+			double wm = (double)vine.get("width");
+			double hm = (double)vine.get("length");	
+			
+			double arcLimit = (double)vine.get("arcLimit");						
+			
+			// makeVine takes swing coordinates, so m is translated to px and y is flipped.
+			makeVine(cxm * this.mToPixel, (this.lvhm - cym) * this.mToPixel, wm, hm, arcLimit);
+		}
+	}
+	
 	
 	public void makePlatList(JSONArray list, boolean polygon) {
 		

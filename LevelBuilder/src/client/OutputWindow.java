@@ -44,7 +44,11 @@ public class OutputWindow extends JFrame {
 	private JLabel lblCurLevel;
 	
 	public enum Request {
-		NONE, MAKE_PLATFORM, EDIT_OLD_PLAT, SET_PLAYER_START_POS, MARK_EOL, SET_PLAT_ENDPOINT, MAKE_VINE
+		NONE, 
+		MAKE_PLATFORM, MAKE_VINE, 
+		EDIT_OLD_PLAT, EDIT_OLD_VINE, 
+		SET_PLAYER_START_POS, SET_PLAT_ENDPOINT, 
+		MARK_EOL
 	}
 	private Request request;
 	
@@ -332,6 +336,15 @@ public class OutputWindow extends JFrame {
 					break;
 				    
 				} 
+		    	case EDIT_OLD_VINE: {
+		    		int xp = e.getX();
+				    int yp = e.getY();
+				    System.out.println("Requesting center point " + xp + ", " + yp + "; pixels.");
+					otlAdapter.editVineCenter(ticket, xp, yp);
+					
+					request = Request.NONE;
+					break;				    
+		    	}
 		    	case SET_PLAYER_START_POS: {
 					int xp = e.getX();
 				    int yp = e.getY();
@@ -449,6 +462,11 @@ public class OutputWindow extends JFrame {
 	public void setPlatPos(int ticket) {
 		this.ticket = ticket;		
 		request = Request.EDIT_OLD_PLAT;		
+	}
+	
+	public void setVinePos(int ticket) {
+		this.ticket = ticket;		
+		request = Request.EDIT_OLD_VINE;		
 	}
 
 	public void markEOL() {

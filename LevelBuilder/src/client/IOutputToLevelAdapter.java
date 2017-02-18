@@ -72,6 +72,14 @@ public interface IOutputToLevelAdapter {
 	public void editPlatCenter(int ticket, double xp, double yp);
 	
 	/**
+	 * Update a vine's position.
+	 * @param ticket identifier of the vine
+	 * @param xp x position in pixels
+	 * @param yp y position in pixels
+	 */
+	public void editVineCenter(int ticket, double xp, double yp);
+	
+	/**
 	 * Update a moving platform's endpoint.
 	 * @param ticket identifier of the platform
 	 * @param xp x position in pixels

@@ -5,9 +5,17 @@ public interface ILayerToLevelAdapter {
 	
 	public void editPlatCollisionBox(int ticket);
 	
-	public void removePlat(int ticket);
+	public void editVineArcl(int ticket, double arcl);
+	
+	public void editVineCenter(int ticket);
+	
+	public void changeDimVine(int ticket, double wm, double hm);
 	
 	public void changeDimPlat(int ticket, double wm, double hm);
+	
+	public void removePlat(int ticket);
+	
+	public void removeVine(int ticket);
 	
 	public void toggleDisappearsPlat(int ticket, boolean selected);
 	

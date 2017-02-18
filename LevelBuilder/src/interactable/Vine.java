@@ -55,7 +55,26 @@ public class Vine extends AInteractable {
 		this.rescaledImage = rescaled;
 	}
 	
-	public JSONObject toJSON() {
+	public void editVineDim(double wm, double hm) {
+		this.setInGameWidth(wm);
+		this.setInGameHeight(hm);	
+	}
+	
+	public void editVineArcl(double arcl) {
+		this.arcLimit = arcl;
+	}
+	
+	/**
+	 * Manually change the center of the vine.
+	 * @param cxm in COCOS coordinates [m]
+	 * @param cym in COCOS coordinates [m]
+	 */
+	public void setCenter(double cxm, double cym) {		
+		this.setCenterXm(cxm);
+		this.setCenterYm(cym);
+	}
+	
+	public JSONObject getJSON() {
 		JSONObject obj = new JSONObject();
 		obj.put("swingCenterX", this.getCenterXm());
 		obj.put("swingCenterY", this.getCenterYm());

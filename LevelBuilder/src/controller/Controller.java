@@ -147,6 +147,26 @@ public class Controller {
 				level.setVelocityPlat(ticket, velocity);
 			}
 
+			@Override
+			public void editVineArcl(int ticket, double arcl) {
+				level.editVineArcl(ticket, arcl);
+			}
+
+			@Override
+			public void editVineCenter(int ticket) {
+				level.editVineCenter(ticket);
+			}
+
+			@Override
+			public void changeDimVine(int ticket, double wm, double hm) {
+				level.editVineDim(ticket, wm, hm);
+			}
+
+			@Override
+			public void removeVine(int ticket) {
+				level.removeVine(ticket);
+			}
+
 			
 		});
 		
@@ -188,8 +208,7 @@ public class Controller {
 
 			@Override
 			public void editPlatCenter(int ticket, double xp, double yp) {
-				level.editPlatCenterRes(ticket, xp, yp);
-				
+				level.editPlatCenterRes(ticket, xp, yp);				
 			}
 
 			@Override
@@ -205,6 +224,11 @@ public class Controller {
 			@Override
 			public void makeVine(double xp, double yp, double wm, double hm, double arcl) {
 				level.makeVine(xp, yp, wm, hm, arcl);				
+			}
+
+			@Override
+			public void editVineCenter(int ticket, double xp, double yp) {
+				level.editVineCenterRes(ticket, xp, yp);				
 			}
 			
 		});
@@ -270,12 +294,21 @@ public class Controller {
 			public void makeVine() {
 				outputWindow.makeVine();				
 			}
+
+			@Override
+			public void setVinePos(int ticket) {
+				outputWindow.setVinePos(ticket);				
+			}
 			
 		}, new ILevelToLayerAdapter() {
 
 			@Override
-			public void addEdit(int ticket, double wm, double hm) {
+			public void addPlatformEdit(int ticket, double wm, double hm) {
 				layerWindow.addPlatformEdit(ticket, wm, hm);				
+			}
+			
+			public void addVineEdit(int ticket, double wm, double hm, double arcl) {
+				layerWindow.addVineEdit(ticket, wm, hm, arcl);				
 			}
 			
 			public void removeAllWindows() {
