@@ -766,10 +766,11 @@ public class LevelManager {
 	}
 	
 	public void makePlatList(JSONArray list, boolean polygon) {
-		// Collision box array
-		ArrayList<Point2D.Double> points = new ArrayList<Point2D.Double>();
 		
 		for (Object obj : list) {
+			// Collision box array		
+			ArrayList<Point2D.Double> points = new ArrayList<Point2D.Double>();
+			
 			JSONObject plat = (JSONObject) obj;
 			// Further parsing here
 			String path = "assets/" + (String)plat.get("imageName");				
