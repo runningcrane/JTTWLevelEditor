@@ -71,6 +71,8 @@ public class Platform extends AInteractable {
 	
 	public void setCollisionBox(ArrayList<Point2D.Double> points) {
 		this.setCollisionPoints(points);
+		System.out.println("Points: " + points.get(0).getX() + " x " + points.get(0).getY() + 
+				"\n\t" + points.get(1).getX() + " x " + points.get(1).getY());
 		this.settings.startWithPoints(points);
 	}
 	
@@ -181,6 +183,7 @@ public class Platform extends AInteractable {
 		JSONArray pointsList = new JSONArray();
 		ArrayList<Point2D.Double> points = this.settings.returnPoints();
 		points.forEach((point) -> {
+			System.out.println("Collision points made initially: " + point.getX() + " x " +  point.getY());
 			JSONObject couple = new JSONObject();
 			couple.put("x", point.getX());
 			couple.put("y", point.getY());
@@ -199,6 +202,9 @@ public class Platform extends AInteractable {
 				double height = Math.abs(p1.getY() - p2.getY());
 				obj.put("collisionWidth", width);
 				obj.put("collisionHeight", height);
+				
+				// add to the collisionPoints anyways for easy reading in by me
+				obj.put("collisionPoints", pointsList);
 			}
 		}
 		

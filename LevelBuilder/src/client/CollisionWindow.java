@@ -211,26 +211,33 @@ public class CollisionWindow extends JFrame {
 
 	public ArrayList<Point2D.Double> returnPoints() {
 		/*
-		 * Convert all chosen points to their actual locations on the screen,
-		 * then into in-game meters.
+		 * Convert into in-game meters relative to the center as (0,0).
 		 * Cocos2dx's origin is in the *bottom left*, not *top left*.
 		 * Thus each point's ym must be subtracted from the height.
 		 */
 		ArrayList<Point2D.Double> correctedPoints = new ArrayList<Point2D.Double>();
-		double xOffsetm = - (this.centerXp / this.scale);
-		double yOffsetm = - (this.centerYp / this.scale);
 		
-		double hm = this.centerYp * 2 / this.scale;
+		double hp = this.centerYp * 2;
 			
 		points.forEach((point) -> {
-					correctedPoints.add(new Point2D.Double(point.getX()/this.scale + xOffsetm,
-							(hm - point.getY()/this.scale) + yOffsetm));
+					correctedPoints.add(new Point2D.Double((point.getX() - this.centerXp)/this.scale,
+							((hp - point.getY()) - this.centerYp)/this.scale));
 				});
 		this.setVisible(false);
 		return correctedPoints;
 	}
 	
 	public void startWithPoints(ArrayList<Point2D.Double> points) {
-		this.points = points;
+		// Clear points
+		this.points.clear();
+		
+		double hp = this.centerYp * 2;
+		
+		points.forEach((point) -> {
+			this.points.add(new Point2D.Double(point.getX() * this.scale + this.centerXp, 
+					hp - (point.getY() * this.scale + this.centerYp)));					
+			System.out.println("added point " + (point.getX() * this.scale + this.centerXp) + " x " + 
+					(hp - (point.getY() * this.scale + this.centerYp)));
+		});
 	}
 }

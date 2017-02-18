@@ -788,13 +788,15 @@ public class LevelManager {
 					points.add(new Point2D.Double((double)point.get("x"), (double)point.get("y")));
 				}
 			} else {
-				// Box collision; make two points based on the width and height.
+				// Box collision. 
 				double collisionWidth = (double)plat.get("collisionWidth");
 				double collisionHeight = (double)plat.get("collisionHeight");
-				points.add(new Point2D.Double(cxm * this.mToPixel - 0.5 * collisionWidth * this.mToPixel,
-						cym * this.mToPixel - 0.5 * collisionHeight * this.mToPixel));
-				points.add(new Point2D.Double(cxm * this.mToPixel + 0.5 * collisionWidth * this.mToPixel,
-						cym * this.mToPixel + 0.5 * collisionHeight * this.mToPixel));
+				
+				JSONArray collisionPoints = (JSONArray)plat.get("collisionPoints");
+				for (Object p : collisionPoints) {
+					JSONObject point = (JSONObject) p;
+					points.add(new Point2D.Double((double)point.get("x"), (double)point.get("y")));
+				}								
 			}
 			
 			// makePlatform takes swing coordinates, so m is translated to px and y is flipped.
