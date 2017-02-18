@@ -43,11 +43,10 @@ public class OutputWindow extends JFrame {
 	private JTextField txtOutputPath;
 	private JLabel lblCurLevel;
 	
-	private boolean makeNew;
-	private boolean editOldPlat;
-	private boolean setPlayerStartPos;
-	private boolean markEOL;
-	private boolean setPlatEndpoint;
+	public enum Request {
+		NONE, MAKE_PLATFORM, EDIT_OLD_PLAT, SET_PLAYER_START_POS, MARK_EOL, SET_PLAT_ENDPOINT, MAKE_VINE
+	}
+	private Request request;
 	
 	private String newPath;
 	private int ticket;
@@ -62,11 +61,7 @@ public class OutputWindow extends JFrame {
 	public OutputWindow(IOutputToLevelAdapter otlAdapter) {
 		this.offset = 1.5;
 		this.ticket = 0;
-		this.editOldPlat = false;
-		this.makeNew = false;
-		this.markEOL = false;		
-		this.setPlatEndpoint = false;
-		this.setPlayerStartPos = false;
+		this.request = Request.NONE;
 		this.otlAdapter = otlAdapter;			
 		initGUI();
 		
@@ -229,7 +224,8 @@ public class OutputWindow extends JFrame {
 		pnlContent.addMouseListener(new MouseListener() {
 		    @Override
 			public void mouseClicked(MouseEvent e) {
-				if (makeNew) {
+		    	switch (request) {
+		    	case MAKE_PLATFORM: { 
 				    int xp = e.getX();
 				    int yp = e.getY();
 				    System.out.println("Requesting center point " + xp + ", " + yp + "; swing vp pixels.");
@@ -267,19 +263,76 @@ public class OutputWindow extends JFrame {
 				    // Pop up dialog box to make collision box.				    
 				    otlAdapter.makePlatform(newPath, xp, yp, wm, hm);
 				    
-				    // No longer need to make a new platform
-				    makeNew = false;
+				    request = Request.NONE;
+					break;
 				    
-				} else if (editOldPlat) {
+				}
+		    	case MAKE_VINE: {
+		    		int xp = e.getX();
+				    int yp = e.getY();
+				    System.out.println("Requesting center point " + xp + ", " + yp + "; swing vp pixels.");
+				    
+				    // Pop up dialog here to get the expected width in meters
+				    String width = JOptionPane.showInputDialog(null, "Input width of the vine (meters)");
+				    double wm;
+				    try {
+				    	wm = Double.parseDouble(width);
+				    } catch (NullPointerException nulle) {
+				    	// Default to 2m width.
+				    	wm = 2;
+						nulle.printStackTrace();
+				    } catch (NumberFormatException numbe) {
+				    	System.out.println("Not a valid number.");
+				    	wm = 2;
+				    	numbe.printStackTrace();
+				    }
+				    
+				    // Pop up dialog here to get the expected size in meters
+				    String height = JOptionPane.showInputDialog(null, "Input height of the vine (meters)");
+				    double hm;
+				    try {
+				    	hm = Double.parseDouble(height);
+				    } catch (NullPointerException nulle) {
+				    	// Default to 2m width.
+				    	hm = 2;
+						nulle.printStackTrace();
+				    } catch (NumberFormatException numbe) {
+				    	System.out.println("Not a valid number.");
+				    	hm = 2;
+				    	numbe.printStackTrace();
+				    }
+				    
+				    String arcl = JOptionPane.showInputDialog(null, "Input arclength (degrees)");
+				    double arcld;
+				    try {
+				    	arcld = Double.parseDouble(arcl);
+				    } catch (NullPointerException nulle) {
+				    	// Default to 2m width.
+				    	arcld = 180;
+						nulle.printStackTrace();
+				    } catch (NumberFormatException numbe) {
+				    	System.out.println("Not a valid number.");
+				    	arcld = 180;
+				    	numbe.printStackTrace();
+				    }				    
+				    				   
+				    // Pop up dialog box to make collision box.				    
+				    otlAdapter.makeVine(xp, yp, wm, hm, arcld);
+		    		
+		    		request = Request.NONE;
+					break;
+		    	}
+		    	case EDIT_OLD_PLAT: {
 					int xp = e.getX();
 				    int yp = e.getY();
 				    System.out.println("Requesting center point " + xp + ", " + yp + "; pixels.");
 					otlAdapter.editPlatCenter(ticket, xp, yp);
 					
-				    // No longer need to edit center position
-				    editOldPlat = false;
+					request = Request.NONE;
+					break;
 				    
-				} else if (setPlayerStartPos) {
+				} 
+		    	case SET_PLAYER_START_POS: {
 					int xp = e.getX();
 				    int yp = e.getY();
 				    System.out.println("Requesting starting point " + xp + ", " + yp + "; pixels.");
@@ -287,10 +340,11 @@ public class OutputWindow extends JFrame {
 				    // Send position to level manager
 				    otlAdapter.setPlayerPosition(newPath, xp, yp);
 				    
-					// No longer need to set position
-					setPlayerStartPos = false;
+				    request = Request.NONE;
+					break;
 					
-				} else if (markEOL) {
+				} 
+		    	case MARK_EOL: {
 					int xp = e.getX();
 				    int yp = e.getY();
 				    System.out.println("EOL point to be at " + xp + ", " + yp + "; pixels.");
@@ -298,18 +352,22 @@ public class OutputWindow extends JFrame {
 				    // Send position to level manager
 				    otlAdapter.setEOL(xp, yp);
 				    
-				    // No longer need to makeNew
-				    markEOL = false;
-				} else if (setPlatEndpoint) {
+				    request = Request.NONE;
+					break;
+				} 
+		    	case SET_PLAT_ENDPOINT: {
 					int xp = e.getX();
 				    int yp = e.getY();				    
 				    
 				    // Send position to level manager
 				    otlAdapter.setEndpointPlat(ticket, xp, yp);
 				    
-					// Don't need to make the endpoint anymore
-					setPlatEndpoint = false;
+				    request = Request.NONE;
+					break;
 				}
+		    	default:
+		    	}
+		    		
 			}
 
 			@Override
@@ -361,23 +419,15 @@ public class OutputWindow extends JFrame {
 		pnlContent.repaint();
 	}	
 	
-	public void setActive(String path) {
-		this.makeNew = true;
-		this.editOldPlat = false;
-		this.markEOL = false;
-		this.setPlatEndpoint = false;
-		this.setPlayerStartPos = false;
+	public void setActive(String path) {		
+		request = Request.MAKE_PLATFORM;
 		this.newPath = path;
 	}
 	
 	public void setCharPos(String name) {		
 		// Ask for the position of the character.
-		System.out.println("Requesting new position for " + name);
-		this.setPlayerStartPos = true;
-		this.editOldPlat = false;
-		this.makeNew = false;
-		this.markEOL = false;		
-		this.setPlatEndpoint = false;
+		System.out.println("Requesting new position for " + name);		
+		request = Request.SET_PLAYER_START_POS;
 		this.newPath = name;
 		
 	}
@@ -397,20 +447,16 @@ public class OutputWindow extends JFrame {
 	 * @param ticket identifier of the platform
 	 */
 	public void setPlatPos(int ticket) {
-		this.ticket = ticket;
-		this.editOldPlat = true;
-		this.makeNew = false;
-		this.markEOL = false;
-		this.setPlatEndpoint = false;		
-		this.setPlayerStartPos = false;
+		this.ticket = ticket;		
+		request = Request.EDIT_OLD_PLAT;		
 	}
 
 	public void markEOL() {
-		this.markEOL = true;
-		this.editOldPlat = false;
-		this.makeNew = false;
-		this.setPlatEndpoint = false;		
-		this.setPlayerStartPos = false;
+		request = Request.MARK_EOL;
+	}
+	
+	public void makeVine() {
+		request = Request.MAKE_VINE;
 	}
 	
 	/**
@@ -419,10 +465,6 @@ public class OutputWindow extends JFrame {
 	 */
 	public void setEndpointPlat(int ticket) {
 		this.ticket = ticket;
-		this.setPlatEndpoint = true;		
-		this.editOldPlat = false;
-		this.makeNew = false;
-		this.markEOL = false;
-		this.setPlayerStartPos = false;
+		request = Request.SET_PLAT_ENDPOINT;
 	}
 }

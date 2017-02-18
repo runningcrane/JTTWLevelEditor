@@ -32,6 +32,7 @@ import com.sun.javafx.geom.Line2D;
 import interactable.Enemy;
 import interactable.Platform;
 import interactable.Player;
+import interactable.Vine;
 import noninteractable.Background;
 import noninteractable.INonInteractable;
 
@@ -94,6 +95,11 @@ public class LevelManager {
 	 * Character array.
 	 */
 	private Map<String, Player> characters;
+	
+	/**
+	 * Vine array.
+	 */
+	private Map<Integer, Vine> vines;
 	
 	/**
 	 * NPC array.
@@ -170,6 +176,7 @@ public class LevelManager {
 		// Instantiate various lists.
 		this.plats = new HashMap<Integer, Platform>();
 		this.fg = new ArrayList<INonInteractable>();
+		this.vines = new HashMap<Integer, Vine>();
 		
 		// Set up the player characters.
 		characters = new HashMap<String, Player>();		
@@ -319,6 +326,28 @@ public class LevelManager {
 			}
 		});				
 		
+		// Draw vines
+		vines.forEach((ticket, vine) -> {
+			double ulxp = (vine.getCenterXm() - vine.getInGameWidth()/2.0) * this.mToPixel;
+			double ulyp = ((this.lvhm - vine.getCenterYm()) - vine.getInGameHeight()) * this.mToPixel;			
+			Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
+			
+			g.drawImage(vine.getRescaled().getImage(), (int)vpulp.getX(), (int)vpulp.getY(), null);
+			
+			// Draw the label on top of it. In the center, maybe?
+			g.setColor(Color.MAGENTA);
+			Point2D.Double vplp = getViewportCoordinates(vine.getCenterXm() * this.mToPixel,
+					(this.lvhm - (vine.getCenterYm())) * this.mToPixel);
+			g.fillOval((int)(vplp.getX()), (int)(vplp.getY()), 15, 15);
+			
+			// Label point
+			g.setColor(Color.BLACK);
+			Point2D.Double vplbp = getViewportCoordinates(vine.getCenterXm() * this.mToPixel + 5, 
+					(this.lvhm - (vine.getCenterYm())) * this.mToPixel + 10);
+			g.drawString(Integer.toString(ticket), (int)(vplbp.getX()), 
+					(int)(vplbp.getY()));
+		});
+		
 		// Draw player characters
 		characters.forEach((name, player) -> {
 			if (player.getPresent()) {
@@ -415,6 +444,32 @@ public class LevelManager {
 	 */
 	public void manualResize(double wp, double hp) {
 		this.setViewportDimensions( wp / this.mToPixel, hp / this.mToPixel);	
+	}
+	
+	public void setVinePosition() {
+		ltoAdapter.makeVine();
+	}
+	
+	public int makeVine(double xp, double yp, double wm, double hm, double arcLength) {
+		Vine vine = new Vine((xp - this.vpOffset.getX()) / this.mToPixel, 
+				this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel, wm, hm, arcLength);
+		
+		BufferedImage image;
+		try {
+			image = ImageIO.read(new File("assets/vine.png"));
+		} catch (IOException e) {
+			System.err.println("File not found: " + "assets/vine.png");
+			e.printStackTrace();
+			return -1;
+		}
+		
+		vine.setImage(image);
+		vine.setRescaled(resize(image, wm, hm));
+		
+		vines.put(this.ticket, vine);		
+		this.ticket++;	
+		
+		return this.ticket - 1;
 	}
 	
 	/**

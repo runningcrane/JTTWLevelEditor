@@ -47,6 +47,12 @@ public interface IControlToLevelAdapter {
 	 * Request a new platform to be added.
 	 * @param path
 	 */
-	public void makePlatform(String path);	
+	public void makePlatform(String path);
+	
+	/**
+	 * Request a new vine to be added.
+	 * @param path
+	 */
+	public void makeVine();	
 
 }

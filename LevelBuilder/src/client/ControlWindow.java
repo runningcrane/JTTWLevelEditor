@@ -377,6 +377,7 @@ public class ControlWindow extends JFrame {
 		ImageIcon iicanyonL = new ImageIcon("assets/canyonLThumbnail.png");
 		ImageIcon iiForestGround = new ImageIcon("assets/ForestGroundThumbnail.png");	
 		ImageIcon iiTree1 = new ImageIcon("assets/Tree1Thumbnail.png");
+		ImageIcon iiVine = new ImageIcon("assets/vineThumbnail.png");
 		ImageIcon iiBuddhaHand = new ImageIcon("assets/BuddhaHandThumbnail.png");
 		
 		// Platform panel - toggle buttons
@@ -436,6 +437,17 @@ public class ControlWindow extends JFrame {
 		tglBtnForestGround.setPreferredSize(dimButton);
 		pnlPlatGrid.add(tglBtnForestGround);
 		platToggleGroup.add(tglBtnForestGround); 
+		
+		JToggleButton tglBtnVine = new JToggleButton("Vine");
+		tglBtnVine.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makeVine();
+			}
+		});
+		tglBtnVine.setIcon(iiVine);
+		tglBtnVine.setPreferredSize(dimButton);
+		pnlPlatGrid.add(tglBtnVine);
+		platToggleGroup.add(tglBtnVine); 
 		
 		JToggleButton tglBtnRock1 = new JToggleButton("Rock1");
 		tglBtnRock1.addActionListener(new ActionListener() {

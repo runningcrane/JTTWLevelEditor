@@ -49,6 +49,10 @@ public class LayerWindow extends JFrame {
 		initGUI();
 	}	
 	
+	public void addVineEdit(int ticket, double wm, double hm, double arcLength) {
+		
+	}
+	
 	public void addPlatformEdit(int ticket, double wm, double hm) {
 		JSeparator jsep = new JSeparator(SwingConstants.HORIZONTAL);
 		this.initWM = wm;

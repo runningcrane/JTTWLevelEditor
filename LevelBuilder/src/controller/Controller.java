@@ -81,6 +81,11 @@ public class Controller {
 			public void markEOL() {
 				level.markEOL();				
 			}
+
+			@Override
+			public void makeVine() {
+				level.setVinePosition();				
+			}
 			
 		});
 		
@@ -196,6 +201,11 @@ public class Controller {
 			public void setEndpointPlat(int ticket, double xp, double yp) {
 				level.setEndpointPlat(ticket, xp, yp);				
 			}
+
+			@Override
+			public void makeVine(double xp, double yp, double wm, double hm, double arcl) {
+				level.makeVine(xp, yp, wm, hm, arcl);				
+			}
 			
 		});
 		
@@ -254,6 +264,11 @@ public class Controller {
 			public void makeEndpointPlat(int ticket) {
 				outputWindow.setEndpointPlat(ticket);
 				
+			}
+
+			@Override
+			public void makeVine() {
+				outputWindow.makeVine();				
 			}
 			
 		}, new ILevelToLayerAdapter() {

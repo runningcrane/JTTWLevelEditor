@@ -26,7 +26,7 @@ public interface ILevelToOutputAdapter {
 	 */
 	public void setLevelName(String levelName);
 	
-	/*
+	/**
 	 * Set the flavor text of what the next level is.
 	 * @param nextName name of the next level following this
 	 */
@@ -37,6 +37,8 @@ public interface ILevelToOutputAdapter {
 	 * @param playerName name of the player to edit
 	 */
 	public void setCharPos(String playerName);
+	
+	public void makeVine();
 	
 	public void setPlatPos(int ticket);
 	

@@ -46,6 +46,16 @@ public interface IOutputToLevelAdapter {
 	public void makePlatform(String path, double xp, double yp, double wm, double hm);
 	
 	/**
+	 * Request a vine to be made.
+	 * @param xp x position in pixels
+	 * @param yp y position in pixels
+	 * @param wm expected width in in-game meters
+	 * @param hm expected height in in-game meters
+	 * @param arcl arc length (degrees)
+	 */
+	public void makeVine(double xp, double yp, double wm, double hm, double arcl);
+
+	/**
 	 * Update a character's position.
 	 * @param name name of character to edit
 	 * @param xp x position in pixels
