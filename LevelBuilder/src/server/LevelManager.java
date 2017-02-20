@@ -907,7 +907,7 @@ public class LevelManager {
 		
 		JSONObject pig = (JSONObject)chars.get("Piggy");
 		// Default case: If pig not found, don't change the current pig at all.
-		if (pig != null) {						
+		if (pig != null) {		
 			// TODO: defaults
 			double pigcxm = (double)pig.get("startingXPos");
 			double pigcym = (double)pig.get("startingYPos");
@@ -1030,10 +1030,17 @@ public class LevelManager {
 				double collisionHeight = (double)plat.get("collisionHeight");
 				
 				JSONArray collisionPoints = (JSONArray)plat.get("collisionPoints");
-				for (Object p : collisionPoints) {
-					JSONObject point = (JSONObject) p;
-					points.add(new Point2D.Double((double)point.get("x"), (double)point.get("y")));
-				}								
+				// Default case.
+				if (collisionPoints == null) {
+					// Use the collisionWidth and collisionHeight to make the points.
+					points.add(new Point2D.Double(0 - collisionWidth/2, 0 - collisionHeight/2));
+					points.add(new Point2D.Double(collisionWidth/2, collisionHeight/2));
+				} else {				
+					for (Object p : collisionPoints) {
+						JSONObject point = (JSONObject) p;
+						points.add(new Point2D.Double((double)point.get("x"), (double)point.get("y")));
+					}		
+				}
 			}
 			
 			// makePlatform takes swing coordinates, so m is translated to px and y is flipped.
