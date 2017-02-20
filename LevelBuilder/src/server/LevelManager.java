@@ -738,32 +738,87 @@ public class LevelManager {
 		
 		JSONObject level = (JSONObject) obj;
 		String name = (String) level.get("levelName");
+		// Default case.
+		if (name == null) {
+			name = "levelName";
+		}
+		
 		setLevelName(name);
 		
 		String nextName = (String) level.get("nextLevelName");
+		// Default case.
+		if (nextName == null) {
+			nextName = "nextLevelName";
+		}
 		setNextName(nextName);		
 		
 		JSONObject bg = (JSONObject) level.get("background");
+		// Default case.
+		if (bg == null) {
+			bg = new JSONObject();
+			bg.put("imageName", "bgSunny");
+			bg.put("width", 20);
+			bg.put("height", 15);
+		}
 		makeBackground(bg);
 		
-		double eolXM = (double) level.get("levelEndX");
-		double eolYM = (double) level.get("levelEndY");
+		Double eolXMD = (Double) level.get("levelEndX");
+		double eolXM;
+		// Default case.
+		if (eolXMD == null) {
+			eolXM = 14;
+		} else {
+			eolXM = eolXMD.doubleValue();
+		}
+		
+		Double eolYMD = (Double) level.get("levelEndY");
+		double eolYM;
+		// Default case.
+		if (eolYMD == null) {
+			eolYM = 14;
+		} else {
+			eolYM = eolYMD.doubleValue();
+		}
+		
 		this.eol = new Point2D.Double(eolXM, eolYM);
 		
 		Boolean polygon = (Boolean) level.get("polygonCollision");
+		// Default case.
+		if (polygon == null) {
+			polygon = false;
+		}
 		System.out.println("Collision: " + polygon);
 		
 		JSONArray plats = (JSONArray) level.get("platforms");
+		// Default case. 
+		if (plats == null) {
+			plats = new JSONArray();
+		}
+		
 		makePlatList(plats, polygon);
 		
 		JSONArray vines = (JSONArray) level.get("vines");
+		// Default case.
+		if (vines == null) {
+			vines = new JSONArray();
+		}
 		makeVinesList(vines);
 		
 		JSONObject characters = (JSONObject) level.get("characters");
-		setCharacters(characters);
+		// Default case: don't change any of the characters' positions, etc if no info found.
+		if (characters != null) {
+			setCharacters(characters);
+		}		
 		
 		// Resize last
-		double mToPixel = (Double) level.get("mToPixel");
+		Double mToPixelD = (Double) level.get("mToPixel");
+		double mToPixel;
+		// Default case.
+		if (mToPixelD == null) {
+			mToPixel = 100;
+		} else {
+			mToPixel = mToPixelD.doubleValue();
+		}
 		jsonSetMToPixel(mToPixel);
 		
 	}
@@ -790,33 +845,87 @@ public class LevelManager {
 	
 	public void setCharacters(JSONObject chars) {		
 		JSONObject monkey = (JSONObject)chars.get("Monkey");
-		double cxm = (double)monkey.get("startingXPos");
-		double cym = (double)monkey.get("startingYPos");
-		boolean present = (boolean)monkey.get("present");
-		this.characters.get("Monkey").setCenter(cxm, cym);
-		this.characters.get("Monkey").setPresent(present);		
+		// Default case: If monkey not found, don't change the current monkey at all.
+		if (monkey != null) {				
+			Double cxmD = (Double)monkey.get("startingXPos");
+			double cxm;
+			// Default case.
+			if (cxmD == null) {
+				cxm = 0;
+			} else {
+				cxm = cxmD.doubleValue();
+			}
+			
+			Double cymD = (Double)monkey.get("startingYPos");
+			double cym;
+			// Default case.
+			if (cymD == null) {
+				cym = 0;
+			} else {
+				cym = cymD.doubleValue();
+			}
+			
+			Boolean present = (Boolean)monkey.get("present");
+			// Default case.
+			if (present == null) {
+				present = false;
+			}
+			this.characters.get("Monkey").setCenter(cxm, cym);
+			this.characters.get("Monkey").setPresent(present);		
+		}
 		
 		JSONObject monk = (JSONObject)chars.get("Monk");
-		double monkcxm = (double)monk.get("startingXPos");
-		double monkcym = (double)monk.get("startingYPos");
-		boolean monkpresent = (boolean)monk.get("present");
-		this.characters.get("Monk").setCenter(monkcxm, monkcym);
-		this.characters.get("Monk").setPresent(monkpresent);
+		// Default case: If monk not found, don't change the current monk at all.
+		if (monk != null) {												
+			Double monkcxmD = (Double)monk.get("startingXPos");
+			double monkcxm;
+			// Default case.
+			if (monkcxmD == null) {
+				monkcxm = 0;
+			} else {
+				monkcxm = monkcxmD.doubleValue();
+			}
+			
+			Double monkcymD = (Double)monk.get("startingYPos");
+			double monkcym;
+			// Default case.
+			if (monkcymD == null) {
+				monkcym = 0;
+			} else {
+				monkcym = monkcymD.doubleValue();
+			}
+			
+			Boolean monkpresent = (Boolean)monk.get("present");
+			// Default case.
+			if (monkpresent == null) {
+				monkpresent = false;
+			}
+			
+			this.characters.get("Monk").setCenter(monkcxm, monkcym);
+			this.characters.get("Monk").setPresent(monkpresent);
+		}
 		
 		JSONObject pig = (JSONObject)chars.get("Piggy");
-		double pigcxm = (double)pig.get("startingXPos");
-		double pigcym = (double)pig.get("startingYPos");
-		boolean pigpresent = (boolean)pig.get("present");
-		this.characters.get("Piggy").setCenter(pigcxm, pigcym);
-		this.characters.get("Piggy").setPresent(pigpresent);
+		// Default case: If pig not found, don't change the current pig at all.
+		if (pig != null) {						
+			// TODO: defaults
+			double pigcxm = (double)pig.get("startingXPos");
+			double pigcym = (double)pig.get("startingYPos");
+			boolean pigpresent = (boolean)pig.get("present");
+			this.characters.get("Piggy").setCenter(pigcxm, pigcym);
+			this.characters.get("Piggy").setPresent(pigpresent);
+		}
 		
 		JSONObject sandy = (JSONObject)chars.get("Sandy");
-		double sandycxm = (double)sandy.get("startingXPos");
-		double sandycym = (double)sandy.get("startingYPos");
-		boolean sandypresent = (boolean)sandy.get("present");
-		this.characters.get("Sandy").setCenter(sandycxm, sandycym);
-		this.characters.get("Sandy").setPresent(sandypresent);
-		
+		// Default case: If sandy not found, don't change the current sandy at all.
+		if (sandy != null) {
+			// TODO: defaults
+			double sandycxm = (double)sandy.get("startingXPos");
+			double sandycym = (double)sandy.get("startingYPos");
+			boolean sandypresent = (boolean)sandy.get("present");
+			this.characters.get("Sandy").setCenter(sandycxm, sandycym);
+			this.characters.get("Sandy").setPresent(sandypresent);
+		}	
 	}
 	
 	public void setLevelName(String name) {		
