@@ -9,6 +9,8 @@ public interface ILayerToLevelAdapter {
 	
 	public void editVineCenter(int ticket);
 	
+	public void editVineStartVel(int ticket, double startVel);
+	
 	public void changeDimVine(int ticket, double wm, double hm);
 	
 	public void changeDimPlat(int ticket, double wm, double hm);

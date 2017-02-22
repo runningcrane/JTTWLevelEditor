@@ -18,11 +18,14 @@ public class Vine extends AInteractable {
 	 */
 	private double arcLimit;
 	
+	private double startVel;
+	
 	private BufferedImage image;
 	private ImageIcon rescaledImage;
 	
-	public Vine (double cxm, double cym,
-			double wm, double hm, double arcLimit) {
+	public Vine (String path, double cxm, double cym,
+			double wm, double hm, double arcLimit, double startingVelocity) {
+		this.setPath(path);
 		this.setInGameWidth(wm);
 		this.setInGameHeight(hm);
 		
@@ -36,7 +39,7 @@ public class Vine extends AInteractable {
 		this.setCenterYm(cym);		
 		this.length = hm;
 		this.arcLimit = arcLimit;
-		
+		this.startVel = startingVelocity;
 	}
 	
 	public BufferedImage getImage() {
@@ -64,6 +67,10 @@ public class Vine extends AInteractable {
 		this.arcLimit = arcl;
 	}
 	
+	public void editVineStartVel(double startVel) {
+		this.startVel = startVel;
+	}
+	
 	/**
 	 * Manually change the center of the vine.
 	 * @param cxm in COCOS coordinates [m]
@@ -76,11 +83,13 @@ public class Vine extends AInteractable {
 	
 	public JSONObject getJSON() {
 		JSONObject obj = new JSONObject();
+		obj.put("imageName", this.getPath());
 		obj.put("swingCenterX", this.getCenterXm());
 		obj.put("swingCenterY", this.getCenterYm());
 		obj.put("width", this.getInGameWidth());
 		obj.put("length", this.length);
 		obj.put("arcLimit", this.arcLimit);
+		obj.put("startingVelocity", this.startVel);
 		
 		return obj;
 	}

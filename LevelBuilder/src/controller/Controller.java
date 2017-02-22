@@ -83,8 +83,8 @@ public class Controller {
 			}
 
 			@Override
-			public void makeVine() {
-				level.setVinePosition();				
+			public void makeVine(String path) {
+				level.setVinePosition(path);				
 			}
 			
 		});
@@ -167,6 +167,11 @@ public class Controller {
 				level.removeVine(ticket);
 			}
 
+			@Override
+			public void editVineStartVel(int ticket, double startVel) {
+				level.editVineStartVel(ticket, startVel);				
+			}
+
 			
 		});
 		
@@ -222,8 +227,9 @@ public class Controller {
 			}
 
 			@Override
-			public void makeVine(double xp, double yp, double wm, double hm, double arcl) {
-				level.makeVine(xp, yp, wm, hm, arcl);				
+			public void makeVine(String path, double xp, double yp, double wm, double hm, 
+					double arcl, double startingVel) {
+				level.makeVine(path, xp, yp, wm, hm, arcl, startingVel);				
 			}
 
 			@Override
@@ -291,8 +297,8 @@ public class Controller {
 			}
 
 			@Override
-			public void makeVine() {
-				outputWindow.makeVine();				
+			public void makeVine(String path) {
+				outputWindow.makeVine(path);				
 			}
 
 			@Override
@@ -307,8 +313,9 @@ public class Controller {
 				layerWindow.addPlatformEdit(ticket, wm, hm);				
 			}
 			
-			public void addVineEdit(int ticket, double wm, double hm, double arcl) {
-				layerWindow.addVineEdit(ticket, wm, hm, arcl);				
+			public void addVineEdit(int ticket, double wm, double hm, 
+					double arcl, double startVel) {
+				layerWindow.addVineEdit(ticket, wm, hm, arcl, startVel);				
 			}
 			
 			public void removeAllWindows() {

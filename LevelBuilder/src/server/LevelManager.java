@@ -329,7 +329,7 @@ public class LevelManager {
 		// Draw vines
 		vines.forEach((ticket, vine) -> {
 			double ulxp = (vine.getCenterXm() - vine.getInGameWidth()/2.0) * this.mToPixel;
-			double ulyp = ((this.lvhm - vine.getCenterYm()) - vine.getInGameHeight()) * this.mToPixel;			
+			double ulyp = ((this.lvhm - vine.getCenterYm())) * this.mToPixel;			
 			Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
 			
 			g.drawImage(vine.getRescaled().getImage(), (int)vpulp.getX(), (int)vpulp.getY(), null);
@@ -337,13 +337,13 @@ public class LevelManager {
 			// Draw the label on top of it.
 			g.setColor(Color.MAGENTA);
 			Point2D.Double vplp = getViewportCoordinates(vine.getCenterXm() * this.mToPixel,
-					(this.lvhm - (vine.getCenterYm())) * this.mToPixel);
+					(this.lvhm - (vine.getCenterYm() - vine.getInGameHeight()/2)) * this.mToPixel);
 			g.fillOval((int)(vplp.getX()), (int)(vplp.getY()), 15, 15);
 			
 			// Label point
 			g.setColor(Color.BLACK);
 			Point2D.Double vplbp = getViewportCoordinates(vine.getCenterXm() * this.mToPixel + 5, 
-					(this.lvhm - (vine.getCenterYm())) * this.mToPixel + 10);
+					(this.lvhm - (vine.getCenterYm() - vine.getInGameHeight()/2)) * this.mToPixel + 10);
 			g.drawString(Integer.toString(ticket), (int)(vplbp.getX()), 
 					(int)(vplbp.getY()));
 		});
@@ -397,6 +397,7 @@ public class LevelManager {
 		// Unfortunately this requires resetting ALL of the rescaled images.		
 		this.plats.forEach((ticket, plat) -> plat.setRescaled(resize(plat.getImage(), plat.getInGameWidth(), plat.getInGameHeight())));		
 		this.characters.forEach((name, player) -> player.setRescaled(resize(player.getImage(), 0.7, 1.7)));
+		this.vines.forEach((ticket, vine) -> vine.setRescaled(resize(vine.getImage(), vine.getInGameWidth(), vine.getInGameHeight())));
 		// this.npcs.forEach((name, enemy) -> enemy.setRescaled(resize(enemy.getImage(), enemy.getInGameWidth(), enemy.getInGameHeight())));
 		this.bg.setRescaled(resize(this.bg.getImage(), this.lvwm, this.lvhm));		 
 	}
@@ -446,19 +447,20 @@ public class LevelManager {
 		this.setViewportDimensions( wp / this.mToPixel, hp / this.mToPixel);	
 	}
 	
-	public void setVinePosition() {
-		ltoAdapter.makeVine();
+	public void setVinePosition(String path) {
+		ltoAdapter.makeVine(path);
 	}
 	
-	public int makeVine(double xp, double yp, double wm, double hm, double arcLength) {
-		Vine vine = new Vine((xp - this.vpOffset.getX()) / this.mToPixel, 
-				this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel, wm, hm, arcLength);
+	public int makeVine(String path, double xp, double yp, double wm, double hm, 
+			double arcLength, double startVel) {
+		Vine vine = new Vine(path, (xp - this.vpOffset.getX()) / this.mToPixel, 
+				this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel, wm, hm, arcLength, startVel);
 		
 		BufferedImage image;
 		try {
-			image = ImageIO.read(new File("assets/vine.png"));
+			image = ImageIO.read(new File(path));
 		} catch (IOException e) {
-			System.err.println("File not found: " + "assets/vine.png");
+			System.err.println("File not found: " + path);
 			e.printStackTrace();
 			return -1;
 		}
@@ -467,7 +469,7 @@ public class LevelManager {
 		vine.setRescaled(resize(image, wm, hm));
 		
 		vines.put(this.ticket, vine);	
-		ltlAdapter.addVineEdit(this.ticket, wm, hm, arcLength);
+		ltlAdapter.addVineEdit(this.ticket, wm, hm, arcLength, startVel);
 		this.ticket++;	
 		
 		return this.ticket - 1;
@@ -630,6 +632,10 @@ public class LevelManager {
 	
 	public void editVineArcl(int ticket, double arcl) {
 		this.vines.get(ticket).editVineArcl(arcl);
+	}
+	
+	public void editVineStartVel(int ticket, double startVel) {
+		this.vines.get(ticket).editVineStartVel(startVel);
 	}
 
 	public void removePlat(int ticket) {
@@ -986,17 +992,69 @@ public class LevelManager {
 		for (Object obj : list) {			
 			JSONObject vine = (JSONObject) obj;
 			
-			// Further parsing here						
-			double cxm = (double)vine.get("swingCenterX");
-			double cym = (double)vine.get("swingCenterY");
+			// Further parsing here
+			String path = (String)vine.get("imageName");
+			// Default case.
+			if (path == null) {
+				path = "assets/vine1.png";
+			}
 			
-			double wm = (double)vine.get("width");
-			double hm = (double)vine.get("length");	
+			Double cxmD = (Double)vine.get("swingCenterX");
+			double cxm;			
+			// Default case.
+			if (cxmD == null) {
+				cxm = 3;
+			} else {
+				cxm = cxmD.doubleValue();
+			}
 			
-			double arcLimit = (double)vine.get("arcLimit");						
+			Double cymD = (Double)vine.get("swingCenterY");
+			double cym;
+			// Default case.
+			if (cymD == null) {
+				cym = 3;
+			} else {
+				cym = cymD.doubleValue();
+			}
+			
+			Double wmD = (Double)vine.get("width");
+			double wm;
+			// Default case.
+			if (wmD == null) {
+				wm = 0.7;
+			} else {
+				wm = wmD.doubleValue();
+			}
+			
+			Double hmD = (Double)vine.get("length");
+			double hm;
+			// Default case.
+			if (hmD == null) {
+				hm = 3;
+			} else {
+				hm = hmD.doubleValue();
+			}
+			
+			Double arcLimitD = (Double)vine.get("arcLimit");
+			double arcLimit;
+			// Default case.
+			if (arcLimitD == null) {
+				arcLimit = 180;
+			} else {
+				arcLimit = arcLimitD.doubleValue();
+			}
+			
+			Double startingVelD = (Double)vine.get("startingVelocity");
+			double startingVel;
+			// Default case.
+			if (startingVelD == null) {
+				startingVel = 0;
+			} else {
+				startingVel = startingVelD.doubleValue();
+			}			
 			
 			// makeVine takes swing coordinates, so m is translated to px and y is flipped.
-			makeVine(cxm * this.mToPixel, (this.lvhm - cym) * this.mToPixel, wm, hm, arcLimit);
+			makeVine(path, cxm * this.mToPixel, (this.lvhm - cym) * this.mToPixel, wm, hm, arcLimit, startingVel);
 		}
 	}
 	

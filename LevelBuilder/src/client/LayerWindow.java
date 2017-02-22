@@ -49,7 +49,8 @@ public class LayerWindow extends JFrame {
 		initGUI();
 	}	
 	
-	public void addVineEdit(int ticket, double wm, double hm, double arcLength) {
+	public void addVineEdit(int ticket, double wm, double hm, 
+			double arcLength, double startVel) {
 		JSeparator jsep = new JSeparator(SwingConstants.HORIZONTAL);
 		this.initWM = wm;
 		this.initHM = hm;
@@ -64,7 +65,7 @@ public class LayerWindow extends JFrame {
 				setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 				
 				JPanel pnlPosition = new JPanel();
-				pnlPosition.setLayout(new GridLayout(3,4,0,0));
+				pnlPosition.setLayout(new GridLayout(5,3,0,0));
 				add(pnlPosition);
 				
 				
@@ -77,7 +78,7 @@ public class LayerWindow extends JFrame {
 				JLabel lblBlank = new JLabel("");
 				pnlPosition.add(lblBlank);
 				
-				JLabel lblArcl = new JLabel("Arclenght (deg):");
+				JLabel lblArcl = new JLabel("Arclength (deg):");
 				pnlPosition.add(lblArcl);
 				
 				txtArcl = new JTextField(Double.toString(arcLength));
@@ -86,6 +87,16 @@ public class LayerWindow extends JFrame {
 				
 				JButton btnArcl = new JButton("New arclength");
 				pnlPosition.add(btnArcl);
+				
+				JLabel lblStartVel = new JLabel("Start velocity (m/s^2):");
+				pnlPosition.add(lblStartVel);
+				
+				txtStartVel = new JTextField(Double.toString(startVel));
+				pnlPosition.add(txtStartVel);
+				txtStartVel.setColumns(10);
+				
+				JButton btnStartVel = new JButton("New start velocity");
+				pnlPosition.add(btnStartVel);
 				
 				JLabel lblWidth = new JLabel("Width (m):");
 				pnlPosition.add(lblWidth);
@@ -154,6 +165,12 @@ public class LayerWindow extends JFrame {
 				btnArcl.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						ltlAdapter.editVineArcl(ticket, Double.parseDouble(txtArcl.getText()));
+					}
+				});
+				
+				btnStartVel.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ltlAdapter.editVineStartVel(ticket, Double.parseDouble(txtStartVel.getText()));
 					}
 				});
 				

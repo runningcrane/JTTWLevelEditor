@@ -53,7 +53,8 @@ public interface IOutputToLevelAdapter {
 	 * @param hm expected height in in-game meters
 	 * @param arcl arc length (degrees)
 	 */
-	public void makeVine(double xp, double yp, double wm, double hm, double arcl);
+	public void makeVine(String path, double xp, double yp, double wm, double hm, 
+			double arcl, double startVel);
 
 	/**
 	 * Update a character's position.

@@ -38,7 +38,7 @@ public interface ILevelToOutputAdapter {
 	 */
 	public void setCharPos(String playerName);
 	
-	public void makeVine();
+	public void makeVine(String path);
 	
 	public void setPlatPos(int ticket);
 	

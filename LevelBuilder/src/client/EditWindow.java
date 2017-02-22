@@ -32,6 +32,7 @@ public class EditWindow extends JPanel {
 	JTextField txtWidth;
 	JTextField txtHeight;
 	JTextField txtArcl;
+	JTextField txtStartVel;
 
 	
 	public EditWindow getThis() {

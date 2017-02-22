@@ -319,9 +319,22 @@ public class OutputWindow extends JFrame {
 				    	arcld = 180;
 				    	numbe.printStackTrace();
 				    }				    
-				    				   
+				    
+				    String startVell = JOptionPane.showInputDialog(null, "Input starting velocity");
+				    double startVel;
+				    try {
+				    	startVel = Double.parseDouble(startVell);
+				    } catch (NullPointerException nulle) {				    	
+				    	startVel = 0;
+						nulle.printStackTrace();
+				    } catch (NumberFormatException numbe) {
+				    	System.out.println("Not a valid number.");
+				    	startVel = 0;
+				    	numbe.printStackTrace();
+				    }				
+				    
 				    // Pop up dialog box to make collision box.				    
-				    otlAdapter.makeVine(xp, yp, wm, hm, arcld);
+				    otlAdapter.makeVine(newPath, xp, yp, wm, hm, arcld, startVel);
 		    		
 		    		request = Request.NONE;
 					break;
@@ -473,8 +486,9 @@ public class OutputWindow extends JFrame {
 		request = Request.MARK_EOL;
 	}
 	
-	public void makeVine() {
+	public void makeVine(String path) {
 		request = Request.MAKE_VINE;
+		this.newPath = path;
 	}
 	
 	/**

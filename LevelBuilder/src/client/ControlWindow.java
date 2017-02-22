@@ -339,28 +339,87 @@ public class ControlWindow extends JFrame {
 		JPanel pnlForeground = new JPanel();
 		pnlBack.add(pnlForeground, BorderLayout.EAST);
 		
+		// Vines
+		
+		JPanel pnlVines = new JPanel();
+		pnlVines.setLayout(new BoxLayout(pnlVines, BoxLayout.Y_AXIS));
+		pnlBack.add(pnlVines);
+		
+		JLabel lblVines = new JLabel("<html><b>Vines</b></html>");
+		pnlVines.add(lblVines);
+		
+		ImageIcon iiVine1 = new ImageIcon("assets/vine1Thumbnail.png");
+		ImageIcon iiVine2 = new ImageIcon("assets/vine2Thumbnail.png");
+		ImageIcon iiVine3 = new ImageIcon("assets/vine3Thumbnail.png");
+		
+		ButtonGroup vineToggleGroup = new ButtonGroup();
+		JPanel pnlVineGrid = new JPanel();
+		pnlVineGrid.setLayout(new GridLayout(1,3));
+		pnlVines.add(pnlVineGrid);
+		
+		JToggleButton tglBtnVine1 = new JToggleButton("Vine1");
+		tglBtnVine1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makeVine("assets/vine1.png");
+			}
+		});
+		tglBtnVine1.setIcon(iiVine1);
+		tglBtnVine1.setPreferredSize(dimButton);
+		pnlVineGrid.add(tglBtnVine1);
+		vineToggleGroup.add(tglBtnVine1); 
+		
+		JToggleButton tglBtnVine2 = new JToggleButton("Vine2");
+		tglBtnVine2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makeVine("assets/vine2.png");
+			}
+		});
+		tglBtnVine2.setIcon(iiVine2);
+		tglBtnVine2.setPreferredSize(dimButton);
+		pnlVineGrid.add(tglBtnVine2);
+		vineToggleGroup.add(tglBtnVine2);
+		
+		JToggleButton tglBtnVine3 = new JToggleButton("Vine3");
+		tglBtnVine3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makeVine("assets/vine3.png");
+			}
+		});
+		tglBtnVine3.setIcon(iiVine3);
+		tglBtnVine3.setPreferredSize(dimButton);
+		pnlVineGrid.add(tglBtnVine3);
+		vineToggleGroup.add(tglBtnVine3);		
 		
 		// Platforms
 		
 		JPanel pnlPlatform = new JPanel();
 		pnlPlatform.setLayout(new BoxLayout(pnlPlatform, BoxLayout.Y_AXIS));
-		pnlBack.add(pnlPlatform);
+		pnlBack.add(pnlPlatform);		
 		
-		JLabel lblPlatform = new JLabel("<html><b>Platforms</b></html>");
-		pnlPlatform.add(lblPlatform);
+		JLabel lblRockLabel = new JLabel("<html><b>Rocks</b></html>");
+		pnlPlatform.add(lblRockLabel);
 		
 		JPanel pnlRocks = new JPanel();
 		pnlRocks.setLayout(new GridLayout(2,4));
 		pnlPlatform.add(pnlRocks);
 		
+		JLabel lblCloudLabel = new JLabel("<html><b>Clouds</b></html>");
+		pnlPlatform.add(lblCloudLabel);
+		
 		JPanel pnlClouds = new JPanel();
 		pnlClouds.setLayout(new GridLayout(4,4));
 		pnlPlatform.add(pnlClouds);
+		
+		JLabel lblSpecialsLabel = new JLabel("<html><b>Special</b></html>");
+		pnlPlatform.add(lblSpecialsLabel);
 		
 		JPanel pnlSpecials = new JPanel();		
 		pnlPlatform.add(pnlSpecials);
 			
 		// Platform panel - grid
+		
+		JLabel lblPlatLabel = new JLabel("<html><b>Other platforms</b></html>");
+		pnlPlatform.add(lblPlatLabel);
 		
 		JPanel pnlPlatGrid = new JPanel();
 		pnlPlatGrid.setLayout(new GridLayout(2,4));
@@ -377,7 +436,6 @@ public class ControlWindow extends JFrame {
 		ImageIcon iicanyonL = new ImageIcon("assets/canyonLThumbnail.png");
 		ImageIcon iiForestGround = new ImageIcon("assets/ForestGroundThumbnail.png");	
 		ImageIcon iiTree1 = new ImageIcon("assets/Tree1Thumbnail.png");
-		ImageIcon iiVine = new ImageIcon("assets/vineThumbnail.png");
 		ImageIcon iiBuddhaHand = new ImageIcon("assets/BuddhaHandThumbnail.png");
 		
 		// Platform panel - toggle buttons
@@ -436,18 +494,9 @@ public class ControlWindow extends JFrame {
 		tglBtnForestGround.setIcon(iiForestGround);
 		tglBtnForestGround.setPreferredSize(dimButton);
 		pnlPlatGrid.add(tglBtnForestGround);
-		platToggleGroup.add(tglBtnForestGround); 
-		
-		JToggleButton tglBtnVine = new JToggleButton("Vine");
-		tglBtnVine.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makeVine();
-			}
-		});
-		tglBtnVine.setIcon(iiVine);
-		tglBtnVine.setPreferredSize(dimButton);
-		pnlPlatGrid.add(tglBtnVine);
-		platToggleGroup.add(tglBtnVine); 
+		platToggleGroup.add(tglBtnForestGround); 				
+				
+		// Rocks
 		
 		JToggleButton tglBtnRock1 = new JToggleButton("Rock1");
 		tglBtnRock1.addActionListener(new ActionListener() {

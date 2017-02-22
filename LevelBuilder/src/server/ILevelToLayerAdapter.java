@@ -15,8 +15,9 @@ public interface ILevelToLayerAdapter {
 	 * @param initial wm
 	 * @param initial hm
 	 * @param initial arcLength
+	 * @param initial starting velocity
 	 */
-	public void addVineEdit(int ticket, double wm, double hm, double arcLength);
+	public void addVineEdit(int ticket, double wm, double hm, double arcLength, double startVel);
 	
 	/**
 	 * Remove all edit panels.
