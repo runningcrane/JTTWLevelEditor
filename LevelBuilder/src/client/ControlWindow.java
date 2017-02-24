@@ -400,7 +400,7 @@ public class ControlWindow extends JFrame {
 		pnlPlatform.add(lblRockLabel);
 		
 		JPanel pnlRocks = new JPanel();
-		pnlRocks.setLayout(new GridLayout(2,4));
+		pnlRocks.setLayout(new GridLayout(3,4));
 		pnlPlatform.add(pnlRocks);
 		
 		JLabel lblCloudLabel = new JLabel("<html><b>Clouds</b></html>");
@@ -430,12 +430,17 @@ public class ControlWindow extends JFrame {
 		ImageIcon iiRock2 = new ImageIcon("assets/Rock2Thumbnail.png");
 		ImageIcon iiRock3 = new ImageIcon("assets/Rock3Thumbnail.png");	
 		ImageIcon iiRock4 = new ImageIcon("assets/Rock4Thumbnail.png");	
+		ImageIcon iiLVL1Rock1 = new ImageIcon("assets/lvl1Rock1Thumbnail.png");				
+		ImageIcon iiLVL1Rock2 = new ImageIcon("assets/lvl1Rock2Thumbnail.png");
+		ImageIcon iiLVL1Rock3 = new ImageIcon("assets/lvl1Rock3Thumbnail.png");	
+		ImageIcon iiLVL1Rock4 = new ImageIcon("assets/lvl1Rock4Thumbnail.png");	
 		ImageIcon iiRock5 = new ImageIcon("assets/Rock5Thumbnail.png");	
 		ImageIcon iiBlueGround = new ImageIcon("assets/blueGroundThumbnail.png");
 		ImageIcon iicanyonR = new ImageIcon("assets/canyonRThumbnail.png");				
 		ImageIcon iicanyonL = new ImageIcon("assets/canyonLThumbnail.png");
 		ImageIcon iiForestGround = new ImageIcon("assets/ForestGroundThumbnail.png");	
 		ImageIcon iiTree1 = new ImageIcon("assets/Tree1Thumbnail.png");
+		ImageIcon iiTree2 = new ImageIcon("assets/Tree2Thumbnail.png");
 		ImageIcon iiBuddhaHand = new ImageIcon("assets/BuddhaHandThumbnail.png");
 		
 		// Platform panel - toggle buttons
@@ -452,17 +457,6 @@ public class ControlWindow extends JFrame {
 		pnlPlatGrid.add(tglBtnPedestal);
 		platToggleGroup.add(tglBtnPedestal); 
 		
-		JToggleButton tglBtncanyonR = new JToggleButton("canyonR");
-		tglBtncanyonR.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/canyonR.png");
-			}
-		});
-		tglBtncanyonR.setIcon(iicanyonR);
-		tglBtncanyonR.setPreferredSize(dimButton);
-		pnlPlatGrid.add(tglBtncanyonR);
-		platToggleGroup.add(tglBtncanyonR); 
-		
 		JToggleButton tglBtncanyonL = new JToggleButton("canyonL");
 		tglBtncanyonL.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -474,6 +468,17 @@ public class ControlWindow extends JFrame {
 		pnlPlatGrid.add(tglBtncanyonL);
 		platToggleGroup.add(tglBtncanyonL); 
 		
+		JToggleButton tglBtncanyonR = new JToggleButton("canyonR");
+		tglBtncanyonR.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/canyonR.png");
+			}
+		});
+		tglBtncanyonR.setIcon(iicanyonR);
+		tglBtncanyonR.setPreferredSize(dimButton);
+		pnlPlatGrid.add(tglBtncanyonR);
+		platToggleGroup.add(tglBtncanyonR); 		
+		
 		JToggleButton tglBtnTree1 = new JToggleButton("Tree1");
 		tglBtnTree1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -483,7 +488,18 @@ public class ControlWindow extends JFrame {
 		tglBtnTree1.setIcon(iiTree1);
 		tglBtnTree1.setPreferredSize(dimButton);
 		pnlPlatGrid.add(tglBtnTree1);
-		platToggleGroup.add(tglBtnTree1); 
+		platToggleGroup.add(tglBtnTree1);
+		
+		JToggleButton tglBtnTree2 = new JToggleButton("Tree2");
+		tglBtnTree2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/Tree2.png");
+			}
+		});
+		tglBtnTree2.setIcon(iiTree2);
+		tglBtnTree2.setPreferredSize(dimButton);
+		pnlPlatGrid.add(tglBtnTree2);
+		platToggleGroup.add(tglBtnTree2); 
 		
 		JToggleButton tglBtnForestGround = new JToggleButton("ForestGround");
 		tglBtnForestGround.addActionListener(new ActionListener() {
@@ -552,6 +568,51 @@ public class ControlWindow extends JFrame {
 		tglBtnRock5.setPreferredSize(dimButton);
 		pnlRocks.add(tglBtnRock5);
 		platToggleGroup.add(tglBtnRock5);
+		
+		// Level 1-specific rocks
+		JToggleButton tglBtnLVL1Rock1 = new JToggleButton("lvl1Rock1");
+		tglBtnLVL1Rock1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/lvl1Rock1.png");
+			}
+		});
+		tglBtnLVL1Rock1.setIcon(iiLVL1Rock1);
+		tglBtnLVL1Rock1.setPreferredSize(dimButton);
+		pnlRocks.add(tglBtnLVL1Rock1);
+		platToggleGroup.add(tglBtnLVL1Rock1);
+		
+		JToggleButton tglBtnLVL1Rock2 = new JToggleButton("lvl1Rock2");
+		tglBtnLVL1Rock2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/lvl1Rock2.png");
+			}
+		});
+		tglBtnLVL1Rock2.setIcon(iiLVL1Rock2);
+		tglBtnLVL1Rock2.setPreferredSize(dimButton);
+		pnlRocks.add(tglBtnLVL1Rock2);
+		platToggleGroup.add(tglBtnLVL1Rock2);	
+		
+		JToggleButton tglBtnLVL1Rock3 = new JToggleButton("lvl1Rock3");
+		tglBtnLVL1Rock3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/lvl1Rock3.png");
+			}
+		});
+		tglBtnLVL1Rock3.setIcon(iiLVL1Rock3);
+		tglBtnLVL1Rock3.setPreferredSize(dimButton);
+		pnlRocks.add(tglBtnLVL1Rock3);
+		platToggleGroup.add(tglBtnLVL1Rock3);
+		
+		JToggleButton tglBtnLVL1Rock4 = new JToggleButton("lvl1Rock4");
+		tglBtnLVL1Rock4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/lvl1Rock4.png");
+			}
+		});
+		tglBtnLVL1Rock4.setIcon(iiLVL1Rock4);
+		tglBtnLVL1Rock4.setPreferredSize(dimButton);
+		pnlRocks.add(tglBtnLVL1Rock4);
+		platToggleGroup.add(tglBtnLVL1Rock4);
 		
 		JToggleButton btnBlueGround = new JToggleButton("BlueGround");
 		btnBlueGround.addActionListener(new ActionListener() {
