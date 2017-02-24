@@ -31,4 +31,6 @@ Option to remove everything on a level.
 
 2. Add boulder, peg support.
 
-3. Make JSONSimple output readable.
+3. Change EditWindow to have subclasses.
+
+4. Make JSONSimple output readable.
