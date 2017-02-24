@@ -12,10 +12,10 @@ This means the level editor allows editing of the [aspect ratio] of an image ins
 Meanwhile, the collision box launch allows editing of the collision box of an image.
 Thus, all instances of an image are of the same ratio, even if their dimensions differ.
 1. Add slider on collision box editor launch so that larger objects can be edited.
-1.* Add viewport on collision box for more precise editing.
+Add viewport on collision box for more precise editing.
 
 2. LevelEditor: option to rescale all objects on a level. 
-2.* Option to remove everything on a level.
+Option to remove everything on a level.
 
 3. Tooltips for easier use of this program.
 
