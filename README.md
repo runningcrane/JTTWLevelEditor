@@ -2,40 +2,36 @@ Initial date: 1/18/2017
 Level Builder for JTTW. This Level Builder is tile-based.
 
 Priority list as of 2/24/2017:
-+-----------------+
-|CONSTANT PRIORITY|
-+-----------------+
-Add in new assets, thumbnails as they are released by meiflower.
+##CONSTANT PRIORITY
+1. Add in new assets, thumbnails as they are released by meiflower.
 
-+------------+
-|TOP PRIORITY|
-+------------+
-[1] Make separate collision box editor launch to make boundary boxes for each image. 
+
+##TOP PRIORITY
+1. Make separate collision box editor launch to make boundary boxes for each image. 
 This means the level editor allows editing of the [aspect ratio] of an image instead.
 Meanwhile, the collision box launch allows editing of the collision box of an image.
 Thus, all instances of an image are of the same ratio, even if their dimensions differ.
-[1-1] Add slider on collision box editor launch so that larger objects can be edited.
-[1-2] Add viewport on collision box for more precise editing.
+Add slider on collision box editor launch so that larger objects can be edited.
+Add viewport on collision box for more precise editing.
 
-[2-1] LevelEditor: option to rescale all objects on a level. 
-[2-1] Option to remove everything on a level.
+2. Tooltips for easier use of this program.
 
-[3] Tooltips for easier use of this program.
+##MEDIUM PRIORITY
+1. Make mToPixel a slider, not a textfield. 
 
-+---------------+
-|MEDIUM PRIORITY|
-+---------------+
-[1] Make mToPixel a slider, not a textfield. 
+2. Add circle-or-polygon collision option and support.
 
-[2] Create respawn points.
+3. Add boulder, peg support.
 
-[3] [BUG] Fix character toggling. Currently characters can be toggle on, but not off.
+4. Create respawn points.
 
-+------------+
-|LOW PRIORITY|
-+------------+
-[1] Add circle-or-polygon collision option and support.
+5. LevelEditor: option to rescale all objects on a level. Includes rescaling positions.
 
-[2] Add boulder, peg support.
+##LOW PRIORITY
+1. [BUG] Fix character toggling. Currently characters can be toggle on, but not off.
 
-[3] Make JSONSimple output readable.
+2. Change EditWindow to have subclasses.
+
+3. Add trap support.
+
+4. Make JSONSimple output readable.
