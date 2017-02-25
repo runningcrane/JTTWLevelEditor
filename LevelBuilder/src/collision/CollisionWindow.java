@@ -97,7 +97,18 @@ public class CollisionWindow extends JFrame {
 		System.out.println("Default file made. Please try again.");
 	}
 	
+	public void clear() {
+		this.zoomLevel = 1;
+		this.points.clear();
+		this.vpOffset = new Point2D.Double(0, 0);
+		this.repaint();
+	}
+	
 	public void readJSON() {
+		// Clear everything first.
+		clear();
+		
+		// Try finding the file to parse.
 		JSONParser parser = new JSONParser();
 		Object obj;
 		
@@ -169,11 +180,11 @@ public class CollisionWindow extends JFrame {
 					ypoint = 0;
 				} else {
 					ypoint = ypointD.doubleValue();
-				}
+				}								
 				
 				points.add(new Point2D.Double(xpoint,  ypoint));
 			}
-		}
+		}		
 		
 		Double zoomLevelD = (Double) object.get("zoomLevel");
 		double zoomLevel;
@@ -187,9 +198,9 @@ public class CollisionWindow extends JFrame {
 		// Set fields.
 		this.name = name;
 		this.imgWidth = width;
-		this.imgHeight = height;
-		this.points = points;
+		this.imgHeight = height;		
 		this.zoomLevel = zoomLevel;
+		this.points = cocosToSwing(points); // Translate the points back to swing coordinates. 
 		
 		// Make the image.		
 		try {
@@ -457,22 +468,14 @@ public class CollisionWindow extends JFrame {
 	}
 	
 
-	public ArrayList<Point2D.Double> cocosToSwing() {
-		/*
-		 * Convert into in-game meters relative to the center as (0,0).
-		 * Cocos2dx's origin is in the *bottom left*, not *top left*.
-		 * Thus each point's ym must be subtracted from the height.
-		 */
+	public ArrayList<Point2D.Double> cocosToSwing(ArrayList<Point2D.Double> cocosPoints ) {		
 		ArrayList<Point2D.Double> correctedPoints = new ArrayList<Point2D.Double>();
-		/*
-		double hp = this.centerYp * 2;
-			
-		points.forEach((point) -> {
-					correctedPoints.add(new Point2D.Double((point.getX() - this.centerXp)/this.mToPixel,
-							((hp - point.getY()) - this.centerYp)/this.mToPixel));
-				});
-		this.setVisible(false);
-		*/
+		Point2D.Double center = new Point2D.Double(this.imgWidth * this.mToPixel/2, this.imgHeight * this.mToPixel/2);
+		cocosPoints.forEach((cocosP) -> {
+			double sx = (center.x + cocosP.x * this.mToPixel) * this.zoomLevel;
+			double sy = (center.y - cocosP.y * this.mToPixel) * this.zoomLevel;
+			correctedPoints.add(new Point2D.Double(sx, sy));
+		});
 		return correctedPoints;
 	}	
 	
