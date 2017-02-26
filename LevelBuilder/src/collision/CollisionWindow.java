@@ -64,6 +64,8 @@ public class CollisionWindow extends JFrame {
 	
 	private double offset;
 	private double mToPixel;
+	private JTextField txtHeight;
+	private JTextField txtWidth;
 	
 	public CollisionWindow() {
 		this.mToPixel = 100;
@@ -146,6 +148,7 @@ public class CollisionWindow extends JFrame {
 			width = 3;
 		} else {
 			width = widthD.doubleValue();
+			txtWidth.setText(Double.toString(width));
 		}
 			
 		Double heightD = (Double) object.get("height");
@@ -155,6 +158,7 @@ public class CollisionWindow extends JFrame {
 			height = 3;
 		} else {
 			height = heightD.doubleValue();
+			txtHeight.setText(Double.toString(height));
 		}
 		
 		JSONArray jsonPoints = (JSONArray) object.get("points");
@@ -270,17 +274,9 @@ public class CollisionWindow extends JFrame {
 		
 		// Control panel
 		JPanel pnlControls = new JPanel();
-		pnlControls.setLayout(new GridLayout(3,2));
+		pnlControls.setLayout(new GridLayout(5,2));
 		pnlControls.setBackground(UIManager.getColor("inactiveCaption"));
 		contentPane.add(pnlControls, BorderLayout.NORTH);
-		
-		JButton btnClear = new JButton("Clear Points");
-		btnClear.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Remove all made points.
-				points.clear();
-			}
-		});
 		
 		txtName = new JTextField();
 		txtName.setText("Name");
@@ -309,9 +305,40 @@ public class CollisionWindow extends JFrame {
 		    });
 		pnlControls.add(slider);
 		
-		JLabel lblBlank = new JLabel("");
-		pnlControls.add(lblBlank);
-		pnlControls.add(btnClear);
+		JButton btnDim = new JButton("Change dimensions");
+		btnDim.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Double pwidth = Double.parseDouble(txtWidth.getText());
+				if (pwidth != null) {
+					imgWidth = pwidth.doubleValue();
+				}
+				
+				Double pheight = Double.parseDouble(txtHeight.getText());
+				if (pheight != null) {
+					imgHeight = pheight.doubleValue();
+				}
+				
+				rescale();
+				
+			}
+		});
+		pnlControls.add(btnDim);
+		
+		JLabel lblWidth = new JLabel("Width:");
+		pnlControls.add(lblWidth);
+		
+		txtWidth = new JTextField();
+		txtWidth.setText("3");
+		pnlControls.add(txtWidth);
+		txtWidth.setColumns(10);
+		
+		JLabel lblHeight = new JLabel("Height:");
+		pnlControls.add(lblHeight);
+		
+		txtHeight = new JTextField();
+		txtHeight.setText("3");
+		pnlControls.add(txtHeight);
+		txtHeight.setColumns(10);
 		
 		JButton btnOutput = new JButton("Change!");
 		btnOutput.addActionListener(new ActionListener() {
@@ -319,6 +346,15 @@ public class CollisionWindow extends JFrame {
 				outputJSON();
 			}
 		});
+		
+		JButton btnClear = new JButton("Clear Points");
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Remove all made points.
+				points.clear();
+			}
+		});
+		pnlControls.add(btnClear);
 		pnlControls.add(btnOutput);
 		
 		// Display the image to make points of
@@ -426,8 +462,7 @@ public class CollisionWindow extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 			    int xp = e.getX();
 			    int yp = e.getY();
-			    points.add(new Point2D.Double((xp - vpOffset.x)/zoomLevel, (yp - vpOffset.y)/zoomLevel));
-			    System.out.println("added point " + (xp - vpOffset.x)/zoomLevel + ", " + (yp - vpOffset.y)/zoomLevel);
+			    points.add(new Point2D.Double((xp - vpOffset.x)/zoomLevel, (yp - vpOffset.y)/zoomLevel));			    
 			    pnlContent.repaint();
 		    }
 
@@ -472,8 +507,10 @@ public class CollisionWindow extends JFrame {
 		ArrayList<Point2D.Double> correctedPoints = new ArrayList<Point2D.Double>();
 		Point2D.Double center = new Point2D.Double(this.imgWidth * this.mToPixel/2, this.imgHeight * this.mToPixel/2);
 		cocosPoints.forEach((cocosP) -> {
-			double sx = (center.x + cocosP.x * this.mToPixel) * this.zoomLevel;
-			double sy = (center.y - cocosP.y * this.mToPixel) * this.zoomLevel;
+			System.out.println("Read in: " + cocosP.x + ", " + cocosP.y);
+			double sx = (center.x + cocosP.x * this.mToPixel);
+			double sy = (center.y - cocosP.y * this.mToPixel);
+			System.out.println("Read in: " + sx + ", " + sy);
 			correctedPoints.add(new Point2D.Double(sx, sy));
 		});
 		return correctedPoints;
@@ -487,6 +524,7 @@ public class CollisionWindow extends JFrame {
 		
 		// The center of the image is treated as (0,0). Do in terms of mToPixel.		
 		this.points.forEach((point) -> {
+			System.out.println("Swing point: " + point.x + ", " + point.y);
 			double cX = (point.x - center.x)/this.mToPixel;
 			double cY = (center.y - point.y)/this.mToPixel;
 			System.out.println("Cocos point: " + cX + ", " + cY);
