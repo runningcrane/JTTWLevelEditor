@@ -291,8 +291,8 @@ public class LevelManager {
 			 * Namely, the y is flipped in direction.			
 			 * Since CenterXm/CenterYm are in swing-orientation, reverse the ys to get them in cocos.
 			 */		
-			double ulxp = (plat.getCenterXm() - plat.getInGameWidth()/2.0) * this.mToPixel;
-			double ulyp = ((this.lvhm - plat.getCenterYm()) - plat.getInGameHeight() /2.0) * this.mToPixel;			
+			double ulxp = (plat.getCenterXm() - plat.getScaledIGW()/2.0) * this.mToPixel;
+			double ulyp = ((this.lvhm - plat.getCenterYm()) - plat.getScaledIGH() /2.0) * this.mToPixel;			
 			Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
 			
 			g.drawImage(plat.getRescaled().getImage(), (int)vpulp.getX(), (int)vpulp.getY(), null);
@@ -486,14 +486,14 @@ public class LevelManager {
 	 * @param path 
 	 * @param xp xpixel location on screen [swing vp coordinates]
 	 * @param yp ypixel location on screen [swing vp coordinates]
-	 * @param ar expected aspect ratio 
+	 * @param scale expected scaling off of the default
 	 * @return the platform's ticket number
 	 */
-	public int makePlatform(String path, double xp, double yp, double ar) {
+	public int makePlatform(String path, double xp, double yp, double scale) {
 		Platform platform;
 		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym appropriately.		
 		platform = new Platform(path, (xp - this.vpOffset.getX()) / this.mToPixel, 
-				this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel, ar);
+				this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel, scale);
 			
 		// Set up some defaults for this platform, such as wm, hm, and box.
 		setPlatformDefaults(platform);		
@@ -508,12 +508,12 @@ public class LevelManager {
 		}
 		
 		platform.setImage(image);
-		platform.setRescaled(resize(image, platform.getInGameWidth() * platform.getAR(),
-				platform.getInGameHeight() * platform.getAR()));
+		platform.setRescaled(resize(image, platform.getInGameWidth() * platform.getScale(),
+				platform.getInGameHeight() * platform.getScale()));
 		
 		plats.put(this.ticket, platform);
 		ltlAdapter.addPlatformEdit(this.ticket, platform.getInGameWidth(), platform.getInGameHeight(),
-				platform.getAR());
+				platform.getScale());
 		this.ticket++;	
 		
 		return this.ticket - 1;
@@ -611,12 +611,12 @@ public class LevelManager {
 						this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel);		
 	}	
 	
-	public void editPlatDim(int ticket, double wm, double hm) {
-		this.plats.get(ticket).editPlatDim(wm, hm);
+	public void editPlatScale(int ticket, double scale) {
+		this.plats.get(ticket).setScale(scale);
 		
 		// Rescale the image
-		System.out.println("New size: " + wm + " , " + hm);
-		this.plats.get(ticket).setRescaled(resize(this.plats.get(ticket).getImage(), wm, hm));
+		this.plats.get(ticket).setRescaled(resize(this.plats.get(ticket).getImage(), 
+				this.plats.get(ticket).getScaledIGW(), this.plats.get(ticket).getScaledIGH()));
 	}
 	
 	public void editVineDim(int ticket, double wm, double hm) {

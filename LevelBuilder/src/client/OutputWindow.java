@@ -235,37 +235,21 @@ public class OutputWindow extends JFrame {
 				    System.out.println("Requesting center point " + xp + ", " + yp + "; swing vp pixels.");
 				    
 				    // Pop up dialog here to get the expected width in meters
-				    String width = JOptionPane.showInputDialog(null, "Input width of the image (meters)");
-				    double wm;
+				    String arString = JOptionPane.showInputDialog(null, "Input custom scale ratio. Default will be used otherwise.");
+				    double arDouble;
 				    try {
-				    	wm = Double.parseDouble(width);
+				    	arDouble = Double.parseDouble(arString);
 				    } catch (NullPointerException nulle) {
-				    	// Default to 2m width.
-				    	wm = 2;
-						nulle.printStackTrace();
+				    	// Default to 1:1.
+				    	arDouble = 1;
 				    } catch (NumberFormatException numbe) {
 				    	System.out.println("Not a valid number.");
-				    	wm = 2;
+				    	arDouble = 1;
 				    	numbe.printStackTrace();
-				    }
-				    
-				    // Pop up dialog here to get the expected size in meters
-				    String height = JOptionPane.showInputDialog(null, "Input height of the image (meters)");
-				    double hm;
-				    try {
-				    	hm = Double.parseDouble(height);
-				    } catch (NullPointerException nulle) {
-				    	// Default to 2m width.
-				    	hm = 2;
-						nulle.printStackTrace();
-				    } catch (NumberFormatException numbe) {
-				    	System.out.println("Not a valid number.");
-				    	hm = 2;
-				    	numbe.printStackTrace();
-				    }				    
+				    }				    				    
 				    				   
 				    // Pop up dialog box to make collision box.				    
-				    otlAdapter.makePlatform(newPath, xp, yp, wm, hm);
+				    otlAdapter.makePlatform(newPath, xp, yp, arDouble);
 				    
 				    request = Request.NONE;
 					break;

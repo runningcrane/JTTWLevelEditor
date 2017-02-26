@@ -6,8 +6,9 @@ public interface ILevelToLayerAdapter {
 	 * @param ticket
 	 * @param initial wm
 	 * @param initial hm
+	 * @param scale of the wm & hm
 	 */
-	public void addPlatformEdit(int ticket, double wm, double hm);
+	public void addPlatformEdit(int ticket, double wm, double hm, double scale);
 	
 	/**
 	 * Add an edit panel.

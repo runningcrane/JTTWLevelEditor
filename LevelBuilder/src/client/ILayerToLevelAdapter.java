@@ -3,7 +3,7 @@ package client;
 public interface ILayerToLevelAdapter {
 	public void editPlatCenter(int ticket);
 	
-	public void editPlatCollisionBox(int ticket);
+	public void editPlatScale(int ticket, double scale);
 	
 	public void editVineArcl(int ticket, double arcl);
 	
@@ -11,9 +11,7 @@ public interface ILayerToLevelAdapter {
 	
 	public void editVineStartVel(int ticket, double startVel);
 	
-	public void changeDimVine(int ticket, double wm, double hm);
-	
-	public void changeDimPlat(int ticket, double wm, double hm);
+	public void changeDimVine(int ticket, double wm, double hm);	
 	
 	public void removePlat(int ticket);
 	

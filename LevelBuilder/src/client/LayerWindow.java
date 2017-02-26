@@ -21,9 +21,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 /**
  * One of the three main windows. LayerWindow holds the "layers" of the level;
  * namely, EditWindows that can modify their respective object.
@@ -201,7 +204,7 @@ public class LayerWindow extends JFrame {
 		this.pack();
 	}
 	
-	public void addPlatformEdit(int ticket, double wm, double hm) {
+	public void addPlatformEdit(int ticket, double wm, double hm, double scale) {
 		JSeparator jsep = new JSeparator(SwingConstants.HORIZONTAL);
 		this.initWM = wm;
 		this.initHM = hm;
@@ -226,25 +229,29 @@ public class LayerWindow extends JFrame {
 				JButton btnMove = new JButton("New center");
 				pnlPosition.add(btnMove);
 				
-				JButton btnCollision = new JButton("Edit collision");
-				pnlPosition.add(btnCollision);
+				JLabel lblScale = new JLabel("Scale:");
+				pnlPosition.add(lblScale);
 				
-				JLabel lblWidth = new JLabel("Width (m):");
-				pnlPosition.add(lblWidth);
+				txtScale = new JTextField(Double.toString(scale));
+				pnlPosition.add(txtScale);
+				txtScale.setColumns(10);
 				
-				txtWidth = new JTextField(Double.toString(wm));
-				pnlPosition.add(txtWidth);
-				txtWidth.setColumns(10);
+				JButton btnDimensions = new JButton("Change scale");
+				pnlPosition.add(btnDimensions);			
 				
-				JButton btnDimensions = new JButton("Change dimensions");
-				pnlPosition.add(btnDimensions);
-				
-				JLabel lblHeight = new JLabel("Height (m):");
-				pnlPosition.add(lblHeight);
-				
-				txtHeight = new JTextField(Double.toString(hm));
-				pnlPosition.add(txtHeight);
-				txtHeight.setColumns(10);
+				JSlider slider = new JSlider();
+				slider.setSnapToTicks(true);
+				slider.setValue(100);
+				slider.setMajorTickSpacing(50);
+				slider.setMaximum(350);
+				slider.addChangeListener(new ChangeListener() {
+				      public void stateChanged(ChangeEvent event) {
+				        int value = slider.getValue();			        
+				        ltlAdapter.editPlatScale(ticket, (value + 50) / 100.0);		       
+				        		        
+				      }
+				    });
+				pnlPosition.add(slider);
 				
 				JButton btnDelete = new JButton("Remove");
 				pnlPosition.add(btnDelete);
@@ -366,43 +373,23 @@ public class LayerWindow extends JFrame {
 				
 				btnDimensions.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						double wm;
-						double hm;
+						double scale;
 						
 					    try {
-					    	wm = Double.parseDouble(txtWidth.getText());
-					    } catch (NullPointerException nulle) {
-					    	// Default to 2m width.
-					    	wm = 2;
-							nulle.printStackTrace();
+					    	scale = Double.parseDouble(txtScale.getText());
+					    } catch (NullPointerException nulle) {					    	
+					    	nulle.printStackTrace();
+					    	return;
 					    } catch (NumberFormatException numbe) {
 					    	System.out.println("Not a valid number.");
-					    	wm = 2;
 					    	numbe.printStackTrace();
-					    }
-					    
-					    try {
-					    	hm = Double.parseDouble(txtHeight.getText());
-					    } catch (NullPointerException nulle) {
-					    	// Default to 2m width.
-					    	hm = 2;
-							nulle.printStackTrace();
-					    } catch (NumberFormatException numbe) {
-					    	System.out.println("Not a valid number.");
-					    	hm = 2;
-					    	numbe.printStackTrace();
+					    	return;
 					    }
 					    
 					    // Valid numbers. Go resize over in LevelManager.
-					    ltlAdapter.changeDimPlat(ticket, wm, hm);
+					    ltlAdapter.editPlatScale(ticket, scale);
 					}
-				});
-				
-				btnCollision.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						ltlAdapter.editPlatCollisionBox(ticket);
-					}
-				});
+				});				
 				
 				btnMove.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {

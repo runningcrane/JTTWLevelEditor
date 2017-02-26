@@ -30,9 +30,19 @@ public class Platform extends AInteractable {
 	private double scK;
 	private double velocity;
 	/**
-	 * Aspect ratio.
+	 * Scale of the width and height of the image
 	 */
-	private double ar;
+	private double scale;
+	
+	/**
+	 * Scaled in-game width [m]. 
+	 */
+	private double scaledIGWM;
+	
+	/**
+	 * Scaled in-game height [m].
+	 */
+	private double scaledIGHM;
 	
 	/**
 	 * In terms of [cocos, m].
@@ -45,14 +55,14 @@ public class Platform extends AInteractable {
 	 * @param cxm in COCOS coordinates [m]
 	 * @param cym in COCOS coordinates [m]
 	 * @param loadedBox there exists a pre-loaded collision box
-	 * @param ar aspect ratio
+	 * @param scale scale of the width and height of the image
 	 */
-	public Platform (String path, double cxm, double cym, double ar) {
+	public Platform (String path, double cxm, double cym, double scale) {
 		// Take in the given arguments.
 		this.setPath(path);
 		this.setCenterXm(cxm);
 		this.setCenterYm(cym);
-		this.ar = ar;
+		this.scale = scale;
 		System.out.println("Setting platform center to " + cxm + ", " + cym + "; cocos world meters");
 		
 		// Initialize the others.
@@ -148,19 +158,29 @@ public class Platform extends AInteractable {
 	}
 	
 	/**
-	 * Set the aspect ratio.
-	 * @param ar aspect ratio
+	 * Set the scale.
+	 * @param scale new scale
 	 */
-	public void setAR(double ar) {
-		this.ar = ar;
+	public void setScale(double scale) {
+		this.scale = scale;
+		this.scaledIGWM = scale * this.getInGameWidth();
+		this.scaledIGHM = scale * this.getInGameHeight();
+	}
+	
+	public double getScaledIGW() {
+		return this.scaledIGWM;
+	}
+	
+	public double getScaledIGH() {
+		return this.scaledIGHM;
 	}
 	
 	/**
-	 * Get the aspect ratio.
-	 * @return the aspect ratio
+	 * Get the scale of the image.
+	 * @return the scale of the wm & hm
 	 */ 
-	public double getAR() {
-		return this.ar;
+	public double getScale() {
+		return this.scale;
 	}
 	
 	public JSONObject getJSON(boolean polygon) {
@@ -177,8 +197,8 @@ public class Platform extends AInteractable {
 		obj.put("imageName", imageName);
 		obj.put("centerX", this.getCenterXm());
 		obj.put("centerY", this.getCenterYm());
-		obj.put("imageSizeWidth", this.getInGameWidth());
-		obj.put("imageSizeHeight", this.getInGameHeight());
+		obj.put("imageSizeWidth", this.scaledIGWM);
+		obj.put("imageSizeHeight", this.scaledIGHM);
 		obj.put("disappears", this.disappears);
 		obj.put("moveable", this.moveable); 
 		obj.put("sinkable", this.sinkable);
@@ -188,14 +208,14 @@ public class Platform extends AInteractable {
 		obj.put("endX", this.endpoint.getX());
 		obj.put("endY", this.endpoint.getY());
 		
-		// Replace t)he below with collision points.
+		// Replace the below with collision points.
 		JSONArray pointsList = new JSONArray();
 		ArrayList<Point2D.Double> points = this.getCollisionPoints();
 		points.forEach((point) -> {
-			System.out.println("Collision points made initially: " + point.getX() + " x " +  point.getY());
+			System.out.println("Collision points made initially: " + point.getX() * this.scale + " x " +  point.getY() * this.scale);
 			JSONObject couple = new JSONObject();
-			couple.put("x", point.getX());
-			couple.put("y", point.getY());
+			couple.put("x", point.getX() * this.scale);
+			couple.put("y", point.getY() * this.scale);
 			pointsList.add(couple);
 		});		
 		

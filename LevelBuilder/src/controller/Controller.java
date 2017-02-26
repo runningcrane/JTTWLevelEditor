@@ -97,20 +97,10 @@ public class Controller {
 			}
 
 			@Override
-			public void editPlatCollisionBox(int ticket) {
-				level.editPlatCollisionBox(ticket);				
-			}
-
-			@Override
 			public void removePlat(int ticket) {
 				level.removePlat(ticket);				
 			}
 
-			@Override
-			public void changeDimPlat(int ticket, double wm, double hm) {
-				level.editPlatDim(ticket, wm, hm);				
-			}
-			
 			@Override
 			public void makeEndpointPlat(int ticket) {
 				level.makeEndpointPlat(ticket);
@@ -172,6 +162,11 @@ public class Controller {
 				level.editVineStartVel(ticket, startVel);				
 			}
 
+			@Override
+			public void editPlatScale(int ticket, double scale) {
+				level.editPlatScale(ticket, scale);
+			}
+
 			
 		});
 		
@@ -197,8 +192,8 @@ public class Controller {
 			}
 
 			@Override
-			public void makePlatform(String path, double xp, double yp, double wm, double hm) {
-				level.makePlatform(path, xp, yp, wm, hm, null);				
+			public void makePlatform(String path, double xp, double yp, double scale) {
+				level.makePlatform(path, xp, yp, scale);				
 			}
 
 			@Override
@@ -309,8 +304,8 @@ public class Controller {
 		}, new ILevelToLayerAdapter() {
 
 			@Override
-			public void addPlatformEdit(int ticket, double wm, double hm) {
-				layerWindow.addPlatformEdit(ticket, wm, hm);				
+			public void addPlatformEdit(int ticket, double wm, double hm, double scale) {
+				layerWindow.addPlatformEdit(ticket, wm, hm, scale);				
 			}
 			
 			public void addVineEdit(int ticket, double wm, double hm, 

@@ -40,10 +40,9 @@ public interface IOutputToLevelAdapter {
 	 * @param path path to image file
 	 * @param xp x position in pixels
 	 * @param yp y position in pixels
-	 * @param wm expected width in in-game meters
-	 * @param hm expected height in in-game meters
+	 * @param wm scaling of the default width-height of this platform
 	 */
-	public void makePlatform(String path, double xp, double yp, double wm, double hm);
+	public void makePlatform(String path, double xp, double yp, double scale);
 	
 	/**
 	 * Request a vine to be made.
