@@ -82,6 +82,11 @@ public class LevelManager {
 	private double vphm;
 	
 	/**
+	 * Map of objects to their default JSON.
+	 */
+	private Map<String, JSONObject> defaultJSON;
+	
+	/**
 	 * Foreground array.
 	 */
 	private ArrayList<INonInteractable> fg;
@@ -174,6 +179,7 @@ public class LevelManager {
 		this.lvhm = 15;
 		
 		// Instantiate various lists.
+		this.defaultJSON = new HashMap<String, JSONObject>();
 		this.plats = new HashMap<Integer, Platform>();
 		this.fg = new ArrayList<INonInteractable>();
 		this.vines = new HashMap<Integer, Vine>();
@@ -480,39 +486,34 @@ public class LevelManager {
 	 * @param path 
 	 * @param xp xpixel location on screen [swing vp coordinates]
 	 * @param yp ypixel location on screen [swing vp coordinates]
-	 * @param wm expected width in in-game meters
-	 * @param hm expected height in in-game meters
+	 * @param ar expected aspect ratio 
 	 * @return the platform's ticket number
 	 */
-	public int makePlatform(String path, double xp, double yp, double wm, double hm,
-			ArrayList<Point2D.Double> points) {
+	public int makePlatform(String path, double xp, double yp, double ar) {
 		Platform platform;
-		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym appropriately.
-		
-		// Are we making a new platform, or is this a platform that already has a collision box?
-		if (points == null) {
-			platform = new Platform(path, (xp - this.vpOffset.getX()) / this.mToPixel, 
-					this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel, wm, hm, false);
-		} else {
-			platform = new Platform(path, (xp - this.vpOffset.getX()) / this.mToPixel, 
-					this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel, wm, hm, true);
-			platform.setCollisionBox(points);
-		}
+		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym appropriately.		
+		platform = new Platform(path, (xp - this.vpOffset.getX()) / this.mToPixel, 
+				this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel, ar);
+			
+		// Set up some defaults for this platform, such as wm, hm, and box.
+		setPlatformDefaults(platform);		
 		
 		BufferedImage image;
 		try {
 			image = ImageIO.read(new File(path));
 		} catch (IOException e) {
-			System.err.println("File not found: " + path);
+			System.err.println("Image file not found: " + path);
 			e.printStackTrace();
 			return -1;
 		}
 		
 		platform.setImage(image);
-		platform.setRescaled(resize(image, wm, hm));
+		platform.setRescaled(resize(image, platform.getInGameWidth() * platform.getAR(),
+				platform.getInGameHeight() * platform.getAR()));
 		
 		plats.put(this.ticket, platform);
-		ltlAdapter.addPlatformEdit(this.ticket, wm, hm);
+		ltlAdapter.addPlatformEdit(this.ticket, platform.getInGameWidth(), platform.getInGameHeight(),
+				platform.getAR());
 		this.ticket++;	
 		
 		return this.ticket - 1;
@@ -608,11 +609,7 @@ public class LevelManager {
 		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym.		
 		this.vines.get(ticket).setCenter((xp - this.vpOffset.getX()) / this.mToPixel,
 						this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel);		
-	}
-	
-	public void editPlatCollisionBox(int ticket) {
-		this.plats.get(ticket).editPlatCollisionBox();			
-	}
+	}	
 	
 	public void editPlatDim(int ticket, double wm, double hm) {
 		this.plats.get(ticket).editPlatDim(wm, hm);
@@ -715,6 +712,79 @@ public class LevelManager {
 		return json;
 	}
 
+	/**
+	 * Reads the defaults of a platform out of its JSON file.	
+	 */
+	public void setPlatformDefaults(Platform plat) {
+		// Have we already loaded in the JSON? If so, get it out of the hash.
+		JSONObject json;
+		
+		// Path name of the json file; name includes .png on the end.
+		String name = plat.getPath().substring(0, plat.getPath().length() - 3);
+		
+		if (this.defaultJSON.containsKey(name)) {
+			json = this.defaultJSON.get(name);
+		} else {		
+		
+			JSONParser parser = new JSONParser();
+			Object obj;
+			try {
+				obj = parser.parse(new FileReader("../src/collision/" + name + ".json"));
+			} catch (FileNotFoundException e) {
+				System.out.println("File not found: " + "../src/collision/" + name + ".json\n" +
+						"Please make the JSON in the collision box editor.");
+				e.printStackTrace();
+				return;
+			} catch (IOException e) {
+				System.out.println("Illegal path: " + "../src/collision/" + name + ".json");
+				e.printStackTrace();
+				return;
+			} catch (ParseException e) {
+				System.out.println("Cannot parse JSON at: " + "../src/collision/" + name + ".json");
+				e.printStackTrace();
+				return;
+			}
+			
+			json = (JSONObject) obj;
+			this.defaultJSON.put(name, json);
+		}
+		
+		// Get the collision points.
+		JSONArray cpJSON = (JSONArray) json.get("points");
+		ArrayList<Point2D.Double> collisionPoints = new ArrayList<Point2D.Double>();
+		cpJSON.forEach((point) -> {
+			JSONObject pointJSON = (JSONObject) point;
+			collisionPoints.add(new Point2D.Double((double)pointJSON.get("x"), (double)pointJSON.get("y")));
+		});
+		
+		// Get the width and height.
+		Double widthD = (Double) json.get("width");
+		double width;
+		if (widthD == null) {
+			System.err.println("Could not find width!");
+			width = 3;
+		} else {
+			width = widthD.doubleValue();
+		}
+		
+		Double heightD = (Double) json.get("height");
+		double height;
+		if (heightD == null) {
+			System.err.println("Could not find height!");
+			height = 3;
+		} else {
+			height = heightD.doubleValue();
+		}
+		
+		// Set the fields.
+		plat.setCollisionBox(collisionPoints);
+		plat.editPlatDim(width, height);
+	}
+	
+	public void getCollisionSphere(String path) {
+		
+	}
+	
 	
 	/**
 	 * Reads in a level from its JSON.	 

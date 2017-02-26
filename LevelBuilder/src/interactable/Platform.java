@@ -4,6 +4,9 @@ import java.awt.Image;
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,12 +15,10 @@ import javax.swing.ImageIcon;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-import client.CollisionWindow;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class Platform extends AInteractable {
-	
-	private CollisionWindow settings;
 	private BufferedImage image;
 	private ImageIcon rescaledImage;
 	
@@ -28,6 +29,10 @@ public class Platform extends AInteractable {
 	
 	private double scK;
 	private double velocity;
+	/**
+	 * Aspect ratio.
+	 */
+	private double ar;
 	
 	/**
 	 * In terms of [cocos, m].
@@ -36,23 +41,19 @@ public class Platform extends AInteractable {
 	
 	
 	/**
-	 * 
 	 * @param path path to image
 	 * @param cxm in COCOS coordinates [m]
 	 * @param cym in COCOS coordinates [m]
-	 * @param wm width (in meters)
-	 * @param hm height (in meters)
 	 * @param loadedBox there exists a pre-loaded collision box
+	 * @param ar aspect ratio
 	 */
-	public Platform (String path, double cxm, double cym,
-			double wm, double hm, boolean loadedBox) {
+	public Platform (String path, double cxm, double cym, double ar) {
 		// Take in the given arguments.
 		this.setPath(path);
 		this.setCenterXm(cxm);
 		this.setCenterYm(cym);
+		this.ar = ar;
 		System.out.println("Setting platform center to " + cxm + ", " + cym + "; cocos world meters");
-		this.setInGameWidth(wm);
-		this.setInGameHeight(hm);
 		
 		// Initialize the others.
 		this.disappears = false;
@@ -61,31 +62,23 @@ public class Platform extends AInteractable {
 		this.climbable = false;
 		this.scK = 1.0;
 		this.velocity = 1.0;
-		this.endpoint = new Point2D.Double(0, 0);			
-		this.settings = new CollisionWindow (path, wm, hm, cxm, cym);
-		
-		if (!loadedBox) {
-			this.settings.start();
-		}
+		this.endpoint = new Point2D.Double(0, 0);						
 	}
 	
 	public void setCollisionBox(ArrayList<Point2D.Double> points) {
 		this.setCollisionPoints(points);
 		System.out.println("Points: " + points.get(0).getX() + " x " + points.get(0).getY() + 
 				"\n\t" + points.get(1).getX() + " x " + points.get(1).getY());
-		this.settings.startWithPoints(points);
-	}
+	}	
 	
-	public void editPlatCollisionBox() {
-		this.settings.setVisible(true);
-	}
-	
+	/**
+	 * Changes the default width and height of the platform.
+	 * @param wm width (in meters)
+	 * @param hm height (in meters)
+	 */
 	public void editPlatDim(double wm, double hm) {
 		this.setInGameWidth(wm);
-		this.setInGameHeight(hm);
-		
-		// Edit the wm and hm of the CollisionWindow too
-		this.settings.setImageSize(wm, hm);
+		this.setInGameHeight(hm);			
 	}
 	
 	/**
@@ -154,6 +147,22 @@ public class Platform extends AInteractable {
 		return this.endpoint.getY();
 	}
 	
+	/**
+	 * Set the aspect ratio.
+	 * @param ar aspect ratio
+	 */
+	public void setAR(double ar) {
+		this.ar = ar;
+	}
+	
+	/**
+	 * Get the aspect ratio.
+	 * @return the aspect ratio
+	 */ 
+	public double getAR() {
+		return this.ar;
+	}
+	
 	public JSONObject getJSON(boolean polygon) {
 		JSONObject obj = new JSONObject();
 		
@@ -179,9 +188,9 @@ public class Platform extends AInteractable {
 		obj.put("endX", this.endpoint.getX());
 		obj.put("endY", this.endpoint.getY());
 		
-		// Replace the below with collision points.
+		// Replace t)he below with collision points.
 		JSONArray pointsList = new JSONArray();
-		ArrayList<Point2D.Double> points = this.settings.returnPoints();
+		ArrayList<Point2D.Double> points = this.getCollisionPoints();
 		points.forEach((point) -> {
 			System.out.println("Collision points made initially: " + point.getX() + " x " +  point.getY());
 			JSONObject couple = new JSONObject();
