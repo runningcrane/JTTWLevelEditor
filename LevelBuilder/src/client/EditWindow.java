@@ -2,6 +2,7 @@ package client;
 
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 
 import java.awt.image.BufferedImage;
 
@@ -34,6 +35,7 @@ public class EditWindow extends JPanel {
 	JTextField txtScale;
 	JTextField txtArcl;
 	JTextField txtStartVel;
+	JSlider slider;
 
 	
 	public EditWindow getThis() {

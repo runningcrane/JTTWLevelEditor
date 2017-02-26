@@ -25,7 +25,7 @@ public interface ILevelToLayerAdapter {
 	 */
 	public void removeAllWindows();
 	
-	public void setDimensions(int ticket, double wm, double hm);
+	public void setDimensions(int ticket, double scale);
 	
 	public void setDisappears(int ticket, boolean selected);
 	

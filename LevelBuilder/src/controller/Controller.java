@@ -318,8 +318,8 @@ public class Controller {
 			}
 
 			@Override
-			public void setDimensions(int ticket, double wm, double hm) {
-				layerWindow.setDimensions(ticket, wm, hm);				
+			public void setDimensions(int ticket, double scale) {
+				layerWindow.setDimensions(ticket, scale);				
 			}
 
 			@Override

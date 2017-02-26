@@ -508,6 +508,7 @@ public class LevelManager {
 		}
 		
 		platform.setImage(image);
+		platform.setScale(scale);
 		platform.setRescaled(resize(image, platform.getInGameWidth() * platform.getScale(),
 				platform.getInGameHeight() * platform.getScale()));
 		
@@ -720,7 +721,8 @@ public class LevelManager {
 		JSONObject json;
 		
 		// Path name of the json file; name includes .png on the end.
-		String name = plat.getPath().substring(0, plat.getPath().length() - 3);
+		System.out.println("plat: " + plat.getPath());
+		String name = plat.getPath().substring(7, plat.getPath().length() - 4);
 		
 		if (this.defaultJSON.containsKey(name)) {
 			json = this.defaultJSON.get(name);
@@ -1141,8 +1143,17 @@ public class LevelManager {
 			double cxm = (double)plat.get("centerX");
 			double cym = (double)plat.get("centerY");
 			
-			double wm = (double)plat.get("imageSizeWidth");
-			double hm = (double)plat.get("imageSizeHeight");			
+			// The width and height are already scaled.
+			double swm = (double)plat.get("imageSizeWidth");
+			double shm = (double)plat.get("imageSizeHeight");
+			
+			Double scaleD = (Double)plat.get("scale");
+			double scale;
+			if (scaleD == null) {
+				scale = 1;
+			} else {
+				scale = scaleD.doubleValue();
+			}
 			
 			if (polygon) {
 				JSONArray collisionPoints = (JSONArray)plat.get("collisionPoints");
@@ -1171,12 +1182,12 @@ public class LevelManager {
 				}
 			}
 			
-			// makePlatform takes swing coordinates, so m is translated to px and y is flipped.
-			int ticket = makePlatform(path, cxm * this.mToPixel, (this.lvhm - cym) * this.mToPixel, wm, hm, points);
+			// makePlatform takes swing coordinates, so m is translated to px and y is flipped.			
+			int ticket = makePlatform(path, cxm * this.mToPixel, (this.lvhm - cym) * this.mToPixel, scale);
 			Platform newPlat = this.plats.get(ticket);
 			
 			// Set the other fields of the platform and its corresponding settings on load.
-			ltlAdapter.setDimensions(ticket, wm, hm);
+			ltlAdapter.setDimensions(ticket, scale);
 			
 			boolean disappears = (boolean)plat.get("disappears");
 			newPlat.setDisappears(disappears);

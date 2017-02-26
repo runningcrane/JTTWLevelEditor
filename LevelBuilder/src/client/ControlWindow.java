@@ -13,10 +13,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -43,7 +46,7 @@ public class ControlWindow extends JFrame {
 	private JTextField txtVPHeight;
 	private JTextField txtVPWidth;
 	private IControlToLevelAdapter ctlAdapter;	
-	private JTextField txtMToPixel;
+	private JSlider slMToPixel;
 	
 	private JPanel pnlBack;	
 	private JScrollPane scrPaneScroll;
@@ -84,7 +87,7 @@ public class ControlWindow extends JFrame {
 		pnlLevelResize.add(lblTitleLabel);
 		
 		JPanel pnlRControls = new JPanel();
-		pnlRControls.setLayout(new GridLayout(3,4));
+		pnlRControls.setLayout(new GridLayout(2,4));
 		Dimension dimPanel = new Dimension(250, 100);
 		pnlRControls.setPreferredSize(dimPanel);
 		pnlLevelResize.add(pnlRControls);
@@ -124,35 +127,25 @@ public class ControlWindow extends JFrame {
 		txtVPHeight.setColumns(10);
 		
 		JLabel lblMToPixel = new JLabel("mToPixel");
-		pnlRControls.add(lblMToPixel);
+		pnlLevelResize.add(lblMToPixel);
 		
-		txtMToPixel = new JTextField();
-		txtMToPixel.setText("100");
-		txtMToPixel.setToolTipText("");
-		pnlRControls.add(txtMToPixel);
-		txtMToPixel.setColumns(10);
+		slMToPixel = new JSlider();
+		slMToPixel.setValue(90);
+		slMToPixel.setMaximum(390);
+		slMToPixel.addChangeListener(new ChangeListener() {
+		      public void stateChanged(ChangeEvent event) {
+		        int value = slMToPixel.getValue();			        
+		        
+				// TODO: negative numbers check				
+				ctlAdapter.setMToPixel(value + 10);		        
+		      }
+		    });
+		pnlLevelResize.add(slMToPixel);
 		
 		JPanel pnlControlButtons = new JPanel();
 		pnlControlButtons.setPreferredSize(new Dimension(50,60));
 		pnlBack.add(pnlControlButtons);
 		
-		JButton btnMToPixel = new JButton("Change mToPixel");
-		btnMToPixel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				double mToPixel;
-				try {
-					mToPixel = Double.valueOf(txtMToPixel.getText());
-				} catch (NumberFormatException e) {			
-					JOptionPane.showMessageDialog(new JFrame("JOptionPane showMessageDialouge"), 
-							"mToPixel must be a number");
-					return;
-				}				
-				
-				// TODO: negative numbers check				
-				ctlAdapter.setMToPixel(mToPixel);			
-			}
-		});
-		pnlControlButtons.add(btnMToPixel);
 		
 		// Resize
 		
@@ -855,7 +848,7 @@ public class ControlWindow extends JFrame {
 	 * @param mToPixel in-game meters-to-pixels ratio
 	 */
 	public void setMToPixel(double mToPixel) {
-		txtMToPixel.setText(Double.toString(mToPixel));
+		slMToPixel.setValue((int)mToPixel);		
 	}
 
 }

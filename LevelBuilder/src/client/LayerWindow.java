@@ -86,7 +86,7 @@ public class LayerWindow extends JFrame {
 				
 				txtArcl = new JTextField(Double.toString(arcLength));
 				pnlPosition.add(txtArcl);
-				txtArcl.setColumns(10);
+				txtArcl.setColumns(7);
 				
 				JButton btnArcl = new JButton("New arclength");
 				pnlPosition.add(btnArcl);
@@ -96,7 +96,7 @@ public class LayerWindow extends JFrame {
 				
 				txtStartVel = new JTextField(Double.toString(startVel));
 				pnlPosition.add(txtStartVel);
-				txtStartVel.setColumns(10);
+				txtStartVel.setColumns(7);
 				
 				JButton btnStartVel = new JButton("New start velocity");
 				pnlPosition.add(btnStartVel);
@@ -106,7 +106,7 @@ public class LayerWindow extends JFrame {
 				
 				txtWidth = new JTextField(Double.toString(wm));
 				pnlPosition.add(txtWidth);
-				txtWidth.setColumns(10);
+				txtWidth.setColumns(7);
 				
 				JButton btnDimensions = new JButton("Change dimensions");
 				pnlPosition.add(btnDimensions);
@@ -116,7 +116,7 @@ public class LayerWindow extends JFrame {
 				
 				txtHeight = new JTextField(Double.toString(hm));
 				pnlPosition.add(txtHeight);
-				txtHeight.setColumns(10);
+				txtHeight.setColumns(7);
 				
 				JButton btnDelete = new JButton("Remove");
 				pnlPosition.add(btnDelete);
@@ -229,30 +229,6 @@ public class LayerWindow extends JFrame {
 				JButton btnMove = new JButton("New center");
 				pnlPosition.add(btnMove);
 				
-				JLabel lblScale = new JLabel("Scale:");
-				pnlPosition.add(lblScale);
-				
-				txtScale = new JTextField(Double.toString(scale));
-				pnlPosition.add(txtScale);
-				txtScale.setColumns(10);
-				
-				JButton btnDimensions = new JButton("Change scale");
-				pnlPosition.add(btnDimensions);			
-				
-				JSlider slider = new JSlider();
-				slider.setSnapToTicks(true);
-				slider.setValue(100);
-				slider.setMajorTickSpacing(50);
-				slider.setMaximum(350);
-				slider.addChangeListener(new ChangeListener() {
-				      public void stateChanged(ChangeEvent event) {
-				        int value = slider.getValue();			        
-				        ltlAdapter.editPlatScale(ticket, (value + 50) / 100.0);		       
-				        		        
-				      }
-				    });
-				pnlPosition.add(slider);
-				
 				JButton btnDelete = new JButton("Remove");
 				pnlPosition.add(btnDelete);
 				btnDelete.addActionListener(new ActionListener() {
@@ -265,6 +241,30 @@ public class LayerWindow extends JFrame {
 				});
 				btnDelete.setBackground(Color.RED);
 				btnDelete.setForeground(Color.WHITE);
+				
+				JLabel lblScale = new JLabel("Scale:");
+				pnlPosition.add(lblScale);
+				
+				txtScale = new JTextField(Double.toString(scale));
+				pnlPosition.add(txtScale);
+				txtScale.setColumns(7);
+				
+				JButton btnDimensions = new JButton("Change scale");
+				pnlPosition.add(btnDimensions);			
+				
+				slider = new JSlider();
+				slider.setSnapToTicks(true);
+				slider.setValue(100);
+				slider.setMajorTickSpacing(50);
+				slider.setMaximum(350);
+				slider.addChangeListener(new ChangeListener() {
+				      public void stateChanged(ChangeEvent event) {
+				        int value = slider.getValue();			        
+				        ltlAdapter.editPlatScale(ticket, (value + 50) / 100.0);		       
+				        txtScale.setText(Integer.toString(value));		        
+				      }
+				    });
+				pnlPosition.add(slider);				
 				
 				JPanel pnlDisappears = new JPanel();
 				add(pnlDisappears);
@@ -313,7 +313,7 @@ public class LayerWindow extends JFrame {
 				txtVelocity = new JTextField();
 				txtVelocity.setText("0.5");
 				pnlMoveable.add(txtVelocity);
-				txtVelocity.setColumns(10);
+				txtVelocity.setColumns(7);
 				
 				JButton btnUpdateVelocity = new JButton("Set velocity");
 				btnUpdateVelocity.addActionListener(new ActionListener() {
@@ -345,7 +345,7 @@ public class LayerWindow extends JFrame {
 				txtSCK = new JTextField();
 				txtSCK.setText("1.0");
 				pnlSinkable.add(txtSCK);
-				txtSCK.setColumns(10);
+				txtSCK.setColumns(7);
 				
 				JButton btnPhysics = new JButton("Set physics");
 				btnPhysics.addActionListener(new ActionListener() {
@@ -488,8 +488,8 @@ public class LayerWindow extends JFrame {
 		this.edits.get(ticket).txtSCK.setText(Double.toString(scK));
 	}
 	
-	public void setDimensions(int ticket, double wm, double hm) {
-		this.edits.get(ticket).txtWidth.setText(Double.toString(wm));
-		this.edits.get(ticket).txtHeight.setText(Double.toString(hm));
+	public void setDimensions(int ticket, double scale) {
+		this.edits.get(ticket).txtScale.setText(Double.toString(scale));
+		this.edits.get(ticket).slider.setValue((int)(scale * 100 - 50));
 	}
 }
