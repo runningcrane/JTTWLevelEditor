@@ -401,7 +401,7 @@ public class LevelManager {
 		this.mToPixel = mToPixel;
 		
 		// Unfortunately this requires resetting ALL of the rescaled images.		
-		this.plats.forEach((ticket, plat) -> plat.setRescaled(resize(plat.getImage(), plat.getInGameWidth(), plat.getInGameHeight())));		
+		this.plats.forEach((ticket, plat) -> plat.setRescaled(resize(plat.getImage(), plat.getScaledIGW(), plat.getScaledIGH())));		
 		this.characters.forEach((name, player) -> player.setRescaled(resize(player.getImage(), 0.7, 1.7)));
 		this.vines.forEach((ticket, vine) -> vine.setRescaled(resize(vine.getImage(), vine.getInGameWidth(), vine.getInGameHeight())));
 		// this.npcs.forEach((name, enemy) -> enemy.setRescaled(resize(enemy.getImage(), enemy.getInGameWidth(), enemy.getInGameHeight())));
@@ -508,9 +508,9 @@ public class LevelManager {
 		}
 		
 		platform.setImage(image);
+		System.out.println("Defaults set");
 		platform.setScale(scale);
-		platform.setRescaled(resize(image, platform.getInGameWidth() * platform.getScale(),
-				platform.getInGameHeight() * platform.getScale()));
+		platform.setRescaled(resize(image, platform.getInGameWidth(), platform.getInGameHeight()));
 		
 		plats.put(this.ticket, platform);
 		ltlAdapter.addPlatformEdit(this.ticket, platform.getInGameWidth(), platform.getInGameHeight(),
