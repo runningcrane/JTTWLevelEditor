@@ -848,7 +848,7 @@ public class ControlWindow extends JFrame {
 	 * @param mToPixel in-game meters-to-pixels ratio
 	 */
 	public void setMToPixel(double mToPixel) {
-		slMToPixel.setValue((int)mToPixel);		
+		slMToPixel.setValue((int)mToPixel - 10);		
 	}
 
 }

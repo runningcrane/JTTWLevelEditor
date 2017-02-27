@@ -77,8 +77,8 @@ public class Platform extends AInteractable {
 	
 	public void setCollisionBox(ArrayList<Point2D.Double> points) {
 		this.setCollisionPoints(points);
-		System.out.println("Points: " + points.get(0).getX() + " x " + points.get(0).getY() + 
-				"\n\t" + points.get(1).getX() + " x " + points.get(1).getY());
+		//System.out.println("Points: " + points.get(0).getX() + " x " + points.get(0).getY() + 
+				//"\n\t" + points.get(1).getX() + " x " + points.get(1).getY());
 	}	
 	
 	/**
@@ -99,6 +99,7 @@ public class Platform extends AInteractable {
 	public void setCenter(double cxm, double cym) {		
 		this.setCenterXm(cxm);
 		this.setCenterYm(cym);
+		System.out.println("Center made: " + this.getCenterXm() + ", " + this.getCenterYm());
 	}
 	
 	public void setDisappears(boolean selected) {
@@ -165,6 +166,7 @@ public class Platform extends AInteractable {
 		this.scale = scale;
 		this.scaledIGWM = scale * this.getInGameWidth();
 		this.scaledIGHM = scale * this.getInGameHeight();
+		System.out.println("New wm x hm: " + this.scaledIGWM + ", " + this.scaledIGHM);
 	}
 	
 	public double getScaledIGW() {
@@ -199,6 +201,7 @@ public class Platform extends AInteractable {
 		obj.put("centerY", this.getCenterYm());
 		obj.put("imageSizeWidth", this.scaledIGWM);
 		obj.put("imageSizeHeight", this.scaledIGHM);
+		obj.put("scale", this.scale);
 		obj.put("disappears", this.disappears);
 		obj.put("moveable", this.moveable); 
 		obj.put("sinkable", this.sinkable);
