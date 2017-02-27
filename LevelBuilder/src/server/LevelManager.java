@@ -793,6 +793,7 @@ public class LevelManager {
 	 * @param levelPath path to the level JSON	 
 	 */
 	public void readJSON(String levelPath) {
+		System.out.println("READING IN FILE " + levelPath);
 		JSONParser parser = new JSONParser();
 		Object obj;
 		try {
