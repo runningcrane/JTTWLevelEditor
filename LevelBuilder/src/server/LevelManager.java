@@ -300,7 +300,7 @@ public class LevelManager {
 
 		// Rescale the image
 		toEditBould.setRescaled(
-				resize(toEditBould.getImage(), toEditBould.getScaledRadius(), toEditBould.getScaledRadius()));
+				resize(toEditBould.getImage(), toEditBould.getScaledIGW(), toEditBould.getScaledIGH()));
 	}
 
 	/**
@@ -492,7 +492,7 @@ public class LevelManager {
 		boulder.setImage(image);
 		System.out.println("Defaults set");
 		boulder.setScale(scale);
-		boulder.setRescaled(resize(image, boulder.getScaledRadius(), boulder.getScaledRadius()));
+		boulder.setRescaled(resize(image, boulder.getScaledIGW(), boulder.getScaledIGH()));
 
 		boulders.put(this.ticket, boulder);
 		ltlAdapter.addBoulderEdit(this.ticket, boulder.getRadius(), boulder.getMass(), boulder.getScale());
