@@ -2,7 +2,6 @@ package client;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 
@@ -23,10 +22,6 @@ import java.awt.event.MouseListener;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
-
-import org.json.simple.JSONObject;
-
-//import org.json.simple.JSONObject;
 
 /**
  * One of the three main windows; OutputWindow is the window on which the level is drawn.
@@ -237,16 +232,20 @@ public class OutputWindow extends JFrame {
 				    // Pop up dialog here to get the expected width in meters
 				    String arString = JOptionPane.showInputDialog(null, "Input custom scale ratio. Default will be used otherwise.");
 				    double arDouble;
-				    try {
-				    	arDouble = Double.parseDouble(arString);
-				    } catch (NullPointerException nulle) {
-				    	// Default to 1:1.
-				    	arDouble = 1;
-				    } catch (NumberFormatException numbe) {
-				    	System.out.println("Not a valid number.");
-				    	arDouble = 1;
-				    	numbe.printStackTrace();
-				    }				    				    
+				    if (arString.isEmpty()) {
+				    	arDouble = 1.0;
+				    } else {
+				        try {
+				    	    arDouble = Double.parseDouble(arString);
+				        } catch (NullPointerException nulle) {
+				    	    // Default to 1:1.
+				    	    arDouble = 1;
+				        } catch (NumberFormatException numberEx) {
+				    	    System.out.println("Not a valid number.");
+				    	    arDouble = 1;
+				    	    numberEx.printStackTrace();
+				        }	
+				    }
 				    				   
 				    // Pop up dialog box to make collision box.				    
 				    otlAdapter.makePlatform(newPath, xp, yp, arDouble);
