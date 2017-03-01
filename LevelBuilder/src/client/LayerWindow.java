@@ -253,13 +253,11 @@ public class LayerWindow extends JFrame {
 				pnlPosition.add(btnDimensions);			
 				
 				slider = new JSlider();
-				slider.setSnapToTicks(true);
 				slider.setValue((int)(scale * 100 - 50));
-				slider.setMajorTickSpacing(50);
 				slider.setMaximum(350);
 				slider.addChangeListener(new ChangeListener() {
 				      public void stateChanged(ChangeEvent event) {
-				        int value = slider.getValue();			        
+				        int value = slider.getValue();					      
 				        ltlAdapter.editPlatScale(ticket, (value + 50) / 100.0);		       
 				        txtScale.setText(Double.toString((value + 50)/100.0));		        
 				      }
