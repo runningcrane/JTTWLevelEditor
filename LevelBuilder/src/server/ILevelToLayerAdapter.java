@@ -45,6 +45,8 @@ public interface ILevelToLayerAdapter {
 	
 	public void setSinkable(int ticket, boolean selected);
 	
+	public void setPolygonBoulder(int ticket, boolean selected);
+	
 	public void setSCK(int ticket, double scK);
 	
 	public void setVelocity(int ticket, double velocity);

@@ -289,13 +289,6 @@ public class LayerWindow extends JFrame {
 					    	numbe.printStackTrace();
 					    	return;
 					    }
-					    if (scale <= 0) {
-					    	slider.setValue(0);
-					    } else if (scale >= 4) {
-					    	slider.setValue(350);
-					    } else {
-					    	slider.setValue((int)(scale * 100 - 50));
-					    }
 					    
 					    // Valid numbers. Go resize over in LevelManager.
 					    ltlAdapter.editBoulderScale(ticket, scale);
@@ -335,6 +328,17 @@ public class LayerWindow extends JFrame {
 				removeEditWindow(ticket, jsep);
 			}
 		};
+	
+		pnlBack.add(newWindow);
+		this.edits.put(ticket, newWindow);
+		
+		// Add a line to separate areas.
+		pnlBack.add(jsep);
+		
+		// Resize the frame.
+        Dimension d = new Dimension(500,300);
+        this.scrPaneScroll.setPreferredSize(d);
+		this.pack();
 	}
 	
 	public void addPlatformEdit(int ticket, double wm, double hm, double scale) {
@@ -614,6 +618,10 @@ public class LayerWindow extends JFrame {
 		this.edits.get(ticket).chckbxClimbable.setSelected(selected);
 	}
 	
+	public void setPolygonBoulder(int ticket, boolean selected) {
+		this.edits.get(ticket).chckbxPolygon.setSelected(selected);
+	}
+	
 	public void setSinkable(int ticket, boolean selected) {
 		this.edits.get(ticket).chckbxSinkable.setSelected(selected);
 	}
@@ -627,7 +635,14 @@ public class LayerWindow extends JFrame {
 	}
 	
 	public void setDimensions(int ticket, double scale) {
-		this.edits.get(ticket).txtScale.setText(Double.toString(scale));
-		this.edits.get(ticket).slider.setValue((int)(scale * 100 - 50));
+		JTextField txtScale = this.edits.get(ticket).txtScale;		
+		if (txtScale != null) {
+			txtScale.setText(Double.toString(scale));
+		}		
+		
+		JSlider slide = this.edits.get(ticket).slider;
+		if (slide != null) {
+			slide.setValue((int)(scale * 100 - 50));
+		}
 	}
 }

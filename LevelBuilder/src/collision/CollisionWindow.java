@@ -151,36 +151,6 @@ public class CollisionWindow extends JFrame {
 			name = path;
 		}				
 		
-		
-		JSONArray jsonPoints = (JSONArray) object.get("points");
-		ArrayList<Point2D.Double> points = new ArrayList<Point2D.Double>();
-		// Check if null.
-		if (jsonPoints != null) {
-			for (Object objPoint : jsonPoints) {			
-				JSONObject jsonPoint = (JSONObject) objPoint;
-				
-				Double xpointD = (Double) jsonPoint.get("x");
-				double xpoint;
-				// Check if null.
-				if (xpointD == null) {
-					xpoint = 0;
-				} else {
-					xpoint = xpointD.doubleValue();
-				}
-				
-				Double ypointD = (Double) jsonPoint.get("y");
-				double ypoint;
-				// Check if null.
-				if (ypointD == null) {
-					ypoint = 0;
-				} else {
-					ypoint = ypointD.doubleValue();
-				}								
-				
-				points.add(new Point2D.Double(xpoint,  ypoint));
-			}
-		}		
-		
 		Double zoomLevelD = (Double) object.get("zoomLevel");
 		double zoomLevel;
 		// Check if null.
@@ -209,6 +179,35 @@ public class CollisionWindow extends JFrame {
 			height = heightD.doubleValue();
 			txtHeight.setText(Double.toString(height));
 		}
+				
+		JSONArray jsonPoints = (JSONArray) object.get("points");
+		ArrayList<Point2D.Double> points = new ArrayList<Point2D.Double>();
+		// Check if null.
+		if (jsonPoints != null) {
+			for (Object objPoint : jsonPoints) {			
+				JSONObject jsonPoint = (JSONObject) objPoint;
+				
+				Double xpointD = (Double) jsonPoint.get("x");
+				double xpoint;
+				// Check if null.
+				if (xpointD == null) {
+					xpoint = 0;
+				} else {
+					xpoint = xpointD.doubleValue();
+				}
+				
+				Double ypointD = (Double) jsonPoint.get("y");
+				double ypoint;
+				// Check if null.
+				if (ypointD == null) {
+					ypoint = 0;
+				} else {
+					ypoint = ypointD.doubleValue();
+				}								
+				
+				points.add(new Point2D.Double(xpoint,  ypoint));
+			}
+		}				
 		
 		// Set shared fields.
 		this.name = name;	

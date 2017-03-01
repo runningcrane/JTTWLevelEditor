@@ -45,6 +45,16 @@ public class Boulder extends AInteractable {
 	private ImageIcon rescaledImage;
 	
 	/**
+	 * Scaled in-game width [m]. 
+	 */
+	private double scaledIGWM;
+	
+	/**
+	 * Scaled in-game height [m].
+	 */
+	private double scaledIGHM;
+	
+	/**
 	 * Makes a new boulder.
 	 * @param path path to boulder image
 	 * @param cxm center x position [cocos;meters]
@@ -55,6 +65,7 @@ public class Boulder extends AInteractable {
 		this.scale = scale;
 		this.setCenterXm(cxm);
 		this.setCenterYm(cym);
+		System.out.println("Cocos[m] center set to " + this.getCenterXm() + ", " + this.getCenterYm());
 	}
 		
 	/**
@@ -95,6 +106,8 @@ public class Boulder extends AInteractable {
 	 */
 	public void setScale(double scale) {
 		this.scale = scale;
+		this.scaledIGWM = scale * this.getInGameWidth();
+		this.scaledIGHM = scale * this.getInGameHeight();
 	}
 	
 	/**
@@ -103,6 +116,16 @@ public class Boulder extends AInteractable {
 	 */
 	public double getScale() {
 		return this.scale;
+	}
+	
+	/**
+	 * Changes the default width and height of the platform.
+	 * @param wm width (in meters)
+	 * @param hm height (in meters)
+	 */
+	public void editBoulderDim(double wm, double hm) {
+		this.setInGameWidth(wm);
+		this.setInGameHeight(hm);			
 	}
 	
 	public void setDefaults(ArrayList<Point2D.Double> points, double radius) {
@@ -148,6 +171,14 @@ public class Boulder extends AInteractable {
 		this.rescaledImage = rescaled;
 	}
 	
+	public double getScaledIGW() {
+		return this.scaledIGWM;
+	}
+	
+	public double getScaledIGH() {
+		return this.scaledIGHM;
+	}
+	
 	
 	public JSONObject makeJSON() {
 		JSONObject obj = new JSONObject();
@@ -163,6 +194,8 @@ public class Boulder extends AInteractable {
 		obj.put("imageName", imageName);
 		obj.put("centerX", this.getCenterXm());
 		obj.put("centerY", this.getCenterYm());
+		obj.put("imageSizeWidth", this.scaledIGWM);
+		obj.put("imageSizeHeight", this.scaledIGHM);
 		obj.put("type", this.type);
 		obj.put("mass", this.mass);
 		obj.put("scale",  this.scale);	
@@ -177,7 +210,7 @@ public class Boulder extends AInteractable {
 			pointsList.add(couple);
 		});		
 		
-		obj.put("points", pointsList);
+		obj.put("collisionPoints", pointsList);
 	
 		obj.put("radius", this.radius * this.scale);
 	
