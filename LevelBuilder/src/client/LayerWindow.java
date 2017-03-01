@@ -298,7 +298,7 @@ public class LayerWindow extends JFrame {
 					    }
 					    
 					    // Valid numbers. Go resize over in LevelManager.
-					    ltlAdapter.editPlatScale(ticket, scale);
+					    ltlAdapter.editBoulderScale(ticket, scale);
 					}
 				});			
 				
@@ -318,13 +318,13 @@ public class LayerWindow extends JFrame {
 					    }
 					    
 					    // Valid numbers. Go resize over in LevelManager.
-					    ltlAdapter.editMassBoulder(ticket, mass);
+					    ltlAdapter.editBoulderMass(ticket, mass);
 					}
 				});			
 				
 				btnMove.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						ltlAdapter.editPlatCenter(ticket);
+						ltlAdapter.editBoulderCenter(ticket);
 					}
 				});												
 			}					

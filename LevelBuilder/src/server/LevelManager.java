@@ -597,7 +597,7 @@ public class LevelManager {
 	}
 	
 	public void togglePolygonBoulder(int ticket, boolean selected) {
-		this.boulders.get(ticket).toggleType(selected));
+		this.boulders.get(ticket).toggleType(selected);
 	}
 			
 	// TOGGLE SECTION - END
@@ -632,6 +632,10 @@ public class LevelManager {
 	public void editVineCenter(int ticket) {
 		ltoAdapter.setVinePos(ticket);
 	}
+	
+	public void editBoulderCenter(int ticket) {
+		ltoAdapter.setBoulderPos(ticket);
+	}
 
 	/**
 	 * OutputWindow just called this method to set the platform's new center.
@@ -657,6 +661,11 @@ public class LevelManager {
 						this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel);		
 	}	
 	
+	public void editBoulderCenterRes(int ticket, double xp, double yp) {
+		this.boulders.get(ticket).setCenterXm((xp - this.vpOffset.getX()) / this.mToPixel);
+		this.boulders.get(ticket).setCenterYm(this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel);
+	}
+	
 	public void editPlatScale(int ticket, double scale) {
 		
 		Platform toEditPlat = this.plats.get(ticket);
@@ -665,6 +674,15 @@ public class LevelManager {
 		// Rescale the image
 		toEditPlat.setRescaled(resize(toEditPlat.getImage(), toEditPlat.getScaledIGW(), 
 				toEditPlat.getScaledIGH()));
+	}
+	
+	public void editBoulderScale(int ticket, double scale) {
+		Boulder toEditBould = this.boulders.get(ticket);
+		toEditBould.setScale(scale);
+		
+		// Rescale the image
+		toEditBould.setRescaled(resize(toEditBould.getImage(), toEditBould.getScaledRadius(), 
+				toEditBould.getScaledRadius()));
 	}
 	
 	public void editVineDim(int ticket, double wm, double hm) {
@@ -677,6 +695,10 @@ public class LevelManager {
 	
 	public void editVineArcl(int ticket, double arcl) {
 		this.vines.get(ticket).editVineArcl(arcl);
+	}
+	
+	public void editBoulderMass(int ticket, double mass) {
+		this.boulders.get(ticket).setMass(mass);
 	}
 	
 	public void editVineStartVel(int ticket, double startVel) {
@@ -796,10 +818,12 @@ public class LevelManager {
 		// Get the collision points.
 		JSONArray cpJSON = (JSONArray) json.get("points");
 		ArrayList<Point2D.Double> collisionPoints = new ArrayList<Point2D.Double>();
-		cpJSON.forEach((point) -> {
-			JSONObject pointJSON = (JSONObject) point;
-			collisionPoints.add(new Point2D.Double((double)pointJSON.get("x"), (double)pointJSON.get("y")));
-		});
+		if (cpJSON != null) {
+			cpJSON.forEach((point) -> {
+				JSONObject pointJSON = (JSONObject) point;
+				collisionPoints.add(new Point2D.Double((double)pointJSON.get("x"), (double)pointJSON.get("y")));
+			});
+		}		
 		
 		// Get the radius.
 		Double radiusD = (Double) json.get("radius");
@@ -812,7 +836,7 @@ public class LevelManager {
 		
 		// Get the type.
 		String type = (String) json.get("type");
-		if (type == null) {
+		if (type == null || !type.equals("POLYGON")) {
 			type = "CIRCLE";
 		}
 		
@@ -827,7 +851,7 @@ public class LevelManager {
 		
 		// Set the defaults.		
 		boulder.setDefaults(collisionPoints, radius);
-		boulder.setType(type);
+		boulder.toggleType((type.equals("POLYGON")) ? true : false);
 		boulder.setMass(mass);
 	}
 	

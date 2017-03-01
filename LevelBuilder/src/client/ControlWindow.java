@@ -835,8 +835,8 @@ public class ControlWindow extends JFrame {
 		JLabel lblBoulders = new JLabel("<html><b>Boulders</b></html>");
 		pnlBoulders.add(lblBoulders);
 		
-		ImageIcon iiBoulderA = new ImageIcon("assets/AThumbnail.png");
-		ImageIcon iiBoulderB = new ImageIcon("assets/BThumbnail.png");		
+		ImageIcon iiBoulderA = new ImageIcon("assets/ABoulderThumbnail.png");
+		ImageIcon iiBoulderB = new ImageIcon("assets/BBoulderThumbnail.png");		
 		
 		ButtonGroup boulderToggleGroup = new ButtonGroup();
 		JPanel pnlBoulderGrid = new JPanel();
@@ -846,7 +846,7 @@ public class ControlWindow extends JFrame {
 		JToggleButton tglBtnBoulderA = new JToggleButton("BoulderA");
 		tglBtnBoulderA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makeRock("assets/A.png");
+				ctlAdapter.makeRock("assets/ABoulder.png");
 			}
 		});
 		tglBtnBoulderA.setIcon(iiBoulderA);
@@ -857,7 +857,7 @@ public class ControlWindow extends JFrame {
 		JToggleButton tglBtnBoulderB = new JToggleButton("BoulderB");
 		tglBtnBoulderB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makeRock("assets/B.png");
+				ctlAdapter.makeRock("assets/BBoulder.png");
 			}
 		});
 		tglBtnBoulderB.setIcon(iiBoulderB);

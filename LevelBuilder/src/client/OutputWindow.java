@@ -46,7 +46,7 @@ public class OutputWindow extends JFrame {
 	public enum Request {
 		NONE, 
 		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC,
-		EDIT_OLD_PLAT, EDIT_OLD_VINE, 
+		EDIT_OLD_PLAT, EDIT_OLD_VINE, EDIT_OLD_BOULDER,
 		SET_PLAYER_START_POS, SET_PLAT_ENDPOINT, 
 		MARK_EOL
 	}
@@ -367,6 +367,15 @@ public class OutputWindow extends JFrame {
 					request = Request.NONE;
 					break;				    
 		    	}
+		    	case EDIT_OLD_BOULDER: {
+		    		int xp = e.getX();
+				    int yp = e.getY();
+				    System.out.println("Requesting center point " + xp + ", " + yp + "; pixels.");
+					otlAdapter.editBoulderCenter(ticket, xp, yp);
+					
+					request = Request.NONE;
+					break;
+		    	}
 		    	case SET_PLAYER_START_POS: {
 					int xp = e.getX();
 				    int yp = e.getY();
@@ -489,6 +498,11 @@ public class OutputWindow extends JFrame {
 	public void setVinePos(int ticket) {
 		this.ticket = ticket;		
 		request = Request.EDIT_OLD_VINE;		
+	}
+	
+	public void setBoulderPos(int ticket) {
+		this.ticket = ticket;
+		request = Request.EDIT_OLD_BOULDER;
 	}
 
 	public void markEOL() {

@@ -47,11 +47,21 @@ public class CollisionWindow extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtName;
+	private JTextField txtMass;
+	private JTextField txtRadius;	
+	private JLabel lblMass;
+	private JLabel lblRadius;
+	private JLabel lblWidth;
+	private JLabel lblHeight;
+	private JButton btnPlatDim;
+	private JButton btnBoulderDim;
 		
 	String name;
 	private double imgWidth;
 	private double imgHeight;
 	private double zoomLevel;
+	private double mass;
+	private double radius;
 	private ArrayList<Point2D.Double> points;
 	
 	private BufferedImage image;
@@ -141,25 +151,6 @@ public class CollisionWindow extends JFrame {
 			name = path;
 		}				
 		
-		Double widthD = (Double) object.get("width");
-		double width;
-		// Check if null.
-		if (widthD == null) {
-			width = 3;
-		} else {
-			width = widthD.doubleValue();
-			txtWidth.setText(Double.toString(width));
-		}
-			
-		Double heightD = (Double) object.get("height");
-		double height;
-		// Check if null.
-		if (heightD == null) {
-			height = 3;
-		} else {
-			height = heightD.doubleValue();
-			txtHeight.setText(Double.toString(height));
-		}
 		
 		JSONArray jsonPoints = (JSONArray) object.get("points");
 		ArrayList<Point2D.Double> points = new ArrayList<Point2D.Double>();
@@ -199,12 +190,32 @@ public class CollisionWindow extends JFrame {
 			zoomLevel = zoomLevelD.doubleValue();
 		}
 		
-		// Set fields.
-		this.name = name;
-		this.imgWidth = width;
-		this.imgHeight = height;		
+		Double widthD = (Double) object.get("width");
+		double width;
+		// Check if null.
+		if (widthD == null) {
+			width = 3;
+		} else {
+			width = widthD.doubleValue();
+			txtWidth.setText(Double.toString(width));
+		}
+			
+		Double heightD = (Double) object.get("height");
+		double height;
+		// Check if null.
+		if (heightD == null) {
+			height = 3;
+		} else {
+			height = heightD.doubleValue();
+			txtHeight.setText(Double.toString(height));
+		}
+		
+		// Set shared fields.
+		this.name = name;	
 		this.zoomLevel = zoomLevel;
 		this.points = cocosToSwing(points); // Translate the points back to swing coordinates. 
+		this.imgWidth = width;
+		this.imgHeight = height;
 		
 		// Make the image.		
 		try {
@@ -215,15 +226,66 @@ public class CollisionWindow extends JFrame {
 			return;
 		}
 		
-		// Resize it to match the zoom level and given default width, heights.
-		rescale();
+		// Show type-specific options.
+		if (path.toLowerCase().contains("boulder")) {
+			// Set the boulder-related objects visible.
+			this.txtMass.setEnabled(true);
+			this.txtRadius.setEnabled(true);
+			this.btnBoulderDim.setEnabled(true);
+			
+			Double massD = (Double) object.get("mass");
+			double mass;
+			// Check if null.
+			if (massD == null) {
+				mass = 1000;
+			} else {
+				mass = massD.doubleValue();
+				txtMass.setText(Double.toString(mass));
+			}
+			
+			Double radiusD = (Double) object.get("radius");
+			double radius;
+			// Check if null.
+			if (radiusD == null) {
+				radius = 3;
+			} else {
+				radius = radiusD.doubleValue();
+				txtRadius.setText(Double.toString(radius));
+			}
+			
+			// Set boulder-specific values.
+			this.mass = mass;
+			this.radius = radius;
+			
+			// Draw the rescaled boulder.
+			rescaleBoulder();
+			
+		} else {
+			// Set the plat-related objects visible.
+			this.txtMass.setEnabled(false);
+			this.txtRadius.setEnabled(false);
+			this.btnBoulderDim.setEnabled(false);							
+			
+			// Resize it to match the zoom level and given default width, heights.
+			rescalePlat();
+		}										
 		
 		// Update screen.
 		this.repaint();
 	}
 	
-	public void rescale() {
+	public void rescalePlat() {
 		// Rescale the loaded image.
+		if (this.image != null) {
+			this.rescaledImage = new ImageIcon(this.image.getScaledInstance((int)(this.imgWidth * this.mToPixel * this.zoomLevel), 
+					(int)(this.imgHeight * this.mToPixel * this.zoomLevel), java.awt.Image.SCALE_SMOOTH));
+		}
+		
+		// Redraw.
+		this.repaint();
+	}
+	
+	public void rescaleBoulder() {
 		if (this.image != null) {
 			this.rescaledImage = new ImageIcon(this.image.getScaledInstance((int)(this.imgWidth * this.mToPixel * this.zoomLevel), 
 					(int)(this.imgHeight * this.mToPixel * this.zoomLevel), java.awt.Image.SCALE_SMOOTH));
@@ -253,6 +315,11 @@ public class CollisionWindow extends JFrame {
 		
 		edited.put("points", jsonCP);
 		
+		if (this.name.toLowerCase().contains("boulder")) {
+			edited.put("radius", this.radius);
+			edited.put("mass", this.mass);
+		}
+		
 		try {
 			file = new FileWriter("../src/collision/" + this.name + ".json");
 			file.write(edited.toJSONString());
@@ -274,7 +341,7 @@ public class CollisionWindow extends JFrame {
 		
 		// Control panel
 		JPanel pnlControls = new JPanel();
-		pnlControls.setLayout(new GridLayout(5,2));
+		pnlControls.setLayout(new GridLayout(8,2));
 		pnlControls.setBackground(UIManager.getColor("inactiveCaption"));
 		contentPane.add(pnlControls, BorderLayout.NORTH);
 		
@@ -300,13 +367,13 @@ public class CollisionWindow extends JFrame {
 		      public void stateChanged(ChangeEvent event) {
 		        int value = slider.getValue();			        
 		        zoomLevel = (value == 0) ? 0.05 : value / 100.0;		       
-		        rescale();		        
+		        rescalePlat();		        
 		      }
 		    });
 		pnlControls.add(slider);
 		
-		JButton btnDim = new JButton("Change dimensions");
-		btnDim.addActionListener(new ActionListener() {
+		btnPlatDim = new JButton("Change dimensions");
+		btnPlatDim.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Double pwidth = Double.parseDouble(txtWidth.getText());
 				if (pwidth != null) {
@@ -318,13 +385,13 @@ public class CollisionWindow extends JFrame {
 					imgHeight = pheight.doubleValue();
 				}
 				
-				rescale();
+				rescalePlat();
 				
 			}
 		});
-		pnlControls.add(btnDim);
+		pnlControls.add(btnPlatDim);
 		
-		JLabel lblWidth = new JLabel("Width:");
+		lblWidth = new JLabel("Width:");
 		pnlControls.add(lblWidth);
 		
 		txtWidth = new JTextField();
@@ -332,13 +399,31 @@ public class CollisionWindow extends JFrame {
 		pnlControls.add(txtWidth);
 		txtWidth.setColumns(10);
 		
-		JLabel lblHeight = new JLabel("Height:");
+		lblHeight = new JLabel("Height:");
 		pnlControls.add(lblHeight);
 		
 		txtHeight = new JTextField();
 		txtHeight.setText("3");
 		pnlControls.add(txtHeight);
 		txtHeight.setColumns(10);
+		
+		lblMass = new JLabel("Mass:");
+		pnlControls.add(lblMass);
+		
+		txtMass = new JTextField();
+		txtMass.setText("1000");
+		pnlControls.add(txtMass);
+		txtMass.setColumns(10);
+		txtMass.setEnabled(false);
+		
+		lblRadius = new JLabel("Radius:");
+		pnlControls.add(lblRadius);
+		
+		txtRadius = new JTextField();		
+		txtRadius.setText("3");
+		pnlControls.add(txtRadius);
+		txtRadius.setColumns(10);		
+		txtRadius.setEnabled(false);
 		
 		JButton btnOutput = new JButton("Change!");
 		btnOutput.addActionListener(new ActionListener() {
@@ -354,8 +439,28 @@ public class CollisionWindow extends JFrame {
 				points.clear();
 			}
 		});
+		
+		btnBoulderDim = new JButton("Change properties");
+		btnBoulderDim.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Double pmass = Double.parseDouble(txtMass.getText());
+				if (pmass != null) {
+					mass = pmass.doubleValue();
+				}
+				
+				Double pradius = Double.parseDouble(txtRadius.getText());
+				if (pradius != null) {
+					radius = pradius.doubleValue();
+				}
+				
+				rescaleBoulder();
+				
+			}
+		});
+		pnlControls.add(btnBoulderDim);
 		pnlControls.add(btnClear);
 		pnlControls.add(btnOutput);
+		btnBoulderDim.setEnabled(false);
 		
 		// Display the image to make points of
 		
@@ -507,10 +612,8 @@ public class CollisionWindow extends JFrame {
 		ArrayList<Point2D.Double> correctedPoints = new ArrayList<Point2D.Double>();
 		Point2D.Double center = new Point2D.Double(this.imgWidth * this.mToPixel/2, this.imgHeight * this.mToPixel/2);
 		cocosPoints.forEach((cocosP) -> {
-			System.out.println("Read in: " + cocosP.x + ", " + cocosP.y);
 			double sx = (center.x + cocosP.x * this.mToPixel);
 			double sy = (center.y - cocosP.y * this.mToPixel);
-			System.out.println("Read in: " + sx + ", " + sy);
 			correctedPoints.add(new Point2D.Double(sx, sy));
 		});
 		return correctedPoints;

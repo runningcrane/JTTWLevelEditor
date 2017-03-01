@@ -178,6 +178,21 @@ public class Controller {
 				
 			}
 
+			@Override
+			public void editBoulderScale(int ticket, double scale) {
+				level.editBoulderScale(ticket, scale);
+			}
+
+			@Override
+			public void editBoulderMass(int ticket, double mass) {
+				level.editBoulderMass(ticket, mass);
+			}
+
+			@Override
+			public void editBoulderCenter(int ticket) {
+				level.editBoulderCenter(ticket);
+			}
+
 			
 		});
 		
@@ -246,6 +261,12 @@ public class Controller {
 			@Override
 			public void makeBoulder(String path, double xp, double yp, double scale) {
 				level.makeBoulder(path, xp, yp, scale);				
+			}
+
+			@Override
+			public void editBoulderCenter(int ticket, double xp, double yp) {
+				level.editBoulderCenterRes(ticket, xp, yp);
+				
 			}
 			
 		});
@@ -320,6 +341,11 @@ public class Controller {
 			@Override
 			public void makeRock(String path) {
 				outputWindow.makeBoulder(path);				
+			}
+
+			@Override
+			public void setBoulderPos(int ticket) {
+				outputWindow.setBoulderPos(ticket);				
 			}
 			
 		}, new ILevelToLayerAdapter() {

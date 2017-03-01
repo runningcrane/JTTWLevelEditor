@@ -5,7 +5,13 @@ public interface ILayerToLevelAdapter {
 	
 	public void editPlatScale(int ticket, double scale);
 	
+	public void editBoulderScale(int ticket, double scale);
+	
+	public void editBoulderMass(int ticket, double mass);
+	
 	public void editVineArcl(int ticket, double arcl);
+	
+	public void editBoulderCenter(int ticket);
 	
 	public void editVineCenter(int ticket);
 	

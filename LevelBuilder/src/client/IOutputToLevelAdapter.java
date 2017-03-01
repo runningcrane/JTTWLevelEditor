@@ -89,6 +89,14 @@ public interface IOutputToLevelAdapter {
 	public void editVineCenter(int ticket, double xp, double yp);
 	
 	/**
+	 * Update a boulder's position.
+	 * @param ticket identifier of the boulder
+	 * @param xp x position in pixels
+	 * @param yp y position in pixels
+	 */
+	public void editBoulderCenter(int ticket, double xp, double yp);
+	
+	/**
 	 * Update a moving platform's endpoint.
 	 * @param ticket identifier of the platform
 	 * @param xp x position in pixels

@@ -112,15 +112,25 @@ public class Boulder extends AInteractable {
 	
 	/**
 	 * Set the type of collision this boulder will use.
+	 * true = POLYGON
+	 * false = CIRCLE
 	 * @param newType type of collision
 	 */
-	public void setType(String newType) {
-		if (newType.equals("POLYGON") || newType.equals("CIRCLE")) {
-			this.type = newType;
+	public void toggleType(boolean type) {
+		if (type) {
+			this.type = "POLYGON";
 		} else {
-			System.err.println("Unrecognized boulder type processed!");
+			this.type = "CIRCLE";
 		}
 	}	
+	
+	/**
+	 * Returns the string representation of what type of collision the boulder uses.
+	 * @return type of collision boulder uses
+	 */
+	public String getType() {
+		return this.type;
+	}
 	
 	public BufferedImage getImage() {
 		return this.image;
