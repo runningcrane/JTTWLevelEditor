@@ -510,7 +510,7 @@ public class LevelManager {
 		platform.setImage(image);
 		System.out.println("Defaults set");
 		platform.setScale(scale);
-		platform.setRescaled(resize(image, platform.getInGameWidth(), platform.getInGameHeight()));
+		platform.setRescaled(resize(image, platform.getScaledIGW(), platform.getScaledIGH()));
 		
 		plats.put(this.ticket, platform);
 		ltlAdapter.addPlatformEdit(this.ticket, platform.getInGameWidth(), platform.getInGameHeight(),
@@ -613,11 +613,13 @@ public class LevelManager {
 	}	
 	
 	public void editPlatScale(int ticket, double scale) {
-		this.plats.get(ticket).setScale(scale);
+		
+		Platform toEditPlat = this.plats.get(ticket);
+		toEditPlat.setScale(scale);
 		
 		// Rescale the image
-		this.plats.get(ticket).setRescaled(resize(this.plats.get(ticket).getImage(), 
-				this.plats.get(ticket).getScaledIGW(), this.plats.get(ticket).getScaledIGH()));
+		toEditPlat.setRescaled(resize(toEditPlat.getImage(), toEditPlat.getScaledIGW(), 
+				toEditPlat.getScaledIGH()));
 	}
 	
 	public void editVineDim(int ticket, double wm, double hm) {
@@ -793,6 +795,7 @@ public class LevelManager {
 	 * @param levelPath path to the level JSON	 
 	 */
 	public void readJSON(String levelPath) {
+		System.out.println("READING IN FILE " + levelPath);
 		JSONParser parser = new JSONParser();
 		Object obj;
 		try {
