@@ -20,6 +20,10 @@ public interface ILevelToOutputAdapter {
 	 */
 	public void makePlatform(String path);		
 	
+	public void makeVine(String path);
+	
+	public void makeRock(String path);
+	
 	/**
 	 * Set the flavor text of the level.
 	 * @param levelName name of the level loaded in
@@ -38,11 +42,11 @@ public interface ILevelToOutputAdapter {
 	 */
 	public void setCharPos(String playerName);
 	
-	public void makeVine(String path);
-	
 	public void setPlatPos(int ticket);
 	
 	public void setVinePos(int ticket);
+	
+	public void setBoulderPos(int ticket);
 	
 	public void markEOL();
 	

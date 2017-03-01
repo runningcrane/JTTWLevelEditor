@@ -54,6 +54,15 @@ public interface IOutputToLevelAdapter {
 	 */
 	public void makeVine(String path, double xp, double yp, double wm, double hm, 
 			double arcl, double startVel);
+	
+	/**
+	 * Request a boulder to be made.
+	 * @param path
+	 * @param xp
+	 * @param y
+	 * @param scale
+	 */
+	public void makeBoulder(String path, double xp, double yp, double scale);
 
 	/**
 	 * Update a character's position.
@@ -78,6 +87,14 @@ public interface IOutputToLevelAdapter {
 	 * @param yp y position in pixels
 	 */
 	public void editVineCenter(int ticket, double xp, double yp);
+	
+	/**
+	 * Update a boulder's position.
+	 * @param ticket identifier of the boulder
+	 * @param xp x position in pixels
+	 * @param yp y position in pixels
+	 */
+	public void editBoulderCenter(int ticket, double xp, double yp);
 	
 	/**
 	 * Update a moving platform's endpoint.

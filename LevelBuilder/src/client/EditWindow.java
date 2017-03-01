@@ -28,6 +28,8 @@ public class EditWindow extends JPanel {
 	JCheckBox chckbxMoveable;
 	JCheckBox chckbxSinkable;
 	JCheckBox chckbxClimbable;
+	JCheckBox chckbxCollidable;
+	JCheckBox chckbxPolygon;
 	JTextField txtSCK;
 	JTextField txtVelocity;
 	JTextField txtWidth;
@@ -35,6 +37,7 @@ public class EditWindow extends JPanel {
 	JTextField txtScale;
 	JTextField txtArcl;
 	JTextField txtStartVel;
+	JTextField txtMass;
 	JSlider slider;
 
 	

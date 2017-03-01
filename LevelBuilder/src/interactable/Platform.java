@@ -19,6 +19,7 @@ public class Platform extends AInteractable {
 	private boolean moveable;
 	private boolean sinkable;
 	private boolean climbable;
+	private boolean collidable;
 	
 	private double scK;
 	private double velocity;
@@ -63,6 +64,7 @@ public class Platform extends AInteractable {
 		this.moveable = false;
 		this.sinkable = false;
 		this.climbable = false;
+		this.collidable = true;
 		this.scK = 1.0;
 		this.velocity = 1.0;
 		this.endpoint = new Point2D.Double(0, 0);						
@@ -109,6 +111,10 @@ public class Platform extends AInteractable {
 
 	public void setClimbable(boolean selected) {
 		this.climbable = selected;
+	}
+	
+	public void setCollidable(boolean selected) {
+		this.collidable = selected;
 	}
 	
 	public void setPhysics(double scK) {
@@ -199,6 +205,7 @@ public class Platform extends AInteractable {
 		obj.put("moveable", this.moveable); 
 		obj.put("sinkable", this.sinkable);
 		obj.put("climbable", this.climbable);
+		obj.put("collidable",  this.collidable);
 		obj.put("springCK", this.scK);
 		obj.put("velocity", this.velocity);
 		obj.put("endX", this.endpoint.getX());

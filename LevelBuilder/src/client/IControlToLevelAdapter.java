@@ -53,6 +53,12 @@ public interface IControlToLevelAdapter {
 	 * Request a new vine to be added.
 	 * @param path
 	 */
-	public void makeVine(String path);	
+	public void makeVine(String path);
+	
+	/**
+	 * Request a new rock to be added.
+	 * @param path
+	 */
+	public void makeRock(String path);
 
 }
