@@ -20,6 +20,16 @@ public interface ILevelToLayerAdapter {
 	 */
 	public void addVineEdit(int ticket, double wm, double hm, double arcLength, double startVel);
 	
+	
+	/**
+	 * Add an edit panel.
+	 * @param ticket
+	 * @param radius
+	 * @param scale
+	 * @param mass
+	 */
+	public void addBoulderEdit(int ticket, double radius, double mass, double scale);
+	
 	/**
 	 * Remove all edit panels.
 	 */

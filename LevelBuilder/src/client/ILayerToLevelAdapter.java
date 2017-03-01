@@ -27,6 +27,8 @@ public interface ILayerToLevelAdapter {
 	
 	public void toggleClimbablePlat(int ticket, boolean selected);
 	
+	public void togglePolygonBoulder(int ticket, boolean selected);
+	
 	public void setPhysicsPlat(int ticket, double scK);
 	
 	public void setVelocityPlat(int ticket, double velocity);

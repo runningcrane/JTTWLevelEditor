@@ -825,7 +825,45 @@ public class ControlWindow extends JFrame {
 		tglBtnBuddhaHand.setIcon(iiBuddhaHand);
 		tglBtnBuddhaHand.setPreferredSize(dimButton);
 		pnlSpecials.add(tglBtnBuddhaHand);
-		platToggleGroup.add(tglBtnBuddhaHand); 		
+		platToggleGroup.add(tglBtnBuddhaHand); 	
+		
+		// Boulders.
+		JPanel pnlBoulders = new JPanel();
+		pnlBoulders.setLayout(new BoxLayout(pnlBoulders, BoxLayout.Y_AXIS));
+		pnlBack.add(pnlBoulders);
+		
+		JLabel lblBoulders = new JLabel("<html><b>Boulders</b></html>");
+		pnlBoulders.add(lblBoulders);
+		
+		ImageIcon iiBoulderA = new ImageIcon("assets/AThumbnail.png");
+		ImageIcon iiBoulderB = new ImageIcon("assets/BThumbnail.png");		
+		
+		ButtonGroup boulderToggleGroup = new ButtonGroup();
+		JPanel pnlBoulderGrid = new JPanel();
+		pnlBoulderGrid.setLayout(new GridLayout(1,2));
+		pnlBoulders.add(pnlBoulderGrid);
+		
+		JToggleButton tglBtnBoulderA = new JToggleButton("BoulderA");
+		tglBtnBoulderA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makeRock("assets/A.png");
+			}
+		});
+		tglBtnBoulderA.setIcon(iiBoulderA);
+		tglBtnBoulderA.setPreferredSize(dimButton);
+		pnlBoulderGrid.add(tglBtnBoulderA);
+		boulderToggleGroup.add(tglBtnBoulderA);
+		
+		JToggleButton tglBtnBoulderB = new JToggleButton("BoulderB");
+		tglBtnBoulderB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makeRock("assets/B.png");
+			}
+		});
+		tglBtnBoulderB.setIcon(iiBoulderB);
+		tglBtnBoulderB.setPreferredSize(dimButton);
+		pnlBoulderGrid.add(tglBtnBoulderB);
+		boulderToggleGroup.add(tglBtnBoulderB);
 		
 		// Resize the frame.        
         this.scrPaneScroll.setPreferredSize(dimFrame);

@@ -29,6 +29,7 @@ import org.json.simple.parser.ParseException;
 
 import com.sun.javafx.geom.Line2D;
 
+import interactable.Boulder;
 import interactable.Enemy;
 import interactable.Platform;
 import interactable.Player;
@@ -105,6 +106,11 @@ public class LevelManager {
 	 * Vine array.
 	 */
 	private Map<Integer, Vine> vines;
+		
+	/**
+	 * Boulder map.
+	 */
+	private Map<Integer, Boulder> boulders;
 	
 	/**
 	 * NPC array.
@@ -183,6 +189,7 @@ public class LevelManager {
 		this.plats = new HashMap<Integer, Platform>();
 		this.fg = new ArrayList<INonInteractable>();
 		this.vines = new HashMap<Integer, Vine>();
+		this.boulders = new HashMap<Integer, Boulder>();
 		
 		// Set up the player characters.
 		characters = new HashMap<String, Player>();		
@@ -455,6 +462,40 @@ public class LevelManager {
 	
 	public void setVinePosition(String path) {
 		ltoAdapter.makeVine(path);
+	}		
+	
+	public void setRockPosition(String path){
+		ltoAdapter.makeRock(path);
+	}
+	
+	public int makeBoulder(String path, double xp, double yp, double scale) {
+		Boulder boulder;
+		// Unfortunately Eclipse and Coco have different coordinate systems. Change cym appropriately.		
+		boulder = new Boulder(path, (xp - this.vpOffset.getX()) / this.mToPixel, 
+				this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel, scale);
+			
+		// Set up the default collision points & radius of the boulder.
+		setBoulderDefaults(boulder);		
+		
+		BufferedImage image;
+		try {
+			image = ImageIO.read(new File(path));
+		} catch (IOException e) {
+			System.err.println("Image file not found: " + path);
+			e.printStackTrace();
+			return -1;
+		}
+		
+		boulder.setImage(image);
+		System.out.println("Defaults set");
+		boulder.setScale(scale);
+		boulder.setRescaled(resize(image, boulder.getScaledRadius(), boulder.getScaledRadius()));
+		
+		boulders.put(this.ticket, boulder);
+		ltlAdapter.addBoulderEdit(this.ticket, boulder.getRadius(),boulder.getMass(), boulder.getScale());
+		this.ticket++;	
+		
+		return this.ticket - 1;
 	}
 	
 	public int makeVine(String path, double xp, double yp, double wm, double hm, 
@@ -553,6 +594,10 @@ public class LevelManager {
 	
 	public void toggleClimbablePlat(int ticket, boolean selected) {
 		this.plats.get(ticket).setClimbable(selected);
+	}
+	
+	public void togglePolygonBoulder(int ticket, boolean selected) {
+		this.boulders.get(ticket).toggleType(selected));
 	}
 			
 	// TOGGLE SECTION - END
@@ -715,6 +760,77 @@ public class LevelManager {
 		return json;
 	}
 
+	public void setBoulderDefaults(Boulder boulder) {
+		JSONObject json;
+		
+		System.out.println("boulder: " + boulder.getPath());
+		String name = boulder.getPath().substring(7, boulder.getPath().length() - 4);
+		
+		if (this.defaultJSON.containsKey(name)) {
+			json = this.defaultJSON.get(name);
+		} else {		
+		
+			JSONParser parser = new JSONParser();
+			Object obj;
+			try {
+				obj = parser.parse(new FileReader("../src/collision/" + name + ".json"));
+			} catch (FileNotFoundException e) {
+				System.out.println("File not found: " + "../src/collision/" + name + ".json\n" +
+						"Please make the JSON in the collision box editor.");
+				e.printStackTrace();
+				return;
+			} catch (IOException e) {
+				System.out.println("Illegal path: " + "../src/collision/" + name + ".json");
+				e.printStackTrace();
+				return;
+			} catch (ParseException e) {
+				System.out.println("Cannot parse JSON at: " + "../src/collision/" + name + ".json");
+				e.printStackTrace();
+				return;
+			}
+			
+			json = (JSONObject) obj;
+			this.defaultJSON.put(name, json);
+		}
+		
+		// Get the collision points.
+		JSONArray cpJSON = (JSONArray) json.get("points");
+		ArrayList<Point2D.Double> collisionPoints = new ArrayList<Point2D.Double>();
+		cpJSON.forEach((point) -> {
+			JSONObject pointJSON = (JSONObject) point;
+			collisionPoints.add(new Point2D.Double((double)pointJSON.get("x"), (double)pointJSON.get("y")));
+		});
+		
+		// Get the radius.
+		Double radiusD = (Double) json.get("radius");
+		double radius;
+		if (radiusD == null) {
+			radius = 3;
+		} else {
+			radius = radiusD.doubleValue();
+		}
+		
+		// Get the type.
+		String type = (String) json.get("type");
+		if (type == null) {
+			type = "CIRCLE";
+		}
+		
+		// Get the mass.
+		Double massD = (Double) json.get("mass");
+		double mass;
+		if (massD == null) {
+			mass = 1000;
+		} else {
+			mass = massD.doubleValue();
+		}
+		
+		// Set the defaults.		
+		boulder.setDefaults(collisionPoints, radius);
+		boulder.setType(type);
+		boulder.setMass(mass);
+	}
+	
 	/**
 	 * Reads the defaults of a platform out of its JSON file.	
 	 */

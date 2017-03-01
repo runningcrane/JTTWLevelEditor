@@ -45,7 +45,7 @@ public class OutputWindow extends JFrame {
 	
 	public enum Request {
 		NONE, 
-		MAKE_PLATFORM, MAKE_VINE, 
+		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC,
 		EDIT_OLD_PLAT, EDIT_OLD_VINE, 
 		SET_PLAYER_START_POS, SET_PLAT_ENDPOINT, 
 		MARK_EOL
@@ -323,6 +323,31 @@ public class OutputWindow extends JFrame {
 		    		request = Request.NONE;
 					break;
 		    	}
+		    	case MAKE_BOULDER: {
+		    		int xp = e.getX();
+				    int yp = e.getY();
+				    System.out.println("Requesting center point " + xp + ", " + yp + "; swing vp pixels.");
+				    
+				    // Pop up dialog here to get the expected width in meters
+				    String arString = JOptionPane.showInputDialog(null, "Input custom scale ratio. Default will be used otherwise.");
+				    double arDouble;
+				    try {
+				    	arDouble = Double.parseDouble(arString);
+				    } catch (NullPointerException nulle) {
+				    	// Default to 1:1.
+				    	arDouble = 1;
+				    } catch (NumberFormatException numbe) {
+				    	System.out.println("Not a valid number.");
+				    	arDouble = 1;
+				    	numbe.printStackTrace();
+				    }				    				    
+				    				   
+				    // Pop up dialog box to make collision box.				    
+				    otlAdapter.makeBoulder(newPath, xp, yp, arDouble);
+				    
+				    request = Request.NONE;
+					break;
+		    	}
 		    	case EDIT_OLD_PLAT: {
 					int xp = e.getX();
 				    int yp = e.getY();
@@ -472,6 +497,16 @@ public class OutputWindow extends JFrame {
 	
 	public void makeVine(String path) {
 		request = Request.MAKE_VINE;
+		this.newPath = path;
+	}
+	
+	public void makeBoulder(String path) {
+		request =  Request.MAKE_BOULDER;
+		this.newPath = path;
+	}
+	
+	public void makeNPC(String path) {
+		request = Request.MAKE_NPC;
 		this.newPath = path;
 	}
 	

@@ -86,6 +86,11 @@ public class Controller {
 			public void makeVine(String path) {
 				level.setVinePosition(path);				
 			}
+
+			@Override
+			public void makeRock(String path) {
+				level.setRockPosition(path);
+			}
 			
 		});
 		
@@ -167,6 +172,12 @@ public class Controller {
 				level.editPlatScale(ticket, scale);
 			}
 
+			@Override
+			public void togglePolygonBoulder(int ticket, boolean selected) {
+				level.togglePolygonBoulder(ticket, selected);
+				
+			}
+
 			
 		});
 		
@@ -230,6 +241,11 @@ public class Controller {
 			@Override
 			public void editVineCenter(int ticket, double xp, double yp) {
 				level.editVineCenterRes(ticket, xp, yp);				
+			}
+
+			@Override
+			public void makeBoulder(String path, double xp, double yp, double scale) {
+				level.makeBoulder(path, xp, yp, scale);				
 			}
 			
 		});
@@ -300,6 +316,11 @@ public class Controller {
 			public void setVinePos(int ticket) {
 				outputWindow.setVinePos(ticket);				
 			}
+
+			@Override
+			public void makeRock(String path) {
+				outputWindow.makeBoulder(path);				
+			}
 			
 		}, new ILevelToLayerAdapter() {
 
@@ -311,6 +332,11 @@ public class Controller {
 			public void addVineEdit(int ticket, double wm, double hm, 
 					double arcl, double startVel) {
 				layerWindow.addVineEdit(ticket, wm, hm, arcl, startVel);				
+			}
+			
+			@Override
+			public void addBoulderEdit(int ticket, double radius, double mass, double scale) {
+				layerWindow.addBoulderEdit(ticket, radius, mass, scale);	
 			}
 			
 			public void removeAllWindows() {
