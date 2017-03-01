@@ -506,6 +506,21 @@ public class LayerWindow extends JFrame {
 				});
 				pnlClimbable.add(chckbxClimbable);
 				
+				JPanel pnlCollidable = new JPanel();
+				add(pnlCollidable);
+				
+				chckbxCollidable = new JCheckBox("Collidable");
+				chckbxCollidable.addActionListener(new ActionListener() {
+				      public void actionPerformed(ActionEvent actionEvent) {
+				        AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+				        boolean selected = abstractButton.getModel().isSelected();
+				        
+				        // Go update that platform
+				        ltlAdapter.toggleCollidablePlat(ticket, selected);
+				      }
+				});
+				pnlCollidable.add(chckbxCollidable);
+				
 				btnDimensions.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						double scale;
@@ -616,6 +631,10 @@ public class LayerWindow extends JFrame {
 	
 	public void setClimbable(int ticket, boolean selected) {
 		this.edits.get(ticket).chckbxClimbable.setSelected(selected);
+	}
+	
+	public void setCollidable(int ticket, boolean selected) {
+		this.edits.get(ticket).chckbxCollidable.setSelected(selected);
 	}
 	
 	public void setPolygonBoulder(int ticket, boolean selected) {

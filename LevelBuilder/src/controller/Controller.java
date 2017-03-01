@@ -187,6 +187,10 @@ public class Controller {
 			public void toggleClimbablePlat(int ticket, boolean selected) {
 				level.toggleClimbablePlat(ticket, selected);
 			}
+			
+			public void toggleCollidablePlat(int ticket, boolean selected) {
+				level.toggleCollidablePlat(ticket, selected);
+			}
 
 			@Override
 			public void toggleDisappearsPlat(int ticket, boolean selected) {
@@ -387,6 +391,10 @@ public class Controller {
 			@Override
 			public void setClimbable(int ticket, boolean selected) {
 				layerWindow.setClimbable(ticket, selected);
+			}
+			
+			public void setCollidable(int ticket, boolean selected) {
+				layerWindow.setCollidable(ticket, selected);
 			}
 
 			@Override

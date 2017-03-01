@@ -28,6 +28,7 @@ public class EditWindow extends JPanel {
 	JCheckBox chckbxMoveable;
 	JCheckBox chckbxSinkable;
 	JCheckBox chckbxClimbable;
+	JCheckBox chckbxCollidable;
 	JCheckBox chckbxPolygon;
 	JTextField txtSCK;
 	JTextField txtVelocity;

@@ -730,6 +730,14 @@ public class LevelManager {
 			boolean climbable = (boolean) plat.get("climbable");
 			newPlat.setClimbable(climbable);
 			ltlAdapter.setClimbable(ticket, climbable);
+			
+			Boolean collidable = (Boolean) plat.get("collidable");
+			if (collidable == null) {
+				collidable = true;
+			} else {
+				newPlat.setCollidable(collidable);
+			}
+			ltlAdapter.setCollidable(ticket, collidable);
 
 			double scK = (double) plat.get("springCK");
 			newPlat.setPhysics(scK);
@@ -943,7 +951,6 @@ public class LevelManager {
 		if (plats == null) {
 			plats = new JSONArray();
 		}
-
 		makePlatList(plats, polygon);
 
 		JSONArray vines = (JSONArray) level.get("vines");
@@ -1530,6 +1537,10 @@ public class LevelManager {
 
 	public void toggleClimbablePlat(int ticket, boolean selected) {
 		this.plats.get(ticket).setClimbable(selected);
+	}
+	
+	public void toggleCollidablePlat(int ticket, boolean selected) {
+		this.plats.get(ticket).setCollidable(selected);
 	}
 
 	public void toggleDisappearsPlat(int ticket, boolean selected) {

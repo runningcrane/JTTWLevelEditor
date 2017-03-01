@@ -43,6 +43,8 @@ public interface ILevelToLayerAdapter {
 	
 	public void setClimbable(int ticket, boolean selected);
 	
+	public void setCollidable(int ticket, boolean selected);
+	
 	public void setSinkable(int ticket, boolean selected);
 	
 	public void setPolygonBoulder(int ticket, boolean selected);
