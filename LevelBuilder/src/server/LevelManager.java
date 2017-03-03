@@ -1770,5 +1770,4 @@ public class LevelManager {
 	}
 
 	// END JSON SECTION
-
 }

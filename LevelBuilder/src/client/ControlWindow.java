@@ -1,10 +1,7 @@
 package client;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
@@ -20,13 +17,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
-import javax.swing.SwingConstants;
 
 /**
  * One of the three main windows; this window holds objects to be put into the level
@@ -363,55 +357,33 @@ public class ControlWindow extends JFrame {
 		pnlBack.add(pnlForeground, BorderLayout.EAST);
 		
 		// Vines
-		
 		JPanel pnlVines = new JPanel();
 		pnlVines.setLayout(new BoxLayout(pnlVines, BoxLayout.Y_AXIS));
 		pnlBack.add(pnlVines);
 		
 		JLabel lblVines = new JLabel("<html><b>Vines</b></html>");
 		pnlVines.add(lblVines);
-		
-		ImageIcon iiVine1 = new ImageIcon("assets/vine1Thumbnail.png");
-		ImageIcon iiVine2 = new ImageIcon("assets/vine2Thumbnail.png");
-		ImageIcon iiVine3 = new ImageIcon("assets/vine3Thumbnail.png");
-		
+
 		ButtonGroup vineToggleGroup = new ButtonGroup();
 		JPanel pnlVineGrid = new JPanel();
 		pnlVineGrid.setLayout(new GridLayout(1,3));
 		pnlVines.add(pnlVineGrid);
 		
-		JToggleButton tglBtnVine1 = new JToggleButton("Vine1");
-		tglBtnVine1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makeVine("assets/vine1.png");
-			}
-		});
-		tglBtnVine1.setIcon(iiVine1);
-		tglBtnVine1.setPreferredSize(dimButton);
-		pnlVineGrid.add(tglBtnVine1);
-		vineToggleGroup.add(tglBtnVine1); 
+		String[] vines = {"vine1", "vine2", "vine3"};
 		
-		JToggleButton tglBtnVine2 = new JToggleButton("Vine2");
-		tglBtnVine2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makeVine("assets/vine2.png");
-			}
-		});
-		tglBtnVine2.setIcon(iiVine2);
-		tglBtnVine2.setPreferredSize(dimButton);
-		pnlVineGrid.add(tglBtnVine2);
-		vineToggleGroup.add(tglBtnVine2);
-		
-		JToggleButton tglBtnVine3 = new JToggleButton("Vine3");
-		tglBtnVine3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makeVine("assets/vine3.png");
-			}
-		});
-		tglBtnVine3.setIcon(iiVine3);
-		tglBtnVine3.setPreferredSize(dimButton);
-		pnlVineGrid.add(tglBtnVine3);
-		vineToggleGroup.add(tglBtnVine3);		
+		for (String vine : vines) {
+			JToggleButton tglBtnVine = new JToggleButton(vine);
+			tglBtnVine.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					ctlAdapter.makeVine("assets/" + vine + ".png");
+				}
+			});
+			ImageIcon iiVine = new ImageIcon("assets/" + vine + "Thumbnail.png");
+			tglBtnVine.setIcon(iiVine);
+			tglBtnVine.setPreferredSize(dimButton);
+			pnlVineGrid.add(tglBtnVine);
+			vineToggleGroup.add(tglBtnVine);
+		}
 		
 		// Platforms
 		
@@ -647,202 +619,26 @@ public class ControlWindow extends JFrame {
 		pnlPlatGrid.add(btnBlueGround);
 		platToggleGroup.add(btnBlueGround);
 		
-		// Clouds
-		ImageIcon iicldClear = new ImageIcon("assets/cldClearThumbnail.png");				
-		ImageIcon iicldCloud = new ImageIcon("assets/cldCloudThumbnail.png");
-		ImageIcon iicldStormy = new ImageIcon("assets/cldStormyThumbnail.png");	
-		ImageIcon iicldSunset = new ImageIcon("assets/cldSunsetThumbnail.png");
+		// Clouds			
+		String[] clouds = {"cldClear", "cldCloud", "cldStormy", "cldSunset",
+				"cldClearDiagL", "cldCloudDiagL", "cldStormyDiagL", "cldSunsetDiagL",
+				"cldClearDiagR", "cldCloudDiagR", "cldStormyDiarR", "cldSunsetDiagR",
+				"cldClearUp", "cldCloudUp", "cldStormyUp", "cldSunsetUp"
+		};
 		
-		JToggleButton tglcldClear = new JToggleButton("cldClear");
-		tglcldClear.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/cldClear.png");
-			}
-		});
-		tglcldClear.setIcon(iicldClear);
-		tglcldClear.setPreferredSize(dimButton);
-		pnlClouds.add(tglcldClear);
-		platToggleGroup.add(tglcldClear);
-		
-		JToggleButton tglcldCloud = new JToggleButton("cldCloud");
-		tglcldCloud.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/cldCloud.png");
-			}
-		});
-		tglcldCloud.setIcon(iicldCloud);
-		tglcldCloud.setPreferredSize(dimButton);
-		pnlClouds.add(tglcldCloud);
-		platToggleGroup.add(tglcldCloud);
-		
-		JToggleButton tglcldStormy = new JToggleButton("cldStormy");
-		tglcldStormy.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/cldStormy.png");
-			}
-		});
-		tglcldStormy.setIcon(iicldStormy);
-		tglcldStormy.setPreferredSize(dimButton);
-		pnlClouds.add(tglcldStormy);
-		platToggleGroup.add(tglcldStormy);
-		
-		JToggleButton tglcldSunset = new JToggleButton("cldSunset");
-		tglcldSunset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/cldSunset.png");
-			}
-		});
-		tglcldSunset.setIcon(iicldSunset);
-		tglcldSunset.setPreferredSize(dimButton);
-		pnlClouds.add(tglcldSunset);
-		platToggleGroup.add(tglcldSunset);
-		
-		ImageIcon iicldClearDiagL = new ImageIcon("assets/cldClearDiagLThumbnail.png");				
-		ImageIcon iicldCloudDiagL = new ImageIcon("assets/cldCloudDiagLThumbnail.png");
-		ImageIcon iicldStormyDiagL = new ImageIcon("assets/cldStormyDiagLThumbnail.png");	
-		ImageIcon iicldSunsetDiagL = new ImageIcon("assets/cldSunsetDiagLThumbnail.png");
-		
-		JToggleButton tglcldClearDiagL = new JToggleButton("cldClearDiagL");
-		tglcldClearDiagL.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/cldClearDiagL.png");
-			}
-		});
-		tglcldClearDiagL.setIcon(iicldClearDiagL);
-		tglcldClearDiagL.setPreferredSize(dimButton);
-		pnlClouds.add(tglcldClearDiagL);
-		platToggleGroup.add(tglcldClearDiagL);
-		
-		JToggleButton tglcldCloudDiagL = new JToggleButton("cldCloudDiagL");
-		tglcldCloudDiagL.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/cldCloudDiagL.png");
-			}
-		});
-		tglcldCloudDiagL.setIcon(iicldCloudDiagL);
-		tglcldCloudDiagL.setPreferredSize(dimButton);
-		pnlClouds.add(tglcldCloudDiagL);
-		platToggleGroup.add(tglcldCloudDiagL);
-		
-		JToggleButton tglcldStormyDiagL = new JToggleButton("cldStormyDiagL");
-		tglcldStormyDiagL.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/cldStormyDiagL.png");
-			}
-		});
-		tglcldStormyDiagL.setIcon(iicldStormyDiagL);
-		tglcldStormyDiagL.setPreferredSize(dimButton);
-		pnlClouds.add(tglcldStormyDiagL);
-		platToggleGroup.add(tglcldStormyDiagL);
-		
-		JToggleButton tglcldSunsetDiagL = new JToggleButton("cldSunsetDiagL");
-		tglcldSunsetDiagL.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/cldSunsetDiagL.png");
-			}
-		});
-		tglcldSunsetDiagL.setIcon(iicldSunsetDiagL);
-		tglcldSunsetDiagL.setPreferredSize(dimButton);
-		pnlClouds.add(tglcldSunsetDiagL);
-		platToggleGroup.add(tglcldSunsetDiagL);
-		
-		ImageIcon iicldClearDiagR = new ImageIcon("assets/cldClearDiagRThumbnail.png");				
-		ImageIcon iicldCloudDiagR = new ImageIcon("assets/cldCloudDiagRThumbnail.png");
-		ImageIcon iicldStormyDiagR = new ImageIcon("assets/cldStormyDiagRThumbnail.png");	
-		ImageIcon iicldSunsetDiagR = new ImageIcon("assets/cldSunsetDiagRThumbnail.png");
-		
-		JToggleButton tglcldClearDiagR = new JToggleButton("cldClearDiagR");
-		tglcldClearDiagR.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/cldClearDiagR.png");
-			}
-		});
-		tglcldClearDiagR.setIcon(iicldClearDiagR);
-		tglcldClearDiagR.setPreferredSize(dimButton);
-		pnlClouds.add(tglcldClearDiagR);
-		platToggleGroup.add(tglcldClearDiagR);
-		
-		JToggleButton tglcldCloudDiagR = new JToggleButton("cldCloudDiagR");
-		tglcldCloudDiagR.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/cldCloudDiagR.png");
-			}
-		});
-		tglcldCloudDiagR.setIcon(iicldCloudDiagR);
-		tglcldCloudDiagR.setPreferredSize(dimButton);
-		pnlClouds.add(tglcldCloudDiagR);
-		platToggleGroup.add(tglcldCloudDiagR);
-		
-		JToggleButton tglcldStormyDiagR = new JToggleButton("cldStormyDiagR");
-		tglcldStormyDiagR.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/cldStormyDiagR.png");
-			}
-		});
-		tglcldStormyDiagR.setIcon(iicldStormyDiagR);
-		tglcldStormyDiagR.setPreferredSize(dimButton);
-		pnlClouds.add(tglcldStormyDiagR);
-		platToggleGroup.add(tglcldStormyDiagR);
-		
-		JToggleButton tglcldSunsetDiagR = new JToggleButton("cldSunsetDiagR");
-		tglcldSunsetDiagR.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/cldSunsetDiagR.png");
-			}
-		});
-		tglcldSunsetDiagR.setIcon(iicldSunsetDiagR);
-		tglcldSunsetDiagR.setPreferredSize(dimButton);
-		pnlClouds.add(tglcldSunsetDiagR);
-		platToggleGroup.add(tglcldSunsetDiagR);
-		
-		ImageIcon iicldClearUp = new ImageIcon("assets/cldClearUpThumbnail.png");				
-		ImageIcon iicldCloudUp = new ImageIcon("assets/cldCloudUpThumbnail.png");
-		ImageIcon iicldStormyUp = new ImageIcon("assets/cldStormyUpThumbnail.png");	
-		ImageIcon iicldSunsetUp = new ImageIcon("assets/cldSunsetUpThumbnail.png");
-		
-		JToggleButton tglcldClearUp = new JToggleButton("cldClearUp");
-		tglcldClearUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/cldClearUp.png");
-			}
-		});
-		tglcldClearUp.setIcon(iicldClearUp);
-		tglcldClearUp.setPreferredSize(dimButton);
-		pnlClouds.add(tglcldClearUp);
-		platToggleGroup.add(tglcldClearUp);
-		
-		JToggleButton tglcldCloudUp = new JToggleButton("cldCloudUp");
-		tglcldCloudUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/cldCloudUp.png");
-			}
-		});
-		tglcldCloudUp.setIcon(iicldCloudUp);
-		tglcldCloudUp.setPreferredSize(dimButton);
-		pnlClouds.add(tglcldCloudUp);
-		platToggleGroup.add(tglcldCloudUp);
-		
-		JToggleButton tglcldStormyUp = new JToggleButton("cldStormyUp");
-		tglcldStormyUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/cldStormyUp.png");
-			}
-		});
-		tglcldStormyUp.setIcon(iicldStormyUp);
-		tglcldStormyUp.setPreferredSize(dimButton);
-		pnlClouds.add(tglcldStormyUp);
-		platToggleGroup.add(tglcldStormyUp);
-		
-		JToggleButton tglcldSunsetUp = new JToggleButton("cldSunsetUp");
-		tglcldSunsetUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/cldSunsetUp.png");
-			}
-		});
-		tglcldSunsetUp.setIcon(iicldSunsetUp);
-		tglcldSunsetUp.setPreferredSize(dimButton);
-		pnlClouds.add(tglcldSunsetUp);
-		platToggleGroup.add(tglcldSunsetUp);
+		for (String cloud : clouds) {
+			ImageIcon iicld = new ImageIcon("assets/" + cloud + "Thumbnail.png");	
+			JToggleButton tglcld = new JToggleButton(cloud);
+			tglcld.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					ctlAdapter.makePlatform("assets/" + cloud + "png");
+				}
+			});
+			tglcld.setIcon(iicld);
+			tglcld.setPreferredSize(dimButton);
+			pnlClouds.add(tglcld);
+			platToggleGroup.add(tglcld);
+		}
 		
 		ImageIcon iiBuddhaHand = new ImageIcon("assets/BuddhaHandThumbnail.png");
 		//ImageIcon iiBtnGate = new ImageIcon("assets/")
@@ -867,35 +663,28 @@ public class ControlWindow extends JFrame {
 		JLabel lblBoulders = new JLabel("<html><b>Boulders</b></html>");
 		pnlBoulders.add(lblBoulders);
 		
-		ImageIcon iiBoulderA = new ImageIcon("assets/ABoulderThumbnail.png");
-		ImageIcon iiBoulderB = new ImageIcon("assets/BBoulderThumbnail.png");		
-		
 		ButtonGroup boulderToggleGroup = new ButtonGroup();
 		JPanel pnlBoulderGrid = new JPanel();
-		pnlBoulderGrid.setLayout(new GridLayout(1,2));
+		pnlBoulderGrid.setLayout(new GridLayout(4,3));
 		pnlBoulders.add(pnlBoulderGrid);
 		
-		JToggleButton tglBtnBoulderA = new JToggleButton("BoulderA");
-		tglBtnBoulderA.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makeRock("assets/ABoulder.png");
-			}
-		});
-		tglBtnBoulderA.setIcon(iiBoulderA);
-		tglBtnBoulderA.setPreferredSize(dimButton);
-		pnlBoulderGrid.add(tglBtnBoulderA);
-		boulderToggleGroup.add(tglBtnBoulderA);
+		String[] boulders = {"BoulderA", "BoulderB", "boulder0", "boulder1", "boulder2", "boulder3",
+				"boulder4", "boulder5", "boulder6", "boulder7", "boulder8", "boulder9"
+		};
 		
-		JToggleButton tglBtnBoulderB = new JToggleButton("BoulderB");
-		tglBtnBoulderB.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makeRock("assets/BBoulder.png");
-			}
-		});
-		tglBtnBoulderB.setIcon(iiBoulderB);
-		tglBtnBoulderB.setPreferredSize(dimButton);
-		pnlBoulderGrid.add(tglBtnBoulderB);
-		boulderToggleGroup.add(tglBtnBoulderB);
+		for (String boulder : boulders) {
+			ImageIcon iiBoulder = new ImageIcon("assets/" + boulder + "Thumbnail.png");
+			JToggleButton tglBtnBoulder = new JToggleButton(boulder);
+			tglBtnBoulder.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					ctlAdapter.makeRock("assets/" + boulder + ".png");
+				}
+			});
+			tglBtnBoulder.setIcon(iiBoulder);
+			tglBtnBoulder.setPreferredSize(dimButton);
+			pnlBoulderGrid.add(tglBtnBoulder);
+			boulderToggleGroup.add(tglBtnBoulder);
+		}
 		
 		JButton btnAddJoint = new JButton("Add Boulder Joint");
 		btnAddJoint.addActionListener(new ActionListener() {

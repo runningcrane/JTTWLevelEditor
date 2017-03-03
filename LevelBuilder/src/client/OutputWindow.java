@@ -143,7 +143,7 @@ public class OutputWindow extends JFrame {
 		JButton btnReadJSON = new JButton("Load Level");
 		btnReadJSON.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				otlAdapter.readJSON(txtInputPath.getText() + ".json");
+				otlAdapter.readJSON("../levelFiles/" + txtInputPath.getText() + ".json");
 			}
 		});
 				
