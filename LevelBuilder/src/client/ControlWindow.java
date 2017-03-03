@@ -897,6 +897,14 @@ public class ControlWindow extends JFrame {
 		pnlBoulderGrid.add(tglBtnBoulderB);
 		boulderToggleGroup.add(tglBtnBoulderB);
 		
+		JButton btnAddJoint = new JButton("Add Boulder Joint");
+		btnAddJoint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makeBoulderJoint();
+			}
+		});
+		pnlBack.add(btnAddJoint);
+
 		// Special images
 		JToggleButton tglBtnGate = new JToggleButton("lvl1Gate");
 		tglBtnGate.addActionListener(new ActionListener() {
@@ -907,8 +915,7 @@ public class ControlWindow extends JFrame {
 		//tglBtnBuddhaHand.setIcon(ii);
 		tglBtnBuddhaHand.setPreferredSize(dimButton);
 		pnlSpecials.add(tglBtnGate);
-		platToggleGroup.add(tglBtnGate); 
-		
+		platToggleGroup.add(tglBtnGate); 		
 		
 		// Resize the frame.        
         this.scrPaneScroll.setPreferredSize(dimFrame);

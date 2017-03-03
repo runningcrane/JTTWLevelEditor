@@ -24,6 +24,8 @@ public interface ILevelToOutputAdapter {
 	
 	public void makeRock(String path);
 	
+	public void makeBoulderJoint();
+	
 	/**
 	 * Set the flavor text of the level.
 	 * @param levelName name of the level loaded in

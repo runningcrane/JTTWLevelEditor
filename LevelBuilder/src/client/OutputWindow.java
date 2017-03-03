@@ -40,7 +40,7 @@ public class OutputWindow extends JFrame {
 	
 	public enum Request {
 		NONE, 
-		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC,
+		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC, MAKE_BOULDER_JOINT,
 		EDIT_OLD_PLAT, EDIT_OLD_VINE, EDIT_OLD_BOULDER,
 		SET_PLAYER_START_POS, SET_PLAT_ENDPOINT, 
 		MARK_EOL, MARK_RP,
@@ -352,6 +352,48 @@ public class OutputWindow extends JFrame {
 				    request = Request.NONE;
 					break;
 		    	}
+		    	case MAKE_BOULDER_JOINT: {
+		    		int xp = e.getX();
+				    int yp = e.getY();
+				    System.out.println("Requesting joint point " + xp + ", " + yp + "; swing vp pixels.");
+				    
+				    // Ask for the first boulder #.	   
+				    
+			    	String boulder1 = JOptionPane.showInputDialog(null, "Input ticket # of boulder 1.");
+				    int ticket1;	 
+				    try {
+				    	ticket1 = Integer.parseInt(boulder1);
+				    } catch (NullPointerException nulle) {
+				    	// Default to 2m width.
+				    	ticket1 = -1;
+						nulle.printStackTrace();
+				    } catch (NumberFormatException numbe) {
+				    	System.out.println("Not a valid number.");
+				    	ticket1 = -1;
+				    	numbe.printStackTrace();
+				    }				    
+				    
+				    // Ask for the second boulder #.
+				    int ticket2 = -1;
+			    	String boulder2 = JOptionPane.showInputDialog(null, "Input ticket # of boulder 2.");
+			    	 
+				    try {
+				    	ticket2 = Integer.parseInt(boulder2);
+				    } catch (NullPointerException nulle) {
+				    	// Default to 2m width.
+				    	ticket2 = -1;
+						nulle.printStackTrace();
+				    } catch (NumberFormatException numbe) {
+				    	System.out.println("Not a valid number.");
+				    	ticket2 = -1;
+				    	numbe.printStackTrace();
+				    }			
+				    
+				    otlAdapter.makeBoulderJoint(ticket1, ticket2, xp, yp);
+				    
+				    request = Request.NONE;
+					break;
+		    	}
 		    	case EDIT_OLD_PLAT: {
 					int xp = e.getX();
 				    int yp = e.getY();
@@ -565,5 +607,9 @@ public class OutputWindow extends JFrame {
 	
 	public void removeRP() {
 		request = Request.REMOVE_RP;
+	}
+	
+	public void makeBoulderJoint() {
+		request = Request.MAKE_BOULDER_JOINT;
 	}
 }

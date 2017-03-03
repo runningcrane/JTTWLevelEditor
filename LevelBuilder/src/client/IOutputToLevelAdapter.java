@@ -44,6 +44,8 @@ public interface IOutputToLevelAdapter {
 	 */
 	public void makePlatform(String path, double xp, double yp, double scale);
 	
+	public void makeBoulderJoint(int ticket1, int ticket2, double xp, double yp);
+	
 	/**
 	 * Request a vine to be made.
 	 * @param xp x position in pixels

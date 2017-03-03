@@ -119,6 +119,11 @@ public class Controller {
 				level.requestRemoveRP();				
 			}
 
+			@Override
+			public void makeBoulderJoint() {
+				level.makeBoulderJoint();
+			}
+
 		});
 
 		layerWindow = new LayerWindow(new ILayerToLevelAdapter() {
@@ -309,6 +314,11 @@ public class Controller {
 				level.removeRP(xp, yp);				
 			}
 
+			@Override
+			public void makeBoulderJoint(int ticket1, int ticket2, double xp, double yp) {
+				level.makeBoulderJointRes(ticket1, ticket2, xp, yp);
+			}
+
 		});
 
 		level = new LevelManager(new ILevelToControlAdapter() {
@@ -396,6 +406,11 @@ public class Controller {
 			@Override
 			public void requestRemoveRP() {
 				outputWindow.removeRP();				
+			}
+
+			@Override
+			public void makeBoulderJoint() {
+				outputWindow.makeBoulderJoint();
 			}
 
 		}, new ILevelToLayerAdapter() {
