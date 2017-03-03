@@ -464,8 +464,7 @@ public class ControlWindow extends JFrame {
 		ImageIcon iiForestGround = new ImageIcon("assets/ForestGroundThumbnail.png");	
 		ImageIcon iiTree1 = new ImageIcon("assets/Tree1Thumbnail.png");
 		ImageIcon iiTree2 = new ImageIcon("assets/Tree2Thumbnail.png");
-		ImageIcon iiBuddhaHand = new ImageIcon("assets/BuddhaHandThumbnail.png");
-		
+
 		// Platform panel - toggle buttons
 		ButtonGroup platToggleGroup = new ButtonGroup();														
 				
@@ -845,6 +844,9 @@ public class ControlWindow extends JFrame {
 		pnlClouds.add(tglcldSunsetUp);
 		platToggleGroup.add(tglcldSunsetUp);
 		
+		ImageIcon iiBuddhaHand = new ImageIcon("assets/BuddhaHandThumbnail.png");
+		//ImageIcon iiBtnGate = new ImageIcon("assets/")
+		
 		// Special images
 		JToggleButton tglBtnBuddhaHand = new JToggleButton("BuddhaHand");
 		tglBtnBuddhaHand.addActionListener(new ActionListener() {
@@ -902,6 +904,18 @@ public class ControlWindow extends JFrame {
 			}
 		});
 		pnlBack.add(btnAddJoint);
+
+		// Special images
+		JToggleButton tglBtnGate = new JToggleButton("lvl1Gate");
+		tglBtnGate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makePlatform("assets/lvl1Gate.png");
+			}
+		});
+		//tglBtnBuddhaHand.setIcon(ii);
+		tglBtnBuddhaHand.setPreferredSize(dimButton);
+		pnlSpecials.add(tglBtnGate);
+		platToggleGroup.add(tglBtnGate); 		
 		
 		// Resize the frame.        
         this.scrPaneScroll.setPreferredSize(dimFrame);

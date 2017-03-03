@@ -3,9 +3,6 @@ package server;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
@@ -27,8 +24,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
-import com.sun.javafx.geom.Line2D;
 
 import interactable.Boulder;
 import interactable.BoulderJoint;
@@ -1752,7 +1747,7 @@ public class LevelManager {
 	 * @param name
 	 *            name of character to toggle
 	 * @param status
-	 *            state of existance or not
+	 *            state of existence or not
 	 */
 	public void togglePlayer(String name, boolean status) {
 		if (status) {
