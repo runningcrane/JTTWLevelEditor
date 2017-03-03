@@ -109,6 +109,16 @@ public class Controller {
 				level.togglePlayer(name, status);
 			}
 
+			@Override
+			public void markRP() {
+				level.markRP();				
+			}
+
+			@Override
+			public void removeRP() {
+				level.requestRemoveRP();				
+			}
+
 		});
 
 		layerWindow = new LayerWindow(new ILayerToLevelAdapter() {
@@ -289,6 +299,16 @@ public class Controller {
 				level.setCharacterPosition(name, xp, yp);
 			}
 
+			@Override
+			public void setRP(double xp, double yp) {
+				level.makeRP(xp, yp);				
+			}
+
+			@Override
+			public void removeRP(double xp, double yp) {
+				level.removeRP(xp, yp);				
+			}
+
 		});
 
 		level = new LevelManager(new ILevelToControlAdapter() {
@@ -366,6 +386,16 @@ public class Controller {
 			@Override
 			public void setVinePos(int ticket) {
 				outputWindow.setVinePos(ticket);
+			}
+
+			@Override
+			public void markRP() {
+				outputWindow.markRP();				
+			}
+
+			@Override
+			public void requestRemoveRP() {
+				outputWindow.removeRP();				
 			}
 
 		}, new ILevelToLayerAdapter() {

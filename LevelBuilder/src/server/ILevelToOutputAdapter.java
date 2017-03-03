@@ -50,6 +50,10 @@ public interface ILevelToOutputAdapter {
 	
 	public void markEOL();
 	
+	public void markRP();
+	
 	public void makeEndpointPlat(int ticket);
+	
+	public void requestRemoveRP();
 
 }
