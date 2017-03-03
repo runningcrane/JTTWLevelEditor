@@ -895,6 +895,14 @@ public class ControlWindow extends JFrame {
 		pnlBoulderGrid.add(tglBtnBoulderB);
 		boulderToggleGroup.add(tglBtnBoulderB);
 		
+		JButton btnAddJoint = new JButton("Add Boulder Joint");
+		btnAddJoint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.makeBoulderJoint();
+			}
+		});
+		pnlBack.add(btnAddJoint);
+		
 		// Resize the frame.        
         this.scrPaneScroll.setPreferredSize(dimFrame);
 

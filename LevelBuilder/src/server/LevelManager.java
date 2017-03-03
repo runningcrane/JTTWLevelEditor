@@ -20,6 +20,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 import org.json.simple.JSONArray;
@@ -30,6 +31,7 @@ import org.json.simple.parser.ParseException;
 import com.sun.javafx.geom.Line2D;
 
 import interactable.Boulder;
+import interactable.BoulderJoint;
 import interactable.Enemy;
 import interactable.Platform;
 import interactable.Player;
@@ -117,6 +119,11 @@ public class LevelManager {
 	 * Boulder map.
 	 */
 	private Map<Integer, Boulder> boulders;
+	
+	/**
+	 * Boulder joint list.
+	 */
+	private ArrayList<BoulderJoint> joints;
 
 	/**
 	 * NPC array.
@@ -199,6 +206,7 @@ public class LevelManager {
 		this.vines = new HashMap<Integer, Vine>();
 		this.boulders = new HashMap<Integer, Boulder>();
 		this.respawnPoints = new ArrayList<Point2D.Double>();
+		this.joints = new ArrayList<BoulderJoint>();
 
 		// Set up the player characters.
 		characters = new HashMap<String, Player>();
@@ -279,6 +287,9 @@ public class LevelManager {
 		
 		// Clear the current list of boulders.
 		this.boulders.clear();
+		
+		// Clear the boulder joints.
+		this.joints.clear();
 		
 		// Clear the current list of respawn points.		
 		this.respawnPoints.clear();
@@ -406,6 +417,28 @@ public class LevelManager {
 			list.add(boulder.makeJSON());
 		});
 
+		return list;
+	}
+	
+	public JSONArray getBouldJointList() {
+		JSONArray list = new JSONArray();
+		
+		/*
+		 * If one of the joint's boulders isn't part of the boulder list anymore,
+		 * ignore the joint.
+		 */
+		this.joints.forEach((joint) -> {
+			int ticket1 = joint.getBoulder1();
+			int ticket2 = joint.getBoulder2();
+			System.out.println(ticket1 + " boulder exists: " + ((boulders.containsKey(ticket1)) ? "true" : "false"));
+			System.out.println(ticket2 + " boulder exists: " + ((boulders.containsKey(ticket2)) ? "true" : "false"));
+			if (boulders.containsKey(ticket1) && boulders.containsKey(ticket2)) {
+				// The boulders exist; get their anchor.
+				System.out.println("Adding joint between boulders " + ticket1 + " and " + ticket2);
+				list.add(joint.makeJSON());				
+			}									
+		});
+		
 		return list;
 	}
 	
@@ -602,6 +635,7 @@ public class LevelManager {
 		JSONObject charList = getCharList();
 		JSONArray boulderList = getBouldList();
 		JSONArray respawnList = getRPs();
+		JSONArray boulderJList = getBouldJointList();
 		
 		// JSONObject charLocs = getCharLocs(this.charLocs);
 
@@ -618,6 +652,7 @@ public class LevelManager {
 		json.put("platforms", platList);
 		json.put("vines", vineList);
 		json.put("boulders", boulderList);
+		json.put("boulderJoints", boulderJList);
 		json.put("polygonCollision", polygon);
 		json.put("respawnPoints", respawnList);
 		return json;
@@ -881,6 +916,51 @@ public class LevelManager {
 			makeVine(path, cxm * this.mToPixel, (this.lvhm - cym) * this.mToPixel, wm, hm, arcLimit, startingVel);
 		}
 	}
+	
+	public void readBoulderJointJSON(JSONArray list) {
+		for (Object obj : list) {
+			int ticket1 = (int)((JSONObject)obj).get("id1");
+			int ticket2 = (int)((JSONObject)obj).get("id2");
+			
+			// Check if the boulders exist.
+			if (boulders.containsKey(ticket1) && boulders.containsKey(ticket2)){			
+				double ob1x = (double)((JSONObject)obj).get("anchor1x");
+				double ob1y = (double)((JSONObject)obj).get("anchor1y");
+				double ob2x = (double)((JSONObject)obj).get("anchor2x");
+				double ob2y = (double)((JSONObject)obj).get("anchor2y");
+				this.joints.add(new BoulderJoint(ticket1, ticket2, ob1x, ob1y, ob2x, ob2y));
+			}
+		}
+	}
+		
+	public void makeBoulderJoint() {
+		// If there aren't at least two boulders, no joints can be made.
+		if (boulders.size() < 2) {
+			return;
+		}
+		
+		this.ltoAdapter.makeBoulderJoint();
+	}
+	
+	public void makeBoulderJointRes(int ticket1, int ticket2, double xp, double yp) {
+		if (boulders.containsKey(ticket1) && boulders.containsKey(ticket2)) {
+			// Translate it to cocos coordinates, since that's what boulders are in.
+			double cxm = (xp - this.vpOffset.getX()) / this.mToPixel;
+			double cym = this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel;
+			
+			// Get offset from boulder 1.
+			// point - center is the offset.
+			double offset1x = cxm - this.boulders.get(ticket1).getCenterXm();
+			double offset1y = cym - this.boulders.get(ticket1).getCenterYm();
+			
+			// Get offset from boulder 2.
+			double offset2x = cxm - this.boulders.get(ticket2).getCenterXm();
+			double offset2y = cym - this.boulders.get(ticket2).getCenterYm();
+			
+			// Now make the joint.
+			this.joints.add(new BoulderJoint(ticket1, ticket2, offset1x, offset1y, offset2x, offset2y));
+		}
+	}
 
 	/**
 	 * Manual call to reset the level dimensions.
@@ -1007,6 +1087,13 @@ public class LevelManager {
 			boulders = new JSONArray();
 		}
 		makeBouldersList(boulders);
+		
+		JSONArray joints = (JSONArray) level.get("boulderJoints");
+		// Default case.
+		if (joints == null) {
+			joints = new JSONArray();
+		}
+		readBoulderJointJSON(joints);
 
 		JSONArray rps = (JSONArray) level.get("respawnPoints");
 		// Default case.
@@ -1530,6 +1617,8 @@ public class LevelManager {
 		this.characters.forEach((name, player) -> player.setRescaled(resize(player.getImage(), 0.7, 1.7)));
 		this.vines.forEach((ticket, vine) -> vine
 				.setRescaled(resize(vine.getImage(), vine.getInGameWidth(), vine.getInGameHeight())));
+		this.boulders.forEach((ticket, boulder) -> boulder
+				.setRescaled(resize(boulder.getImage(), boulder.getScaledIGW(), boulder.getScaledIGH())));
 		// this.npcs.forEach((name, enemy) ->
 		// enemy.setRescaled(resize(enemy.getImage(), enemy.getInGameWidth(),
 		// enemy.getInGameHeight())));
