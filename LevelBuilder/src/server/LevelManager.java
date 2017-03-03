@@ -597,8 +597,6 @@ public class LevelManager {
 		JSONObject charList = getCharList();
 		JSONArray boulderList = getBouldList();
 		JSONArray respawnList = getRPs();
-		
-		// JSONObject charLocs = getCharLocs(this.charLocs);
 
 		// Level specific items
 		json.put("levelName", levelName);
