@@ -43,7 +43,8 @@ public class OutputWindow extends JFrame {
 		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC,
 		EDIT_OLD_PLAT, EDIT_OLD_VINE, EDIT_OLD_BOULDER,
 		SET_PLAYER_START_POS, SET_PLAT_ENDPOINT, 
-		MARK_EOL
+		MARK_EOL, MARK_RP,
+		REMOVE_RP
 	}
 	private Request request;
 	
@@ -398,6 +399,28 @@ public class OutputWindow extends JFrame {
 				    request = Request.NONE;
 					break;
 				} 
+		    	case MARK_RP: {
+		    		int xp = e.getX();
+				    int yp = e.getY();
+				    System.out.println("RP point to be at " + xp + ", " + yp + "; pixels.");
+				    
+				    // Send position to level manager
+				    otlAdapter.setRP(xp, yp);
+				    
+				    request = Request.NONE;
+					break;
+		    	}
+		    	case REMOVE_RP: {
+		    		int xp = e.getX();
+				    int yp = e.getY();
+				    System.out.println("Estimated removal point at " + xp + ", " + yp + "; pixels.");
+				    
+				    // Send position to level manager
+				    otlAdapter.removeRP(xp, yp);
+				    
+				    request = Request.NONE;
+					break;
+		    	}
 		    	case SET_PLAT_ENDPOINT: {
 					int xp = e.getX();
 				    int yp = e.getY();				    
@@ -508,6 +531,10 @@ public class OutputWindow extends JFrame {
 		request = Request.MARK_EOL;
 	}
 	
+	public void markRP() {
+		request = Request.MARK_RP;
+	}
+	
 	public void makeVine(String path) {
 		request = Request.MAKE_VINE;
 		this.newPath = path;
@@ -530,5 +557,9 @@ public class OutputWindow extends JFrame {
 	public void setEndpointPlat(int ticket) {
 		this.ticket = ticket;
 		request = Request.SET_PLAT_ENDPOINT;
+	}
+	
+	public void removeRP() {
+		request = Request.REMOVE_RP;
 	}
 }

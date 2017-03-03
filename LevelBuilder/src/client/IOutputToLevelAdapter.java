@@ -118,4 +118,18 @@ public interface IOutputToLevelAdapter {
 	 */
 	public void setEOL(double xp, double yp);
 	
+	/**
+	 * Make a respawn point for the level.
+	 * @param xp
+	 * @param yp
+	 */
+	public void setRP(double xp, double yp);
+	
+	/**
+	 * Remove a respawn point from the level.	
+	 * @param xp
+	 * @param yp
+	 */
+	public void removeRP(double xp, double yp);
+	
 }

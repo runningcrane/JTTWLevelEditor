@@ -60,5 +60,9 @@ public interface IControlToLevelAdapter {
 	 * @param path
 	 */
 	public void makeRock(String path);
+	
+	public void markRP();
+	
+	public void removeRP();
 
 }

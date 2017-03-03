@@ -201,6 +201,8 @@ public class ControlWindow extends JFrame {
 			}
 		});
 		
+		// EOL Panel
+		
 		JPanel pnlEOL = new JPanel();
 		pnlEOL.setLayout(new BoxLayout(pnlEOL, BoxLayout.Y_AXIS));
 		pnlEOL.setPreferredSize(new Dimension(50,50));
@@ -217,6 +219,34 @@ public class ControlWindow extends JFrame {
 		});
 		pnlEOL.add(btnEOL);
 		
+		// Respawn points panel		
+		JPanel pnlRP = new JPanel();
+		pnlRP.setLayout(new BoxLayout(pnlRP, BoxLayout.Y_AXIS));
+		pnlRP.setPreferredSize(new Dimension(50,50));
+		pnlBack.add(pnlRP);
+		
+		JLabel lblRP = new JLabel("<html><b>Respawn Points</b></html>");
+		pnlRP.add(lblRP);
+		
+		JPanel pnlRPControls = new JPanel();		
+		pnlRControls.setPreferredSize(dimPanel);
+		pnlRP.add(pnlRPControls);
+		
+		JButton btnRP = new JButton("Make RP");
+		btnRP.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.markRP();
+			}
+		});
+		pnlRPControls.add(btnRP);
+		
+		JButton btnRPRemove = new JButton("Remove RP");
+		btnRPRemove.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ctlAdapter.removeRP();
+			}
+		});
+		pnlRPControls.add(btnRPRemove);
 		
 		// Background panel		
 		JPanel pnlBackground = new JPanel();

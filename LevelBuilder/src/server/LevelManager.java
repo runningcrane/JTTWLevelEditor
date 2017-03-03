@@ -82,6 +82,11 @@ public class LevelManager {
 	 * Map of objects to their default JSON.
 	 */
 	private Map<String, JSONObject> defaultJSON;
+	
+	/**
+	 * List of respawn points for the level.
+	 */
+	private ArrayList<Point2D.Double> respawnPoints; 
 
 	/**
 	 * Foreground array.
@@ -188,6 +193,7 @@ public class LevelManager {
 		this.fg = new ArrayList<INonInteractable>();
 		this.vines = new HashMap<Integer, Vine>();
 		this.boulders = new HashMap<Integer, Boulder>();
+		this.respawnPoints = new ArrayList<Point2D.Double>();
 
 		// Set up the player characters.
 		characters = new HashMap<String, Player>();
@@ -265,7 +271,13 @@ public class LevelManager {
 
 		// Clear the current list of vines.
 		this.vines.clear();
-
+		
+		// Clear the current list of boulders.
+		this.boulders.clear();
+		
+		// Clear the current list of respawn points.		
+		this.respawnPoints.clear();
+		
 		// By the way, they all need to be removed from the LayerWindow as well.
 		this.ltlAdapter.removeAllWindows();
 
@@ -584,6 +596,7 @@ public class LevelManager {
 		JSONArray vineList = getVineList();
 		JSONObject charList = getCharList();
 		JSONArray boulderList = getBouldList();
+		JSONArray respawnList = getRPs();
 		
 		// JSONObject charLocs = getCharLocs(this.charLocs);
 
@@ -601,7 +614,7 @@ public class LevelManager {
 		json.put("vines", vineList);
 		json.put("boulders", boulderList);
 		json.put("polygonCollision", polygon);
-		// json.put("charactersStart", charLocs);
+		json.put("respawnPoints", respawnList);
 		return json;
 	}
 
@@ -649,6 +662,27 @@ public class LevelManager {
 		return this.ticket - 1;
 	}
 
+	public JSONArray getRPs() {
+		JSONArray rps = new JSONArray();
+		this.respawnPoints.forEach((point) -> {
+			JSONObject obj = new JSONObject();
+			obj.put("x", point.x);
+			obj.put("y", point.y);
+			rps.add(obj);
+		});
+		
+		return rps;
+	}
+	
+	public void makeRPs(JSONArray list) {
+		list.forEach((obj) -> {
+			JSONObject jsonObj = (JSONObject) obj;
+			double x = (double)jsonObj.get("x");
+			double y = (double)jsonObj.get("y");			
+			respawnPoints.add(new Point2D.Double(x, y));
+		});
+	}
+	
 	public void makePlatList(JSONArray list, boolean polygon) {
 
 		for (Object obj : list) {
@@ -858,6 +892,13 @@ public class LevelManager {
 	public void markEOL() {
 		ltoAdapter.markEOL();
 	}
+	
+	/**
+	 * Mark the location of a respawn point on the screen.
+	 */
+	public void markRP() {
+		ltoAdapter.markRP();
+	}
 
 	/**
 	 * Reads in a level from its JSON.
@@ -962,12 +1003,19 @@ public class LevelManager {
 		}
 		makeBouldersList(boulders);
 
+		JSONArray rps = (JSONArray) level.get("respawnPoints");
+		// Default case.
+		if (rps == null) {
+			rps = new JSONArray();
+		}
+		makeRPs(rps);
+		
 		JSONObject characters = (JSONObject) level.get("characters");
 		// Default case: don't change any of the characters' positions, etc if
 		// no info found.
 		if (characters != null) {
 			setCharacters(characters);
-		}
+		}				
 
 		// Resize last
 		Double mToPixelD = (Double) level.get("mToPixel");
@@ -1116,6 +1164,20 @@ public class LevelManager {
 		Point2D.Double vplbeol = getViewportCoordinates(this.eol.getX() * this.mToPixel + 5,
 				(this.lvhm - (this.eol.getY())) * this.mToPixel + 10);
 		g.drawString("EOL", (int) (vplbeol.getX()), (int) (vplbeol.getY()));
+		
+		// Draw respawn points		
+		respawnPoints.forEach((point) -> {
+			g.setColor(Color.BLUE);
+			Point2D.Double vprp = getViewportCoordinates(point.getX() * this.mToPixel,
+					(this.lvhm - point.getY()) * this.mToPixel);
+			g.fillOval((int) (vprp.getX()), (int) (vprp.getY()), 15, 15);
+
+			// Label point
+			g.setColor(Color.WHITE);
+			Point2D.Double vprplb = getViewportCoordinates(point.getX() * this.mToPixel,
+					(this.lvhm - point.getY()) * this.mToPixel + 12);
+			g.drawString("RP", (int) (vprplb.getX()), (int) (vprplb.getY()));
+		});
 	}
 
 	/**
@@ -1384,6 +1446,49 @@ public class LevelManager {
 		// Change cym.
 		this.eol = new Point2D.Double((xp - this.vpOffset.getX()) / this.mToPixel,
 				this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel);
+	}
+	
+	public void makeRP(double xp, double yp) {		
+		this.respawnPoints.add(new Point2D.Double((xp - this.vpOffset.getX()) / this.mToPixel,
+				this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel));
+		System.out.println("Respawn point added at " + this.respawnPoints.get(this.respawnPoints.size() - 1).getX() + ", " +
+				this.respawnPoints.get(this.respawnPoints.size() - 1).getY() + " [cocos, m]");
+	}
+	
+	public void requestRemoveRP() {
+		this.ltoAdapter.requestRemoveRP();
+	}
+	
+	public void removeRP(double xp, double yp) {
+		double xm = (xp - this.vpOffset.getX()) / this.mToPixel;
+		double ym = this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel;
+		
+		/*
+		 * Find the respawn point closest to this.
+		 * Since there won't be that many respawn points, we can probably bruteforce search.
+		 */ 
+		Point2D.Double[] closest = new Point2D.Double[]{new Point2D.Double(-1, -1)};
+		double[] distance = new double[]{Double.MAX_VALUE};
+		
+		this.respawnPoints.forEach((point) -> {
+			// Calculate distance from the point to the clicked point.
+			double xDiff = Math.abs(point.x - xm);
+			double yDiff = Math.abs(point.y - ym);
+			double tempDist = Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
+			if (tempDist < distance[0]) {
+				// Closer point found. Update.
+				distance[0] = tempDist;
+				closest[0] = point;
+			}
+		});
+		
+		// Don't remove if nothing was found.
+		if (closest[0].x != -1) {
+			// Don't remove unless the click was close enough to the label.
+			if (distance[0] < 2) {
+				this.respawnPoints.remove(closest[0]);
+			}
+		}
 	}
 
 	/**
