@@ -52,6 +52,204 @@ public class LayerWindow extends JFrame {
 		initGUI();
 	}	
 	
+	public void addJointsEdit(int ticket, int id1, int id2, double obx1, double oby1, double obx2, double oby2) {
+		JSeparator jsep = new JSeparator(SwingConstants.HORIZONTAL);
+
+		EditWindow newWindow = new EditWindow(ticket) {
+			/**
+			 * UID for serialization.
+			 */
+			private static final long serialVersionUID = 8116441836763125578L;
+
+			@Override
+			public void initGUI() {	
+				this.cTicket1 = id1;
+				this.cTicket2 = id2;
+				
+				setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+				
+				JPanel pnlPosition = new JPanel();
+				pnlPosition.setLayout(new GridLayout(5,3,0,0));
+				add(pnlPosition);
+								
+				JLabel lblTicket = new JLabel("<html><b><u>#" + "Joint " + id1 + ", " + id2 + "</u></b></html>");
+				pnlPosition.add(lblTicket);
+				
+				JButton btnChangeBoulder = new JButton("Change boulders");
+				pnlPosition.add(btnChangeBoulder);
+				
+				JButton btnChangeOffset = new JButton("Change offset");
+				pnlPosition.add(btnChangeOffset);
+				
+				JButton btnDelete = new JButton("Remove");
+				pnlPosition.add(btnDelete);
+				btnDelete.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ltlAdapter.removeJoint(cTicket1, cTicket2);
+						
+						// Remove this EditWindow.
+						removeEditWindow(ticket, jsep);	
+					}
+				});
+				btnDelete.setBackground(Color.RED);
+				btnDelete.setForeground(Color.WHITE);
+				
+				JLabel lblB1 = new JLabel("Boulder1 #:");
+				pnlPosition.add(lblB1);
+				
+				txtB1 = new JTextField(Integer.toString(id1));
+				pnlPosition.add(txtB1);
+				txtB1.setColumns(7);
+				
+				JLabel lblB2 = new JLabel("Boulder2 #:");
+				pnlPosition.add(lblB2);
+				
+				txtB2 = new JTextField(Integer.toString(id2));
+				pnlPosition.add(txtB2);
+				txtB2.setColumns(7);							
+				
+				JLabel lblOBX1 = new JLabel("Boulder1X:");
+				pnlPosition.add(lblOBX1);
+				
+				txtOBX1 = new JTextField(Double.toString(obx1));
+				pnlPosition.add(txtOBX1);
+				txtOBX1.setColumns(7);
+				
+				JLabel lblOBY1 = new JLabel("Boulder1Y:");
+				pnlPosition.add(lblOBY1);
+				
+				txtOBY1 = new JTextField(Double.toString(oby1));
+				pnlPosition.add(txtOBY1);
+				txtOBY1.setColumns(7);
+				
+				JLabel lblOBX2 = new JLabel("Boulder2X:");
+				pnlPosition.add(lblOBX2);
+				
+				txtOBX2 = new JTextField(Double.toString(obx2));
+				pnlPosition.add(txtOBX2);
+				txtOBX2.setColumns(7);
+				
+				JLabel lblOBY2 = new JLabel("Boulder2Y:");
+				pnlPosition.add(lblOBY2);
+				
+				txtOBY2 = new JTextField(Double.toString(oby2));
+				pnlPosition.add(txtOBY2);
+				txtOBY2.setColumns(7);				
+				
+				btnChangeBoulder.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						int b1;
+						int b2;
+						
+					    try {
+					    	b1 = Integer.parseInt(txtB1.getText());
+					    } catch (NullPointerException nulle) {
+					    	// Default to 2m width.
+							nulle.printStackTrace();
+							return;
+					    } catch (NumberFormatException numbe) {
+					    	System.out.println("Not a valid number.");
+					    	numbe.printStackTrace();
+					    	return;
+					    }
+					    
+					    try {
+					    	b2 = Integer.parseInt(txtB2.getText());					    	
+					    } catch (NullPointerException nulle) {
+					    	// Default to 2m width.
+							nulle.printStackTrace();
+							return;
+					    } catch (NumberFormatException numbe) {
+					    	System.out.println("Not a valid number.");
+					    	numbe.printStackTrace();
+					    	return;
+					    }
+					    
+					    // Valid numbers. Go resize over in LevelManager.
+					    ltlAdapter.changeBoulderJoint(cTicket1, cTicket2, b1, b2);
+					    
+					    // Update the new joints before change.
+					    cTicket1 = b1;
+					    cTicket2 = b2;
+					}
+				});
+				
+				btnChangeOffset.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						double obx1;
+						double obx2;
+						double oby1;
+						double oby2;
+						
+					    try {
+					    	obx1 = Double.parseDouble(txtOBX1.getText());
+					    } catch (NullPointerException nulle) {
+							nulle.printStackTrace();
+							return;
+					    } catch (NumberFormatException numbe) {
+					    	System.out.println("Not a valid number.");
+					    	numbe.printStackTrace();
+					    	return;
+					    }
+					    
+					    try {
+					    	obx2 = Double.parseDouble(txtOBX2.getText());
+					    } catch (NullPointerException nulle) {
+							nulle.printStackTrace();
+							return;
+					    } catch (NumberFormatException numbe) {
+					    	System.out.println("Not a valid number.");
+					    	numbe.printStackTrace();
+					    	return;
+					    }
+					    
+					    try {
+					    	oby1 = Double.parseDouble(txtOBY1.getText());
+					    } catch (NullPointerException nulle) {
+							nulle.printStackTrace();
+							return;
+					    } catch (NumberFormatException numbe) {
+					    	System.out.println("Not a valid number.");
+					    	numbe.printStackTrace();
+					    	return;
+					    }
+					    
+					    try {
+					    	oby2 = Double.parseDouble(txtOBY2.getText());
+					    } catch (NullPointerException nulle) {
+							nulle.printStackTrace();
+							return;
+					    } catch (NumberFormatException numbe) {
+					    	System.out.println("Not a valid number.");
+					    	numbe.printStackTrace();
+					    	return;
+					    }
+					    
+						ltlAdapter.editBJOff(cTicket1, cTicket2, obx1, oby1, obx2, oby2);
+					}
+				});														
+			}					
+			
+			@Override
+			public void manualRemove() {
+				System.out.println("Removing #" + ticket + "...");
+				removeEditWindow(ticket, jsep);
+			}
+			
+		};
+		
+		pnlBack.add(newWindow);
+		this.edits.put(ticket, newWindow);
+		
+		// Add a line to separate areas.
+		pnlBack.add(jsep);
+		
+		// Resize the frame.
+        Dimension d = new Dimension(500,300);
+        this.scrPaneScroll.setPreferredSize(d);
+		this.pack();
+	}
+	
 	public void addVineEdit(int ticket, double wm, double hm, 
 			double arcLength, double startVel) {
 		JSeparator jsep = new JSeparator(SwingConstants.HORIZONTAL);

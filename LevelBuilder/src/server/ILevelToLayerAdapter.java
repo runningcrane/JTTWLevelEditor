@@ -30,6 +30,8 @@ public interface ILevelToLayerAdapter {
 	 */
 	public void addBoulderEdit(int ticket, double radius, double mass, double scale);
 	
+	public void addJointsEdit(int ticket, int id1, int id2, double obx1, double oby1, double obx2, double oby2);
+	
 	/**
 	 * Remove all edit panels.
 	 */

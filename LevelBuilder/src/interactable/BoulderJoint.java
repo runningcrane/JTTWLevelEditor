@@ -48,6 +48,14 @@ public class BoulderJoint {
 		return this.ticket2;
 	}
 	
+	public void setBoulder1(int newB1) {
+		this.ticket1 = newB1;
+	}
+	
+	public void setBoulder2(int newB2) {
+		this.ticket2 = newB2;
+	}
+	
 	public void setOffsetB1(double x, double y) {
 		this.offsetB1X = x;
 		this.offsetB1Y = y;

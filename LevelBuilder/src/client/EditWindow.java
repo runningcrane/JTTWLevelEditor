@@ -38,7 +38,15 @@ public class EditWindow extends JPanel {
 	JTextField txtArcl;
 	JTextField txtStartVel;
 	JTextField txtMass;
+	JTextField txtB1;
+	JTextField txtB2;
+	JTextField txtOBX1;
+	JTextField txtOBY1;
+	JTextField txtOBX2;
+	JTextField txtOBY2;
 	JSlider slider;
+	int cTicket1;
+	int cTicket2;
 
 	
 	public EditWindow getThis() {

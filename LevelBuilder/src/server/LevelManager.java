@@ -320,6 +320,60 @@ public class LevelManager {
 		toEditBould.setRescaled(
 				resize(toEditBould.getImage(), toEditBould.getScaledIGW(), toEditBould.getScaledIGH()));
 	}
+	
+	public void editBJOff(int cTicket1, int cTicket2, double obx1, double oby1, double obx2, double oby2) {
+		BoulderJoint[] joint = new BoulderJoint[1];
+		
+		this.joints.forEach((bjoint) -> {
+			if ((bjoint.getBoulder1() == cTicket1 && bjoint.getBoulder2() == cTicket2) ||
+					(bjoint.getBoulder1() == cTicket2 && bjoint.getBoulder2() == cTicket1)) {
+				joint[0] = bjoint;
+			}
+		});
+		
+		if (joint[0] != null) {
+			joint[0].setOffsetB1(obx1, oby1);
+			joint[0].setOffsetB2(oby1, oby2);
+		} else {
+			System.out.println("Couldn't find joint specified");
+		}
+	}
+	
+	public void changeBoulderJoint(int cTicket1, int cTicket2, int b1, int b2) {
+		BoulderJoint[] joint = new BoulderJoint[1];
+		
+		this.joints.forEach((bjoint) -> {
+			if ((bjoint.getBoulder1() == cTicket1 && bjoint.getBoulder2() == cTicket2) ||
+					(bjoint.getBoulder1() == cTicket2 && bjoint.getBoulder2() == cTicket1)) {
+				joint[0] = bjoint;
+			}
+		});
+		
+		if (joint[0] != null) {
+			joint[0].setBoulder1(b1);
+			joint[0].setBoulder2(b2);
+		} else {
+			System.out.println("Couldn't find joint specified");
+		}
+	}
+	
+	public void removeJoint(int cTicket1, int cTicket2) {
+		BoulderJoint[] joint = new BoulderJoint[1];
+		
+		this.joints.forEach((bjoint) -> {
+			if ((bjoint.getBoulder1() == cTicket1 && bjoint.getBoulder2() == cTicket2) ||
+					(bjoint.getBoulder1() == cTicket2 && bjoint.getBoulder2() == cTicket1)) {
+				joint[0] = bjoint;
+			}
+		});
+		
+		if (joint[0] != null) {
+			this.joints.remove(joint[0]);
+		} else {
+			System.out.println("Couldn't find joint specified");
+		}
+	}
+	
 
 	/**
 	 * Ask the OutputWindow for new center coordinates.
@@ -959,6 +1013,9 @@ public class LevelManager {
 				double ob2x = (double)((JSONObject)obj).get("anchor2x");
 				double ob2y = (double)((JSONObject)obj).get("anchor2y");
 				this.joints.add(new BoulderJoint(ticket1[0], ticket2[0], ob1x, ob1y, ob2x, ob2y));
+				
+				ltlAdapter.addJointsEdit(this.ticket, ticket1[0], ticket2[0], ob1x, ob1y, ob2x, ob2y);
+				this.ticket++;
 			}
 		}
 	}

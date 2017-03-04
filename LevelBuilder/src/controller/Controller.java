@@ -234,6 +234,21 @@ public class Controller {
 				level.removeBoulder(ticket);				
 			}
 
+			@Override
+			public void editBJOff(int cTicket1, int cTicket2, double obx1, double oby1, double obx2, double oby2) {
+				level.editBJOff(cTicket1, cTicket2, obx1, oby1, obx2, oby2);				
+			}
+
+			@Override
+			public void changeBoulderJoint(int cTicket1, int cTicket2, int b1, int b2) {
+				level.changeBoulderJoint(cTicket1, cTicket2, b1, b2);				
+			}
+
+			@Override
+			public void removeJoint(int cTicket1, int cTicket2) {
+				level.removeJoint(cTicket1, cTicket2);
+			}
+
 		});
 
 		outputWindow = new OutputWindow(new IOutputToLevelAdapter() {
@@ -432,6 +447,11 @@ public class Controller {
 
 			public void addVineEdit(int ticket, double wm, double hm, double arcl, double startVel) {
 				layerWindow.addVineEdit(ticket, wm, hm, arcl, startVel);
+			}
+			
+			@Override
+			public void addJointsEdit(int ticket, int id1, int id2, double obx1, double oby1, double obx2, double oby2) {
+				layerWindow.addJointsEdit(ticket, id1, id2, obx1, oby1, obx2, oby2);				
 			}
 
 			public void removeAllWindows() {
