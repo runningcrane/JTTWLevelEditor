@@ -35,6 +35,37 @@ public class ControlWindow extends JFrame {
 	 */
 	private static final long serialVersionUID = 2761055324358420713L;
 	
+	/**
+	 * All of the assets that we can use. To add another, just put the
+	 * file name (without extension) in here and the image in src/assets.
+	 * 
+	 * TODO: Read this stuff in from the assets folder automatically. 
+	 */
+	private static String[] BACKGROUNDS = {
+			"bgSunny", "bgCloud"
+	};
+	private static String[] PLATFORMS = {
+			"Pedestal", "blueGround", "canyonR", "canyonL", 
+			"ForestGround", "Tree1", "Tree2"
+	};
+	private static String[] ROCKS = {
+			"Rock1", "Rock2", "Rock3", "Rock4", "Rock5", 
+			"lvl1Rock1", "lvl1Rock2", "lvl1Rock3", "lvl1Rock4"
+	};
+	private static String[] CLOUDS = {
+			"cldClear", "cldCloud", "cldStormy", "cldSunset",
+			"cldClearDiagL", "cldCloudDiagL", "cldStormyDiagL", "cldSunsetDiagL",
+			"cldClearDiagR", "cldCloudDiagR", "cldStormyDiarR", "cldSunsetDiagR",
+			"cldClearUp", "cldCloudUp", "cldStormyUp", "cldSunsetUp"
+	};;
+	private static String[] BOULDERS = {
+			"BoulderA", "BoulderB", "boulder0", "boulder1", "boulder2", "boulder3",
+			"boulder4", "boulder5", "boulder6", "boulder7", "boulder8", "boulder9"
+	};
+	private static String[] VINES = {
+			"vine1", "vine2", "vine3"
+	};
+	
 	private JTextField txtLHeight;
 	private JTextField txtLWidth;
 	private JTextField txtVPHeight;
@@ -68,6 +99,7 @@ public class ControlWindow extends JFrame {
 		pnlBack = new JPanel();
 		scrPaneScroll = new JScrollPane(pnlBack);
 		scrPaneScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrPaneScroll.getVerticalScrollBar().setUnitIncrement(10);
 		
 		pnlBack.setBorder(new EmptyBorder(5, 5, 5, 5));
 		pnlBack.setLayout(new BoxLayout(pnlBack, BoxLayout.Y_AXIS));
@@ -142,7 +174,6 @@ public class ControlWindow extends JFrame {
 		
 		
 		// Resize
-		
 		JButton btnResizeScreen = new JButton("VP Resize");
 		pnlControlButtons.add(btnResizeScreen);	
 		btnResizeScreen.addActionListener(new ActionListener() {
@@ -196,7 +227,6 @@ public class ControlWindow extends JFrame {
 		});
 		
 		// EOL Panel
-		
 		JPanel pnlEOL = new JPanel();
 		pnlEOL.setLayout(new BoxLayout(pnlEOL, BoxLayout.Y_AXIS));
 		pnlEOL.setPreferredSize(new Dimension(50,50));
@@ -206,11 +236,7 @@ public class ControlWindow extends JFrame {
 		pnlEOL.add(lblEOL);
 		
 		JButton btnEOL = new JButton("Mark EOL");
-		btnEOL.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.markEOL();
-			}
-		});
+		btnEOL.addActionListener((arg0) -> ctlAdapter.markEOL()); 
 		pnlEOL.add(btnEOL);
 		
 		// Respawn points panel		
@@ -227,19 +253,11 @@ public class ControlWindow extends JFrame {
 		pnlRP.add(pnlRPControls);
 		
 		JButton btnRP = new JButton("Make RP");
-		btnRP.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.markRP();
-			}
-		});
+		btnRP.addActionListener((arg0) -> ctlAdapter.markRP()); 
 		pnlRPControls.add(btnRP);
 		
 		JButton btnRPRemove = new JButton("Remove RP");
-		btnRPRemove.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.removeRP();
-			}
-		});
+		btnRPRemove.addActionListener((arg0) -> ctlAdapter.removeRP()); 
 		pnlRPControls.add(btnRPRemove);
 		
 		// Background panel		
@@ -252,42 +270,24 @@ public class ControlWindow extends JFrame {
 		JLabel lblBackground = new JLabel("<html><b>Background</b></html>");
 		pnlBackground.add(lblBackground);	
 		
+		// Background panel - grid		
 		JPanel pnlGrid = new JPanel();
 		pnlGrid.setLayout(new GridLayout(1,3));
 		pnlBackground.add(pnlGrid);
-		
-		// Background panel - grid
-		ImageIcon iiSunny = new ImageIcon("assets/bgSunnyThumbnail.png");									
-		ImageIcon iiCloud = new ImageIcon("assets/bgCloudThumbnail.png");		
-		
+
 		// Background panel - radio buttons
 		ButtonGroup bgRadGroup = new ButtonGroup();
 		
-		JButton btnBgCloudy = new JButton("Cloudy");
-		btnBgCloudy.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.setBg("assets/bgCloud.png");
-			}
-		});
-		btnBgCloudy.setIcon(iiCloud);
-		btnBgCloudy.setPreferredSize(dimButton);
-		pnlGrid.add(btnBgCloudy);
-		bgRadGroup.add(btnBgCloudy);
-		
-		
-		JButton btnBgSunny = new JButton("Sunny");
-		btnBgSunny.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ctlAdapter.setBg("assets/bgSunny.png");
-			}
-		});
-		btnBgSunny.setIcon(iiSunny);
-		btnBgSunny.setPreferredSize(dimButton);
-		pnlGrid.add(btnBgSunny);
-		bgRadGroup.add(btnBgSunny);
-				
-		// Player panel
-		
+		for (String bg : BACKGROUNDS) { 
+			JButton btnBg = new JButton(bg);
+			btnBg.addActionListener((arg0) -> ctlAdapter.setBg("assets/" + bg + ".png")); 
+			btnBg.setIcon(new ImageIcon("assets/" + bg + "Thumbnail.png"));
+			btnBg.setPreferredSize(dimButton);
+			pnlGrid.add(btnBg);
+			bgRadGroup.add(btnBg);
+		}
+
+		// Player panel		
 		JPanel pnlPlayer = new JPanel();
 		pnlPlayer.setLayout(new BoxLayout(pnlPlayer, BoxLayout.Y_AXIS));
 		
@@ -368,25 +368,17 @@ public class ControlWindow extends JFrame {
 		JPanel pnlVineGrid = new JPanel();
 		pnlVineGrid.setLayout(new GridLayout(1,3));
 		pnlVines.add(pnlVineGrid);
-		
-		String[] vines = {"vine1", "vine2", "vine3"};
-		
-		for (String vine : vines) {
+	
+		for (String vine : VINES) {
 			JToggleButton tglBtnVine = new JToggleButton(vine);
-			tglBtnVine.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					ctlAdapter.makeVine("assets/" + vine + ".png");
-				}
-			});
-			ImageIcon iiVine = new ImageIcon("assets/" + vine + "Thumbnail.png");
-			tglBtnVine.setIcon(iiVine);
+			tglBtnVine.addActionListener((arg0) -> ctlAdapter.makeVine("assets/" + vine + ".png")); 
+			tglBtnVine.setIcon(new ImageIcon("assets/" + vine + "Thumbnail.png"));
 			tglBtnVine.setPreferredSize(dimButton);
 			pnlVineGrid.add(tglBtnVine);
 			vineToggleGroup.add(tglBtnVine);
 		}
 		
 		// Platforms
-		
 		JPanel pnlPlatform = new JPanel();
 		pnlPlatform.setLayout(new BoxLayout(pnlPlatform, BoxLayout.Y_AXIS));
 		pnlBack.add(pnlPlatform);		
@@ -420,213 +412,29 @@ public class ControlWindow extends JFrame {
 		pnlPlatGrid.setLayout(new GridLayout(2,4));
 		pnlPlatform.add(pnlPlatGrid);
 		
-		ImageIcon iiPedestal = new ImageIcon("assets/PedestalThumbnail.png");				
-		ImageIcon iiRock1 = new ImageIcon("assets/Rock1Thumbnail.png");				
-		ImageIcon iiRock2 = new ImageIcon("assets/Rock2Thumbnail.png");
-		ImageIcon iiRock3 = new ImageIcon("assets/Rock3Thumbnail.png");	
-		ImageIcon iiRock4 = new ImageIcon("assets/Rock4Thumbnail.png");	
-		ImageIcon iiLVL1Rock1 = new ImageIcon("assets/lvl1Rock1Thumbnail.png");				
-		ImageIcon iiLVL1Rock2 = new ImageIcon("assets/lvl1Rock2Thumbnail.png");
-		ImageIcon iiLVL1Rock3 = new ImageIcon("assets/lvl1Rock3Thumbnail.png");	
-		ImageIcon iiLVL1Rock4 = new ImageIcon("assets/lvl1Rock4Thumbnail.png");	
-		ImageIcon iiRock5 = new ImageIcon("assets/Rock5Thumbnail.png");	
-		ImageIcon iiBlueGround = new ImageIcon("assets/blueGroundThumbnail.png");
-		ImageIcon iicanyonR = new ImageIcon("assets/canyonRThumbnail.png");				
-		ImageIcon iicanyonL = new ImageIcon("assets/canyonLThumbnail.png");
-		ImageIcon iiForestGround = new ImageIcon("assets/ForestGroundThumbnail.png");	
-		ImageIcon iiTree1 = new ImageIcon("assets/Tree1Thumbnail.png");
-		ImageIcon iiTree2 = new ImageIcon("assets/Tree2Thumbnail.png");
-
 		// Platform panel - toggle buttons
 		ButtonGroup platToggleGroup = new ButtonGroup();														
-				
-		JToggleButton tglBtnPedestal = new JToggleButton("Pedestal");
-		tglBtnPedestal.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/Pedestal.png");
-			}
-		});
-		tglBtnPedestal.setIcon(iiPedestal);
-		tglBtnPedestal.setPreferredSize(dimButton);
-		pnlPlatGrid.add(tglBtnPedestal);
-		platToggleGroup.add(tglBtnPedestal); 
+
+		for (String platform : PLATFORMS) {
+			JToggleButton tglBtnPlatform = new JToggleButton(platform);
+			tglBtnPlatform.addActionListener((arg0) -> ctlAdapter.makePlatform("assets/" + platform + ".png"));
+			tglBtnPlatform.setIcon(new ImageIcon("assets/" + platform + "Thumbnail.png"));
+			tglBtnPlatform.setPreferredSize(dimButton);
+			pnlPlatGrid.add(tglBtnPlatform);
+			platToggleGroup.add(tglBtnPlatform); 
+		}
 		
-		JToggleButton tglBtncanyonL = new JToggleButton("canyonL");
-		tglBtncanyonL.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/canyonL.png");
-			}
-		});
-		tglBtncanyonL.setIcon(iicanyonL);
-		tglBtncanyonL.setPreferredSize(dimButton);
-		pnlPlatGrid.add(tglBtncanyonL);
-		platToggleGroup.add(tglBtncanyonL); 
-		
-		JToggleButton tglBtncanyonR = new JToggleButton("canyonR");
-		tglBtncanyonR.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/canyonR.png");
-			}
-		});
-		tglBtncanyonR.setIcon(iicanyonR);
-		tglBtncanyonR.setPreferredSize(dimButton);
-		pnlPlatGrid.add(tglBtncanyonR);
-		platToggleGroup.add(tglBtncanyonR); 		
-		
-		JToggleButton tglBtnTree1 = new JToggleButton("Tree1");
-		tglBtnTree1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/Tree1.png");
-			}
-		});
-		tglBtnTree1.setIcon(iiTree1);
-		tglBtnTree1.setPreferredSize(dimButton);
-		pnlPlatGrid.add(tglBtnTree1);
-		platToggleGroup.add(tglBtnTree1);
-		
-		JToggleButton tglBtnTree2 = new JToggleButton("Tree2");
-		tglBtnTree2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/Tree2.png");
-			}
-		});
-		tglBtnTree2.setIcon(iiTree2);
-		tglBtnTree2.setPreferredSize(dimButton);
-		pnlPlatGrid.add(tglBtnTree2);
-		platToggleGroup.add(tglBtnTree2); 
-		
-		JToggleButton tglBtnForestGround = new JToggleButton("ForestGround");
-		tglBtnForestGround.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/ForestGround.png");
-			}
-		});
-		tglBtnForestGround.setIcon(iiForestGround);
-		tglBtnForestGround.setPreferredSize(dimButton);
-		pnlPlatGrid.add(tglBtnForestGround);
-		platToggleGroup.add(tglBtnForestGround); 				
-				
-		// Rocks
-		
-		JToggleButton tglBtnRock1 = new JToggleButton("Rock1");
-		tglBtnRock1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/Rock1.png");
-			}
-		});
-		tglBtnRock1.setIcon(iiRock1);
-		tglBtnRock1.setPreferredSize(dimButton);
-		pnlRocks.add(tglBtnRock1);
-		platToggleGroup.add(tglBtnRock1);
-		
-		JToggleButton tglBtnRock2 = new JToggleButton("Rock2");
-		tglBtnRock2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/Rock2.png");
-			}
-		});
-		tglBtnRock2.setIcon(iiRock2);
-		tglBtnRock2.setPreferredSize(dimButton);
-		pnlRocks.add(tglBtnRock2);
-		platToggleGroup.add(tglBtnRock2);	
-		
-		JToggleButton tglBtnRock3 = new JToggleButton("Rock3");
-		tglBtnRock3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/Rock3.png");
-			}
-		});
-		tglBtnRock3.setIcon(iiRock3);
-		tglBtnRock3.setPreferredSize(dimButton);
-		pnlRocks.add(tglBtnRock3);
-		platToggleGroup.add(tglBtnRock3);
-		
-		JToggleButton tglBtnRock4 = new JToggleButton("Rock4");
-		tglBtnRock4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/Rock4.png");
-			}
-		});
-		tglBtnRock4.setIcon(iiRock4);
-		tglBtnRock4.setPreferredSize(dimButton);
-		pnlRocks.add(tglBtnRock4);
-		platToggleGroup.add(tglBtnRock4);
-		
-		JToggleButton tglBtnRock5 = new JToggleButton("Rock5");
-		tglBtnRock5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/Rock5.png");
-			}
-		});
-		tglBtnRock5.setIcon(iiRock5);
-		tglBtnRock5.setPreferredSize(dimButton);
-		pnlRocks.add(tglBtnRock5);
-		platToggleGroup.add(tglBtnRock5);
-		
-		// Level 1-specific rocks
-		JToggleButton tglBtnLVL1Rock1 = new JToggleButton("lvl1Rock1");
-		tglBtnLVL1Rock1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/lvl1Rock1.png");
-			}
-		});
-		tglBtnLVL1Rock1.setIcon(iiLVL1Rock1);
-		tglBtnLVL1Rock1.setPreferredSize(dimButton);
-		pnlRocks.add(tglBtnLVL1Rock1);
-		platToggleGroup.add(tglBtnLVL1Rock1);
-		
-		JToggleButton tglBtnLVL1Rock2 = new JToggleButton("lvl1Rock2");
-		tglBtnLVL1Rock2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/lvl1Rock2.png");
-			}
-		});
-		tglBtnLVL1Rock2.setIcon(iiLVL1Rock2);
-		tglBtnLVL1Rock2.setPreferredSize(dimButton);
-		pnlRocks.add(tglBtnLVL1Rock2);
-		platToggleGroup.add(tglBtnLVL1Rock2);	
-		
-		JToggleButton tglBtnLVL1Rock3 = new JToggleButton("lvl1Rock3");
-		tglBtnLVL1Rock3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/lvl1Rock3.png");
-			}
-		});
-		tglBtnLVL1Rock3.setIcon(iiLVL1Rock3);
-		tglBtnLVL1Rock3.setPreferredSize(dimButton);
-		pnlRocks.add(tglBtnLVL1Rock3);
-		platToggleGroup.add(tglBtnLVL1Rock3);
-		
-		JToggleButton tglBtnLVL1Rock4 = new JToggleButton("lvl1Rock4");
-		tglBtnLVL1Rock4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.makePlatform("assets/lvl1Rock4.png");
-			}
-		});
-		tglBtnLVL1Rock4.setIcon(iiLVL1Rock4);
-		tglBtnLVL1Rock4.setPreferredSize(dimButton);
-		pnlRocks.add(tglBtnLVL1Rock4);
-		platToggleGroup.add(tglBtnLVL1Rock4);
-		
-		JToggleButton btnBlueGround = new JToggleButton("BlueGround");
-		btnBlueGround.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ctlAdapter.makePlatform("assets/blueGround.png");
-			}
-		});
-		btnBlueGround.setIcon(iiBlueGround);
-		btnBlueGround.setPreferredSize(dimButton);
-		pnlPlatGrid.add(btnBlueGround);
-		platToggleGroup.add(btnBlueGround);
-		
-		// Clouds			
-		String[] clouds = {"cldClear", "cldCloud", "cldStormy", "cldSunset",
-				"cldClearDiagL", "cldCloudDiagL", "cldStormyDiagL", "cldSunsetDiagL",
-				"cldClearDiagR", "cldCloudDiagR", "cldStormyDiarR", "cldSunsetDiagR",
-				"cldClearUp", "cldCloudUp", "cldStormyUp", "cldSunsetUp"
-		};
-		
-		for (String cloud : clouds) {
+		for (String rock : ROCKS) {
+			JToggleButton tglBtnRock = new JToggleButton(rock);
+			tglBtnRock.addActionListener((arg0) -> ctlAdapter.makePlatform("assets/" + rock + ".png"));
+			tglBtnRock.setIcon(new ImageIcon("assets/" + rock + "Thumbnail.png"));
+			tglBtnRock.setPreferredSize(dimButton);
+			pnlRocks.add(tglBtnRock);
+			platToggleGroup.add(tglBtnRock); 
+		}
+
+		// Clouds				
+		for (String cloud : CLOUDS) {
 			ImageIcon iicld = new ImageIcon("assets/" + cloud + "Thumbnail.png");	
 			JToggleButton tglcld = new JToggleButton(cloud);
 			tglcld.addActionListener(new ActionListener() {
@@ -668,11 +476,7 @@ public class ControlWindow extends JFrame {
 		pnlBoulderGrid.setLayout(new GridLayout(4,3));
 		pnlBoulders.add(pnlBoulderGrid);
 		
-		String[] boulders = {"BoulderA", "BoulderB", "boulder0", "boulder1", "boulder2", "boulder3",
-				"boulder4", "boulder5", "boulder6", "boulder7", "boulder8", "boulder9"
-		};
-		
-		for (String boulder : boulders) {
+		for (String boulder : BOULDERS) {
 			ImageIcon iiBoulder = new ImageIcon("assets/" + boulder + "Thumbnail.png");
 			JToggleButton tglBtnBoulder = new JToggleButton(boulder);
 			tglBtnBoulder.addActionListener(new ActionListener() {
@@ -701,8 +505,7 @@ public class ControlWindow extends JFrame {
 				ctlAdapter.makePlatform("assets/lvl1Gate.png");
 			}
 		});
-		//tglBtnBuddhaHand.setIcon(ii);
-		tglBtnBuddhaHand.setPreferredSize(dimButton);
+		tglBtnGate.setPreferredSize(dimButton);
 		pnlSpecials.add(tglBtnGate);
 		platToggleGroup.add(tglBtnGate); 		
 		
