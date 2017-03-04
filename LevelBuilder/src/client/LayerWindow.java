@@ -231,7 +231,7 @@ public class LayerWindow extends JFrame {
 				pnlPosition.add(btnDelete);
 				btnDelete.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ltlAdapter.removePlat(ticket);
+						ltlAdapter.removeBoulder(ticket);
 						
 						// Remove this EditWindow.
 						removeEditWindow(ticket, jsep);	

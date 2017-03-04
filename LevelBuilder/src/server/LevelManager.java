@@ -510,12 +510,13 @@ public class LevelManager {
 		System.out.println("Dimensions set to " + this.lvwm + "x" + this.lvhm);
 	}
 
-	public int makeBoulder(String path, double xp, double yp, double scale) {
+	public int makeBoulder(String path, double xp, double yp, double scale, int oldTicket) {
 		Boulder boulder;
 		// Unfortunately Eclipse and Coco have different coordinate systems.
 		// Change cym appropriately.
+		System.out.println("old ticket: " + oldTicket);
 		boulder = new Boulder(path, (xp - this.vpOffset.getX()) / this.mToPixel,
-				this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel, scale);
+				this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel, scale, oldTicket);
 
 		// Set up the default collision points & radius of the boulder.
 		setBoulderDefaults(boulder);
@@ -533,8 +534,15 @@ public class LevelManager {
 		System.out.println("Defaults set");
 		boulder.setScale(scale);
 		boulder.setRescaled(resize(image, boulder.getScaledIGW(), boulder.getScaledIGH()));
-
+		
+		// If the passed-in ticket was -1, the boulder didn't exist before, so set its new to be its old, too.
+		if (oldTicket == -1) {
+			boulder.setOldTicket(this.ticket);
+		}
+		
+		boulder.setNewTicket(this.ticket);
 		boulders.put(this.ticket, boulder);
+		
 		ltlAdapter.addBoulderEdit(this.ticket, boulder.getRadius(), boulder.getMass(), boulder.getScale());
 		this.ticket++;
 
@@ -580,14 +588,24 @@ public class LevelManager {
 				points.add(new Point2D.Double((double) point.get("x"), (double) point.get("y")));
 
 			} 
+			
+			// Get the old ticket value, if it exists.
+			Long ticketL = (Long)(boulder.get("ticket"));			
+			int oldTicket;
+			if (ticketL == null) {
+				oldTicket = -1;
+			} else {
+				oldTicket= ticketL.intValue();
+			}
 
 			// makePlatform takes swing coordinates, so m is translated to px
 			// and y is flipped.
-			int ticket = makeBoulder(path, cxm * this.mToPixel, (this.lvhm - cym) * this.mToPixel, scale);
-			Boulder newBoulder = this.boulders.get(ticket);
+			int ticket = makeBoulder(path, cxm * this.mToPixel, (this.lvhm - cym) * this.mToPixel, scale, oldTicket);
+			Boulder newBoulder = this.boulders.get(ticket);			
 			
 			// Set some fields.
 			newBoulder.setMass(mass);
+			newBoulder.setNewTicket(ticket);
 
 			// Set the other fields of the platform and its corresponding
 			// settings on load.
@@ -1119,6 +1137,10 @@ public class LevelManager {
 
 	public void removePlat(int ticket) {
 		this.plats.remove(ticket);
+	}
+	
+	public void removeBoulder(int ticket) {
+		this.boulders.remove(ticket);
 	}
 
 	public void removeVine(int ticket) {

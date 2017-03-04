@@ -19,6 +19,8 @@ public interface ILayerToLevelAdapter {
 	
 	public void changeDimVine(int ticket, double wm, double hm);	
 	
+	public void removeBoulder(int ticket);
+	
 	public void removePlat(int ticket);
 	
 	public void removeVine(int ticket);

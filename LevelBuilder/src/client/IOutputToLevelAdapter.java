@@ -64,7 +64,7 @@ public interface IOutputToLevelAdapter {
 	 * @param y
 	 * @param scale
 	 */
-	public void makeBoulder(String path, double xp, double yp, double scale);
+	public void makeBoulder(String path, double xp, double yp, double scale, int oldTicket);
 
 	/**
 	 * Update a character's position.

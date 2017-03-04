@@ -229,6 +229,11 @@ public class Controller {
 				level.toggleSinkablePlat(ticket, selected);
 			}
 
+			@Override
+			public void removeBoulder(int ticket) {
+				level.removeBoulder(ticket);				
+			}
+
 		});
 
 		outputWindow = new OutputWindow(new IOutputToLevelAdapter() {
@@ -254,8 +259,8 @@ public class Controller {
 			}
 
 			@Override
-			public void makeBoulder(String path, double xp, double yp, double scale) {
-				level.makeBoulder(path, xp, yp, scale);
+			public void makeBoulder(String path, double xp, double yp, double scale, int oldTicket) {
+				level.makeBoulder(path, xp, yp, scale, oldTicket);
 			}
 
 			@Override

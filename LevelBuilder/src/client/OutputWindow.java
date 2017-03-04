@@ -343,7 +343,7 @@ public class OutputWindow extends JFrame {
 				    }				    				    
 				    				   
 				    // Pop up dialog box to make collision box.				    
-				    otlAdapter.makeBoulder(newPath, xp, yp, arDouble);
+				    otlAdapter.makeBoulder(newPath, xp, yp, arDouble, -1);
 				    
 				    request = Request.NONE;
 					break;

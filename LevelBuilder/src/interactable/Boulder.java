@@ -54,20 +54,33 @@ public class Boulder extends AInteractable {
 	 */
 	private double scaledIGHM;
 	
+	private int oldTicket;
+	
+	private int newTicket;
+	
 	/**
 	 * Makes a new boulder.
 	 * @param path path to boulder image
 	 * @param cxm center x position [cocos;meters]
 	 * @param cym center y position [cocos;meters]
 	 */	
-	public Boulder (String path, double cxm, double cym, double scale) {
+	public Boulder (String path, double cxm, double cym, double scale, int oldTicket) {
 		this.setPath(path);
 		this.scale = scale;
 		this.setCenterXm(cxm);
 		this.setCenterYm(cym);
+		this.oldTicket = oldTicket;
 		System.out.println("Cocos[m] center set to " + this.getCenterXm() + ", " + this.getCenterYm());
 	}
+	
+	public void setNewTicket(int newTicket) {
+		this.newTicket = newTicket;
+	}
 		
+	public void setOldTicket(int oldTicket) {
+		this.oldTicket = oldTicket;
+	}
+	
 	/**
 	 * Return the scaled radius.
 	 * @return scaled radius
@@ -199,6 +212,12 @@ public class Boulder extends AInteractable {
 		obj.put("type", this.type);
 		obj.put("mass", this.mass);
 		obj.put("scale",  this.scale);	
+		
+		// Replace the old ticket value.
+		System.out.println("old: " + this.oldTicket + ", new: " + this.newTicket);
+		this.oldTicket = this.newTicket;
+		
+		obj.put("ticket", this.oldTicket);
 		
 		JSONArray pointsList = new JSONArray();
 		ArrayList<Point2D.Double> points = this.getCollisionPoints();
