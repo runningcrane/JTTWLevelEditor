@@ -143,7 +143,7 @@ public class OutputWindow extends JFrame {
 		JButton btnReadJSON = new JButton("Load Level");
 		btnReadJSON.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				otlAdapter.readJSON(txtInputPath.getText() + ".json");
+				otlAdapter.readJSON("../levelFiles/" + txtInputPath.getText() + ".json");
 			}
 		});
 				
@@ -331,16 +331,20 @@ public class OutputWindow extends JFrame {
 				    // Pop up dialog here to get the expected width in meters
 				    String arString = JOptionPane.showInputDialog(null, "Input custom scale ratio. Default will be used otherwise.");
 				    double arDouble;
-				    try {
-				    	arDouble = Double.parseDouble(arString);
-				    } catch (NullPointerException nulle) {
-				    	// Default to 1:1.
-				    	arDouble = 1;
-				    } catch (NumberFormatException numbe) {
-				    	System.out.println("Not a valid number.");
-				    	arDouble = 1;
-				    	numbe.printStackTrace();
-				    }				    				    
+				    if (arString.isEmpty()) {
+				    	arDouble = 1.0;
+				    } else {
+				        try {
+				    	    arDouble = Double.parseDouble(arString);
+				        } catch (NullPointerException nulle) {
+				    	    // Default to 1:1.
+				    	    arDouble = 1;
+				        } catch (NumberFormatException numbe) {
+				    	    System.out.println("Not a valid number.");
+				    	    arDouble = 1;
+				    	    numbe.printStackTrace();
+				        }
+				    }
 				    				   
 				    // Pop up dialog box to make collision box.				    
 				    otlAdapter.makeBoulder(newPath, xp, yp, arDouble, -1);

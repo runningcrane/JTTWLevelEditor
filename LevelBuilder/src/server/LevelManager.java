@@ -702,6 +702,7 @@ public class LevelManager {
 		JSONObject charList = getCharList();
 		JSONArray boulderList = getBouldList();
 		JSONArray respawnList = getRPs();
+
 		JSONArray boulderJList = getBouldJointList();
 		
 		// JSONObject charLocs = getCharLocs(this.charLocs);
@@ -1865,5 +1866,4 @@ public class LevelManager {
 	}
 
 	// END JSON SECTION
-
 }
