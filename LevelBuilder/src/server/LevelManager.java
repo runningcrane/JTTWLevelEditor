@@ -932,16 +932,33 @@ public class LevelManager {
 	
 	public void readBoulderJointJSON(JSONArray list) {
 		for (Object obj : list) {
-			int ticket1 = (int)((JSONObject)obj).get("id1");
-			int ticket2 = (int)((JSONObject)obj).get("id2");
+			int[] ticket1 = new int[]{((Long)((JSONObject)obj).get("id1")).intValue()};
+			int[] ticket2 = new int[]{((Long)((JSONObject)obj).get("id2")).intValue()};
+			boolean[] has1 = {false};
+			boolean[] has2 = {false};
+			
+			// Look through the current list of boulders for the ticket1 & ticket2.
+			this.boulders.forEach((ticket, boulder) -> {
+				if (boulder.getOldTicket() == ticket1[0]) {
+					ticket1[0] = boulder.getNewTicket();
+					has1[0] = true;
+				}
+			});
+			
+			this.boulders.forEach((ticket, boulder) -> {
+				if (boulder.getOldTicket() == ticket2[0]) {
+					ticket2[0] = boulder.getNewTicket();
+					has2[0] = true;
+				}
+			});
 			
 			// Check if the boulders exist.
-			if (boulders.containsKey(ticket1) && boulders.containsKey(ticket2)){			
+			if (has1[0] && has2[0]){			
 				double ob1x = (double)((JSONObject)obj).get("anchor1x");
 				double ob1y = (double)((JSONObject)obj).get("anchor1y");
 				double ob2x = (double)((JSONObject)obj).get("anchor2x");
 				double ob2y = (double)((JSONObject)obj).get("anchor2y");
-				this.joints.add(new BoulderJoint(ticket1, ticket2, ob1x, ob1y, ob2x, ob2y));
+				this.joints.add(new BoulderJoint(ticket1[0], ticket2[0], ob1x, ob1y, ob2x, ob2y));
 			}
 		}
 	}
@@ -956,10 +973,10 @@ public class LevelManager {
 	}
 	
 	public void makeBoulderJointRes(int ticket1, int ticket2, double xp, double yp) {
-		if (boulders.containsKey(ticket1) && boulders.containsKey(ticket2)) {
+		if (boulders.containsKey(ticket1) && boulders.containsKey(ticket2)) {						
 			// Translate it to cocos coordinates, since that's what boulders are in.
 			double cxm = (xp - this.vpOffset.getX()) / this.mToPixel;
-			double cym = this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel;
+			double cym = this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel;					
 			
 			// Get offset from boulder 1.
 			// point - center is the offset.

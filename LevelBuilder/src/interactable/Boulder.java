@@ -81,6 +81,14 @@ public class Boulder extends AInteractable {
 		this.oldTicket = oldTicket;
 	}
 	
+	public int getOldTicket() {
+		return this.oldTicket;
+	}
+	
+	public int getNewTicket(){
+		return this.newTicket;
+	}
+	
 	/**
 	 * Return the scaled radius.
 	 * @return scaled radius
