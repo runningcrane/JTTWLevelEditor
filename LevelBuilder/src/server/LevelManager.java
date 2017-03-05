@@ -1427,6 +1427,27 @@ public class LevelManager {
 			g.drawString(Integer.toString(ticket), (int) (vplbp.getX()), (int) (vplbp.getY()));
 			
 		});
+		
+		// Draw pegs.
+		pegs.forEach((ticket, peg) -> {
+			double ulxp = (peg.getCenterXm() - peg.getScaledIGW() / 2.0) * this.mToPixel;
+			double ulyp = ((this.lvhm - peg.getCenterYm()) - peg.getScaledIGH() / 2.0) * this.mToPixel;
+			Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
+
+			g.drawImage(peg.getRescaled().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
+
+			// Draw the label on top of it. In the center, maybe?
+			g.setColor(Color.MAGENTA);
+			Point2D.Double vplp = getViewportCoordinates(peg.getCenterXm() * this.mToPixel,
+					(this.lvhm - (peg.getCenterYm())) * this.mToPixel);
+			g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
+
+			// Label point
+			g.setColor(Color.BLACK);
+			Point2D.Double vplbp = getViewportCoordinates(peg.getCenterXm() * this.mToPixel + 5,
+					(this.lvhm - (peg.getCenterYm())) * this.mToPixel + 10);
+			g.drawString(Integer.toString(ticket), (int) (vplbp.getX()), (int) (vplbp.getY()));
+		});
 
 		// Draw vines
 		vines.forEach((ticket, vine) -> {
