@@ -702,8 +702,8 @@ public class LevelManager {
 		JSONObject charList = getCharList();
 		JSONArray boulderList = getBouldList();
 		JSONArray respawnList = getRPs();
-
 		JSONArray boulderJList = getBouldJointList();
+        JSONArray attackZoneList = new JSONArray();
 		
 		// JSONObject charLocs = getCharLocs(this.charLocs);
 
@@ -723,6 +723,7 @@ public class LevelManager {
 		json.put("boulderJoints", boulderJList);
 		json.put("polygonCollision", polygon);
 		json.put("respawnPoints", respawnList);
+		json.put("attackZones",  attackZoneList);
 		return json;
 	}
 
