@@ -118,7 +118,7 @@ public class LevelManager {
 	/**
 	 * Boulder joint list.
 	 */
-	private ArrayList<BoulderJoint> joints;
+	private Map<Integer, BoulderJoint> joints;
 
 	/**
 	 * NPC array.
@@ -201,7 +201,7 @@ public class LevelManager {
 		this.vines = new HashMap<Integer, Vine>();
 		this.boulders = new HashMap<Integer, Boulder>();
 		this.respawnPoints = new ArrayList<Point2D.Double>();
-		this.joints = new ArrayList<BoulderJoint>();
+		this.joints = new HashMap<Integer, BoulderJoint>();
 
 		// Set up the player characters.
 		characters = new HashMap<String, Player>();
@@ -321,57 +321,29 @@ public class LevelManager {
 				resize(toEditBould.getImage(), toEditBould.getScaledIGW(), toEditBould.getScaledIGH()));
 	}
 	
-	public void editBJOff(int cTicket1, int cTicket2, double obx1, double oby1, double obx2, double oby2) {
-		BoulderJoint[] joint = new BoulderJoint[1];
-		
-		this.joints.forEach((bjoint) -> {
-			if ((bjoint.getBoulder1() == cTicket1 && bjoint.getBoulder2() == cTicket2) ||
-					(bjoint.getBoulder1() == cTicket2 && bjoint.getBoulder2() == cTicket1)) {
-				joint[0] = bjoint;
-			}
-		});
-		
-		if (joint[0] != null) {
-			joint[0].setOffsetB1(obx1, oby1);
-			joint[0].setOffsetB2(oby1, oby2);
+	public void editBJOff(int ticket, double obx1, double oby1, double obx2, double oby2) {
+		BoulderJoint joint = joints.get(ticket);	
+		if (joint != null) {
+			joint.setOffsetB1(obx1, oby1);
+			joint.setOffsetB2(oby1, oby2);
 		} else {
 			System.out.println("Couldn't find joint specified");
 		}
 	}
 	
-	public void changeBoulderJoint(int cTicket1, int cTicket2, int b1, int b2) {
-		BoulderJoint[] joint = new BoulderJoint[1];
+	public void changeBoulderJoint(int ticket, int b1, int b2) {
+		BoulderJoint joint = joints.get(ticket);		
 		
-		this.joints.forEach((bjoint) -> {
-			if ((bjoint.getBoulder1() == cTicket1 && bjoint.getBoulder2() == cTicket2) ||
-					(bjoint.getBoulder1() == cTicket2 && bjoint.getBoulder2() == cTicket1)) {
-				joint[0] = bjoint;
-			}
-		});
-		
-		if (joint[0] != null) {
-			joint[0].setBoulder1(b1);
-			joint[0].setBoulder2(b2);
+		if (joint != null) {
+			joint.setBoulder1(b1);
+			joint.setBoulder2(b2);
 		} else {
 			System.out.println("Couldn't find joint specified");
 		}
 	}
 	
-	public void removeJoint(int cTicket1, int cTicket2) {
-		BoulderJoint[] joint = new BoulderJoint[1];
-		
-		this.joints.forEach((bjoint) -> {
-			if ((bjoint.getBoulder1() == cTicket1 && bjoint.getBoulder2() == cTicket2) ||
-					(bjoint.getBoulder1() == cTicket2 && bjoint.getBoulder2() == cTicket1)) {
-				joint[0] = bjoint;
-			}
-		});
-		
-		if (joint[0] != null) {
-			this.joints.remove(joint[0]);
-		} else {
-			System.out.println("Couldn't find joint specified");
-		}
+	public void removeJoint(int ticket) {		
+		this.joints.remove(ticket);		
 	}
 	
 
@@ -476,7 +448,7 @@ public class LevelManager {
 		 * If one of the joint's boulders isn't part of the boulder list anymore,
 		 * ignore the joint.
 		 */
-		this.joints.forEach((joint) -> {
+		this.joints.forEach((ticket, joint) -> {
 			int ticket1 = joint.getBoulder1();
 			int ticket2 = joint.getBoulder2();
 			System.out.println(ticket1 + " boulder exists: " + ((boulders.containsKey(ticket1)) ? "true" : "false"));
@@ -1013,8 +985,11 @@ public class LevelManager {
 				double ob1y = (double)((JSONObject)obj).get("anchor1y");
 				double ob2x = (double)((JSONObject)obj).get("anchor2x");
 				double ob2y = (double)((JSONObject)obj).get("anchor2y");
-				this.joints.add(new BoulderJoint(ticket1[0], ticket2[0], ob1x, ob1y, ob2x, ob2y));
-				
+				int oldID = (int)((Long)(((JSONObject)obj).get("jointID"))).intValue();
+				BoulderJoint newBJoint = new BoulderJoint(oldID, ticket1[0], ticket2[0], ob1x, ob1y, ob2x, ob2y);
+				newBJoint.setNewID(this.ticket);
+				this.joints.put(this.ticket, newBJoint);
+								
 				ltlAdapter.addJointsEdit(this.ticket, ticket1[0], ticket2[0], ob1x, ob1y, ob2x, ob2y);
 				this.ticket++;
 			}
@@ -1038,15 +1013,21 @@ public class LevelManager {
 			
 			// Get offset from boulder 1.
 			// point - center is the offset.
-			double offset1x = cxm - this.boulders.get(ticket1).getCenterXm();
-			double offset1y = cym - this.boulders.get(ticket1).getCenterYm();
+			double ob1x = cxm - this.boulders.get(ticket1).getCenterXm();
+			double ob1y = cym - this.boulders.get(ticket1).getCenterYm();
 			
 			// Get offset from boulder 2.
-			double offset2x = cxm - this.boulders.get(ticket2).getCenterXm();
-			double offset2y = cym - this.boulders.get(ticket2).getCenterYm();
+			double ob2x = cxm - this.boulders.get(ticket2).getCenterXm();
+			double ob2y = cym - this.boulders.get(ticket2).getCenterYm();
 			
 			// Now make the joint.
-			this.joints.add(new BoulderJoint(ticket1, ticket2, offset1x, offset1y, offset2x, offset2y));
+			BoulderJoint newBJoint = new BoulderJoint(this.ticket, ticket1, ticket2, ob1x, ob1y, ob2x, ob2y);
+			newBJoint.setNewID(this.ticket);
+			this.joints.put(this.ticket, newBJoint);
+			
+			
+			ltlAdapter.addJointsEdit(this.ticket, ticket1, ticket2, ob1x, ob1y, ob2x, ob2y);
+			this.ticket++;
 		}
 	}
 

@@ -72,7 +72,7 @@ public class LayerWindow extends JFrame {
 				pnlPosition.setLayout(new GridLayout(5,3,0,0));
 				add(pnlPosition);
 								
-				JLabel lblTicket = new JLabel("<html><b><u>#" + "Joint " + id1 + ", " + id2 + "</u></b></html>");
+				JLabel lblTicket = new JLabel("<html><b><u>#" + ticket + ": joints " + id1 + ", " + id2 + "</u></b></html>");
 				pnlPosition.add(lblTicket);
 				
 				JButton btnChangeBoulder = new JButton("Change boulders");
@@ -85,7 +85,7 @@ public class LayerWindow extends JFrame {
 				pnlPosition.add(btnDelete);
 				btnDelete.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ltlAdapter.removeJoint(cTicket1, cTicket2);
+						ltlAdapter.removeJoint(ticket);
 						
 						// Remove this EditWindow.
 						removeEditWindow(ticket, jsep);	
@@ -166,7 +166,7 @@ public class LayerWindow extends JFrame {
 					    }
 					    
 					    // Valid numbers. Go resize over in LevelManager.
-					    ltlAdapter.changeBoulderJoint(cTicket1, cTicket2, b1, b2);
+					    ltlAdapter.changeBoulderJoint(ticket, b1, b2);
 					    
 					    // Update the new joints before change.
 					    cTicket1 = b1;
@@ -225,7 +225,7 @@ public class LayerWindow extends JFrame {
 					    	return;
 					    }
 					    
-						ltlAdapter.editBJOff(cTicket1, cTicket2, obx1, oby1, obx2, oby2);
+						ltlAdapter.editBJOff(ticket, obx1, oby1, obx2, oby2);
 					}
 				});														
 			}					

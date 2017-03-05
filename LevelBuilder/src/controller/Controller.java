@@ -235,18 +235,18 @@ public class Controller {
 			}
 
 			@Override
-			public void editBJOff(int cTicket1, int cTicket2, double obx1, double oby1, double obx2, double oby2) {
-				level.editBJOff(cTicket1, cTicket2, obx1, oby1, obx2, oby2);				
+			public void editBJOff(int ticket, double obx1, double oby1, double obx2, double oby2) {
+				level.editBJOff(ticket, obx1, oby1, obx2, oby2);				
 			}
 
 			@Override
-			public void changeBoulderJoint(int cTicket1, int cTicket2, int b1, int b2) {
-				level.changeBoulderJoint(cTicket1, cTicket2, b1, b2);				
+			public void changeBoulderJoint(int ticket, int b1, int b2) {
+				level.changeBoulderJoint(ticket, b1, b2);				
 			}
 
 			@Override
-			public void removeJoint(int cTicket1, int cTicket2) {
-				level.removeJoint(cTicket1, cTicket2);
+			public void removeJoint(int ticket) {
+				level.removeJoint(ticket);
 			}
 
 		});
