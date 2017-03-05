@@ -55,6 +55,8 @@ public interface IControlToLevelAdapter {
 	 */
 	public void makeVine(String path);
 	
+	public void makePeg(String path);
+	
 	/**
 	 * Request a new rock to be added.
 	 * @param path

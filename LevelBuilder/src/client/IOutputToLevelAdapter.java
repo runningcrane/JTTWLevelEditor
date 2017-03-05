@@ -57,6 +57,8 @@ public interface IOutputToLevelAdapter {
 	public void makeVine(String path, double xp, double yp, double wm, double hm, 
 			double arcl, double startVel);
 	
+	public void makePeg(String newPath, double xp, double yp, double radDouble, int jid, double scale);
+	
 	/**
 	 * Request a boulder to be made.
 	 * @param path
@@ -97,6 +99,8 @@ public interface IOutputToLevelAdapter {
 	 * @param yp y position in pixels
 	 */
 	public void editBoulderCenter(int ticket, double xp, double yp);
+	
+	public void editPegCenter(int ticket, double xp, double yp);
 	
 	/**
 	 * Update a moving platform's endpoint.

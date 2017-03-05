@@ -124,6 +124,11 @@ public class Controller {
 				level.makeBoulderJoint();
 			}
 
+			@Override
+			public void makePeg(String path) {
+				level.requestPeg(path);
+			}
+
 		});
 
 		layerWindow = new LayerWindow(new ILayerToLevelAdapter() {
@@ -235,18 +240,43 @@ public class Controller {
 			}
 
 			@Override
-			public void editBJOff(int cTicket1, int cTicket2, double obx1, double oby1, double obx2, double oby2) {
-				level.editBJOff(cTicket1, cTicket2, obx1, oby1, obx2, oby2);				
+			public void editBJOff(int ticket, double obx1, double oby1, double obx2, double oby2) {
+				level.editBJOff(ticket, obx1, oby1, obx2, oby2);				
 			}
 
 			@Override
-			public void changeBoulderJoint(int cTicket1, int cTicket2, int b1, int b2) {
-				level.changeBoulderJoint(cTicket1, cTicket2, b1, b2);				
+			public void changeBoulderJoint(int ticket, int b1, int b2) {
+				level.changeBoulderJoint(ticket, b1, b2);				
 			}
 
 			@Override
-			public void removeJoint(int cTicket1, int cTicket2) {
-				level.removeJoint(cTicket1, cTicket2);
+			public void removeJoint(int ticket) {
+				level.removeJoint(ticket);
+			}
+
+			@Override
+			public void editPegScale(int ticket, double scale) {
+				level.editPegScale(ticket, scale);				
+			}
+
+			@Override
+			public void editPegCenter(int ticket) {
+				level.editPegCenter(ticket);
+			}
+
+			@Override
+			public void editPegJointID(int ticket, int jid) {
+				level.editPegJointID(ticket, jid);
+			}
+
+			@Override
+			public void editPegRotation(int ticket, double rotation) {
+				level.editPegRotation(ticket, rotation);
+			}
+
+			@Override
+			public void removePeg(int ticket) {
+				level.removePeg(ticket);
 			}
 
 		});
@@ -337,6 +367,16 @@ public class Controller {
 			@Override
 			public void makeBoulderJoint(int ticket1, int ticket2, double xp, double yp) {
 				level.makeBoulderJointRes(ticket1, ticket2, xp, yp);
+			}
+
+			@Override
+			public void editPegCenter(int ticket, double xp, double yp) {
+				level.editPegCenterRes(ticket, xp, yp);
+			}
+
+			@Override
+			public void makePeg(String newPath, double xp, double yp, double radDouble, int jid, double scale) {
+				level.makeGoldenPeg(newPath, xp, yp, scale, radDouble, jid);
 			}
 
 		});
@@ -433,6 +473,16 @@ public class Controller {
 				outputWindow.makeBoulderJoint();
 			}
 
+			@Override
+			public void setPegPos(int ticket) {
+				outputWindow.setPegPos(ticket);
+			}
+
+			@Override
+			public void makePeg(String path) {
+				outputWindow.makePeg(path);
+			}
+
 		}, new ILevelToLayerAdapter() {
 
 			@Override
@@ -500,6 +550,11 @@ public class Controller {
 			@Override
 			public void setPolygonBoulder(int ticket, boolean selected) {
 				layerWindow.setPolygonBoulder(ticket, selected);				
+			}
+
+			@Override
+			public void addPegEdit(int ticket, double rotation, int jid, double scale) {
+				layerWindow.addPegEdit(ticket, rotation, jid, scale);
 			}
 
 		});

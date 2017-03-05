@@ -5,6 +5,10 @@ import java.awt.geom.Point2D;
 import org.json.simple.JSONObject;
 
 public class BoulderJoint {
+	
+	int oldID;
+	
+	int newID;
 
 	int ticket1;
 	
@@ -30,7 +34,8 @@ public class BoulderJoint {
 	 */
 	double offsetB2Y;
 	
-	public BoulderJoint(int ticket1, int ticket2, double ob1x, double ob1y, double ob2x, double ob2y) {
+	public BoulderJoint(int oldID, int ticket1, int ticket2, double ob1x, double ob1y, double ob2x, double ob2y) {
+		this.oldID = oldID;
 		this.ticket1 = ticket1;
 		this.ticket2 = ticket2;		
 		this.offsetB1X = ob1x;
@@ -46,6 +51,18 @@ public class BoulderJoint {
 	
 	public int getBoulder2() {
 		return this.ticket2;
+	}
+	
+	public int getOldID() {
+		return this.oldID;
+	}
+	
+	public int getNewID() {
+		return this.newID;
+	}
+	
+	public void setNewID(int newID) {
+		this.newID = newID;
 	}
 	
 	public void setBoulder1(int newB1) {
@@ -68,6 +85,8 @@ public class BoulderJoint {
 	
 	public JSONObject makeJSON() {
 		JSONObject obj = new JSONObject();
+		this.oldID = this.newID;
+		obj.put("jointID",  this.oldID);
 		obj.put("id1", this.ticket1);
 		obj.put("id2", this.ticket2);
 		obj.put("anchor1x", offsetB1X);

@@ -13,19 +13,29 @@ public interface ILayerToLevelAdapter {
 	
 	public void editBoulderCenter(int ticket);
 	
-	public void editBJOff(int cTicket1, int cTicket2, double obx1, double oby1, double obx2, double oby2);
+	public void editPegScale(int ticket, double scale);
+	
+	public void editBJOff(int ticket, double obx1, double oby1, double obx2, double oby2);
 	
 	public void editVineCenter(int ticket);
 	
+	public void editPegCenter(int ticket);
+	
+	public void editPegJointID(int ticket, int jid);
+	
 	public void editVineStartVel(int ticket, double startVel);
+	
+	public void editPegRotation(int ticket, double rotation);
 	
 	public void changeDimVine(int ticket, double wm, double hm);	
 	
-	public void changeBoulderJoint(int cTicket1, int cTicket2, int b1, int b2);
+	public void changeBoulderJoint(int ticket, int b1, int b2);
 	
 	public void removeBoulder(int ticket);
 	
-	public void removeJoint(int cTicket1, int cTicket2);
+	public void removeJoint(int ticket);
+	
+	public void removePeg(int ticket);
 	
 	public void removePlat(int ticket);
 	
