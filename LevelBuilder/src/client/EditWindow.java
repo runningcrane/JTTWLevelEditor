@@ -34,6 +34,8 @@ public class EditWindow extends JPanel {
 	JTextField txtVelocity;
 	JTextField txtWidth;
 	JTextField txtHeight;
+	JTextField txtRotation;
+	JTextField txtJointID;
 	JTextField txtScale;
 	JTextField txtArcl;
 	JTextField txtStartVel;

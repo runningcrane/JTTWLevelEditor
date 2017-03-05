@@ -28,6 +28,7 @@ import org.json.simple.parser.ParseException;
 import interactable.Boulder;
 import interactable.BoulderJoint;
 import interactable.Enemy;
+import interactable.GoldenPeg;
 import interactable.Platform;
 import interactable.Player;
 import interactable.Vine;
@@ -119,6 +120,11 @@ public class LevelManager {
 	 * Boulder joint list.
 	 */
 	private Map<Integer, BoulderJoint> joints;
+	
+	/**
+	 * Peg list. These are connected to boulder joints.
+	 */
+	private Map<Integer, GoldenPeg> pegs;
 
 	/**
 	 * NPC array.
@@ -202,6 +208,7 @@ public class LevelManager {
 		this.boulders = new HashMap<Integer, Boulder>();
 		this.respawnPoints = new ArrayList<Point2D.Double>();
 		this.joints = new HashMap<Integer, BoulderJoint>();
+		this.pegs = new HashMap<Integer, GoldenPeg>();
 
 		// Set up the player characters.
 		characters = new HashMap<String, Player>();
@@ -302,6 +309,14 @@ public class LevelManager {
 	public void editBoulderCenter(int ticket) {
 		ltoAdapter.setBoulderPos(ticket);
 	}
+	public void editPegCenter(int ticket) {
+		ltoAdapter.setPegPos(ticket);
+	}
+	
+	public void editPegCenterRes(int ticket, double xp, double yp) {
+		this.pegs.get(ticket).setCenterXm((xp - this.vpOffset.getX()) / this.mToPixel);
+		this.pegs.get(ticket).setCenterYm(this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel);
+	}
 
 	public void editBoulderCenterRes(int ticket, double xp, double yp) {
 		this.boulders.get(ticket).setCenterXm((xp - this.vpOffset.getX()) / this.mToPixel);
@@ -382,6 +397,14 @@ public class LevelManager {
 		// Rescale the image
 		toEditPlat.setRescaled(resize(toEditPlat.getImage(), toEditPlat.getScaledIGW(), toEditPlat.getScaledIGH()));
 	}
+	
+	public void editPegScale(int ticket, double scale) {
+		GoldenPeg toEditPeg = this.pegs.get(ticket);
+		toEditPeg.setScale(scale);
+
+		// Rescale the image
+		toEditPeg.setRescaled(resize(toEditPeg.getImage(), toEditPeg.getScaledIGW(), toEditPeg.getScaledIGH()));
+	}
 
 	public void editVineArcl(int ticket, double arcl) {
 		this.vines.get(ticket).editVineArcl(arcl);
@@ -419,6 +442,14 @@ public class LevelManager {
 	public void editVineStartVel(int ticket, double startVel) {
 		this.vines.get(ticket).editVineStartVel(startVel);
 	}
+	
+	public void editPegRotation(int ticket, double rotation) {
+		this.pegs.get(ticket).editRotation(rotation);
+	}
+	
+	public void editPegJointID(int ticket, int jid) {
+		this.pegs.get(ticket).editPegJointID(jid);
+	}
 
 	public JSONObject getCharList() {
 		JSONObject obj = new JSONObject();
@@ -438,6 +469,22 @@ public class LevelManager {
 			list.add(boulder.makeJSON());
 		});
 
+		return list;
+	}
+	
+	public JSONArray getPegList() {
+		JSONArray list = new JSONArray();
+		
+		/*
+		 * If one of the joints doesn't exist anymore, ignore it.	
+		 */
+		this.pegs.forEach((ticket, peg) -> {
+			if (this.joints.containsKey(peg.getJointID())) {
+				// Joint exists. 
+				list.add(peg.getJSON());
+			}
+		});
+		
 		return list;
 	}
 	
@@ -673,9 +720,9 @@ public class LevelManager {
 		JSONArray vineList = getVineList();
 		JSONObject charList = getCharList();
 		JSONArray boulderList = getBouldList();
-		JSONArray respawnList = getRPs();
-
 		JSONArray boulderJList = getBouldJointList();
+		JSONArray pegList = getPegList();
+		JSONArray respawnList = getRPs();
 		
 		// JSONObject charLocs = getCharLocs(this.charLocs);
 
@@ -693,11 +740,49 @@ public class LevelManager {
 		json.put("vines", vineList);
 		json.put("boulders", boulderList);
 		json.put("boulderJoints", boulderJList);
+		json.put("goldenPegs", pegList);
 		json.put("polygonCollision", polygon);
 		json.put("respawnPoints", respawnList);
 		return json;
 	}
 
+	/**
+	 * Makes a new golden peg.
+	 */
+	public int makeGoldenPeg(String path, double xp, double yp, double scale, double rotation, int jid) {
+		GoldenPeg peg = new GoldenPeg(path,  (xp - this.vpOffset.getX()) / this.mToPixel,
+				this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel, scale, jid, rotation);				
+		
+		BufferedImage image;
+		try {
+			image = ImageIO.read(new File(path));
+		} catch (IOException e) {
+			System.err.println("Image file not found: " + path);
+			e.printStackTrace();
+			return -1;
+		}
+		
+		// From the image, get the default width and height.
+		double wm = image.getWidth() / this.mToPixel;
+		double hm = image.getHeight() / this.mToPixel;
+		if (wm < hm) {
+			peg.editPegDim(1, (hm * 1.0 / wm));
+		} else {
+			peg.editPegDim((wm * 1.0) / hm, 1);
+		}		
+
+		peg.setImage(image);
+		peg.setScale(scale);
+		peg.setRescaled(resize(image, peg.getScaledIGW(), peg.getScaledIGH()));
+
+		pegs.put(this.ticket, peg);
+		ltlAdapter.addPegEdit(this.ticket, rotation, jid, scale);
+		this.ticket++;
+
+		return this.ticket - 1;
+		
+	}
+	
 	/**
 	 * Makes a new platform object.
 	 * 
@@ -957,6 +1042,38 @@ public class LevelManager {
 		}
 	}
 	
+	public void readPegJSON(JSONArray list) {
+		for (Object obj : list) {
+			int[] jid = new int[]{((Long)((JSONObject)obj).get("jointID")).intValue()};			
+			boolean[] has = {false};
+			
+			// Look through the current list of joints for the id.
+			this.joints.forEach((ticket, joint) -> {
+				if (joint.getOldID() == jid[0]) {
+					jid[0] = joint.getNewID();
+					has[0] = true;
+				}
+			});
+			
+			// Check if the joints exist.
+			if (has[0]){			
+				String imageName = (String)((JSONObject)obj).get("imageName");
+				double centerX = (double)((JSONObject)obj).get("centerX");
+				double centerY = (double)((JSONObject)obj).get("centerY");
+				double rotation = (double)((JSONObject)obj).get("rotation");
+				double scale = (double)((JSONObject)obj).get("scale");
+				double imageWidth = (double)((JSONObject)obj).get("imageWidth");
+				double imageHeight = (double)((JSONObject)obj).get("imageHeight");			
+				
+				GoldenPeg newPeg = new GoldenPeg(imageName, centerX, centerY, scale, jid[0], rotation);
+				this.pegs.put(this.ticket, newPeg);
+								
+				ltlAdapter.addPegEdit(ticket, rotation, jid[0], scale);
+				this.ticket++;
+			}
+		}
+	}
+	
 	public void readBoulderJointJSON(JSONArray list) {
 		for (Object obj : list) {
 			int[] ticket1 = new int[]{((Long)((JSONObject)obj).get("id1")).intValue()};
@@ -985,7 +1102,15 @@ public class LevelManager {
 				double ob1y = (double)((JSONObject)obj).get("anchor1y");
 				double ob2x = (double)((JSONObject)obj).get("anchor2x");
 				double ob2y = (double)((JSONObject)obj).get("anchor2y");
-				int oldID = (int)((Long)(((JSONObject)obj).get("jointID"))).intValue();
+				Long oldIDL = (Long)(((JSONObject)obj).get("jointID"));
+				int oldID;
+				// In case the boulder's previous JSON didn't include a "jointID" field, default case				
+				if (oldIDL == null) {
+					oldID = this.ticket;
+				} else {
+					oldID = oldIDL.intValue();
+				}
+				
 				BoulderJoint newBJoint = new BoulderJoint(oldID, ticket1[0], ticket2[0], ob1x, ob1y, ob2x, ob2y);
 				newBJoint.setNewID(this.ticket);
 				this.joints.put(this.ticket, newBJoint);
@@ -1003,6 +1128,10 @@ public class LevelManager {
 		}
 		
 		this.ltoAdapter.makeBoulderJoint();
+	}
+	
+	public void requestPeg(String path) {
+		this.ltoAdapter.makePeg(path);
 	}
 	
 	public void makeBoulderJointRes(int ticket1, int ticket2, double xp, double yp) {
@@ -1163,6 +1292,13 @@ public class LevelManager {
 			joints = new JSONArray();
 		}
 		readBoulderJointJSON(joints);
+		
+		JSONArray pegs = (JSONArray) level.get("goldenPegs");
+		// Default case.
+		if (pegs == null) {
+			pegs = new JSONArray();
+		}
+		readPegJSON(pegs);
 
 		JSONArray rps = (JSONArray) level.get("respawnPoints");
 		// Default case.
@@ -1199,6 +1335,10 @@ public class LevelManager {
 		this.boulders.remove(ticket);
 	}
 
+	public void removePeg(int ticket) {
+		this.pegs.remove(ticket);
+	}
+	
 	public void removeVine(int ticket) {
 		this.vines.remove(ticket);
 	}
@@ -1705,7 +1845,7 @@ public class LevelManager {
 	public void setPhysicsPlat(int ticket, double scK) {
 		this.plats.get(ticket).setPhysics(scK);
 	}
-
+	
 	/**
 	 * Reads the defaults of a platform out of its JSON file.
 	 */

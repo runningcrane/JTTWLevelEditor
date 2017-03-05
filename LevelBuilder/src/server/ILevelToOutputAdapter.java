@@ -50,6 +50,8 @@ public interface ILevelToOutputAdapter {
 	
 	public void setBoulderPos(int ticket);
 	
+	public void setPegPos(int ticket);
+	
 	public void markEOL();
 	
 	public void markRP();
@@ -57,5 +59,7 @@ public interface ILevelToOutputAdapter {
 	public void makeEndpointPlat(int ticket);
 	
 	public void requestRemoveRP();
+	
+	public void makePeg(String path);
 
 }

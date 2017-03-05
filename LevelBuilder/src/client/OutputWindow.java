@@ -40,8 +40,8 @@ public class OutputWindow extends JFrame {
 	
 	public enum Request {
 		NONE, 
-		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC, MAKE_BOULDER_JOINT,
-		EDIT_OLD_PLAT, EDIT_OLD_VINE, EDIT_OLD_BOULDER,
+		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC, MAKE_BOULDER_JOINT, MAKE_PEG,
+		EDIT_OLD_PLAT, EDIT_OLD_VINE, EDIT_OLD_BOULDER, EDIT_OLD_PEG,
 		SET_PLAYER_START_POS, SET_PLAT_ENDPOINT, 
 		MARK_EOL, MARK_RP,
 		REMOVE_RP
@@ -323,6 +323,67 @@ public class OutputWindow extends JFrame {
 		    		request = Request.NONE;
 					break;
 		    	}
+		    	case MAKE_PEG: {
+		    		int xp = e.getX();
+				    int yp = e.getY();
+				    System.out.println("Requesting center point " + xp + ", " + yp + "; swing vp pixels.");
+				    
+				    // Pop up dialog here to get the expected width in meters
+				    String arString = JOptionPane.showInputDialog(null, "Input custom scale ratio. Default will be used otherwise.");
+				    double arDouble;
+				    if (arString.isEmpty()) {
+				    	arDouble = 1.0;
+				    } else {
+				        try {
+				    	    arDouble = Double.parseDouble(arString);
+				        } catch (NullPointerException nulle) {
+				    	    // Default to 1:1.
+				    	    arDouble = 1;
+				        } catch (NumberFormatException numbe) {
+				    	    System.out.println("Not a valid number.");
+				    	    arDouble = 1;
+				    	    numbe.printStackTrace();
+				        }
+				    }
+				    
+				    String radString = JOptionPane.showInputDialog(null, "Input rotation in radians.");
+				    double radDouble;
+				    if (radString.isEmpty()) {
+				    	radDouble = 0.0;
+				    } else {
+				        try {
+				        	radDouble = Double.parseDouble(radString);
+				        } catch (NullPointerException nulle) {
+				        	radDouble = 0;
+				        } catch (NumberFormatException numbe) {
+				    	    System.out.println("Not a valid number.");
+				    	    radDouble = 0;
+				    	    numbe.printStackTrace();
+				        }
+				    }
+				    
+				    String jidString = JOptionPane.showInputDialog(null, "Input jointID.");
+				    int jid;
+				    if (jidString.isEmpty()) {
+				    	jid = 0;
+				    } else {
+				        try {
+				        	jid = Integer.parseInt(jidString);
+				        } catch (NullPointerException nulle) {
+				        	jid = 0;
+				        } catch (NumberFormatException numbe) {
+				    	    System.out.println("Not a valid number.");
+				    	    jid = 0;
+				    	    numbe.printStackTrace();
+				        }
+				    }
+				    				   
+				    // Pop up dialog box to make collision box.				    
+				    otlAdapter.makePeg(newPath, xp, yp, radDouble, jid, arDouble);
+				    
+				    request = Request.NONE;
+					break;
+		    	}
 		    	case MAKE_BOULDER: {
 		    		int xp = e.getX();
 				    int yp = e.getY();
@@ -412,6 +473,15 @@ public class OutputWindow extends JFrame {
 					
 					request = Request.NONE;
 					break;				    
+		    	}
+		    	case EDIT_OLD_PEG: {
+		    		int xp = e.getX();
+				    int yp = e.getY();
+				    System.out.println("Requesting center point " + xp + ", " + yp + "; pixels.");
+					otlAdapter.editPegCenter(ticket, xp, yp);
+					
+					request = Request.NONE;
+					break;
 		    	}
 		    	case EDIT_OLD_BOULDER: {
 		    		int xp = e.getX();
@@ -572,6 +642,11 @@ public class OutputWindow extends JFrame {
 		this.ticket = ticket;
 		request = Request.EDIT_OLD_BOULDER;
 	}
+	
+	public void setPegPos(int ticket) {
+		this.ticket = ticket;
+		request = Request.EDIT_OLD_PEG;
+	}
 
 	public void markEOL() {
 		request = Request.MARK_EOL;
@@ -583,6 +658,11 @@ public class OutputWindow extends JFrame {
 	
 	public void makeVine(String path) {
 		request = Request.MAKE_VINE;
+		this.newPath = path;
+	}
+	
+	public void makePeg(String path) {
+		request = Request.MAKE_PEG;
 		this.newPath = path;
 	}
 	

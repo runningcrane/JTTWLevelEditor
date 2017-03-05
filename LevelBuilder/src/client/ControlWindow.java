@@ -66,6 +66,10 @@ public class ControlWindow extends JFrame {
 			"vine1", "vine2", "vine3"
 	};
 	
+	private static String[] PEGS = {
+			"peg"
+	};
+	
 	private JTextField txtLHeight;
 	private JTextField txtLWidth;
 	private JTextField txtVPHeight;
@@ -496,6 +500,20 @@ public class ControlWindow extends JFrame {
 				ctlAdapter.makeBoulderJoint();
 			}
 		});
+		
+		for (String peg : PEGS) {
+			ImageIcon iiPeg = new ImageIcon("assets/" + peg + "Thumbnail.png");
+			JToggleButton tglBtnPeg = new JToggleButton(peg);
+			tglBtnPeg.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					ctlAdapter.makePeg("assets/" + peg + ".png");
+				}
+			});
+			tglBtnPeg.setIcon(iiPeg);
+			tglBtnPeg.setPreferredSize(dimButton);
+			pnlBoulderGrid.add(tglBtnPeg);
+			boulderToggleGroup.add(tglBtnPeg);
+		}
 		pnlBack.add(btnAddJoint);
 
 		// Special images

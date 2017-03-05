@@ -20,6 +20,7 @@ public interface ILevelToLayerAdapter {
 	 */
 	public void addVineEdit(int ticket, double wm, double hm, double arcLength, double startVel);
 	
+	public void addPegEdit(int ticket, double rotation, int jid, double scale);
 	
 	/**
 	 * Add an edit panel.

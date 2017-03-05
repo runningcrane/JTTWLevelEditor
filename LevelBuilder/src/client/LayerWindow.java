@@ -539,6 +539,146 @@ public class LayerWindow extends JFrame {
 		this.pack();
 	}
 	
+	public void addPegEdit(int ticket, double rotation, double jointID, double scale) {
+		JSeparator jsep = new JSeparator(SwingConstants.HORIZONTAL);
+		EditWindow newWindow = new EditWindow(ticket) {
+			/**
+			 * UID for serialization.
+			 */
+			private static final long serialVersionUID = 8116441836763125578L;
+
+			@Override
+			public void initGUI() {	
+				setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+				
+				JPanel pnlPosition = new JPanel();
+				pnlPosition.setLayout(new GridLayout(3,3,0,0));
+				add(pnlPosition);
+				
+				
+				JLabel lblTicket = new JLabel("<html><b><u>#" + this.ticket + "</u></b></html>");
+				pnlPosition.add(lblTicket);
+				
+				JButton btnMove = new JButton("New center");
+				pnlPosition.add(btnMove);
+				
+				JButton btnDelete = new JButton("Remove");
+				pnlPosition.add(btnDelete);
+				btnDelete.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ltlAdapter.removePeg(ticket);
+						
+						// Remove this EditWindow.
+						removeEditWindow(ticket, jsep);	
+					}
+				});
+				btnDelete.setBackground(Color.RED);
+				btnDelete.setForeground(Color.WHITE);
+				
+				JLabel lblRotation = new JLabel("Rotation (rad):");
+				pnlPosition.add(lblRotation);
+				
+				txtRotation = new JTextField(Double.toString(rotation));
+				pnlPosition.add(txtRotation);
+				txtRotation.setColumns(7);
+				
+				JButton btnRotation = new JButton("Change rotation");
+				pnlPosition.add(btnRotation);	
+				
+				JLabel lblScale = new JLabel("Scale:");
+				pnlPosition.add(lblScale);
+				
+				txtScale = new JTextField(Double.toString(scale));
+				pnlPosition.add(txtScale);
+				txtScale.setColumns(7);
+				
+				JButton btnDimensions = new JButton("Change scale");
+				pnlPosition.add(btnDimensions);													
+				
+				JLabel lblJointID = new JLabel("Joint ID:");
+				pnlPosition.add(lblJointID);
+				
+				txtJointID = new JTextField(Double.toString(jointID));
+				pnlPosition.add(txtJointID);
+				txtJointID.setColumns(7);
+				
+				JButton btnJointID = new JButton("Change joint");
+				pnlPosition.add(btnJointID);
+											
+				
+				btnDimensions.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						double scale;
+						
+					    try {
+					    	scale = Double.parseDouble(txtScale.getText());
+					    } catch (NullPointerException nulle) {					    	
+					    	nulle.printStackTrace();
+					    	return;
+					    } catch (NumberFormatException numbe) {
+					    	System.out.println("Not a valid number.");
+					    	numbe.printStackTrace();
+					    	return;
+					    }
+					    
+					    // Valid numbers. Go resize over in LevelManager.
+					    ltlAdapter.editPegScale(ticket, scale);
+					}
+				});			
+				
+				btnRotation.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						double rotation;
+						
+					    try {
+					    	rotation = Double.parseDouble(txtRotation.getText());
+					    } catch (NullPointerException nulle) {					    	
+					    	nulle.printStackTrace();
+					    	return;
+					    } catch (NumberFormatException numbe) {
+					    	System.out.println("Not a valid number.");
+					    	numbe.printStackTrace();
+					    	return;
+					    }
+					    
+					    // Valid numbers. Go resize over in LevelManager.
+					    ltlAdapter.editPegRotation(ticket, rotation);
+					}
+				});			
+				
+				btnMove.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						ltlAdapter.editPegCenter(ticket);
+					}
+				});	
+				
+				btnJointID.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						int jid = Integer.parseInt(txtJointID.getText());
+						ltlAdapter.editPegJointID(ticket, jid);
+					}
+				});
+			}					
+			
+			@Override
+			public void manualRemove() {
+				System.out.println("Removing #" + ticket + "...");
+				removeEditWindow(ticket, jsep);
+			}
+		};
+	
+		pnlBack.add(newWindow);
+		this.edits.put(ticket, newWindow);
+		
+		// Add a line to separate areas.
+		pnlBack.add(jsep);
+		
+		// Resize the frame.
+        Dimension d = new Dimension(500,300);
+        this.scrPaneScroll.setPreferredSize(d);
+		this.pack();
+	}
+	
 	public void addPlatformEdit(int ticket, double wm, double hm, double scale) {
 		JSeparator jsep = new JSeparator(SwingConstants.HORIZONTAL);
 		this.initWM = wm;
