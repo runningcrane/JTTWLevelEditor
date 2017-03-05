@@ -109,7 +109,7 @@ public class OutputWindow extends JFrame {
 				 */
 				FileWriter file;
 				try {
-					file = new FileWriter(txtOutputPath.getText() + ".json");
+					file = new FileWriter("../levelFiles/" + txtOutputPath.getText() + ".json");
 					file.write(otlAdapter
 							.makeJSON(txtOutputPath.getText(),txtNextLevel.getText()).toJSONString());
 					file.flush();
