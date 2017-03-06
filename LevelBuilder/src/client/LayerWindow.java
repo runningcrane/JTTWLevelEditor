@@ -539,7 +539,7 @@ public class LayerWindow extends JFrame {
 		this.pack();
 	}
 	
-	public void addPegEdit(int ticket, double rotation, double jointID, double scale) {
+	public void addPegEdit(int ticket, double rotation, int jointID, double scale) {
 		JSeparator jsep = new JSeparator(SwingConstants.HORIZONTAL);
 		EditWindow newWindow = new EditWindow(ticket) {
 			/**
@@ -598,7 +598,7 @@ public class LayerWindow extends JFrame {
 				JLabel lblJointID = new JLabel("Joint ID:");
 				pnlPosition.add(lblJointID);
 				
-				txtJointID = new JTextField(Double.toString(jointID));
+				txtJointID = new JTextField(Integer.toString(jointID));
 				pnlPosition.add(txtJointID);
 				txtJointID.setColumns(7);
 				
