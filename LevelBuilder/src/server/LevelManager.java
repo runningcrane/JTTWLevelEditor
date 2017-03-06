@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -758,7 +759,7 @@ public class LevelManager {
 		
 		BufferedImage image;
 		try {
-			image = ImageIO.read(new File(path));
+			image = ImageIO.read(new File("assets/" + path));
 		} catch (IOException e) {
 			System.err.println("Image file not found: " + path);
 			e.printStackTrace();
@@ -1052,7 +1053,7 @@ public class LevelManager {
 			
 			// Look through the current list of joints for the id.
 			this.joints.forEach((ticket, joint) -> {
-				if (joint.getOldID() == jid[0]) {
+				if (joint.getOldID() == jid[0] && has[0] == false) {
 					jid[0] = joint.getNewID();
 					has[0] = true;
 				}
@@ -1061,46 +1062,48 @@ public class LevelManager {
 			// Check if the joints exist.
 			if (has[0]){			
 				String imageName = (String)((JSONObject)obj).get("imageName");
-				double centerX = (double)((JSONObject)obj).get("centerX");
-				double centerY = (double)((JSONObject)obj).get("centerY");
+				double centerXm = (double)((JSONObject)obj).get("centerX");
+				double centerYm = (double)((JSONObject)obj).get("centerY");
 				double rotation = (double)((JSONObject)obj).get("rotation");
 				double scale = (double)((JSONObject)obj).get("scale");
 				double imageWidth = (double)((JSONObject)obj).get("imageWidth");
 				double imageHeight = (double)((JSONObject)obj).get("imageHeight");			
 				
-				GoldenPeg newPeg = new GoldenPeg(imageName, centerX, centerY, scale, jid[0], rotation);
-				this.pegs.put(this.ticket, newPeg);
-								
-				ltlAdapter.addPegEdit(ticket, rotation, jid[0], scale);
-				this.ticket++;
+				makeGoldenPeg(imageName, centerXm * this.mToPixel, centerYm * this.mToPixel, scale, rotation, jid[0]);
 			}
 		}
 	}
 	
 	public void readBoulderJointJSON(JSONArray list) {
 		for (Object obj : list) {
-			int[] ticket1 = new int[]{((Long)((JSONObject)obj).get("id1")).intValue()};
-			int[] ticket2 = new int[]{((Long)((JSONObject)obj).get("id2")).intValue()};
+			Long ticket1L = (Long)((JSONObject)obj).get("id1");
+			int[] ticket1 = new int[1];
+			ticket1[0] = ticket1L.intValue();
+			
+			Long ticket2L = (Long)((JSONObject)obj).get("id2");
+			int[] ticket2 = new int[1];
+			ticket2[0] = ticket2L.intValue();
+			
 			boolean[] has1 = {false};
 			boolean[] has2 = {false};
 			
-			// Look through the current list of boulders for the ticket1 & ticket2.
+			// Look through the current list of boulders for the ticket1 & ticket2.						
 			this.boulders.forEach((ticket, boulder) -> {
-				if (boulder.getOldTicket() == ticket1[0]) {
+				if (boulder.getOldTicket() == ticket1[0] && has1[0] == false) {
 					ticket1[0] = boulder.getNewTicket();
 					has1[0] = true;
 				}
 			});
 			
 			this.boulders.forEach((ticket, boulder) -> {
-				if (boulder.getOldTicket() == ticket2[0]) {
+				if (boulder.getOldTicket() == ticket2[0] && has2[0] == false) {
 					ticket2[0] = boulder.getNewTicket();
 					has2[0] = true;
 				}
 			});
 			
 			// Check if the boulders exist.
-			if (has1[0] && has2[0]){			
+			if (has1[0] && has2[0]){							
 				double ob1x = (double)((JSONObject)obj).get("anchor1x");
 				double ob1y = (double)((JSONObject)obj).get("anchor1y");
 				double ob2x = (double)((JSONObject)obj).get("anchor2x");
