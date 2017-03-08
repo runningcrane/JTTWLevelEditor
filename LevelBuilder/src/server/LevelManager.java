@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -759,7 +758,7 @@ public class LevelManager {
 		
 		BufferedImage image;
 		try {
-			image = ImageIO.read(new File("assets/" + path));
+			image = ImageIO.read(new File(path));
 		} catch (IOException e) {
 			System.err.println("Image file not found: " + path);
 			e.printStackTrace();
@@ -1069,7 +1068,7 @@ public class LevelManager {
 				double imageWidth = (double)((JSONObject)obj).get("imageWidth");
 				double imageHeight = (double)((JSONObject)obj).get("imageHeight");			
 				
-				makeGoldenPeg(imageName, centerXm * this.mToPixel, centerYm * this.mToPixel, scale, rotation, jid[0]);
+				makeGoldenPeg("assets/" + imageName, centerXm * this.mToPixel, centerYm * this.mToPixel, scale, rotation, jid[0]);
 			}
 		}
 	}
@@ -1883,7 +1882,8 @@ public class LevelManager {
 		// Path name of the json file; name includes .png on the end.
 		System.out.println("plat: " + plat.getPath());
 		String name = plat.getPath().substring(7, plat.getPath().length() - 4);
-
+        System.out.println("new plat: " + name);
+		
 		if (this.defaultJSON.containsKey(name)) {
 			json = this.defaultJSON.get(name);
 		} else {
@@ -1893,16 +1893,16 @@ public class LevelManager {
 			try {
 				obj = parser.parse(new FileReader("../src/collision/" + name + ".json"));
 			} catch (FileNotFoundException e) {
-				System.out.println("File not found: " + "../src/collision/" + name + ".json\n"
+				System.err.println("File not found: " + "../src/collision/" + name + ".json\n"
 						+ "Please make the JSON in the collision box editor.");
 				e.printStackTrace();
 				return;
 			} catch (IOException e) {
-				System.out.println("Illegal path: " + "../src/collision/" + name + ".json");
+				System.err.println("Illegal path: " + "../src/collision/" + name + ".json");
 				e.printStackTrace();
 				return;
 			} catch (ParseException e) {
-				System.out.println("Cannot parse JSON at: " + "../src/collision/" + name + ".json");
+				System.err.println("Cannot parse JSON at: " + "../src/collision/" + name + ".json");
 				e.printStackTrace();
 				return;
 			}

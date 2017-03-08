@@ -114,7 +114,7 @@ public class OutputWindow extends JFrame {
 							.makeJSON(txtOutputPath.getText(),txtNextLevel.getText()).toJSONString());
 					file.flush();
 					file.close();
-					System.out.println("Output JSON written to bin root");
+					System.out.println("Output JSON written to levelFiles folder.");
 				} catch (IOException e1) {					
 					e1.printStackTrace();
 				}			

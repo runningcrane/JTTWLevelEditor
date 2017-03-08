@@ -46,7 +46,7 @@ public class ControlWindow extends JFrame {
 	};
 	private static String[] PLATFORMS = {
 			"Pedestal", "blueGround", "canyonR", "canyonL", 
-			"ForestGround", "Tree1", "Tree2"
+			"ForestGround", "Tree1", "Tree2", "paradiserock"
 	};
 	private static String[] ROCKS = {
 			"Rock1", "Rock2", "Rock3", "Rock4", "Rock5", 
@@ -59,7 +59,7 @@ public class ControlWindow extends JFrame {
 			"cldClearUp", "cldCloudUp", "cldStormyUp", "cldSunsetUp"
 	};;
 	private static String[] BOULDERS = {
-			"BoulderA", "BoulderB", "boulder0", "boulder1", "boulder2", "boulder3",
+			"BoulderA", "BoulderB", "BoulderC", "boulder0", "boulder1", "boulder2", "boulder3",
 			"boulder4", "boulder5", "boulder6", "boulder7", "boulder8", "boulder9"
 	};
 	private static String[] VINES = {
@@ -443,7 +443,7 @@ public class ControlWindow extends JFrame {
 			JToggleButton tglcld = new JToggleButton(cloud);
 			tglcld.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					ctlAdapter.makePlatform("assets/" + cloud + "png");
+					ctlAdapter.makePlatform("assets/" + cloud + ".png");
 				}
 			});
 			tglcld.setIcon(iicld);
