@@ -7,7 +7,6 @@
   {"imageWidth":1.0310344827586206,"centerY":10.175,"imageName":"peg.png","centerX":19.625,"rotation":3.4,"scale":1.0,"jointID":28,"imageHeight":1.0, "bouldersAffected":[7, 8, 9, 10, 15, 5, 16]}
 ],
 
-
 "tutorials": [
   {
     "tipString": "Hit the pegs with 's'",

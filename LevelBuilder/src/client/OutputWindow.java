@@ -107,11 +107,23 @@ public class OutputWindow extends JFrame {
 				/*
 				 * Try to write out the JSON file.
 				 */
+				String fullPath;
+				String levelName;
+				if (txtOutputPath.getText().contains(".")) {
+					// They added their own extension, don't add json to the end.
+					fullPath = "../levelFiles/" + txtOutputPath.getText();
+					levelName = txtOutputPath.getText().substring(0, txtOutputPath.getText().indexOf('.'));
+				} else {
+					fullPath = "../levelFiles/" + txtOutputPath.getText() + ".json";
+					levelName = txtOutputPath.getText();
+				}
 				FileWriter file;
 				try {
-					file = new FileWriter("../levelFiles/" + txtOutputPath.getText() + ".json");
-					file.write(otlAdapter
-							.makeJSON(txtOutputPath.getText(),txtNextLevel.getText()).toJSONString());
+					file = new FileWriter(fullPath);
+					// Send over the name of the level, so everything before the '.' in the extension.
+					file.write(otlAdapter.makeJSON(
+					        levelName,
+							txtNextLevel.getText()).toJSONString());
 					file.flush();
 					file.close();
 					System.out.println("Output JSON written to levelFiles folder.");
@@ -143,7 +155,15 @@ public class OutputWindow extends JFrame {
 		JButton btnReadJSON = new JButton("Load Level");
 		btnReadJSON.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				otlAdapter.readJSON("../levelFiles/" + txtInputPath.getText() + ".json");
+				String fullPath;
+				String levelName;
+				if (txtOutputPath.getText().contains(".")) {
+					// They added their own extension, don't add json to the end.
+					fullPath = "../levelFiles/" + txtInputPath.getText();
+				} else {
+					fullPath = "../levelFiles/" + txtInputPath.getText() + ".json";
+				}
+				otlAdapter.readJSON(fullPath);
 			}
 		});
 				
