@@ -4,8 +4,16 @@
   "nextLevelName" : String, // This is blank on the final level.
   "levelEndX" : double, // The X position of where the level officially ends.
   "levelEndY" : double,
-  "xGreater" : boolean, // True if the EOL is triggered walking [right] of it.
-  "yGreater" : boolean, // True if the EOL is triggered reaching a height [above] it.
+  "levelBottomX" : double, // if character falls below this point, they respawn.
+  "levelBounds": { // the absolute bounds of the level (should be able to adjust the min to be below 0),
+                   // will be used for camera absolute bounds (i.e.) camera will stop moving once it includes that point.
+    "minX" : double,
+    "minY" : double,
+    "maxX" : double,
+    "maxY" : double
+  },
+  "levelEndRight" : boolean, // True if the EOL is triggered walking [right] of it.
+  "levelEndUp" : boolean, // True if the EOL is triggered reaching a height [above] it.
   "mToPixel" : double, // The number of pixels in a meter. For example, 80 = 80 px per meter.
   "background" : {        
     "imageName" : String, 
@@ -78,22 +86,23 @@
           /** ELSE IF type == CIRCLE **/
           "radius" : double,
           /** END **/
-          "mass" : double // should be in the range of 1_000 for smaller boulders to 10_000 for larger ones. Will have
+          "mass" : double, // should be in the range of 6_000 for smaller boulders to 20_000 for larger ones. Will have
                         // to playtest extensively.
+          "fixed" : boolean // true if the boulder starts off fixed to ground or something else.
         },
         ...
       ],
-      "boulderJoints" : [
-          {
-             "jointId": int,
-             "id1" : int, //id of boulder 1
-             "id2" : int, //id of boulder 2
-             "anchor1x": double, // the x, y offset from the center of boulder 1
-             "anchor1y": double,
-             "anchor2x": double, // the x, y offset from the center of boulder 2
-             "anchor2y": double,
-          }
-      ]
+      //"boulderJoints" : [
+      //    {
+      //       "jointId": int,
+      //       "id1" : int, //id of boulder 1
+      //       "id2" : int, //id of boulder 2
+      //       "anchor1x": double, // the x, y offset from the center of boulder 1
+      //       "anchor1y": double,
+      //       "anchor2x": double, // the x, y offset from the center of boulder 2
+      //       "anchor2y": double,
+      //    }
+      //]
       "goldenPegs" : [ {
         "imageName" : String,
         "centerX" : double,
@@ -101,7 +110,7 @@
         "rotation": double, // radians
         "imageWidth": double,
         "imageHeight": double,
-        "jointId": double,
+        "bouldersAffected": [int, ...] // a list of the boulder ticket numbers that are effected.
        },
        ...       
        ],

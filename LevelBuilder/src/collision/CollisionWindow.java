@@ -26,7 +26,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import javax.swing.JOptionPane;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -45,6 +44,7 @@ import javax.swing.JLabel;
  */
 public class CollisionWindow extends JFrame {
 
+	private static final long serialVersionUID = -1482793564160863642L;
 	private JPanel contentPane;
 	private JTextField txtName;
 	private JTextField txtMass;
