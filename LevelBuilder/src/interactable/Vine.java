@@ -83,7 +83,7 @@ public class Vine extends AInteractable {
 	
 	public JSONObject getJSON() {
 		JSONObject obj = new JSONObject();
-		obj.put("imageName", this.getPath());
+		obj.put("imageName", this.getPath().substring(this.getPath().lastIndexOf('/') + 1, this.getPath().length()));
 		obj.put("swingCenterX", this.getCenterXm());
 		obj.put("swingCenterY", this.getCenterYm());
 		obj.put("width", this.getInGameWidth());

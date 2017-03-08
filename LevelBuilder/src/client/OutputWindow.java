@@ -182,7 +182,7 @@ public class OutputWindow extends JFrame {
 				otlAdapter.changeOffset(offset, 0);
 			}
 		});
-		ImageIcon iiWest = new ImageIcon("assets/arWest.png");
+		ImageIcon iiWest = new ImageIcon("../assets/arWest.png");
 		btnWest.setIcon(iiWest);
 		pnlWest.add(btnWest);
 		
@@ -196,7 +196,7 @@ public class OutputWindow extends JFrame {
 				otlAdapter.changeOffset(-1 * offset, 0);
 			}
 		});
-		ImageIcon iiEast = new ImageIcon("assets/arEast.png");
+		ImageIcon iiEast = new ImageIcon("../assets/arEast.png");
 		btnEast.setIcon(iiEast);
 		pnlEast.add(btnEast);
 		
@@ -210,7 +210,7 @@ public class OutputWindow extends JFrame {
 				otlAdapter.changeOffset(0, offset);
 			}
 		});
-		ImageIcon iiNorth = new ImageIcon("assets/arNorth.png");
+		ImageIcon iiNorth = new ImageIcon("../assets/arNorth.png");
 		btnNorth.setIcon(iiNorth);
 		pnlNorth.add(btnNorth);
 		
@@ -224,7 +224,7 @@ public class OutputWindow extends JFrame {
 				otlAdapter.changeOffset(0, -1 * offset);
 			}
 		});
-		ImageIcon iiSouth = new ImageIcon("assets/arSouth.png");
+		ImageIcon iiSouth = new ImageIcon("../assets/arSouth.png");
 		btnSouth.setIcon(iiSouth);
 		pnlSouth.add(btnSouth);
 		

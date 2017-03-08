@@ -215,10 +215,10 @@ public class LevelManager {
 
 		// String path, String name, double cxm, double cym, boolean present
 
-		Player monkey = new Player("assets/Monkey.png", "Monkey", 0, 0, false);
+		Player monkey = new Player("../assets/Monkey.png", "Monkey", 0, 0, false);
 		BufferedImage monkeyBI;
 		try {
-			monkeyBI = ImageIO.read(new File("assets/Monkey.png"));
+			monkeyBI = ImageIO.read(new File("../assets/Monkey.png"));
 		} catch (IOException e) {
 			System.err.println("File not found: " + "assets/Monkey.png");
 			e.printStackTrace();
@@ -228,12 +228,12 @@ public class LevelManager {
 		monkey.setRescaled(resize(monkeyBI, 0.7, 1.7));
 		characters.put("Monkey", monkey);
 
-		Player monk = new Player("assets/Monk.png", "Monk", 0, 0, false);
+		Player monk = new Player("../assets/Monk.png", "Monk", 0, 0, false);
 		BufferedImage monkBI;
 		try {
-			monkBI = ImageIO.read(new File("assets/Monk.png"));
+			monkBI = ImageIO.read(new File("../assets/Monk.png"));
 		} catch (IOException e) {
-			System.err.println("File not found: " + "assets/Monk.png");
+			System.err.println("File not found: " + "../assets/Monk.png");
 			e.printStackTrace();
 			return;
 		}
@@ -241,12 +241,12 @@ public class LevelManager {
 		monk.setRescaled(resize(monkBI, 0.7, 1.7));
 		characters.put("Monk", monk);
 
-		Player pig = new Player("assets/Piggy.png", "Piggy", 0, 0, false);
+		Player pig = new Player("../assets/Piggy.png", "Piggy", 0, 0, false);
 		BufferedImage pigBI;
 		try {
-			pigBI = ImageIO.read(new File("assets/Piggy.png"));
+			pigBI = ImageIO.read(new File("../assets/Piggy.png"));
 		} catch (IOException e) {
-			System.err.println("File not found: " + "assets/Piggy.png");
+			System.err.println("File not found: " + "../assets/Piggy.png");
 			e.printStackTrace();
 			return;
 		}
@@ -254,12 +254,12 @@ public class LevelManager {
 		pig.setRescaled(resize(pigBI, 0.7, 1.7));
 		characters.put("Piggy", pig);
 
-		Player sandy = new Player("assets/Sandy.png", "Sandy", 0, 0, false);
+		Player sandy = new Player("../assets/Sandy.png", "Sandy", 0, 0, false);
 		BufferedImage sandyBI;
 		try {
-			sandyBI = ImageIO.read(new File("assets/Sandy.png"));
+			sandyBI = ImageIO.read(new File("../assets/Sandy.png"));
 		} catch (IOException e) {
-			System.err.println("File not found: " + "assets/Sandy.png");
+			System.err.println("File not found: " + "../assets/Sandy.png");
 			e.printStackTrace();
 			return;
 		}
@@ -576,7 +576,7 @@ public class LevelManager {
 		this.lvhm = levelHeight;
 
 		// Set the background.
-		setBg("assets/" + imageName);
+		setBg("../assets/" + imageName);
 
 		// Set the dimensions.
 		setLevelDimensions(this.lvwm, this.lvhm);
@@ -629,7 +629,7 @@ public class LevelManager {
 
 			JSONObject boulder = (JSONObject) obj;
 			// Further parsing here
-			String path = "assets/" + (String) boulder.get("imageName");
+			String path = "../assets/" + (String) boulder.get("imageName");
 			double cxm = (double) boulder.get("centerX");
 			double cym = (double) boulder.get("centerY");
 
@@ -859,7 +859,7 @@ public class LevelManager {
 
 			JSONObject plat = (JSONObject) obj;
 			// Further parsing here
-			String path = "assets/" + (String) plat.get("imageName");
+			String path = "../assets/" + (String) plat.get("imageName");
 			double cxm = (double) plat.get("centerX");
 			double cym = (double) plat.get("centerY");
 
@@ -982,7 +982,9 @@ public class LevelManager {
 			String path = (String) vine.get("imageName");
 			// Default case.
 			if (path == null) {
-				path = "assets/vine1.png";
+				path = "../assets/vine1.png";
+			} else {
+				path = "../assets/" + path;
 			}
 
 			Double cxmD = (Double) vine.get("swingCenterX");
@@ -1068,7 +1070,7 @@ public class LevelManager {
 				double imageWidth = (double)((JSONObject)obj).get("imageWidth");
 				double imageHeight = (double)((JSONObject)obj).get("imageHeight");			
 				
-				makeGoldenPeg("assets/" + imageName, centerXm * this.mToPixel, centerYm * this.mToPixel, scale, rotation, jid[0]);
+				makeGoldenPeg("..assets/" + imageName, centerXm * this.mToPixel, centerYm * this.mToPixel, scale, rotation, jid[0]);
 			}
 		}
 	}
@@ -1565,7 +1567,7 @@ public class LevelManager {
 		JSONObject json;
 
 		System.out.println("boulder: " + boulder.getPath());
-		String name = boulder.getPath().substring(7, boulder.getPath().length() - 4);
+		String name = boulder.getPath().substring(9, boulder.getPath().length() - 4);
 
 		if (this.defaultJSON.containsKey(name)) {
 			json = this.defaultJSON.get(name);
@@ -1881,7 +1883,7 @@ public class LevelManager {
 
 		// Path name of the json file; name includes .png on the end.
 		System.out.println("plat: " + plat.getPath());
-		String name = plat.getPath().substring(7, plat.getPath().length() - 4);
+		String name = plat.getPath().substring(9, plat.getPath().length() - 4);
         System.out.println("new plat: " + name);
 		
 		if (this.defaultJSON.containsKey(name)) {
@@ -1965,7 +1967,7 @@ public class LevelManager {
 	 * After constructor is done initializing, start operations.
 	 */
 	public void start() {
-		setBg("assets/bgSunny.png");
+		setBg("../assets/bgSunny.png");
 		this.timer.start();
 	}
 
