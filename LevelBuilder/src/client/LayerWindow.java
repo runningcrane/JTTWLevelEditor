@@ -1,15 +1,11 @@
 package client;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
@@ -17,7 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -92,6 +87,8 @@ public class LayerWindow extends JFrame {
 					}
 				});
 				btnDelete.setBackground(Color.RED);
+				btnDelete.setOpaque(true);
+				btnDelete.setBorderPainted(false);
 				btnDelete.setForeground(Color.WHITE);
 				
 				JLabel lblB1 = new JLabel("Boulder1 #:");
@@ -327,6 +324,8 @@ public class LayerWindow extends JFrame {
 					}
 				});
 				btnDelete.setBackground(Color.RED);
+				btnDelete.setOpaque(true);
+				btnDelete.setBorderPainted(false);
 				btnDelete.setForeground(Color.WHITE);
 				
 				btnDimensions.addActionListener(new ActionListener() {
@@ -436,6 +435,8 @@ public class LayerWindow extends JFrame {
 					}
 				});
 				btnDelete.setBackground(Color.RED);
+				btnDelete.setOpaque(true);
+				btnDelete.setBorderPainted(false);
 				btnDelete.setForeground(Color.WHITE);
 				
 				JLabel lblMass = new JLabel("Mass:");
@@ -573,6 +574,8 @@ public class LayerWindow extends JFrame {
 					}
 				});
 				btnDelete.setBackground(Color.RED);
+				btnDelete.setOpaque(true);
+				btnDelete.setBorderPainted(false);
 				btnDelete.setForeground(Color.WHITE);
 				
 				JLabel lblRotation = new JLabel("Rotation (rad):");
@@ -715,6 +718,8 @@ public class LayerWindow extends JFrame {
 					}
 				});
 				btnDelete.setBackground(Color.RED);
+				btnDelete.setOpaque(true);
+				btnDelete.setBorderPainted(false);
 				btnDelete.setForeground(Color.WHITE);
 				
 				JLabel lblScale = new JLabel("Scale:");
