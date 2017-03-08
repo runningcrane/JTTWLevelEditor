@@ -450,7 +450,6 @@ public class Controller {
 			@Override
 			public void setPlatPos(int ticket) {
 				outputWindow.setPlatPos(ticket);
-
 			}
 
 			@Override

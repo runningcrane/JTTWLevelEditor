@@ -65,8 +65,6 @@ public class EditWindow extends JPanel {
 
 	}
 	
-	
-	
 	public void initGUI() {
 		// To be filled in by LayerWindow.
 
