@@ -1,7 +1,5 @@
 package client;
 
-import java.awt.Component;
-import java.awt.Graphics;
 
 /**
  * Adapter from the ControlWindow to the LevelManager.

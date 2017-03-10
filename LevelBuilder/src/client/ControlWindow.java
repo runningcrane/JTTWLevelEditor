@@ -19,11 +19,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.awt.event.ActionEvent;
 import javax.swing.JToggleButton;
+
+import static utils.Constants.*;
 
 /**
  * One of the three main windows; this window holds objects to be put into the level
@@ -77,9 +77,6 @@ public class ControlWindow extends JFrame {
 	private static final String[] SPECIALS = {
 		    "BuddhaHand", "lvl1Gate"	
 	}; 
-	
-	private static final String ASSETS_PATH = "../assets/";
-	private static final String THUMBNAIL_PATH = "../assets/thumbnails/";
 	
 	private JTextField txtLHeight;
 	private JTextField txtLWidth;
