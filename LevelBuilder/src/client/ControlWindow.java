@@ -49,7 +49,8 @@ public class ControlWindow extends JFrame {
 	};
 	private static final String[] PLATFORMS = {
 			"Pedestal", "blueGround", "canyonR", "canyonL", 
-			"ForestGround", "Tree1", "Tree2", "paradiserock"
+			"ForestGround", "Tree1", "Tree2", "paradiserock",
+			"Ramp"
 	};
 	private static final String[] ROCKS = {
 			"Rock1", "Rock2", "Rock3", "Rock4", "Rock5", 
@@ -176,8 +177,8 @@ public class ControlWindow extends JFrame {
 		pnlLevelResize.add(lblMToPixel);
 		
 		slMToPixel = new JSlider();
-		slMToPixel.setValue(90);
-		slMToPixel.setMaximum(390);
+		slMToPixel.setValue(50);
+		slMToPixel.setMaximum(100);
 		slMToPixel.addChangeListener(new ChangeListener() {
 		      public void stateChanged(ChangeEvent event) {
 		        int value = slMToPixel.getValue();			        

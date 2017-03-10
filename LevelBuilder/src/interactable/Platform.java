@@ -220,7 +220,7 @@ public class Platform extends AInteractable {
 			couple.put("x", point.getX() * this.scale);
 			couple.put("y", point.getY() * this.scale);
 			pointsList.add(couple);
-		});		
+		});
 		
 		if (polygon) {
 			obj.put("collisionPoints", pointsList);	
@@ -230,11 +230,10 @@ public class Platform extends AInteractable {
 			} else {
 				Point2D.Double p1 = points.get(0);
 				Point2D.Double p2 = points.get(1);
-				double width = Math.abs(p1.getX() - p2.getX()); 
-				double height = Math.abs(p1.getY() - p2.getY());
+				double width = Math.abs(p1.getX() - p2.getX()) * this.scale; 
+				double height = Math.abs(p1.getY() - p2.getY()) * this.scale;
 				obj.put("collisionWidth", width);
 				obj.put("collisionHeight", height);
-				
 				// add to the collisionPoints anyways for easy reading in by me
 				obj.put("collisionPoints", pointsList);
 			}

@@ -44,6 +44,8 @@ import javax.swing.JLabel;
  */
 public class CollisionWindow extends JFrame {
 
+	private static final String ASSETS_PATH = "../assets/";
+	private static final String COL_PATH = "../src/collision/";
 	private static final long serialVersionUID = -1482793564160863642L;
 	private JPanel contentPane;
 	private JTextField txtName;
@@ -95,7 +97,7 @@ public class CollisionWindow extends JFrame {
 	public void makeDefault(String path) {
 		// Check if the image exists.	
 		try {
-			this.image = ImageIO.read(new File("assets/" + path + ".png"));
+			this.image = ImageIO.read(new File(ASSETS_PATH + path + ".png"));
 		} catch (IOException e) {
 			System.err.println("Image not found in assets folder: " + path);
 			e.printStackTrace();
@@ -126,19 +128,19 @@ public class CollisionWindow extends JFrame {
 		
 		String path = txtName.getText();
 		try {
-			obj = parser.parse(new FileReader("../src/collision/" + path + ".json"));
+			obj = parser.parse(new FileReader(COL_PATH + path + ".json"));
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found: " + "collision/" + path + ".json");
+			System.out.println("File not found: " + COL_PATH + path + ".json");
 			// e.printStackTrace();
 			makeDefault(path);
 			return;
 		} catch (IOException e) {
-			System.out.println("Illegal path: " + "collision/" + path + ".json");
+			System.out.println("Illegal path: " + COL_PATH + path + ".json");
 			e.printStackTrace();
 			makeDefault(path);
 			return;
 		} catch (ParseException e) {
-			System.out.println("Cannot parse JSON at: " + "collision/" + path + ".json");
+			System.out.println("Cannot parse JSON at: " + COL_PATH + path + ".json");
 			e.printStackTrace();
 			makeDefault(path);
 			return;
@@ -218,9 +220,9 @@ public class CollisionWindow extends JFrame {
 		
 		// Make the image.		
 		try {
-			this.image = ImageIO.read(new File("assets/" + path + ".png"));
+			this.image = ImageIO.read(new File(ASSETS_PATH + path + ".png"));
 		} catch (IOException e) {
-			System.err.println("File not found: " + "assets/" + path + ".png");
+			System.err.println("File not found: " + ASSETS_PATH + path + ".png");
 			e.printStackTrace();
 			return;
 		}
@@ -320,11 +322,11 @@ public class CollisionWindow extends JFrame {
 		}
 		
 		try {
-			file = new FileWriter("../src/collision/" + this.name + ".json");
+			file = new FileWriter(COL_PATH + this.name + ".json");
 			file.write(edited.toJSONString());
 			file.flush();
 			file.close();
-			System.out.println("Output JSON written to src/collision/");
+			System.out.println("Output JSON written to " + COL_PATH);
 		} catch (IOException e1) {					
 			e1.printStackTrace();
 		}						
@@ -462,7 +464,6 @@ public class CollisionWindow extends JFrame {
 		btnBoulderDim.setEnabled(false);
 		
 		// Display the image to make points of
-		
 		JPanel pnlDisplay = new JPanel();	
 		pnlDisplay.setBackground(UIManager.getColor("Button.background"));
 		pnlDisplay.setLayout(new BorderLayout(0,0));
@@ -478,7 +479,7 @@ public class CollisionWindow extends JFrame {
 				changeOffset(0, offset);
 			}
 		});
-		ImageIcon iiNorth = new ImageIcon("assets/arNorth.png");
+		ImageIcon iiNorth = new ImageIcon(ASSETS_PATH + "arNorth.png");
 		btnNorth.setIcon(iiNorth);
 		pnlNorth.add(btnNorth);
 		
@@ -492,7 +493,7 @@ public class CollisionWindow extends JFrame {
 				changeOffset(0, -1 * offset);
 			}
 		});
-		ImageIcon iiSouth = new ImageIcon("assets/arSouth.png");
+		ImageIcon iiSouth = new ImageIcon(ASSETS_PATH + "arSouth.png");
 		btnSouth.setIcon(iiSouth);
 		pnlSouth.add(btnSouth);
 		
@@ -506,7 +507,7 @@ public class CollisionWindow extends JFrame {
 				changeOffset(offset, 0);
 			}
 		});
-		ImageIcon iiWest = new ImageIcon("assets/arWest.png");
+		ImageIcon iiWest = new ImageIcon(ASSETS_PATH + "arWest.png");
 		btnWest.setIcon(iiWest);
 		pnlWest.add(btnWest);
 		
@@ -520,7 +521,7 @@ public class CollisionWindow extends JFrame {
 				changeOffset(-1 * offset, 0);
 			}
 		});
-		ImageIcon iiEast = new ImageIcon("assets/arEast.png");
+		ImageIcon iiEast = new ImageIcon(ASSETS_PATH + "arEast.png");
 		btnEast.setIcon(iiEast);
 		pnlEast.add(btnEast);
 		

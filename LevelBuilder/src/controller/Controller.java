@@ -310,7 +310,8 @@ public class Controller {
 
 			@Override
 			public JSONObject makeJSON(String levelName, String nextName) {
-				return level.makeJSON(levelName, nextName, false);
+				boolean polygonPlatforms = true;
+				return level.makeJSON(levelName, nextName, polygonPlatforms);
 			}
 
 			@Override
