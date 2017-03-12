@@ -1,14 +1,11 @@
 package interactable;
 
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class GoldenPeg extends AInteractable {

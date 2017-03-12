@@ -18,6 +18,8 @@ import javax.swing.JTextField;
  */
 public class EditWindow extends JPanel {
 
+	private static final long serialVersionUID = -3747952784243808533L;
+
 	private JPanel contentPane;
 	
 	protected int ticket;

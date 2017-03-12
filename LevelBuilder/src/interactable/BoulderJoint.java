@@ -1,7 +1,5 @@
 package interactable;
 
-import java.awt.geom.Point2D;
-
 import org.json.simple.JSONObject;
 
 public class BoulderJoint {

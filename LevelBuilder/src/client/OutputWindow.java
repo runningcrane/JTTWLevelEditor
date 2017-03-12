@@ -31,6 +31,7 @@ import java.awt.event.ActionEvent;
  */
 public class OutputWindow extends JFrame {
 
+	private static final long serialVersionUID = -7377558614914074899L;
 	private JPanel contentPane;
 	private JPanel pnlContent;
 	private IOutputToLevelAdapter otlAdapter;
@@ -156,7 +157,6 @@ public class OutputWindow extends JFrame {
 		btnReadJSON.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String fullPath;
-				String levelName;
 				if (txtOutputPath.getText().contains(".")) {
 					// They added their own extension, don't add json to the end.
 					fullPath = "../levelFiles/" + txtInputPath.getText();
