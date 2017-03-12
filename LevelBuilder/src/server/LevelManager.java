@@ -35,6 +35,8 @@ import interactable.Vine;
 import noninteractable.Background;
 import noninteractable.INonInteractable;
 
+import static utils.Constants.*;
+
 /**
  * Manages the level building.
  * 
@@ -215,12 +217,12 @@ public class LevelManager {
 
 		// String path, String name, double cxm, double cym, boolean present
 
-		Player monkey = new Player("../assets/Monkey.png", "Monkey", 0, 0, false);
+		Player monkey = new Player(ASSETS_PATH + "Monkey.png", "Monkey", 0, 0, false);
 		BufferedImage monkeyBI;
 		try {
-			monkeyBI = ImageIO.read(new File("../assets/Monkey.png"));
+			monkeyBI = ImageIO.read(new File(ASSETS_PATH + "Monkey.png"));
 		} catch (IOException e) {
-			System.err.println("File not found: " + "assets/Monkey.png");
+			System.err.println("File not found: " + ASSETS_PATH + "Monkey.png");
 			e.printStackTrace();
 			return;
 		}
@@ -228,12 +230,12 @@ public class LevelManager {
 		monkey.setRescaled(resize(monkeyBI, 0.7, 1.7));
 		characters.put("Monkey", monkey);
 
-		Player monk = new Player("../assets/Monk.png", "Monk", 0, 0, false);
+		Player monk = new Player(ASSETS_PATH + "Monk.png", "Monk", 0, 0, false);
 		BufferedImage monkBI;
 		try {
-			monkBI = ImageIO.read(new File("../assets/Monk.png"));
+			monkBI = ImageIO.read(new File(ASSETS_PATH + "Monk.png"));
 		} catch (IOException e) {
-			System.err.println("File not found: " + "../assets/Monk.png");
+			System.err.println("File not found: " + ASSETS_PATH + "Monk.png");
 			e.printStackTrace();
 			return;
 		}
@@ -241,12 +243,12 @@ public class LevelManager {
 		monk.setRescaled(resize(monkBI, 0.7, 1.7));
 		characters.put("Monk", monk);
 
-		Player pig = new Player("../assets/Piggy.png", "Piggy", 0, 0, false);
+		Player pig = new Player(ASSETS_PATH + "Piggy.png", "Piggy", 0, 0, false);
 		BufferedImage pigBI;
 		try {
-			pigBI = ImageIO.read(new File("../assets/Piggy.png"));
+			pigBI = ImageIO.read(new File(ASSETS_PATH + "Piggy.png"));
 		} catch (IOException e) {
-			System.err.println("File not found: " + "../assets/Piggy.png");
+			System.err.println("File not found: " + ASSETS_PATH + "Piggy.png");
 			e.printStackTrace();
 			return;
 		}
@@ -254,12 +256,12 @@ public class LevelManager {
 		pig.setRescaled(resize(pigBI, 0.7, 1.7));
 		characters.put("Piggy", pig);
 
-		Player sandy = new Player("../assets/Sandy.png", "Sandy", 0, 0, false);
+		Player sandy = new Player(ASSETS_PATH + "Sandy.png", "Sandy", 0, 0, false);
 		BufferedImage sandyBI;
 		try {
-			sandyBI = ImageIO.read(new File("../assets/Sandy.png"));
+			sandyBI = ImageIO.read(new File(ASSETS_PATH + "Sandy.png"));
 		} catch (IOException e) {
-			System.err.println("File not found: " + "../assets/Sandy.png");
+			System.err.println("File not found: " + ASSETS_PATH + "Sandy.png");
 			e.printStackTrace();
 			return;
 		}
@@ -576,7 +578,7 @@ public class LevelManager {
 		this.lvhm = levelHeight;
 
 		// Set the background.
-		setBg("../assets/" + imageName);
+		setBg(ASSETS_PATH + imageName);
 
 		// Set the dimensions.
 		setLevelDimensions(this.lvwm, this.lvhm);
@@ -629,7 +631,7 @@ public class LevelManager {
 
 			JSONObject boulder = (JSONObject) obj;
 			// Further parsing here
-			String path = "../assets/" + (String) boulder.get("imageName");
+			String path = ASSETS_PATH + (String) boulder.get("imageName");
 			double cxm = (double) boulder.get("centerX");
 			double cym = (double) boulder.get("centerY");
 
@@ -859,7 +861,7 @@ public class LevelManager {
 
 			JSONObject plat = (JSONObject) obj;
 			// Further parsing here
-			String path = "../assets/" + (String) plat.get("imageName");
+			String path = ASSETS_PATH + (String) plat.get("imageName");
 			double cxm = (double) plat.get("centerX");
 			double cym = (double) plat.get("centerY");
 
@@ -982,9 +984,9 @@ public class LevelManager {
 			String path = (String) vine.get("imageName");
 			// Default case.
 			if (path == null) {
-				path = "../assets/vine1.png";
+				path = ASSETS_PATH + "vine1.png";
 			} else {
-				path = "../assets/" + path;
+				path = ASSETS_PATH + path;
 			}
 
 			Double cxmD = (Double) vine.get("swingCenterX");
@@ -1070,7 +1072,7 @@ public class LevelManager {
 				double imageWidth = (double)((JSONObject)obj).get("imageWidth");
 				double imageHeight = (double)((JSONObject)obj).get("imageHeight");			
 				
-				makeGoldenPeg("..assets/" + imageName, centerXm * this.mToPixel, centerYm * this.mToPixel, scale, rotation, jid[0]);
+				makeGoldenPeg(ASSETS_PATH + imageName, centerXm * this.mToPixel, centerYm * this.mToPixel, scale, rotation, jid[0]);
 			}
 		}
 	}
@@ -1576,18 +1578,18 @@ public class LevelManager {
 			JSONParser parser = new JSONParser();
 			Object obj;
 			try {
-				obj = parser.parse(new FileReader("../src/collision/" + name + ".json"));
+				obj = parser.parse(new FileReader(COL_PATH + name + ".json"));
 			} catch (FileNotFoundException e) {
-				System.out.println("File not found: " + "../src/collision/" + name + ".json\n"
+				System.out.println("File not found: " + COL_PATH + name + ".json\n"
 						+ "Please make the JSON in the collision box editor.");
 				e.printStackTrace();
 				return;
 			} catch (IOException e) {
-				System.out.println("Illegal path: " + "../src/collision/" + name + ".json");
+				System.out.println("Illegal path: " + COL_PATH + name + ".json");
 				e.printStackTrace();
 				return;
 			} catch (ParseException e) {
-				System.out.println("Cannot parse JSON at: " + "../src/collision/" + name + ".json");
+				System.out.println("Cannot parse JSON at: " + COL_PATH + name + ".json");
 				e.printStackTrace();
 				return;
 			}
@@ -1893,18 +1895,18 @@ public class LevelManager {
 			JSONParser parser = new JSONParser();
 			Object obj;
 			try {
-				obj = parser.parse(new FileReader("../src/collision/" + name + ".json"));
+				obj = parser.parse(new FileReader(COL_PATH + name + ".json"));
 			} catch (FileNotFoundException e) {
-				System.err.println("File not found: " + "../src/collision/" + name + ".json\n"
+				System.err.println("File not found: " + COL_PATH + name + ".json\n"
 						+ "Please make the JSON in the collision box editor.");
 				e.printStackTrace();
 				return;
 			} catch (IOException e) {
-				System.err.println("Illegal path: " + "../src/collision/" + name + ".json");
+				System.err.println("Illegal path: " + COL_PATH + name + ".json");
 				e.printStackTrace();
 				return;
 			} catch (ParseException e) {
-				System.err.println("Cannot parse JSON at: " + "../src/collision/" + name + ".json");
+				System.err.println("Cannot parse JSON at: " + COL_PATH + name + ".json");
 				e.printStackTrace();
 				return;
 			}
@@ -1967,7 +1969,7 @@ public class LevelManager {
 	 * After constructor is done initializing, start operations.
 	 */
 	public void start() {
-		setBg("../assets/bgSunny.png");
+		setBg(ASSETS_PATH + "bgSunny.png");
 		this.timer.start();
 	}
 

@@ -37,6 +37,9 @@ import javax.swing.JTextField;
 import javax.swing.JSlider;
 import javax.swing.JLabel;
 
+import static utils.Constants.*;
+
+
 /**
  * Helper window for setting a collision box for an image.
  * 
@@ -44,8 +47,6 @@ import javax.swing.JLabel;
  */
 public class CollisionWindow extends JFrame {
 
-	private static final String ASSETS_PATH = "../assets/";
-	private static final String COL_PATH = "../src/collision/";
 	private static final long serialVersionUID = -1482793564160863642L;
 	private JPanel contentPane;
 	private JTextField txtName;
