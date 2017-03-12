@@ -1,3 +1,5 @@
+3.11.17 - MVC layout being updated to properly abide to MVC format. 
+
 Start program:
 	Run RunLevelBuilder.launch. If you need the json simple jar, it is on the root level.
 	Three windows have popped up. Minimize the layer window that has nothing on it; it's not implemented yet.
