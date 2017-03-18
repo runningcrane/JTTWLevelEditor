@@ -1,4 +1,4 @@
-package new_client;
+package new_interactable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class PropertyBook {
 	/**
 	 * Map of property IDs to boolean values.
 	 */
-	Map<String, Boolean> boolList;
+	Map<String, Boolean> boolList;	
 	
 	public PropertyBook() {
 		this.intList = new HashMap<String, Integer>();
@@ -38,23 +38,23 @@ public class PropertyBook {
 		this.boolList = new HashMap<String, Boolean>();
 	}
 	
-	Map<String, Integer> getIntList() {
+	public Map<String, Integer> getIntList() {
 		return this.intList;
 	}
 	
-	Map<String, Double> getDoubList() {
+	public Map<String, Double> getDoubList() {
 		return this.doubList;
 	}
 	
-	Map<String, Float> getFloatList() {
+	public Map<String, Float> getFloatList() {
 		return this.floatList;
 	}
 	
-	Map<String, String> getStringList() {
+	public Map<String, String> getStringList() {
 		return this.strList;
 	}
 	
-	Map<String, Boolean> getBoolList() {
+	public Map<String, Boolean> getBoolList() {
 		return this.boolList;
 	}
 }

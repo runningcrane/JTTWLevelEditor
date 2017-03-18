@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import new_interactable.PropertyBook;
+
 public class EditWindow extends JPanel {
 
 	/**
@@ -77,6 +79,7 @@ public class EditWindow extends JPanel {
 		add(this.remove);
 		
 		setLayout(new GridLayout(2,2,0,0));
+		this.twos = 2;
 	}
 	
 	/**
@@ -90,7 +93,7 @@ public class EditWindow extends JPanel {
 	 * Set the action listener for submit. It needs to give the results back to someone.
 	 * @param listener
 	 */
-	void setSubmitListener(ActionListener listener) {
+	public void setSubmitListener(ActionListener listener) {
 		this.submit.addActionListener(listener);
 	}
 	
@@ -106,8 +109,16 @@ public class EditWindow extends JPanel {
 	 * Return this edit window's properties and values
 	 * @return properties
 	 */
-	PropertyBook getPropertyBook() {
+	public PropertyBook getPropertyBook() {
 		return this.book;
+	}
+	
+	/**
+	 * Set this edit window's properties and values
+	 * @param book properties
+	 */
+	void setPropertyBook(PropertyBook book) {
+		this.book = book;
 	}
 	
 	/**
@@ -115,7 +126,7 @@ public class EditWindow extends JPanel {
 	 * @param text text on the button
 	 * @param listener action listener for the button
 	 */
-	void makeButton(String text, ActionListener listener) {
+	public void makeButton(String text, ActionListener listener) {
 		JLabel lblBlank = new JLabel();
 		add(lblBlank);
 		
@@ -133,7 +144,7 @@ public class EditWindow extends JPanel {
 	 * @param text property's name & jlabel's text
 	 * @param defaultValue default value for this textbox
 	 */
-	void makeIntProperty(String text, int defaultValue) {
+	public void makeIntProperty(String text, int defaultValue) {
 		JLabel label = new JLabel(text);
 		JTextField txtField = new JTextField(Integer.toString(defaultValue) + ":");
 		txtField.addActionListener(new ActionListener() {
@@ -157,7 +168,7 @@ public class EditWindow extends JPanel {
 	 * @param text property's name & jlabel's text
 	 * @param defaultValue default value for this textbox
 	 */
-	void makeDoubleProperty(String text, double defaultValue) {
+	public void makeDoubleProperty(String text, double defaultValue) {
 		JLabel label = new JLabel(text);
 		JTextField txtField = new JTextField(Double.toString(defaultValue));
 		txtField.addActionListener(new ActionListener() {
@@ -181,7 +192,7 @@ public class EditWindow extends JPanel {
 	 * @param text property's name & jlabel's text
 	 * @param defaultValue default value for this textbox
 	 */
-	void makeFloatProperty(String text, float defaultValue) {
+	public void makeFloatProperty(String text, float defaultValue) {
 		JLabel label = new JLabel(text);
 		JTextField txtField = new JTextField(Float.toString(defaultValue));
 		txtField.addActionListener(new ActionListener() {
@@ -205,7 +216,7 @@ public class EditWindow extends JPanel {
 	 * @param text property's name & jlabel's text
 	 * @param defaultValue default value for this textbox
 	 */
-	void makeStringProperty(String text, String defaultValue) {
+	public void makeStringProperty(String text, String defaultValue) {
 		JLabel label = new JLabel(text);
 		JTextField txtField = new JTextField(defaultValue);
 		txtField.addActionListener(new ActionListener() {
@@ -225,11 +236,11 @@ public class EditWindow extends JPanel {
 	}
 	
 	/**
-	 * Make a new booleane-returning set. This includes a JLabel and JCheckBox.
+	 * Make a new boolean-returning set. This includes a JLabel and JCheckBox.
 	 * @param text property's name & jlabel's text
 	 * @param defaultValue default value for this JCheckBox
 	 */
-	void makeBooleanProperty(String text, boolean defaultValue) {
+	public void makeBooleanProperty(String text, boolean defaultValue) {
 		JLabel label = new JLabel(text);
 		JCheckBox chckBox = new JCheckBox();
 		chckBox.setSelected(defaultValue);
@@ -255,7 +266,7 @@ public class EditWindow extends JPanel {
 	 * @param text label's text
 	 * @param defaultValue default value for this textbox
 	 */
-	void setTicket(int number) {
+	public void setTicket(int number) {
 		this.ticket = number;
 	}
 	
@@ -264,7 +275,7 @@ public class EditWindow extends JPanel {
 	 * to set a GridLayout with two columns to the appropriate number of rows.
 	 * @return number of JObjects in this window
 	 */
-	int getNumberContained() {
+	private int getNumberContained() {
 		return this.twos * 2;
 	}
 	

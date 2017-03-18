@@ -62,7 +62,7 @@ public class LayerWindow extends JFrame {
 		
 		return window;
 	}
-	
+
 	/**
 	 * Remove an EditWindow.
 	 * @param number ticket number of object this is editing
