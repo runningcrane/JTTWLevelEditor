@@ -25,10 +25,5 @@ public interface ILevelToOutputAdapter {
 	 * @param nextName name of the next level following this
 	 */
 	public void setNextName(String nextName);
-	
-	/**
-	 * Request coordinates from the output window.
-	 */
-	public void requestCoordinates();
 
 }

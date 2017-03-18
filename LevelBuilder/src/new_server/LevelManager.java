@@ -124,13 +124,15 @@ public class LevelManager {
 	
 	public enum Request {
 		NONE, 
-		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC, MAKE_BOULDER_JOINT, MAKE_PEG,
+		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC, MAKE_PEG,
 		EDIT_OLD_PLAT, EDIT_OLD_VINE, EDIT_OLD_BOULDER, EDIT_OLD_PEG,
+		EDIT_MONK, EDIT_MONKEY, EDIT_PIG, EDIT_SANDY,
 		SET_PLAYER_START_POS, SET_PLAT_ENDPOINT, 
 		MARK_EOL, MARK_RP,
 		REMOVE_RP
 	}
 	private Request request;
+	private String requestPath;
 	
 	/**
 	 * Ticket number of the requesting object.
@@ -180,6 +182,7 @@ public class LevelManager {
 		this.ticketer = 1;
 		this.request = Request.NONE;
 		this.requestNum = 1;
+		this.requestPath = "";
 		
 		// No real reason to put it to 5,8 other than just to initialize it.
 		this.eol = new Point2D.Double(5, 8);
@@ -278,6 +281,57 @@ public class LevelManager {
 	}
 	
 	/**
+	 * Request a new entity to be made.
+	 * @param path image path name
+	 * @param requestType type of request
+	 */
+	public void setRequest(String path, String requestType) {
+		this.requestPath = path;			
+		
+		switch(requestType) {
+		case "Platform" : {
+			this.request = Request.MAKE_PLATFORM;
+		}
+		case "Vine" : {
+			this.request = Request.MAKE_VINE;
+		}
+		case "NPC" : {
+			this.request = Request.MAKE_NPC;
+		}
+		case "Boulder" : {
+			this.request = Request.MAKE_BOULDER;
+		}
+		case "Peg" : {
+			this.request = Request.MAKE_PEG;
+		}
+		case "Monk" : {
+			this.request = Request.EDIT_MONK;
+		}
+		case "Monkey" : {
+			this.request = Request.EDIT_MONKEY;
+		}
+		case "Pig" : {
+			this.request = Request.EDIT_PIG;
+		}
+		case "Sandy" : {
+			this.request = Request.EDIT_SANDY;
+		}
+		case "EOL" : {
+			this.request = Request.MARK_EOL;
+		}
+		case "RP" : {
+			this.request = Request.MARK_RP;
+		}
+		case "RMRP" : {
+			this.request = Request.REMOVE_RP;
+		}
+		default : {
+			this.request = Request.NONE;
+		}
+		}
+	}
+	
+	/**
 	 * Receive coordinates from the OuputWindow. Do various actions depending on the request type.
 	 * @param x
 	 * @param y
@@ -334,8 +388,7 @@ public class LevelManager {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				request = Request.EDIT_OLD_BOULDER;
-				requestNum = ticket;
-				ltoAdapter.requestCoordinates();	
+				requestNum = ticket;	
 			}		
 		});
 		
@@ -488,6 +541,7 @@ public class LevelManager {
 		return new ImageIcon(original.getScaledInstance((int) (original.getWidth() * widthScale),
 				(int) (original.getHeight() * heightScale), java.awt.Image.SCALE_SMOOTH));
 	}
+	
 	
 	/**
 	 * After constructor is done initializing, start operations.
