@@ -54,6 +54,8 @@ public interface IControlToLevelAdapter {
 	
 	public void makePeg(String path);
 	
+	public void makeTrap(String path);
+	
 	/**
 	 * Request a new boulder to be added.
 	 * @param path
