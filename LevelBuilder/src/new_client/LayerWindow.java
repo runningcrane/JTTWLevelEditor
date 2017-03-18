@@ -44,9 +44,19 @@ public class LayerWindow extends JFrame {
 	 * @param name type of object this is editing
 	 */
 	public EditWindow makeEditWindow(int number, String name) {
+		// Make the window.
 		EditWindow window = new EditWindow(name, number);
 		JSeparator jsep = new JSeparator(SwingConstants.HORIZONTAL);
 		
+		// Set its removal action listener.
+		window.setRemoveListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				removeEditWindow(number);
+			}			
+		});
+		
+		// Add it to our known lists.		
 		this.windows.put(number, window);
 		this.separators.put(number, jsep);
 		

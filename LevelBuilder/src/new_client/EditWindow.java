@@ -1,5 +1,6 @@
 package new_client;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,14 +29,14 @@ public class EditWindow extends JPanel {
 	int twos;
 	
 	/**
-	 * Number of one-object properties made.
-	 */
-	int ones;
-	
-	/**
 	 * JButton for submitting updates.
 	 */
 	JButton submit;
+	
+	/**
+	 * JButton for removing this window.
+	 */
+	JButton remove;
 	
 	/**
 	 * Map of property ids to the property.
@@ -50,7 +51,6 @@ public class EditWindow extends JPanel {
 	public EditWindow(String name, int number) {
 		this.name = name;		
 		this.twos = 0;
-		this.ones = 0;
 		this.book = new PropertyBook();
 		
 		// Make the initial JLabel featuring the ticket number.
@@ -60,16 +60,30 @@ public class EditWindow extends JPanel {
 				
 		// Make the submit button.
 		this.submit = new JButton("Submit");
+		submit.setBackground(Color.GREEN);
+		submit.setOpaque(true);
+		submit.setBorderPainted(false);
+		submit.setForeground(Color.WHITE);
 		add(this.submit);
 		
-		setLayout(new GridLayout(1,2,0,0));
+		// Make the remove button.
+		JLabel lblBlank = new JLabel();
+		add(lblBlank);
+		this.remove = new JButton("Remove");
+		remove.setBackground(Color.RED);
+		remove.setOpaque(true);
+		remove.setBorderPainted(false);
+		remove.setForeground(Color.WHITE);
+		add(this.remove);
+		
+		setLayout(new GridLayout(2,2,0,0));
 	}
 	
 	/**
 	 * Update the grid layout with however many properties we now have.
 	 */
 	void updateLayout() {
-		setLayout(new GridLayout((this.ones + this.twos * 2)/2, 2, 0, 0));
+		setLayout(new GridLayout(this.twos, 2, 0, 0));
 	}
 	
 	/**
@@ -78,6 +92,14 @@ public class EditWindow extends JPanel {
 	 */
 	void setSubmitListener(ActionListener listener) {
 		this.submit.addActionListener(listener);
+	}
+	
+	/**
+	 * Set the action listener for remove. It informs the layer window it needs to be removed.
+	 * @param listener
+	 */
+	void setRemoveListener(ActionListener listener) {
+		this.remove.addActionListener(listener);
 	}
 	
 	/**
@@ -94,11 +116,14 @@ public class EditWindow extends JPanel {
 	 * @param listener action listener for the button
 	 */
 	void makeButton(String text, ActionListener listener) {
+		JLabel lblBlank = new JLabel();
+		add(lblBlank);
+		
 		JButton btnDimensions = new JButton(text);
 		btnDimensions.addActionListener(listener);
 		add(btnDimensions);
 		
-		this.ones++;
+		this.twos++;
 		updateLayout();
 	}
 	
@@ -240,7 +265,7 @@ public class EditWindow extends JPanel {
 	 * @return number of JObjects in this window
 	 */
 	int getNumberContained() {
-		return this.ones + this.twos * 2;
+		return this.twos * 2;
 	}
 	
 	/**
