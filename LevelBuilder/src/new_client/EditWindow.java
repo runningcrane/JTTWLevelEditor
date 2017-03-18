@@ -283,7 +283,7 @@ public class EditWindow extends JPanel {
 	 * Get the type of editing window this is - for example, a window that edits "Rock".
 	 * @return name of type of editing window
 	 */
-	String getEditWindowType() {
+	public String getEditWindowType() {
 		return this.name;
 	}
 	

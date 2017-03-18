@@ -17,13 +17,10 @@ import interactable.Platform;
 import interactable.Player;
 import interactable.Vine;
 import new_client.EditWindow;
-import new_client.ILevelToLayerAdapter;
-import new_client.ILevelToOutputAdapter;
 import new_interactable.Boulder;
 import new_interactable.PropertyBook;
 import noninteractable.Background;
 import noninteractable.INonInteractable;
-import server.ILevelToControlAdapter;
 
 public class LevelManager {
 	
@@ -126,8 +123,11 @@ public class LevelManager {
 		REMOVE_RP
 	}
 	private Request request;
-	private int requestNum;
 	
+	/**
+	 * Ticket number of the requesting object.
+	 */
+	private int requestNum;		
 
 	/**
 	 * Gives out ticket values.

@@ -30,12 +30,15 @@ public class LayerWindow extends JFrame {
 	private static final String[] TYPES = {
 			"All", "Platform", "Rock", "Vine", "Peg", "Trap"
 	};;
+		
+	ILayerToLevelAdapter ltlAdapter;
 	
-	public LayerWindow() {
+	public LayerWindow(ILayerToLevelAdapter ltlAdapter) {
+		this.ltlAdapter = ltlAdapter;
 		this.windows = new HashMap<Integer, EditWindow>();
 		this.separators = new HashMap<Integer, JSeparator>();
 		
-		initJSON();
+		initGUI();
 	}
 	
 	/**
@@ -68,11 +71,25 @@ public class LayerWindow extends JFrame {
 	 * @param number ticket number of object this is editing
 	 */
 	public void removeEditWindow(int number) {
+		String type = this.windows.get(number).getEditWindowType();
+		
 		this.windows.remove(number);
 		this.separators.remove(number);		
+		
+		// Remove the object from the level as well.
+		ltlAdapter.removeEntity(number, type);
+		
 	}
 	
-	public void initJSON() {		
+	/**
+	 * Remove everything.
+	 */
+	public void clean() {
+		this.windows.clear();
+		this.separators.clear();
+	}
+	
+	public void initGUI() {		
 		// Make this a BoxY layout. 
 		JPanel contentPane = new JPanel();
 		JPanel pnlBack = new JPanel();
@@ -121,5 +138,11 @@ public class LayerWindow extends JFrame {
 			btnBg.setPreferredSize(dimButton);
 			pnlToggle.add(btnAll);
 		}		
+	}
+	
+	public void start() {
+		setTitle("Edit Objects");
+		setSize(200, 550);
+		setVisible(true);
 	}
 }

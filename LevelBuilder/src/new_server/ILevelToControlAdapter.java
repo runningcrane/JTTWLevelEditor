@@ -1,4 +1,4 @@
-package server;
+package new_server;
 
 public interface ILevelToControlAdapter {
 

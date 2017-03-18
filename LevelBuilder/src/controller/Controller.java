@@ -11,11 +11,11 @@ import client.ILayerToLevelAdapter;
 import client.IOutputToLevelAdapter;
 import client.LayerWindow;
 import client.OutputWindow;
+import new_server.ILevelToControlAdapter;
+import new_server.ILevelToOutputAdapter;
 import client.ControlWindow;
 import server.LevelManager;
 import server.ILevelToLayerAdapter;
-import server.ILevelToOutputAdapter;
-import server.ILevelToControlAdapter;
 
 /**
  * Controller of this MVC system. Start the program here.
