@@ -18,15 +18,14 @@ import javax.swing.Timer;
 
 import org.json.simple.JSONObject;
 
-import interactable.BoulderJoint;
-import interactable.Enemy;
-import interactable.GoldenPeg;
-import interactable.Platform;
-import interactable.Player;
-import interactable.Vine;
 import new_client.EditWindow;
 import new_interactable.Boulder;
+import new_interactable.NPC;
+import new_interactable.Peg;
+import new_interactable.Platform;
+import new_interactable.Player;
 import new_interactable.PropertyBook;
+import new_interactable.Vine;
 import noninteractable.Background;
 import noninteractable.INonInteractable;
 
@@ -108,19 +107,14 @@ public class LevelManager {
 	private Map<Integer, Boulder> boulders;
 	
 	/**
-	 * Boulder joint list.
-	 */
-	private Map<Integer, BoulderJoint> joints;
-	
-	/**
 	 * Peg list. These are connected to boulder joints.
 	 */
-	private Map<Integer, GoldenPeg> pegs;
+	private Map<Integer, Peg> pegs;
 
 	/**
 	 * NPC array.
 	 */
-	private Map<String, Enemy> npcs;
+	private Map<String, NPC> npcs;
 	
 	public enum Request {
 		NONE, 
@@ -215,68 +209,32 @@ public class LevelManager {
 		this.vines = new HashMap<Integer, Vine>();
 		this.boulders = new HashMap<Integer, Boulder>();
 		this.respawnPoints = new ArrayList<Point2D.Double>();
-		this.joints = new HashMap<Integer, BoulderJoint>();
-		this.pegs = new HashMap<Integer, GoldenPeg>();
+		this.pegs = new HashMap<Integer, Peg>();
 
 		// Set up the player characters.
 		characters = new HashMap<String, Player>();
 
-		// String path, String name, double cxm, double cym, boolean present
-
-		Player monkey = new Player(ASSETS_PATH + "Monkey.png", "Monkey", 0, 0, false);
-		BufferedImage monkeyBI;
-		try {
-			monkeyBI = ImageIO.read(new File(ASSETS_PATH + "Monkey.png"));
-		} catch (IOException e) {
-			System.err.println("File not found: " + ASSETS_PATH + "Monkey.png");
-			e.printStackTrace();
-			return;
-		}
-		monkey.setImage(monkeyBI);
-		monkey.setRescaled(resize(monkeyBI, 0.7, 1.7));
-		characters.put("Monkey", monkey);
-
-		Player monk = new Player(ASSETS_PATH + "Monk.png", "Monk", 0, 0, false);
-		BufferedImage monkBI;
-		try {
-			monkBI = ImageIO.read(new File(ASSETS_PATH + "Monk.png"));
-		} catch (IOException e) {
-			System.err.println("File not found: " + ASSETS_PATH + "Monk.png");
-			e.printStackTrace();
-			return;
-		}
-		monk.setImage(monkBI);
-		monk.setRescaled(resize(monkBI, 0.7, 1.7));
-		characters.put("Monk", monk);
-
-		Player pig = new Player(ASSETS_PATH + "Piggy.png", "Piggy", 0, 0, false);
-		BufferedImage pigBI;
-		try {
-			pigBI = ImageIO.read(new File(ASSETS_PATH + "Piggy.png"));
-		} catch (IOException e) {
-			System.err.println("File not found: " + ASSETS_PATH + "Piggy.png");
-			e.printStackTrace();
-			return;
-		}
-		pig.setImage(pigBI);
-		pig.setRescaled(resize(pigBI, 0.7, 1.7));
-		characters.put("Piggy", pig);
-
-		Player sandy = new Player(ASSETS_PATH + "Sandy.png", "Sandy", 0, 0, false);
-		BufferedImage sandyBI;
-		try {
-			sandyBI = ImageIO.read(new File(ASSETS_PATH + "Sandy.png"));
-		} catch (IOException e) {
-			System.err.println("File not found: " + ASSETS_PATH + "Sandy.png");
-			e.printStackTrace();
-			return;
-		}
-		sandy.setImage(sandyBI);
-		sandy.setRescaled(resize(sandyBI, 0.7, 1.7));
-		characters.put("Sandy", sandy);
+		String[] players = {"Monkey", "Monk", "Piggy", "Sandy"};
+		
+		for (int i = 0; i < 4; i++) {
+			Player player = new Player(ASSETS_PATH + players[i] + ".png");
+			BufferedImage playerBI;
+			try {
+				playerBI = ImageIO.read(new File(ASSETS_PATH + players[i] + ".png"));
+			} catch (IOException e) {
+				System.err.println("File not found: " + ASSETS_PATH + players[i] + ".png");
+				e.printStackTrace();
+				return;
+			}
+			player.setBI(playerBI);
+			player.setRI(resize(playerBI, 0.7, 1.7));
+			player.setCenter(0, 0);
+			player.getPropertyBook().getBoolList().put("present", false);
+			characters.put(players[i], player);
+		}		
 
 		// Initialize the NPCs.
-		npcs = new HashMap<String, Enemy>();
+		npcs = new HashMap<String, NPC>();
 
 	}
 	
@@ -333,27 +291,253 @@ public class LevelManager {
 	
 	/**
 	 * Receive coordinates from the OuputWindow. Do various actions depending on the request type.
-	 * @param x
-	 * @param y
+	 * @param xp
+	 * @param yp
 	 */
-	public void receiveCoordinates(double x, double y) {
+	public void receiveCoordinates(double xp, double yp) {
+		double xm = (xp - this.vpOffset.getX()) / this.mToPixel;
+		double ym = this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel;
+		
 		switch (request) {
+		case MAKE_PLATFORM: {
+			makePlatform(this.requestPath, null, xm, ym);
+		}
+		case MAKE_VINE: {
+			makeVine(this.requestPath, null, xm, ym);
+		}
+		case MAKE_BOULDER: {
+			makeBoulder(this.requestPath, null, xm, ym);
+		}
+		case MAKE_NPC: {
+			makeNPC(this.requestPath, null, xm, ym);
+		}
+		case MAKE_PEG: {
+			makePeg(this.requestPath, null, xm, ym);
+		}
+		case EDIT_OLD_PLAT: {
+			Platform target = this.plats.get(requestNum);
+			if (target != null) {
+				// Set the center.
+				target.setCenter(xm, ym);
+			}
+		}
+		case EDIT_OLD_VINE: {
+			Vine target = this.vines.get(requestNum);
+			if (target != null) {
+				// Set the center.
+				target.setCenter(xm, ym);
+			}
+		}
 		case EDIT_OLD_BOULDER: {
 			Boulder target = this.boulders.get(requestNum);
 			if (target != null) {
-				// TODO: Chance x & y into [cocos,m] coordinates.
-				
 				// Set the center.
-				target.setCenter(x, y);
+				target.setCenter(xm, ym);
+			}
+		}
+		case EDIT_OLD_PEG: {
+			Peg target = this.pegs.get(requestNum);
+			if (target != null) {
+				// Set the center.
+				target.setCenter(xm, ym);
+			}
+		}
+		case EDIT_MONK: {
+			this.characters.get("Monk").setCenter(xm, ym);
+		}
+		case EDIT_MONKEY: {
+			this.characters.get("Monkey").setCenter(xm, ym);
+		}
+		case EDIT_PIG: {
+			this.characters.get("Piggy").setCenter(xm, ym);
+		}
+		case EDIT_SANDY: {
+			this.characters.get("Sandy").setCenter(xm, ym);
+		}
+		case SET_PLAT_ENDPOINT: {
+			// TODO
+		}
+		case MARK_EOL: {
+			this.eol = new Point2D.Double(xm, ym);
+		}
+		case MARK_RP: {
+			this.respawnPoints.add(new Point2D.Double(xm, ym));
+		}
+		case REMOVE_RP: {
+			Point2D.Double[] closest = new Point2D.Double[]{new Point2D.Double(-1, -1)};
+			double[] distance = new double[]{Double.MAX_VALUE};
+			
+			this.respawnPoints.forEach((point) -> {
+				// Calculate distance from the point to the clicked point.
+				double xDiff = Math.abs(point.x - xm);
+				double yDiff = Math.abs(point.y - ym);
+				double tempDist = Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
+				if (tempDist < distance[0]) {
+					// Closer point found. Update.
+					distance[0] = tempDist;
+					closest[0] = point;
+				}
+			});
+			
+			// Don't remove if nothing was found.
+			if (closest[0].x != -1) {
+				// Don't remove unless the click was close enough to the label.
+				if (distance[0] < 2) {
+					this.respawnPoints.remove(closest[0]);
+				}
 			}
 		}
 		case NONE: {
 			
 		}
 		}
+		
+		this.request = Request.NONE;
+		this.requestNum = 0;
+		this.requestPath = "";
 	}
 	
-	public void makeBoulder(String imageName, PropertyBook book) {
+	public void makePlatform (String imageName, PropertyBook book, double xm, double ym) {
+		Platform plat = new Platform(this.ticketer, imageName);
+		
+		// Make an EditWindow.
+		makePlatEditWindow(this.ticketer, plat, book);
+				
+		// Add it the known list of platforms.
+		this.plats.put(this.ticketer, plat);
+		
+		// Increase the ticket count.
+		this.ticketer++;
+	}
+	
+	/**
+	 * Make a boulder's edit window.
+	 * @param ticket ticket number of boulder
+	 * @param plat actual boulder object
+	 * @param book property book for the boulder, if it had pre-existing properties
+	 */
+	public void makePlatformEditWindow(int ticket, Platform plat, PropertyBook book) {
+		EditWindow window = ltlAdapter.makeEditWindow(ticket, "Platform");		
+		
+		// Set up the the submit listener.
+		window.setSubmitListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				plat.updateProperties(window.getPropertyBook());				
+			}			
+		});
+		
+		// Set up boulder properties.
+		window.makeButton("New center", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				request = Request.EDIT_OLD_PLAT;
+				requestNum = ticket;	
+			}		
+		});
+		
+		
+		window.makeDoubleProperty("Scale", (book == null) 
+				? 1.0 
+				: ((book.getDoubList().get("Scale") == null 
+					? 1.0  
+					: book.getDoubList().get("Scale")))
+		);
+		
+		window.makeBooleanProperty("Disappears", (book == null) 
+				? false 
+				: ((book.getBoolList().get("Disappears") == null 
+					? false
+					: book.getBoolList().get("Disappears")))
+		);
+		
+		window.makeBooleanProperty("Moving", (book == null) 
+				? false 
+				: ((book.getBoolList().get("Moving") == null 
+					? false
+					: book.getBoolList().get("Moving")))
+		);
+		
+		window.makeButton("Set Endpoint", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				request = Request.SET_PLAT_ENDPOINT;
+				requestNum = ticket;
+			}			
+		});
+		
+		window.makeDoubleProperty("Velocity", (book == null) 
+				? 1.0 
+				: ((book.getDoubList().get("Velocity") == null 
+					? 1.0  
+					: book.getDoubList().get("Velocity")))
+		);
+		
+		window.makeBooleanProperty("Sinkable", (book == null) 
+				? false 
+				: ((book.getBoolList().get("Sinkable") == null 
+					? false
+					: book.getBoolList().get("Sinkable")))
+		);
+		
+		window.makeDoubleProperty("Spring Constant K", (book == null) 
+				? 1.0 
+				: ((book.getDoubList().get("Spring Constant K") == null 
+					? 1.0  
+					: book.getDoubList().get("Spring Constant K")))
+		);
+		
+		window.makeBooleanProperty("Climbable", (book == null) 
+				? false 
+				: ((book.getBoolList().get("Climbable") == null 
+					? false
+					: book.getBoolList().get("Climbable")))
+		);
+		
+		window.makeBooleanProperty("Collidable", (book == null) 
+				? false 
+				: ((book.getBoolList().get("Collidable") == null 
+					? false
+					: book.getBoolList().get("Collidable")))
+		);
+		
+		window.makeBooleanProperty("Polygon collision", (book == null) 
+				? false
+				: ((book.getBoolList().get("Polygon collision") == null 
+					? false
+					: book.getBoolList().get("Polygon collision")))
+		);
+
+	}
+	
+	public void makeVine (String imageName, PropertyBook book, double xm, double ym) {
+		Vine vine = new Vine(this.ticketer, imageName);
+		
+		// Make an EditWindow.
+		makeVineEditWindow(this.ticketer, vine, book);
+				
+		// Add it the known list of vines.
+		this.vines.put(this.ticketer, vine);
+		
+		// Increase the ticket count.
+		this.ticketer++;
+	}
+	
+	
+	public void makeNPC (String imageName, PropertyBook book, double xm, double ym) {
+		NPC npc = new NPC(this.ticketer, imageName);
+		
+		// Make an EditWindow.
+		makeNPCEditWindow(this.ticketer, npc, book);
+				
+		// Add it the known list of NPCs.
+		this.npcs.put(this.ticketer, npc);
+		
+		// Increase the ticket count.
+		this.ticketer++;
+	}
+	
+	public void makeBoulder(String imageName, PropertyBook book, double xm, double ym) {
 		Boulder newBoulder = new Boulder(this.ticketer, imageName);
 		
 		// Make an EditWindow.
@@ -415,6 +599,19 @@ public class LevelManager {
 
 	}
 	
+	public void makePeg (String imageName, PropertyBook book, double xm, double ym) {
+		Peg peg = new Peg(this.ticketer, imageName);
+		
+		// Make an EditWindow.
+		makePegEditWindow(this.ticketer, peg, book);
+				
+		// Add it the known list of NPCs.
+		this.pegs.put(this.ticketer, peg);
+		
+		// Increase the ticket count.
+		this.ticketer++;
+	}
+	
 	public void changeOffset(double xm, double ym) {
 
 		this.vpOffset = new Point2D.Double(this.vpOffset.getX() + xm * this.mToPixel,
@@ -433,9 +630,6 @@ public class LevelManager {
 		
 		// Clear the current list of boulders.
 		this.boulders.clear();
-		
-		// Clear the boulder joints.
-		this.joints.clear();
 		
 		// Clear the current list of respawn points.		
 		this.respawnPoints.clear();
@@ -490,12 +684,13 @@ public class LevelManager {
 
 		// Unfortunately this requires resetting ALL of the rescaled images.
 		this.plats.forEach(
-				(ticket, plat) -> plat.setRescaled(resize(plat.getImage(), plat.getScaledIGW(), plat.getScaledIGH())));
-		this.characters.forEach((name, player) -> player.setRescaled(resize(player.getImage(), 0.7, 1.7)));
+				(ticket, plat) -> plat.setRI(resize(plat.getBI(), plat.getScaledIGWM(), plat.getScaledIGHM())));
+		this.characters.forEach((name, player) -> player.setRI(resize(player.getBI(), 0.7, 1.7)));
+		// TODO: Why are vines using IGW instead of IGWM?
 		this.vines.forEach((ticket, vine) -> vine
-				.setRescaled(resize(vine.getImage(), vine.getInGameWidth(), vine.getInGameHeight())));
+				.setRI(resize(vine.getBI(), vine.getInGameWidth(), vine.getInGameHeight())));
 		this.boulders.forEach((ticket, boulder) -> boulder
-				.setRescaled(resize(boulder.getImage(), boulder.getScaledIGW(), boulder.getScaledIGH())));
+				.setRI(resize(boulder.getBI(), boulder.getScaledIGWM(), boulder.getScaledIGHM())));
 		// this.npcs.forEach((name, enemy) ->
 		// enemy.setRescaled(resize(enemy.getImage(), enemy.getInGameWidth(),
 		// enemy.getInGameHeight())));
