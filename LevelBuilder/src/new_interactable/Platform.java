@@ -1,6 +1,10 @@
 package new_interactable;
 
+import java.awt.geom.Point2D;
+
 public class Platform extends AInteractable {
+	
+	private Point2D.Double endpoint;
 	/**
 	 * Makes a basic platform.
 	 * @param ticket identifier
@@ -10,4 +14,12 @@ public class Platform extends AInteractable {
 		setTicket(ticket);
 		this.setPath(path);		
 	}	
+	
+	public void setEndpoint(Point2D.Double endpoint) {
+		this.endpoint = endpoint;
+	}
+	
+	public Point2D.Double getEndpoint() {
+		return this.endpoint;
+	}
 }

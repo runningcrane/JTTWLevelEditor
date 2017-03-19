@@ -1,6 +1,12 @@
 package new_interactable;
 
 public class Boulder extends AInteractable {
+	
+	/**
+	 * Previous ticket of the boulder.
+	 */
+	private int oldTicket;
+	
 	/**
 	 * Makes a basic boulder.
 	 * @param ticket identifier
@@ -10,4 +16,12 @@ public class Boulder extends AInteractable {
 		setTicket(ticket);
 		this.setPath(path);		
 	}	
+	
+	public int getOldTicket() {
+		return this.oldTicket;
+	}
+	
+	public void updateTicket() {
+		this.oldTicket = getTicket();
+	}
 }

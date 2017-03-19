@@ -2,6 +2,9 @@ package new_server;
 
 import static utils.Constants.ASSETS_PATH;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
@@ -114,15 +117,14 @@ public class LevelManager {
 	/**
 	 * NPC array.
 	 */
-	private Map<String, NPC> npcs;
+	private Map<Integer, NPC> npcs;
 	
 	public enum Request {
 		NONE, 
 		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC, MAKE_PEG,
 		EDIT_OLD_PLAT, EDIT_OLD_VINE, EDIT_OLD_BOULDER, EDIT_OLD_PEG,
 		EDIT_MONK, EDIT_MONKEY, EDIT_PIG, EDIT_SANDY,
-		SET_PLAYER_START_POS, SET_PLAT_ENDPOINT, 
-		MARK_EOL, MARK_RP,
+		SET_PLAT_ENDPOINT, MARK_EOL, MARK_RP,
 		REMOVE_RP
 	}
 	private Request request;
@@ -229,13 +231,191 @@ public class LevelManager {
 			player.setBI(playerBI);
 			player.setRI(resize(playerBI, 0.7, 1.7));
 			player.setCenter(0, 0);
-			player.getPropertyBook().getBoolList().put("present", false);
+			player.getPropertyBook().getBoolList().put("Present", false);
 			characters.put(players[i], player);
 		}		
 
 		// Initialize the NPCs.
-		npcs = new HashMap<String, NPC>();
+		npcs = new HashMap<Integer, NPC>();
 
+	}
+	
+	/**
+	 * For rendering purposes. Offsets the real world coordinates by the
+	 * viewport offset.
+	 * 
+	 * @param x
+	 *            real world swing coordinate
+	 * @param y
+	 *            real world swing coordinate
+	 * @return (x,y) viewport swing coordinates
+	 */
+	public Point2D.Double getViewportCoordinates(double x, double y) {
+		return new Point2D.Double(x + this.vpOffset.getX(), y + this.vpOffset.getY());
+	}
+	
+	/**
+	 * Renders the output window.
+	 * 
+	 * @param panel
+	 *            JPanel to render
+	 * @param g
+	 *            graphics of component
+	 */
+	public void render(Component panel, Graphics g) {
+		// Draw background
+		if (bg.getRescaled() != null) {
+			Point2D.Double vpbg = getViewportCoordinates(0, 0);
+			g.drawImage(bg.getRescaled().getImage(), (int) vpbg.getX(), (int) vpbg.getY(), null);
+		}
+
+		// Draw platforms
+		plats.forEach((number, plat) -> {
+			/*
+			 * Unfortunately drawImage draws on the top left, not center, so
+			 * adjustments are made. Also unfortunately, cocos uses a different
+			 * orientation system than swing. Namely, the y is flipped in
+			 * direction. Since CenterXm/CenterYm are in swing-orientation,
+			 * reverse the ys to get them in cocos.
+			 */
+			double ulxp = (plat.getCenterXM() - plat.getScaledIGWM() / 2.0) * this.mToPixel;
+			double ulyp = ((this.lvhm - plat.getCenterYM()) - plat.getScaledIGHM() / 2.0) * this.mToPixel;
+			Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
+
+			g.drawImage(plat.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
+
+			// Draw the label on top of it. In the center, maybe?
+			g.setColor(Color.MAGENTA);
+			Point2D.Double vplp = getViewportCoordinates(plat.getCenterXM() * this.mToPixel,
+					(this.lvhm - (plat.getCenterYM())) * this.mToPixel);
+			g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
+
+			// Label point
+			g.setColor(Color.BLACK);
+			Point2D.Double vplbp = getViewportCoordinates(plat.getCenterXM() * this.mToPixel + 5,
+					(this.lvhm - (plat.getCenterYM())) * this.mToPixel + 10);
+			g.drawString(Integer.toString(number), (int) (vplbp.getX()), (int) (vplbp.getY()));
+
+			// If moveable, show its endpoint and a line to its endpoint.
+			if (plat.getPropertyBook().getBoolList().get("Moving").booleanValue()) {
+				Point2D.Double endpoint = plat.getEndpoint();
+				Point2D.Double vplbep = getViewportCoordinates(endpoint.getX() * this.mToPixel + 5,
+						(this.lvhm - (endpoint.getY())) * this.mToPixel + 10);
+
+				// Draw the line first.
+				g.setColor(Color.MAGENTA);
+				g.drawLine((int) vplp.getX(), (int) vplp.getY(), (int) vplbep.getX(), (int) vplbep.getY());
+
+				// Then draw the endpoint.
+				g.setColor(Color.RED);
+				g.fillOval((int) (vplbep.getX()), (int) (vplbep.getY()), 15, 15);
+
+				// Then label it.
+				g.setColor(Color.BLACK);
+				Point2D.Double vplbnep = getViewportCoordinates(endpoint.getX() * this.mToPixel + 5,
+						(this.lvhm - (endpoint.getY())) * this.mToPixel + 10);
+				g.drawString(Integer.toString(number) + "EP", (int) (vplbnep.getX()), (int) (vplbnep.getY()));
+			}
+		});
+		
+		// Draw boulders
+		boulders.forEach((ticket, boulder) -> {
+			double ulxp = (boulder.getCenterXM() - boulder.getScaledIGWM() / 2.0) * this.mToPixel;
+			double ulyp = ((this.lvhm - boulder.getCenterYM()) - boulder.getScaledIGHM() / 2.0) * this.mToPixel;
+			Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
+
+			g.drawImage(boulder.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
+
+			// Draw the label on top of it. In the center, maybe?
+			g.setColor(Color.MAGENTA);
+			Point2D.Double vplp = getViewportCoordinates(boulder.getCenterXM() * this.mToPixel,
+					(this.lvhm - (boulder.getCenterYM())) * this.mToPixel);
+			g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
+
+			// Label point
+			g.setColor(Color.BLACK);
+			Point2D.Double vplbp = getViewportCoordinates(boulder.getCenterXM() * this.mToPixel + 5,
+					(this.lvhm - (boulder.getCenterYM())) * this.mToPixel + 10);
+			g.drawString(Integer.toString(ticket), (int) (vplbp.getX()), (int) (vplbp.getY()));
+			
+		});
+		
+		// Draw pegs.
+		pegs.forEach((ticket, peg) -> {
+			double ulxp = (peg.getCenterXM() - peg.getScaledIGWM() / 2.0) * this.mToPixel;
+			double ulyp = ((this.lvhm - peg.getCenterYM()) - peg.getScaledIGHM() / 2.0) * this.mToPixel;
+			Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
+
+			g.drawImage(peg.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
+
+			// Draw the label on top of it. In the center, maybe?
+			g.setColor(Color.MAGENTA);
+			Point2D.Double vplp = getViewportCoordinates(peg.getCenterXM() * this.mToPixel,
+					(this.lvhm - (peg.getCenterYM())) * this.mToPixel);
+			g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
+
+			// Label point
+			g.setColor(Color.BLACK);
+			Point2D.Double vplbp = getViewportCoordinates(peg.getCenterXM() * this.mToPixel + 5,
+					(this.lvhm - (peg.getCenterYM())) * this.mToPixel + 10);
+			g.drawString(Integer.toString(ticket), (int) (vplbp.getX()), (int) (vplbp.getY()));
+		});
+
+		// Draw vines
+		vines.forEach((ticket, vine) -> {
+			double ulxp = (vine.getCenterXM() - vine.getInGameWidth() / 2.0) * this.mToPixel;
+			double ulyp = ((this.lvhm - vine.getCenterYM())) * this.mToPixel;
+			Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
+
+			g.drawImage(vine.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
+
+			// Draw the label on top of it.
+			g.setColor(Color.MAGENTA);
+			Point2D.Double vplp = getViewportCoordinates(vine.getCenterXM() * this.mToPixel,
+					(this.lvhm - (vine.getCenterYM() - vine.getInGameHeight() / 2)) * this.mToPixel);
+			g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
+
+			// Label point
+			g.setColor(Color.BLACK);
+			Point2D.Double vplbp = getViewportCoordinates(vine.getCenterXM() * this.mToPixel + 5,
+					(this.lvhm - (vine.getCenterYM() - vine.getInGameHeight() / 2)) * this.mToPixel + 10);
+			g.drawString(Integer.toString(ticket), (int) (vplbp.getX()), (int) (vplbp.getY()));
+		});
+
+		// Draw player characters
+		characters.forEach((name, player) -> {
+			if (player.getPropertyBook().getBoolList().get("Present").booleanValue()) {
+				double ulxp = (player.getCenterXM() - player.getInGameWidth() / 2.0) * this.mToPixel;
+				double ulyp = ((this.lvhm - (player.getCenterYM())) - player.getInGameHeight() / 2.0) * this.mToPixel;
+				Point2D.Double vpcp = getViewportCoordinates(ulxp, ulyp);
+				g.drawImage(player.getRI().getImage(), (int) vpcp.getX(), (int) vpcp.getY(), null);
+			}
+		});
+
+		// Draw EOL
+		g.setColor(Color.GREEN);
+		Point2D.Double vpeol = getViewportCoordinates(this.eol.getX() * this.mToPixel,
+				(this.lvhm - (this.eol.getY())) * this.mToPixel);
+		g.fillOval((int) (vpeol.getX()), (int) (vpeol.getY()), 15, 15);
+
+		g.setColor(Color.BLACK);
+		Point2D.Double vplbeol = getViewportCoordinates(this.eol.getX() * this.mToPixel + 5,
+				(this.lvhm - (this.eol.getY())) * this.mToPixel + 10);
+		g.drawString("EOL", (int) (vplbeol.getX()), (int) (vplbeol.getY()));
+		
+		// Draw respawn points		
+		respawnPoints.forEach((point) -> {
+			g.setColor(Color.BLUE);
+			Point2D.Double vprp = getViewportCoordinates(point.getX() * this.mToPixel,
+					(this.lvhm - point.getY()) * this.mToPixel);
+			g.fillOval((int) (vprp.getX()), (int) (vprp.getY()), 15, 15);
+
+			// Label point
+			g.setColor(Color.WHITE);
+			Point2D.Double vprplb = getViewportCoordinates(point.getX() * this.mToPixel,
+					(this.lvhm - point.getY()) * this.mToPixel + 12);
+			g.drawString("RP", (int) (vprplb.getX()), (int) (vprplb.getY()));
+		});
 	}
 	
 	/**
@@ -355,7 +535,7 @@ public class LevelManager {
 			this.characters.get("Sandy").setCenter(xm, ym);
 		}
 		case SET_PLAT_ENDPOINT: {
-			// TODO
+			this.plats.get(this.requestNum).setEndpoint(new Point2D.Double(xm, ym));
 		}
 		case MARK_EOL: {
 			this.eol = new Point2D.Double(xm, ym);
@@ -410,13 +590,7 @@ public class LevelManager {
 		this.ticketer++;
 	}
 	
-	/**
-	 * Make a boulder's edit window.
-	 * @param ticket ticket number of boulder
-	 * @param plat actual boulder object
-	 * @param book property book for the boulder, if it had pre-existing properties
-	 */
-	public void makePlatformEditWindow(int ticket, Platform plat, PropertyBook book) {
+	public void makePlatEditWindow(int ticket, Platform plat, PropertyBook book) {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "Platform");		
 		
 		// Set up the the submit listener.
@@ -427,7 +601,7 @@ public class LevelManager {
 			}			
 		});
 		
-		// Set up boulder properties.
+		// Set up platform properties.
 		window.makeButton("New center", new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -443,6 +617,8 @@ public class LevelManager {
 					? 1.0  
 					: book.getDoubList().get("Scale")))
 		);
+		
+		window.makeStringProperty("Image path", plat.getPath());
 		
 		window.makeBooleanProperty("Disappears", (book == null) 
 				? false 
@@ -523,6 +699,49 @@ public class LevelManager {
 		this.ticketer++;
 	}
 	
+	public void makeVineEditWindow(int ticket, Vine vine, PropertyBook book) {
+		EditWindow window = ltlAdapter.makeEditWindow(ticket, "Vine");		
+		
+		// Set up the the submit listener.
+		window.setSubmitListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				vine.updateProperties(window.getPropertyBook());				
+			}			
+		});
+		
+		// Set up vine properties.
+		window.makeButton("New center", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				request = Request.EDIT_OLD_VINE;
+				requestNum = ticket;	
+			}		
+		});
+		
+		window.makeDoubleProperty("Scale", (book == null) 
+				? 1.0 
+				: ((book.getDoubList().get("Scale") == null 
+					? 1.0  
+					: book.getDoubList().get("Scale")))
+		);
+		
+		window.makeStringProperty("Image path", vine.getPath());
+		
+		window.makeDoubleProperty("Arc Length (deg)", (book == null) 
+				? 180.0
+				: ((book.getDoubList().get("Arc Length (deg)") == null 
+					? 180.0 
+					: book.getDoubList().get("Arc Length (deg)")))
+		);
+		
+		window.makeDoubleProperty("Velocity", (book == null) 
+				? 1.0 
+				: ((book.getDoubList().get("Velocity") == null 
+					? 1.0  
+					: book.getDoubList().get("Velocity")))
+		);
+	}
 	
 	public void makeNPC (String imageName, PropertyBook book, double xm, double ym) {
 		NPC npc = new NPC(this.ticketer, imageName);
@@ -535,6 +754,50 @@ public class LevelManager {
 		
 		// Increase the ticket count.
 		this.ticketer++;
+	}
+	
+	public void makeNPCEditWindow(int ticket, NPC npc, PropertyBook book) {
+		EditWindow window = ltlAdapter.makeEditWindow(ticket, "NPC");		
+		
+		// Set up the the submit listener.
+		window.setSubmitListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				npc.updateProperties(window.getPropertyBook());				
+			}			
+		});
+		
+		// Set up NPC properties.
+		window.makeButton("New center", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				request = Request.EDIT_OLD_VINE;
+				requestNum = ticket;	
+			}		
+		});
+		
+		window.makeDoubleProperty("Scale", (book == null) 
+				? 1.0 
+				: ((book.getDoubList().get("Scale") == null 
+					? 1.0  
+					: book.getDoubList().get("Scale")))
+		);
+		
+		window.makeStringProperty("Image path", npc.getPath());		
+		
+		window.makeDoubleProperty("Velocity", (book == null) 
+				? 1.0 
+				: ((book.getDoubList().get("Velocity") == null 
+					? 1.0  
+					: book.getDoubList().get("Velocity")))
+		);
+		
+		window.makeDoubleProperty("Range (m)", (book == null) 
+				? 5.0 
+				: ((book.getDoubList().get("Velocity") == null 
+					? 5.0  
+					: book.getDoubList().get("Velocity")))
+		);
 	}
 	
 	public void makeBoulder(String imageName, PropertyBook book, double xm, double ym) {
@@ -576,6 +839,15 @@ public class LevelManager {
 			}		
 		});
 		
+		window.makeDoubleProperty("Scale", (book == null) 
+				? 1.0 
+				: ((book.getDoubList().get("Scale") == null 
+					? 1.0  
+					: book.getDoubList().get("Scale")))
+		);
+		
+		window.makeStringProperty("Image path", boulder.getPath());
+		
 		window.makeDoubleProperty("Mass", (book == null) 
 				? 1000.0 
 				: ((book.getDoubList().get("Mass") == null 
@@ -583,11 +855,11 @@ public class LevelManager {
 					: book.getDoubList().get("Mass")))
 		);
 		
-		window.makeDoubleProperty("Scale", (book == null) 
-				? 1.0 
-				: ((book.getDoubList().get("Scale") == null 
-					? 1.0  
-					: book.getDoubList().get("Scale")))
+		window.makeDoubleProperty("Radius", (book == null) 
+				? 5.0
+				: ((book.getDoubList().get("Radius") == null 
+					? 5.0
+					: book.getDoubList().get("Radius")))
 		);
 		
 		window.makeBooleanProperty("Polygon collision", (book == null) 
@@ -610,6 +882,50 @@ public class LevelManager {
 		
 		// Increase the ticket count.
 		this.ticketer++;
+	}
+	
+	public void makePegEditWindow(int ticket, Peg peg, PropertyBook book) {
+		EditWindow window = ltlAdapter.makeEditWindow(ticket, "Peg");		
+		
+		// Set up the the submit listener.
+		window.setSubmitListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				peg.updateProperties(window.getPropertyBook());				
+			}			
+		});
+		
+		// Set up peg properties.
+		window.makeButton("New center", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				request = Request.EDIT_OLD_VINE;
+				requestNum = ticket;	
+			}		
+		});
+		
+		window.makeDoubleProperty("Scale", (book == null) 
+				? 1.0 
+				: ((book.getDoubList().get("Scale") == null 
+					? 1.0  
+					: book.getDoubList().get("Scale")))
+		);
+		
+		window.makeStringProperty("Image path", peg.getPath());
+
+		window.makeIntProperty("Boulder ID", (book == null) 
+				? 0
+				: ((book.getIntList().get("Boulder ID") == null 
+					? 0
+					: book.getIntList().get("Boulder ID")))
+		);
+		
+		window.makeDoubleProperty("Rotation (rad)", (book == null) 
+				? 0.0
+				: ((book.getDoubList().get("Rotation (rad)") == null 
+					? 0.0  
+					: book.getDoubList().get("Rotation (rad)")))
+		);
 	}
 	
 	public void changeOffset(double xm, double ym) {
@@ -685,15 +1001,13 @@ public class LevelManager {
 		// Unfortunately this requires resetting ALL of the rescaled images.
 		this.plats.forEach(
 				(ticket, plat) -> plat.setRI(resize(plat.getBI(), plat.getScaledIGWM(), plat.getScaledIGHM())));
-		this.characters.forEach((name, player) -> player.setRI(resize(player.getBI(), 0.7, 1.7)));
-		// TODO: Why are vines using IGW instead of IGWM?
+		this.characters.forEach((name, player) -> player.setRI(resize(player.getBI(), 0.7, 1.7)));		
 		this.vines.forEach((ticket, vine) -> vine
-				.setRI(resize(vine.getBI(), vine.getInGameWidth(), vine.getInGameHeight())));
+				.setRI(resize(vine.getBI(), vine.getScaledIGWM(), vine.getScaledIGHM())));
 		this.boulders.forEach((ticket, boulder) -> boulder
 				.setRI(resize(boulder.getBI(), boulder.getScaledIGWM(), boulder.getScaledIGHM())));
-		// this.npcs.forEach((name, enemy) ->
-		// enemy.setRescaled(resize(enemy.getImage(), enemy.getInGameWidth(),
-		// enemy.getInGameHeight())));
+		this.npcs.forEach((name, enemy) -> enemy
+				.setRI(resize(enemy.getBI(), enemy.getScaledIGWM(), enemy.getScaledIGHM())));
 		this.bg.setRescaled(resize(this.bg.getImage(), this.lvwm, this.lvhm));
 	}
 	
