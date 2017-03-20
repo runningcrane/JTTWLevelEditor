@@ -71,7 +71,7 @@ public abstract class AInteractable {
 	 */
 	public String getPath() {
 		return this.path;
-	}	
+	}
 	
 	/**
 	 * Set the relative path to its image.

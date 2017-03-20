@@ -1059,4 +1059,23 @@ public class LevelManager {
 		setBg(ASSETS_PATH + "bgSunny.png");
 		this.timer.start();
 	}
+	
+	/**
+	 * Toggle players.
+	 * 
+	 * @param name
+	 *            name of character to toggle
+	 * @param status
+	 *            state of existence or not
+	 */
+	public void togglePlayer(String name, boolean status) {
+		if (status) {
+			System.out.println("Setting " + name + " to " + status);
+			this.characters.get(name).setPresent(true);
+			ltoAdapter.setCharPos(name);
+		} else {
+			this.characters.get(name).setPresent(false);
+		}
+
+	}
 }
