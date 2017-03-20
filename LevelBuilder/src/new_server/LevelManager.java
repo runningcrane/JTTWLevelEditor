@@ -618,7 +618,15 @@ public class LevelManager {
 		window.setSubmitListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				plat.updateProperties(window.getPropertyBook());				
+				plat.updateProperties(window.getPropertyBook());
+				
+				// Next, update the relevant parts when scaling. Use resize()!
+				double scale = book.getDoubList().get("Scale");
+				
+				plat.setScale(scale);					
+					
+				// Scale the image now.
+				plat.setRI(resize(plat.getBI(), plat.getScaledIGWM(), plat.getScaledIGHM()));
 			}			
 		});
 		
@@ -727,7 +735,15 @@ public class LevelManager {
 		window.setSubmitListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				vine.updateProperties(window.getPropertyBook());				
+				vine.updateProperties(window.getPropertyBook());
+				
+				// Next, update the relevant parts when scaling. Use resize()!
+				double scale = book.getDoubList().get("Scale");
+				
+				vine.setScale(scale);					
+					
+				// Scale the image now.
+				vine.setRI(resize(vine.getBI(), vine.getScaledIGWM(), vine.getScaledIGHM()));
 			}			
 		});
 		
@@ -784,7 +800,15 @@ public class LevelManager {
 		window.setSubmitListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				npc.updateProperties(window.getPropertyBook());				
+				npc.updateProperties(window.getPropertyBook());	
+				
+				// Next, update the relevant parts when scaling. Use resize()!
+				double scale = book.getDoubList().get("Scale");
+				
+				npc.setScale(scale);					
+					
+				// Scale the image now.
+				npc.setRI(resize(npc.getBI(), npc.getScaledIGWM(), npc.getScaledIGHM()));
 			}			
 		});
 		
@@ -847,7 +871,17 @@ public class LevelManager {
 		window.setSubmitListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				boulder.updateProperties(window.getPropertyBook());				
+				boulder.updateProperties(window.getPropertyBook());	
+				
+				// Next, update the relevant parts when scaling. Use resize()!
+				double scale = book.getDoubList().get("Scale");
+				
+				boulder.setScale(scale);
+					
+				// TODO: scaledRadius is for boulders; need to add scaledRadius in the makeBoulder() call.			
+					
+				// Scale the image now.
+				boulder.setRI(resize(boulder.getBI(), boulder.getScaledIGWM(), boulder.getScaledIGHM()));
 			}			
 		});
 		
@@ -912,7 +946,15 @@ public class LevelManager {
 		window.setSubmitListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				peg.updateProperties(window.getPropertyBook());				
+				peg.updateProperties(window.getPropertyBook());	
+				
+				// Next, update the relevant parts when scaling. Use resize()!
+				double scale = book.getDoubList().get("Scale");
+				
+				peg.setScale(scale);					
+					
+				// Scale the image now.
+				peg.setRI(resize(peg.getBI(), peg.getScaledIGWM(), peg.getScaledIGHM()));
 			}			
 		});
 		
@@ -920,8 +962,8 @@ public class LevelManager {
 		window.makeButton("New center", new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				request = Request.EDIT_OLD_VINE;
-				requestNum = ticket;	
+				request = Request.EDIT_OLD_PEG;
+				requestNum = ticket;				
 			}		
 		});
 		

@@ -148,6 +148,9 @@ public abstract class AInteractable {
 	 */
 	public void setScale(double scale) {
 		this.scale = scale;
+		setScaledIGWM();
+		setScaledIGHM();
+		setScaledCoordinates();
 	}
 	
 	/**
@@ -226,7 +229,7 @@ public abstract class AInteractable {
 	 * Set scaled width in terms of meters.
 	 * @return scaled width width in meters
 	 */
-	protected void setScaledIGWM(double width) {
+	protected void setScaledIGWM() {
 		this.scaledIGWM = this.widthm * this.scale;	
 	}
 	
@@ -301,10 +304,6 @@ public abstract class AInteractable {
 			} else {
 				book.getDoubList().put(name, value);
 			}
-			
-			if (name.equals("Scale")) {
-				updateScaleProperties(value);
-			}
 		});
 		
 		// Float.
@@ -343,15 +342,5 @@ public abstract class AInteractable {
 	public void setCenter(double x, double y) {
 		this.centerXM = x;
 		this.centerYM = y;
-	}
-	
-	public void updateScaleProperties(double scale) {
-		// scaledIGWM
-		
-		// scaledIGHM
-		
-		// scaledRadius
-		
-		// scaledCoordinates
 	}
 }
