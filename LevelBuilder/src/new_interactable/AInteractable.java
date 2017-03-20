@@ -67,6 +67,11 @@ public abstract class AInteractable {
 	private PropertyBook book;
 	
 	/**
+	 * Book of default properties.
+	 */
+	private PropertyBook defaultBook;
+	
+	/**
 	 * Gets the path to its image.
 	 * @return relative path to image
 	 */
@@ -258,6 +263,22 @@ public abstract class AInteractable {
 	}
 	
 	/**
+	 * Get the book of default properties.
+	 * @return default properties book
+	 */
+	public PropertyBook getDefaultPropertyBook() {
+		return this.defaultBook;
+	}
+	
+	/**
+	 * Set default properties, such as base image width/height in meters.
+	 * @param defaultBook book of default properties
+	 */
+	public void setDefaultPropertyBook(PropertyBook defaultBook) {
+		this.defaultBook = defaultBook;
+	}
+	
+	/**
 	 * Updates the properties of this object. 
 	 * If the new property book contains properties not in this book,
 	 * those properties will be added.
@@ -279,6 +300,10 @@ public abstract class AInteractable {
 				book.getDoubList().replace(name, value);
 			} else {
 				book.getDoubList().put(name, value);
+			}
+			
+			if (name.equals("Scale")) {
+				updateScaleProperties(value);
 			}
 		});
 		
@@ -318,5 +343,15 @@ public abstract class AInteractable {
 	public void setCenter(double x, double y) {
 		this.centerXM = x;
 		this.centerYM = y;
+	}
+	
+	public void updateScaleProperties(double scale) {
+		// scaledIGWM
+		
+		// scaledIGHM
+		
+		// scaledRadius
+		
+		// scaledCoordinates
 	}
 }

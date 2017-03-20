@@ -598,8 +598,8 @@ public class LevelManager {
 			return;
 		}
 		
-		// Merge the two books.
-		plat.updateProperties(collisionBook);
+		// Set the default property book.
+		plat.setDefaultPropertyBook(collisionBook);
 		
 		// Make an EditWindow.
 		makePlatEditWindow(this.ticketer, plat, book);
