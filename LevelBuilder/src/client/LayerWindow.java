@@ -30,12 +30,15 @@ import javax.swing.event.ChangeListener;
  */
 public class LayerWindow extends JFrame {
 
+	private static final long serialVersionUID = 691161568950646112L;
 	private JPanel contentPane;
 	private JPanel pnlBack;	
 	private JScrollPane scrPaneScroll;
 	private ILayerToLevelAdapter ltlAdapter;
 	private HashMap<Integer, EditWindow> edits;
+	@SuppressWarnings("unused") // they are used, but in an anon func.
 	private double initWM;
+	@SuppressWarnings("unused")
 	private double initHM;
 	
 	/**

@@ -1,6 +1,5 @@
 package noninteractable;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

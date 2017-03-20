@@ -1070,9 +1070,7 @@ public class LevelManager {
 				double centerXm = (double)((JSONObject)obj).get("centerX");
 				double centerYm = (double)((JSONObject)obj).get("centerY");
 				double rotation = (double)((JSONObject)obj).get("rotation");
-				double scale = (double)((JSONObject)obj).get("scale");
-				double imageWidth = (double)((JSONObject)obj).get("imageWidth");
-				double imageHeight = (double)((JSONObject)obj).get("imageHeight");			
+				double scale = (double)((JSONObject)obj).get("scale");		
 				
 				makeGoldenPeg(ASSETS_PATH + imageName, centerXm * this.mToPixel, centerYm * this.mToPixel, scale, rotation, jid[0]);
 			}

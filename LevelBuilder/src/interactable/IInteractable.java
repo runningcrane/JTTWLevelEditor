@@ -2,7 +2,6 @@ package interactable;
 
 import java.awt.Image;
 import java.awt.geom.Point2D;
-import javax.swing.ImageIcon;
 
 import server.IElement;
 
