@@ -1,6 +1,7 @@
 package new_server;
 
 import static utils.Constants.ASSETS_PATH;
+import static utils.Constants.COL_PATH;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -10,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +23,8 @@ import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
 import org.json.simple.JSONObject;
+
+import com.google.gson.Gson;
 
 import new_client.EditWindow;
 import new_interactable.Boulder;
@@ -579,6 +584,22 @@ public class LevelManager {
 	
 	public void makePlatform (String imageName, PropertyBook book, double xm, double ym) {
 		Platform plat = new Platform(this.ticketer, imageName);
+		
+		// Get the collision, etc property book.
+		Gson gson = new Gson();
+		PropertyBook collisionBook;
+		String path = imageName.substring(9, plat.getPath().length() - 4);
+		try {			
+			collisionBook = gson.fromJson(new FileReader(COL_PATH + path + ".json"), PropertyBook.class);			
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found: " + COL_PATH + path + ".json");
+			// e.printStackTrace();
+			// TODO: Make a default set of values?
+			return;
+		}
+		
+		// Merge the two books.
+		plat.updateProperties(collisionBook);
 		
 		// Make an EditWindow.
 		makePlatEditWindow(this.ticketer, plat, book);

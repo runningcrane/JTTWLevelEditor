@@ -142,6 +142,15 @@ public class CollisionWindow extends JFrame {
 			makeDefault(path);
 			return;
 		}
+		
+		// Make the image.		
+		try {
+			this.image = ImageIO.read(new File(ASSETS_PATH + path + ".png"));
+		} catch (IOException e) {
+			System.err.println("File not found: " + ASSETS_PATH + path + ".png");
+			e.printStackTrace();
+			return;
+		}
 				
 		String name = book.getStringList().get("Name");
 		// Check if null.
@@ -158,21 +167,21 @@ public class CollisionWindow extends JFrame {
 			zoomLevel = zoomLevelD.doubleValue();
 		}
 		
-		Double widthD = book.getDoubList().get("width");
+		Double widthD = book.getDoubList().get("widthm");
 		double width;
 		// Check if null.
 		if (widthD == null) {
-			width = 3;
+			width = this.image.getWidth() / this.mToPixel;
 		} else {
 			width = widthD.doubleValue();
 			txtWidth.setText(Double.toString(width));
 		}
 			
-		Double heightD = book.getDoubList().get("height");
+		Double heightD = book.getDoubList().get("heightm");
 		double height;
 		// Check if null.
 		if (heightD == null) {
-			height = 3;
+			height = this.image.getHeight() / this.mToPixel;
 		} else {
 			height = heightD.doubleValue();
 			txtHeight.setText(Double.toString(height));
@@ -180,8 +189,8 @@ public class CollisionWindow extends JFrame {
 				
 		ArrayList<Point2D.Double> points = new ArrayList<Point2D.Double>();
 		// Check if null.
-		if (!book.getPoint2DList().isEmpty()) {			
-			for (Point2D.Double point : book.getPoint2DList().values()) {											
+		if (!book.getCollPoints().isEmpty()) {			
+			for (Point2D.Double point : book.getCollPoints()) {											
 				points.add(point);
 			}
 		}				
@@ -192,15 +201,6 @@ public class CollisionWindow extends JFrame {
 		this.points = cocosToSwing(points); // Translate the points back to swing coordinates. 
 		this.imgWidth = width;
 		this.imgHeight = height;
-		
-		// Make the image.		
-		try {
-			this.image = ImageIO.read(new File(ASSETS_PATH + path + ".png"));
-		} catch (IOException e) {
-			System.err.println("File not found: " + ASSETS_PATH + path + ".png");
-			e.printStackTrace();
-			return;
-		}
 		
 		// Show type-specific options.
 		if (path.toLowerCase().contains("boulder")) {
@@ -275,8 +275,8 @@ public class CollisionWindow extends JFrame {
 		PropertyBook book = new PropertyBook();
 		
 		FileWriter file;
-		book.getDoubList().put("width", this.imgWidth);
-		book.getDoubList().put("height", this.imgHeight);
+		book.getDoubList().put("widthm", this.imgWidth);
+		book.getDoubList().put("heightm", this.imgHeight);
 		book.getDoubList().put("zoomLevel", this.zoomLevel);
 		
 		// Change the points to cocos points
@@ -284,7 +284,7 @@ public class CollisionWindow extends JFrame {
 		
 		int[] pointID = {0};
 		cocosPoints.forEach((cocosP) -> {
-			book.getPoint2DList().put("collisionPoint" + Integer.toString(pointID[0]), cocosP);
+			book.getCollPoints().add(cocosP);
 			pointID[0]++;
 		});		
 		

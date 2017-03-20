@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
 public abstract class AInteractable {
+	
 	/**
 	 * Relative path to file.
 	 */

@@ -1,6 +1,7 @@
 package new_interactable;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,9 +18,9 @@ public class PropertyBook {
 	Map<String, Double> doubList;
 	
 	/**
-	 * Map of property IDs to Point2D.Double values.
+	 * List of Point2D.Double values - collision points.
 	 */
-	Map<String, Point2D.Double> point2DList; 
+	ArrayList<Point2D.Double> collPointList; 
 	
 	/**
 	 * Map of property IDs to float values.
@@ -39,7 +40,7 @@ public class PropertyBook {
 	public PropertyBook() {
 		this.intList = new HashMap<String, Integer>();
 		this.doubList = new HashMap<String, Double>();
-		this.point2DList = new HashMap<String, Point2D.Double>();
+		this.collPointList = new ArrayList<Point2D.Double>();
 		this.floatList = new HashMap<String, Float>();
 		this.strList = new HashMap<String, String>();
 		this.boolList = new HashMap<String, Boolean>();
@@ -53,8 +54,8 @@ public class PropertyBook {
 		return this.doubList;
 	}
 	
-	public Map<String, Point2D.Double> getPoint2DList() {
-		return this.point2DList;
+	public ArrayList<Point2D.Double> getCollPoints() {
+		return this.collPointList;
 	}
 	
 	public Map<String, Float> getFloatList() {
