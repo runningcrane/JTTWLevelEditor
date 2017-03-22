@@ -26,6 +26,10 @@ public class Boulder extends AInteractable {
 		return this.oldTicket;
 	}
 	
+	public void setOldTicket(int ticket) {
+		this.oldTicket = ticket;
+	}
+	
 	public void updateTicket() {
 		this.oldTicket = getTicket();
 	}

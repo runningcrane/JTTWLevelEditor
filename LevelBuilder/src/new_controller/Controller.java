@@ -104,7 +104,7 @@ public class Controller {
 
 			@Override
 			public void togglePlayer(String name, boolean status) {
-				level.togglePlayer(name, status);
+				// TODO: level.togglePlayer(name, status);
 			}
 
 			@Override

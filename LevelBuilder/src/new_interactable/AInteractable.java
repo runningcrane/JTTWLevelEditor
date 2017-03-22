@@ -7,6 +7,10 @@ import javax.swing.ImageIcon;
 
 public abstract class AInteractable {
 	
+	public AInteractable() {
+		start();
+	}
+	
 	/**
 	 * Relative path to file.
 	 */
@@ -41,16 +45,6 @@ public abstract class AInteractable {
 	 * Rescaled image for output on level editor.
 	 */
 	private ImageIcon rescaledImage;
-	
-	/**
-	 * Original width, in meters.
-	 */
-	private double widthm;
-	
-	/**
-	 * Original height, in meters.
-	 */
-	private double heightm;
 	
 	/**
 	 * Scaled in-game width [m]. 
@@ -191,7 +185,7 @@ public abstract class AInteractable {
 	 * @return width in meters
 	 */
 	public double getInGameWidth() {
-		return this.widthm;
+		return defaultBook.doubList.get("widthm");
 	}
 	
 	/**
@@ -199,7 +193,7 @@ public abstract class AInteractable {
 	 * @return width width in meters
 	 */
 	protected void setInGameWidth(double width) {
-		this.widthm = width;
+		defaultBook.doubList.replace("widthm", width);
 	}
 	
 	/**
@@ -207,7 +201,7 @@ public abstract class AInteractable {
 	 * @return height in meters
 	 */
 	public double getInGameHeight() {
-		return this.heightm;
+		return defaultBook.doubList.get("heightm");
 	}
 	
 	/**
@@ -215,7 +209,7 @@ public abstract class AInteractable {
 	 * @return height width in meters
 	 */
 	protected void setInGameHeight(double height) {
-		this.heightm = height;	
+		defaultBook.doubList.replace("heightm", height);
 	}
 	
 	/**
@@ -231,7 +225,7 @@ public abstract class AInteractable {
 	 * @return scaled width width in meters
 	 */
 	protected void setScaledIGWM() {
-		this.scaledIGWM = this.widthm * this.scale;	
+		this.scaledIGWM = defaultBook.doubList.get("widthm") * this.scale;	
 	}
 	
 	/**
@@ -247,7 +241,7 @@ public abstract class AInteractable {
 	 * @return scaled height width in meters
 	 */
 	protected void setScaledIGHM() {
-		this.scaledIGHM = this.heightm * this.scale;	
+		this.scaledIGHM = defaultBook.doubList.get("heightm") * this.scale;	
 	}
 	
 	/**
@@ -289,7 +283,7 @@ public abstract class AInteractable {
 	 * @param defaultBook book of default properties
 	 */
 	public void setDefaultPropertyBook(PropertyBook defaultBook) {
-		this.defaultBook = defaultBook;
+		this.defaultBook = defaultBook;				
 	}
 	
 	/**
@@ -353,5 +347,10 @@ public abstract class AInteractable {
 	public void setCenter(double x, double y) {
 		this.centerXM = x;
 		this.centerYM = y;
+	}
+	
+	public void start() {
+		this.book = new PropertyBook();
+		this.defaultBook = new PropertyBook();
 	}
 }

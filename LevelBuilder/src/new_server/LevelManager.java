@@ -28,8 +28,10 @@ import org.json.simple.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 
 import new_client.EditWindow;
+import new_interactable.AInteractable;
 import new_interactable.Boulder;
 import new_interactable.NPC;
 import new_interactable.Peg;
@@ -50,6 +52,7 @@ public class LevelManager {
 	/**
 	 * Viewport offset (px).
 	 */
+	@Expose(serialize = false)
 	private Point2D.Double vpOffset;
 
 	/**
@@ -75,11 +78,13 @@ public class LevelManager {
 	/**
 	 * Viewport width (meters).
 	 */
+	@Expose(serialize = false)
 	private double vpwm;
 
 	/**
 	 * Viewport height (meters).
 	 */
+	@Expose(serialize = false)
 	private double vphm;
 	
 	/**
@@ -90,6 +95,7 @@ public class LevelManager {
 	/**
 	 * Foreground array.
 	 */
+	@Expose(serialize = false)
 	private ArrayList<INonInteractable> fg;
 
 	/**
@@ -130,43 +136,63 @@ public class LevelManager {
 		SET_PLAT_ENDPOINT, MARK_EOL, MARK_RP,
 		REMOVE_RP
 	}
+	@Expose(serialize = false)
 	private Request request;
+	
+	@Expose(serialize = false)
 	private String requestPath;
 	
 	/**
 	 * Ticket number of the requesting object.
 	 */
+	@Expose(serialize = false)
 	private int requestNum;		
 
 	/**
 	 * Gives out ticket values.
 	 */
+	@Expose(serialize = false)
 	int ticketer;
 	
 	/**
 	 * Adapter from the LevelManager to a LayerWIndow.
 	 */
+	@Expose(serialize = false)
 	ILevelToLayerAdapter ltlAdapter;
 	
 	/**
 	 * Adapter from the LevelManager to the OuputWindow.
 	 */
+	@Expose(serialize = false)
 	ILevelToOutputAdapter ltoAdapter;
 	
 	/**
 	 * Adapter to communicate with the controls panel.
 	 */
+	@Expose(serialize = false)
 	private ILevelToControlAdapter ltcAdapter;
 	
 	/**
 	 * Time to update the level view.
 	 */
+	@Expose(serialize = false)
 	private Timer timer;
 
 	/**
 	 * How often the timer should be called.
 	 */
+	@Expose(serialize = false)
 	private int timeSlice;
+	
+	/**
+	 * Name of the currently-loaded level.
+	 */
+	private String levelName;
+	
+	/**
+	 * Name of the level after this level.
+	 */
+	private String nextLevelName;
 	
 	/**
 	 * The model side of the MVC structure. Level Manager manages everything 
@@ -273,115 +299,129 @@ public class LevelManager {
 
 		// Draw platforms
 		plats.forEach((number, plat) -> {
-			/*
-			 * Unfortunately drawImage draws on the top left, not center, so
-			 * adjustments are made. Also unfortunately, cocos uses a different
-			 * orientation system than swing. Namely, the y is flipped in
-			 * direction. Since CenterXm/CenterYm are in swing-orientation,
-			 * reverse the ys to get them in cocos.
-			 */
-			double ulxp = (plat.getCenterXM() - plat.getScaledIGWM() / 2.0) * this.mToPixel;
-			double ulyp = ((this.lvhm - plat.getCenterYM()) - plat.getScaledIGHM() / 2.0) * this.mToPixel;
-			Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
-
-			g.drawImage(plat.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
-
-			// Draw the label on top of it. In the center, maybe?
-			g.setColor(Color.MAGENTA);
-			Point2D.Double vplp = getViewportCoordinates(plat.getCenterXM() * this.mToPixel,
-					(this.lvhm - (plat.getCenterYM())) * this.mToPixel);
-			g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
-
-			// Label point
-			g.setColor(Color.BLACK);
-			Point2D.Double vplbp = getViewportCoordinates(plat.getCenterXM() * this.mToPixel + 5,
-					(this.lvhm - (plat.getCenterYM())) * this.mToPixel + 10);
-			g.drawString(Integer.toString(number), (int) (vplbp.getX()), (int) (vplbp.getY()));
-
-			// If moveable, show its endpoint and a line to its endpoint.
-			if (plat.getPropertyBook().getBoolList().get("Moving").booleanValue()) {
-				Point2D.Double endpoint = plat.getEndpoint();
-				Point2D.Double vplbep = getViewportCoordinates(endpoint.getX() * this.mToPixel + 5,
-						(this.lvhm - (endpoint.getY())) * this.mToPixel + 10);
-
-				// Draw the line first.
+			
+			// Don't draw until the plat's image has been made.
+			if (plat.getRI() != null) {
+				
+				/*
+				 * Unfortunately drawImage draws on the top left, not center, so
+				 * adjustments are made. Also unfortunately, cocos uses a different
+				 * orientation system than swing. Namely, the y is flipped in
+				 * direction. Since CenterXm/CenterYm are in swing-orientation,
+				 * reverse the ys to get them in cocos.
+				 */
+				double ulxp = (plat.getCenterXM() - plat.getScaledIGWM() / 2.0) * this.mToPixel;
+				double ulyp = ((this.lvhm - plat.getCenterYM()) - plat.getScaledIGHM() / 2.0) * this.mToPixel;
+				Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
+		
+				g.drawImage(plat.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
+		
+				// Draw the label on top of it. In the center, maybe?
 				g.setColor(Color.MAGENTA);
-				g.drawLine((int) vplp.getX(), (int) vplp.getY(), (int) vplbep.getX(), (int) vplbep.getY());
-
-				// Then draw the endpoint.
-				g.setColor(Color.RED);
-				g.fillOval((int) (vplbep.getX()), (int) (vplbep.getY()), 15, 15);
-
-				// Then label it.
+				Point2D.Double vplp = getViewportCoordinates(plat.getCenterXM() * this.mToPixel,
+						(this.lvhm - (plat.getCenterYM())) * this.mToPixel);
+				g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
+		
+				// Label point
 				g.setColor(Color.BLACK);
-				Point2D.Double vplbnep = getViewportCoordinates(endpoint.getX() * this.mToPixel + 5,
-						(this.lvhm - (endpoint.getY())) * this.mToPixel + 10);
-				g.drawString(Integer.toString(number) + "EP", (int) (vplbnep.getX()), (int) (vplbnep.getY()));
+				Point2D.Double vplbp = getViewportCoordinates(plat.getCenterXM() * this.mToPixel + 5,
+						(this.lvhm - (plat.getCenterYM())) * this.mToPixel + 10);
+				g.drawString(Integer.toString(number), (int) (vplbp.getX()), (int) (vplbp.getY()));
+		
+				// If moveable, show its endpoint and a line to its endpoint.
+				if (plat.getPropertyBook().getBoolList().get("Moving").booleanValue()) {
+					Point2D.Double endpoint = plat.getEndpoint();
+					Point2D.Double vplbep = getViewportCoordinates(endpoint.getX() * this.mToPixel + 5,
+							(this.lvhm - (endpoint.getY())) * this.mToPixel + 10);
+		
+					// Draw the line first.
+					g.setColor(Color.MAGENTA);
+					g.drawLine((int) vplp.getX(), (int) vplp.getY(), (int) vplbep.getX(), (int) vplbep.getY());
+		
+					// Then draw the endpoint.
+					g.setColor(Color.RED);
+					g.fillOval((int) (vplbep.getX()), (int) (vplbep.getY()), 15, 15);
+		
+					// Then label it.
+					g.setColor(Color.BLACK);
+					Point2D.Double vplbnep = getViewportCoordinates(endpoint.getX() * this.mToPixel + 5,
+							(this.lvhm - (endpoint.getY())) * this.mToPixel + 10);
+					g.drawString(Integer.toString(number) + "EP", (int) (vplbnep.getX()), (int) (vplbnep.getY()));
+				}
 			}
 		});
 		
 		// Draw boulders
 		boulders.forEach((ticket, boulder) -> {
-			double ulxp = (boulder.getCenterXM() - boulder.getScaledIGWM() / 2.0) * this.mToPixel;
-			double ulyp = ((this.lvhm - boulder.getCenterYM()) - boulder.getScaledIGHM() / 2.0) * this.mToPixel;
-			Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
-
-			g.drawImage(boulder.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
-
-			// Draw the label on top of it. In the center, maybe?
-			g.setColor(Color.MAGENTA);
-			Point2D.Double vplp = getViewportCoordinates(boulder.getCenterXM() * this.mToPixel,
-					(this.lvhm - (boulder.getCenterYM())) * this.mToPixel);
-			g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
-
-			// Label point
-			g.setColor(Color.BLACK);
-			Point2D.Double vplbp = getViewportCoordinates(boulder.getCenterXM() * this.mToPixel + 5,
-					(this.lvhm - (boulder.getCenterYM())) * this.mToPixel + 10);
-			g.drawString(Integer.toString(ticket), (int) (vplbp.getX()), (int) (vplbp.getY()));
 			
+			// Don't draw until the image has been made.
+			if (boulder.getRI() != null) {
+				double ulxp = (boulder.getCenterXM() - boulder.getScaledIGWM() / 2.0) * this.mToPixel;
+				double ulyp = ((this.lvhm - boulder.getCenterYM()) - boulder.getScaledIGHM() / 2.0) * this.mToPixel;
+				Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
+	
+				g.drawImage(boulder.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
+	
+				// Draw the label on top of it. In the center, maybe?
+				g.setColor(Color.MAGENTA);
+				Point2D.Double vplp = getViewportCoordinates(boulder.getCenterXM() * this.mToPixel,
+						(this.lvhm - (boulder.getCenterYM())) * this.mToPixel);
+				g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
+	
+				// Label point
+				g.setColor(Color.BLACK);
+				Point2D.Double vplbp = getViewportCoordinates(boulder.getCenterXM() * this.mToPixel + 5,
+						(this.lvhm - (boulder.getCenterYM())) * this.mToPixel + 10);
+				g.drawString(Integer.toString(ticket), (int) (vplbp.getX()), (int) (vplbp.getY()));
+			}
 		});
 		
 		// Draw pegs.
 		pegs.forEach((ticket, peg) -> {
-			double ulxp = (peg.getCenterXM() - peg.getScaledIGWM() / 2.0) * this.mToPixel;
-			double ulyp = ((this.lvhm - peg.getCenterYM()) - peg.getScaledIGHM() / 2.0) * this.mToPixel;
-			Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
-
-			g.drawImage(peg.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
-
-			// Draw the label on top of it. In the center, maybe?
-			g.setColor(Color.MAGENTA);
-			Point2D.Double vplp = getViewportCoordinates(peg.getCenterXM() * this.mToPixel,
-					(this.lvhm - (peg.getCenterYM())) * this.mToPixel);
-			g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
-
-			// Label point
-			g.setColor(Color.BLACK);
-			Point2D.Double vplbp = getViewportCoordinates(peg.getCenterXM() * this.mToPixel + 5,
-					(this.lvhm - (peg.getCenterYM())) * this.mToPixel + 10);
-			g.drawString(Integer.toString(ticket), (int) (vplbp.getX()), (int) (vplbp.getY()));
+			// Don't draw until the image has been made.
+			if (peg.getRI() != null) {
+				double ulxp = (peg.getCenterXM() - peg.getScaledIGWM() / 2.0) * this.mToPixel;
+				double ulyp = ((this.lvhm - peg.getCenterYM()) - peg.getScaledIGHM() / 2.0) * this.mToPixel;
+				Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
+	
+				g.drawImage(peg.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
+	
+				// Draw the label on top of it. In the center, maybe?
+				g.setColor(Color.MAGENTA);
+				Point2D.Double vplp = getViewportCoordinates(peg.getCenterXM() * this.mToPixel,
+						(this.lvhm - (peg.getCenterYM())) * this.mToPixel);
+				g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
+	
+				// Label point
+				g.setColor(Color.BLACK);
+				Point2D.Double vplbp = getViewportCoordinates(peg.getCenterXM() * this.mToPixel + 5,
+						(this.lvhm - (peg.getCenterYM())) * this.mToPixel + 10);
+				g.drawString(Integer.toString(ticket), (int) (vplbp.getX()), (int) (vplbp.getY()));
+			}
 		});
 
 		// Draw vines
 		vines.forEach((ticket, vine) -> {
-			double ulxp = (vine.getCenterXM() - vine.getInGameWidth() / 2.0) * this.mToPixel;
-			double ulyp = ((this.lvhm - vine.getCenterYM())) * this.mToPixel;
-			Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
-
-			g.drawImage(vine.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
-
-			// Draw the label on top of it.
-			g.setColor(Color.MAGENTA);
-			Point2D.Double vplp = getViewportCoordinates(vine.getCenterXM() * this.mToPixel,
-					(this.lvhm - (vine.getCenterYM() - vine.getInGameHeight() / 2)) * this.mToPixel);
-			g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
-
-			// Label point
-			g.setColor(Color.BLACK);
-			Point2D.Double vplbp = getViewportCoordinates(vine.getCenterXM() * this.mToPixel + 5,
-					(this.lvhm - (vine.getCenterYM() - vine.getInGameHeight() / 2)) * this.mToPixel + 10);
-			g.drawString(Integer.toString(ticket), (int) (vplbp.getX()), (int) (vplbp.getY()));
+			// Don't draw until the image has been made.
+			if (vine.getRI() != null) {
+				double ulxp = (vine.getCenterXM() - vine.getInGameWidth() / 2.0) * this.mToPixel;
+				double ulyp = ((this.lvhm - vine.getCenterYM())) * this.mToPixel;
+				Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
+	
+				g.drawImage(vine.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
+	
+				// Draw the label on top of it.
+				g.setColor(Color.MAGENTA);
+				Point2D.Double vplp = getViewportCoordinates(vine.getCenterXM() * this.mToPixel,
+						(this.lvhm - (vine.getCenterYM() - vine.getInGameHeight() / 2)) * this.mToPixel);
+				g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
+	
+				// Label point
+				g.setColor(Color.BLACK);
+				Point2D.Double vplbp = getViewportCoordinates(vine.getCenterXM() * this.mToPixel + 5,
+						(this.lvhm - (vine.getCenterYM() - vine.getInGameHeight() / 2)) * this.mToPixel + 10);
+				g.drawString(Integer.toString(ticket), (int) (vplbp.getX()), (int) (vplbp.getY()));
+			}
 		});
 
 		// Draw player characters
@@ -428,47 +468,62 @@ public class LevelManager {
 	public void setRequest(String path, String requestType) {
 		this.requestPath = path;			
 		
+		System.out.println("Received request type " + requestType);
+		
 		switch(requestType) {
 		case "Platform" : {
 			this.request = Request.MAKE_PLATFORM;
+			break;
 		}
 		case "Vine" : {
 			this.request = Request.MAKE_VINE;
+			break;
 		}
 		case "NPC" : {
 			this.request = Request.MAKE_NPC;
+			break;
 		}
 		case "Boulder" : {
 			this.request = Request.MAKE_BOULDER;
+			break;
 		}
 		case "Peg" : {
 			this.request = Request.MAKE_PEG;
+			break;
 		}
 		case "Monk" : {
 			this.request = Request.EDIT_MONK;
+			break;
 		}
 		case "Monkey" : {
 			this.request = Request.EDIT_MONKEY;
+			break;
 		}
 		case "Pig" : {
 			this.request = Request.EDIT_PIG;
+			break;
 		}
 		case "Sandy" : {
 			this.request = Request.EDIT_SANDY;
+			break;
 		}
 		case "EOL" : {
 			this.request = Request.MARK_EOL;
+			break;
 		}
 		case "RP" : {
 			this.request = Request.MARK_RP;
+			break;
 		}
 		case "RMRP" : {
 			this.request = Request.REMOVE_RP;
+			break;
 		}
-		default : {
-			this.request = Request.NONE;
+		default : 
+			this.request = Request.NONE;		
 		}
-		}
+		
+		System.out.println("Set request to " + this.request);
 	}
 	
 	/**
@@ -480,21 +535,28 @@ public class LevelManager {
 		double xm = (xp - this.vpOffset.getX()) / this.mToPixel;
 		double ym = this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel;
 		
+		System.out.println("Received coordinates; request type is " + this.request);
+		
 		switch (request) {
 		case MAKE_PLATFORM: {
 			makePlatform(this.requestPath, null, xm, ym);
+			break;
 		}
 		case MAKE_VINE: {
 			makeVine(this.requestPath, null, xm, ym);
+			break;
 		}
 		case MAKE_BOULDER: {
-			makeBoulder(this.requestPath, null, xm, ym);
+			makeBoulder(this.requestPath, null, xm, ym, 0);
+			break;
 		}
 		case MAKE_NPC: {
 			makeNPC(this.requestPath, null, xm, ym);
+			break;
 		}
 		case MAKE_PEG: {
 			makePeg(this.requestPath, null, xm, ym);
+			break;
 		}
 		case EDIT_OLD_PLAT: {
 			Platform target = this.plats.get(requestNum);
@@ -502,6 +564,7 @@ public class LevelManager {
 				// Set the center.
 				target.setCenter(xm, ym);
 			}
+			break;
 		}
 		case EDIT_OLD_VINE: {
 			Vine target = this.vines.get(requestNum);
@@ -509,6 +572,7 @@ public class LevelManager {
 				// Set the center.
 				target.setCenter(xm, ym);
 			}
+			break;
 		}
 		case EDIT_OLD_BOULDER: {
 			Boulder target = this.boulders.get(requestNum);
@@ -516,6 +580,7 @@ public class LevelManager {
 				// Set the center.
 				target.setCenter(xm, ym);
 			}
+			break;
 		}
 		case EDIT_OLD_PEG: {
 			Peg target = this.pegs.get(requestNum);
@@ -523,27 +588,35 @@ public class LevelManager {
 				// Set the center.
 				target.setCenter(xm, ym);
 			}
+			break;
 		}
 		case EDIT_MONK: {
 			this.characters.get("Monk").setCenter(xm, ym);
+			break;
 		}
 		case EDIT_MONKEY: {
 			this.characters.get("Monkey").setCenter(xm, ym);
+			break;
 		}
 		case EDIT_PIG: {
 			this.characters.get("Piggy").setCenter(xm, ym);
+			break;
 		}
 		case EDIT_SANDY: {
 			this.characters.get("Sandy").setCenter(xm, ym);
+			break;
 		}
 		case SET_PLAT_ENDPOINT: {
 			this.plats.get(this.requestNum).setEndpoint(new Point2D.Double(xm, ym));
+			break;
 		}
 		case MARK_EOL: {
 			this.eol = new Point2D.Double(xm, ym);
+			break;
 		}
 		case MARK_RP: {
 			this.respawnPoints.add(new Point2D.Double(xm, ym));
+			break;
 		}
 		case REMOVE_RP: {
 			Point2D.Double[] closest = new Point2D.Double[]{new Point2D.Double(-1, -1)};
@@ -568,6 +641,7 @@ public class LevelManager {
 					this.respawnPoints.remove(closest[0]);
 				}
 			}
+			break;
 		}
 		case NONE: {
 			
@@ -579,27 +653,54 @@ public class LevelManager {
 		this.requestPath = "";
 	}
 	
-	public void makePlatform (String imageName, PropertyBook book, double xm, double ym) {
-		Platform plat = new Platform(this.ticketer, imageName);
-		
-		// Get the collision, etc property book.
+	public PropertyBook getCollisionBook(String truncatedName) {
 		Gson gson = new Gson();
-		PropertyBook collisionBook;
-		String path = imageName.substring(9, plat.getPath().length() - 4);
+		PropertyBook collisionBook;		
 		try {			
-			collisionBook = gson.fromJson(new FileReader(COL_PATH + path + ".json"), PropertyBook.class);			
+			collisionBook = gson.fromJson(new FileReader(COL_PATH + truncatedName + ".json"), PropertyBook.class);			
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found: " + COL_PATH + path + ".json");
+			System.out.println("File not found: " + COL_PATH + truncatedName + ".json");
 			// e.printStackTrace();
 			// TODO: Make a default set of values?
-			return;
+			return null;
 		}
 		
+		return collisionBook;
+	}
+	
+	public void setImage(AInteractable object, String path){
+		BufferedImage image;
+		try {
+			image = ImageIO.read(new File(ASSETS_PATH + path + ".png"));
+		} catch (IOException e) {
+			System.err.println("Image file not found: " + ASSETS_PATH + path + ".png");
+			e.printStackTrace();
+			return;
+		}		
+
+		object.setBI(image);
+		
+		double scale = object.getPropertyBook().getDoubList().get("Scale");		
+		object.setScale(scale);	
+		
+		System.out.println("Width: " + object.getInGameWidth() + " Height: " + object.getInGameHeight() + 
+				" Scale: " + scale + " ScaledIGWM: " + object.getScaledIGWM() + " ScaledIGHM: " + object.getScaledIGHM());
+		
+		object.setRI(resize(image, object.getScaledIGWM(), object.getScaledIGHM()));
+	}
+	
+	public void makePlatform (String imageName, PropertyBook book, double xm, double ym) {
+		Platform plat = new Platform(this.ticketer, imageName);
+						
 		// Set the default property book.
-		plat.setDefaultPropertyBook(collisionBook);
+		String path = imageName.substring(10, plat.getPath().length() - 4);
+		plat.setDefaultPropertyBook(getCollisionBook(path));		
 		
 		// Make an EditWindow.
 		makePlatEditWindow(this.ticketer, plat, book);
+		
+		// Make the image.
+		setImage(plat, path);
 				
 		// Add it the known list of platforms.
 		this.plats.put(this.ticketer, plat);
@@ -710,13 +811,21 @@ public class LevelManager {
 					: book.getBoolList().get("Polygon collision")))
 		);
 
+		plat.updateProperties(window.getPropertyBook());
 	}
 	
 	public void makeVine (String imageName, PropertyBook book, double xm, double ym) {
 		Vine vine = new Vine(this.ticketer, imageName);
 		
+		// Set the default property book.
+		String path = imageName.substring(10, vine.getPath().length() - 4);
+		vine.setDefaultPropertyBook(getCollisionBook(path));		
+		
 		// Make an EditWindow.
 		makeVineEditWindow(this.ticketer, vine, book);
+		
+		// Make the image.
+		setImage(vine, path);
 				
 		// Add it the known list of vines.
 		this.vines.put(this.ticketer, vine);
@@ -775,13 +884,22 @@ public class LevelManager {
 					? 1.0  
 					: book.getDoubList().get("Velocity")))
 		);
+		
+		vine.updateProperties(window.getPropertyBook());
 	}
 	
 	public void makeNPC (String imageName, PropertyBook book, double xm, double ym) {
 		NPC npc = new NPC(this.ticketer, imageName);
 		
+		// Set the default property book.
+		String path = imageName.substring(10, npc.getPath().length() - 4);
+		npc.setDefaultPropertyBook(getCollisionBook(path));
+		
 		// Make an EditWindow.
 		makeNPCEditWindow(this.ticketer, npc, book);
+		
+		// Make its image.
+		setImage(npc, path);
 				
 		// Add it the known list of NPCs.
 		this.npcs.put(this.ticketer, npc);
@@ -840,13 +958,27 @@ public class LevelManager {
 					? 5.0  
 					: book.getDoubList().get("Velocity")))
 		);
+		
+		npc.updateProperties(window.getPropertyBook());
 	}
 	
-	public void makeBoulder(String imageName, PropertyBook book, double xm, double ym) {
+	public void makeBoulder(String imageName, PropertyBook book, double xm, double ym, int oldTicket) {
 		Boulder newBoulder = new Boulder(this.ticketer, imageName);
+		if (oldTicket == 0) {
+			newBoulder.setOldTicket(this.ticketer);
+		} else {
+			newBoulder.setOldTicket(oldTicket);
+		}
+		
+		// Set the default property book.
+		String path = imageName.substring(10, newBoulder.getPath().length() - 4);
+		newBoulder.setDefaultPropertyBook(getCollisionBook(path));
 		
 		// Make an EditWindow.
 		makeBoulderEditWindow(this.ticketer, newBoulder, book);
+		
+		// Make its image.
+		setImage(newBoulder, path);
 		
 		// Add it the known list of boulders.
 		this.boulders.put(this.ticketer, newBoulder);
@@ -920,13 +1052,21 @@ public class LevelManager {
 					: book.getBoolList().get("Polygon collision")))
 		);
 
+		boulder.updateProperties(window.getPropertyBook());
 	}
 	
 	public void makePeg (String imageName, PropertyBook book, double xm, double ym) {
 		Peg peg = new Peg(this.ticketer, imageName);
 		
+		// Set the default property book.
+		String path = imageName.substring(10, peg.getPath().length() - 4);
+		peg.setDefaultPropertyBook(getCollisionBook(path));
+		
 		// Make an EditWindow.
 		makePegEditWindow(this.ticketer, peg, book);
+		
+		// Make its image.
+		setImage(peg, path);
 				
 		// Add it the known list of NPCs.
 		this.pegs.put(this.ticketer, peg);
@@ -972,12 +1112,18 @@ public class LevelManager {
 		
 		window.makeStringProperty("Image path", peg.getPath());
 
-		window.makeIntProperty("Boulder ID", (book == null) 
-				? 0
-				: ((book.getIntList().get("Boulder ID") == null 
-					? 0
-					: book.getIntList().get("Boulder ID")))
-		);
+		int[] boulderID = {0};
+		// Boulder ID requires some extra checking, as it may have changed.
+		if (book != null && book.getIntList().get("Boulder ID") != null) {
+			// Look through the boulder IDs for the one that matches the old ID.
+			this.boulders.forEach((number, boulder) -> {
+				if (boulder.getOldTicket() == book.getIntList().get("Boulder ID")) {
+					boulderID[0] = number;
+				}				
+			});
+		}		
+		
+		window.makeIntProperty("Boulder ID", boulderID[0]);
 		
 		window.makeDoubleProperty("Rotation (rad)", (book == null) 
 				? 0.0
@@ -985,6 +1131,8 @@ public class LevelManager {
 					? 0.0  
 					: book.getDoubList().get("Rotation (rad)")))
 		);
+		
+		peg.updateProperties(window.getPropertyBook());
 	}
 	
 	public void changeOffset(double xm, double ym) {
@@ -1017,6 +1165,31 @@ public class LevelManager {
 
 		// Reset the viewpoint starting point.
 		this.vpOffset = new Point2D.Double(0, 0);
+	}
+	
+	public void removeEntity(int number, String type) {
+		switch(type) {
+		case "Peg": {
+			this.pegs.remove(number);
+			break;
+		} 
+		case "Boulder": {
+			this.boulders.remove(number);
+			break;
+		}
+		case "Vine": {
+			this.vines.remove(number);
+			break;
+		}
+		case "Platform": {
+			this.plats.remove(number);
+			break;
+		}
+		case "NPC": {
+			this.npcs.remove(number);
+			break;
+		}
+		}
 	}
 	
 	/**
@@ -1150,10 +1323,45 @@ public class LevelManager {
 			return;			
 		}
 		
-		// Set the old variables.
+		// Do some preliminary cleaning.		
+		clearAndSet();
+		
+		// Load in the level.
+		this.setBg(old.bg.getPath());
+		this.eol = old.eol;
+		this.lvhm = old.lvhm;
+		this.lvwm = old.lvwm;
+		this.characters = old.characters;
+		this.respawnPoints = old.respawnPoints;
+		old.boulders.forEach((ticket, boulder) -> {
+			makeBoulder(boulder.getPath(), boulder.getPropertyBook(), 
+					boulder.getCenterXM(), boulder.getCenterYM(), boulder.getOldTicket());
+		});
+		old.pegs.forEach((ticket, peg) -> {
+			makePeg(peg.getPath(), peg.getPropertyBook(), peg.getCenterXM(), peg.getCenterYM());
+		});		
+		old.npcs.forEach((ticket, npc) -> {
+			makeNPC(npc.getPath(), npc.getPropertyBook(), npc.getCenterXM(), npc.getCenterYM());
+		});
+		old.plats.forEach((ticket, plat) -> {
+			makePlatform(plat.getPath(), plat.getPropertyBook(), plat.getCenterXM(), plat.getCenterYM());
+		});		
+		old.vines.forEach((ticket, vine) -> {
+			makeVine(vine.getPath(), vine.getPropertyBook(), vine.getCenterXM(), vine.getCenterYM());
+		});
+		
+		// Update the boulders to have their old tickets match their new.
+		this.boulders.forEach((number, boulder) -> {
+			boulder.updateTicket();
+		});
+		
 		
 		// Tell output window what the level names are, etc.
-
+		ltoAdapter.setLevelName(old.levelName);
+		ltoAdapter.setNextName(old.nextLevelName);
+		
+		// Resize as necessary.
+		setMToPixel(old.mToPixel);
 	}
 	
 	/**
@@ -1165,6 +1373,9 @@ public class LevelManager {
 	 * @return GSON to be outputted
 	 */
 	public String makeJSON(String levelName, String nextName) {
+		this.levelName = levelName;
+		this.nextLevelName = nextName;
+		
 		Gson gson = new GsonBuilder().create();
 		String output = gson.toJson(this);
 		return output;	
