@@ -1407,11 +1407,8 @@ public class LevelManager {
 		this.levelName = levelName;
 		this.nextLevelName = nextName;	
 		
-		Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls()
-				.registerTypeAdapterFactory(RuntimeTypeAdapterFactory
-						.of(AInteractable.class)
-						.registerSubtype(AInteractable.class)
-						.registerSubtype(Player.class)).create();
+		Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+		
 		LevelFile level = new LevelFile();
 		String output;
 		
@@ -1425,8 +1422,6 @@ public class LevelManager {
 		output = gson.toJson(level.characters);
 		System.out.println("2 pass" + output);
 		
-		return output;
-		/*
 		level.eol = this.eol;
 		
 		output = gson.toJson(level.eol);
@@ -1453,14 +1448,39 @@ public class LevelManager {
 		System.out.println("7 pass" + output);
 		
 		level.mToPixel = this.mToPixel;
+
+		output = gson.toJson(level.mToPixel);
+		System.out.println("8 pass" + output);
+		
 		level.npcs = this.npcs;
+		
+		output = gson.toJson(level.npcs);
+		System.out.println("9 pass" + output);
+		
 		level.pegs = this.pegs;
+		
+		output = gson.toJson(level.pegs);
+		System.out.println("10 pass" + output);
+		
 		level.plats = this.plats;
+		
+		output = gson.toJson(level.plats);
+		System.out.println("11 pass" + output);
+		
 		level.respawnPoints = this.respawnPoints;
+		
+		output = gson.toJson(level.respawnPoints);
+		System.out.println("12 pass" + output);
+		
 		level.vines = this.vines;		
 		
+		output = gson.toJson(level.vines);
+		System.out.println("13 pass" + output);
+		
 		output = gson.toJson(level);
+		
+		System.out.println("Expected total: " + output);
 		return output;	
-		*/
+		
 	}	
 }
