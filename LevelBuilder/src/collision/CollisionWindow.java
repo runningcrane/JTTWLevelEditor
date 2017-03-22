@@ -295,7 +295,7 @@ public class CollisionWindow extends JFrame {
 				
 		try {
 			// Make the GSON writer.
-			Gson gson = new GsonBuilder().create();
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 			// Try writing it out.
 			file = new FileWriter(COL_PATH + this.name + ".json");

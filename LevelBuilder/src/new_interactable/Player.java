@@ -9,5 +9,7 @@ public class Player extends AInteractable {
 	public Player(String path) {
 		this.setPath(path);		
 	}	
+	
+	public Player() {};
 
 }

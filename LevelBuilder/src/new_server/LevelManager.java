@@ -33,6 +33,7 @@ import com.google.gson.annotations.Expose;
 import new_client.EditWindow;
 import new_interactable.AInteractable;
 import new_interactable.Boulder;
+import new_interactable.LevelFile;
 import new_interactable.NPC;
 import new_interactable.Peg;
 import new_interactable.Platform;
@@ -41,6 +42,7 @@ import new_interactable.PropertyBook;
 import new_interactable.Vine;
 import noninteractable.Background;
 import noninteractable.INonInteractable;
+import utils.RuntimeTypeAdapterFactory;
 
 public class LevelManager {
 	
@@ -208,6 +210,8 @@ public class LevelManager {
 		this.request = Request.NONE;
 		this.requestNum = 1;
 		this.requestPath = "";
+		this.levelName = "default";
+		this.nextLevelName  = "";
 		
 		// No real reason to put it to 5,8 other than just to initialize it.
 		this.eol = new Point2D.Double(5, 8);
@@ -403,11 +407,11 @@ public class LevelManager {
 		// Draw vines
 		vines.forEach((ticket, vine) -> {
 			// Don't draw until the image has been made.
-			if (vine.getRI() != null) {
+			if (vine.getRI() != null) {				
 				double ulxp = (vine.getCenterXM() - vine.getInGameWidth() / 2.0) * this.mToPixel;
 				double ulyp = ((this.lvhm - vine.getCenterYM())) * this.mToPixel;
-				Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
-	
+				Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);			
+				
 				g.drawImage(vine.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
 	
 				// Draw the label on top of it.
@@ -535,15 +539,16 @@ public class LevelManager {
 		double xm = (xp - this.vpOffset.getX()) / this.mToPixel;
 		double ym = this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel;
 		
-		System.out.println("Received coordinates; request type is " + this.request);
+		System.out.println("Received swing coordinates " + xp + ", " + yp + ";\ntranslated to " +
+				xm + ", " + ym + " cocos coordinates");
 		
 		switch (request) {
 		case MAKE_PLATFORM: {
-			makePlatform(this.requestPath, null, xm, ym);
+			makeInteractable(this.requestPath, null, xm, ym, "Platform");
 			break;
 		}
 		case MAKE_VINE: {
-			makeVine(this.requestPath, null, xm, ym);
+			makeInteractable(this.requestPath, null, xm, ym, "Vine");
 			break;
 		}
 		case MAKE_BOULDER: {
@@ -551,11 +556,11 @@ public class LevelManager {
 			break;
 		}
 		case MAKE_NPC: {
-			makeNPC(this.requestPath, null, xm, ym);
+			makeInteractable(this.requestPath, null, xm, ym, "NPC");
 			break;
 		}
 		case MAKE_PEG: {
-			makePeg(this.requestPath, null, xm, ym);
+			makeInteractable(this.requestPath, null, xm, ym, "Peg");
 			break;
 		}
 		case EDIT_OLD_PLAT: {
@@ -653,7 +658,8 @@ public class LevelManager {
 		this.requestPath = "";
 	}
 	
-	public PropertyBook getCollisionBook(String truncatedName) {
+	public PropertyBook getCollisionBook(String truncatedName) {		
+		
 		Gson gson = new Gson();
 		PropertyBook collisionBook;		
 		try {			
@@ -661,8 +667,11 @@ public class LevelManager {
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found: " + COL_PATH + truncatedName + ".json");
 			// e.printStackTrace();
-			// TODO: Make a default set of values?
-			return null;
+			PropertyBook defaultBook = new PropertyBook();
+			defaultBook.getDoubList().put("zoomLevel", 1.0);
+			defaultBook.getDoubList().put("widthm", 3.0);
+			defaultBook.getDoubList().put("heightm", 3.0);
+			return defaultBook;
 		}
 		
 		return collisionBook;
@@ -689,21 +698,75 @@ public class LevelManager {
 		object.setRI(resize(image, object.getScaledIGWM(), object.getScaledIGHM()));
 	}
 	
-	public void makePlatform (String imageName, PropertyBook book, double xm, double ym) {
-		Platform plat = new Platform(this.ticketer, imageName);
+	public void makeInteractable (String imageName, PropertyBook book, double xm, double ym, String type) {
+		AInteractable obj;
+		switch (type) {
+		case "Platform": {
+			obj = new Platform(this.ticketer, imageName);
+			break;
+		}
+		case "Vine" : {
+			obj = new Vine(this.ticketer, imageName);
+			break;
+		}
+		case "NPC" : {
+			obj = new NPC(this.ticketer, imageName);
+			break;
+		}
+		case "Boulder" : {
+			System.err.println("Please call makeBoulder() instead.");
+			return;
+		}
+		case "Peg" : {
+			obj = new Peg(this.ticketer, imageName);
+			break;
+		}
+		default:
+			return;
+		}
 						
+		// Set the center location.
+		obj.setCenter(xm, ym);
+		
 		// Set the default property book.
-		String path = imageName.substring(10, plat.getPath().length() - 4);
-		plat.setDefaultPropertyBook(getCollisionBook(path));		
+		String path = imageName.substring(10, obj.getPath().length() - 4);
+		obj.setDefaultPropertyBook(getCollisionBook(path));		
 		
 		// Make an EditWindow.
-		makePlatEditWindow(this.ticketer, plat, book);
-		
-		// Make the image.
-		setImage(plat, path);
-				
-		// Add it the known list of platforms.
-		this.plats.put(this.ticketer, plat);
+		switch (type) {
+		case "Platform": {
+			makePlatEditWindow(this.ticketer, (Platform)obj, book);
+			setImage(obj, path);
+			this.plats.put(this.ticketer, (Platform)obj);
+			break;
+		}
+		case "Vine" : {
+			makeVineEditWindow(this.ticketer, (Vine)obj, book);
+			setImage(obj, path);
+			this.vines.put(this.ticketer, (Vine)obj);
+			break;
+		}
+		case "NPC" : {
+			makeNPCEditWindow(this.ticketer, (NPC)obj, book);
+			setImage(obj, path);
+			this.npcs.put(this.ticketer, (NPC)obj);
+			break;
+		}
+		case "Boulder" : {
+			makeBoulderEditWindow(this.ticketer, (Boulder)obj, book);
+			setImage(obj, path);
+			this.boulders.put(this.ticketer, (Boulder)obj);
+			break;
+		}
+		case "Peg" : {
+			makePegEditWindow(this.ticketer, (Peg)obj, book);
+			setImage(obj, path);
+			this.pegs.put(this.ticketer, (Peg)obj);
+			break;
+		}
+		default: 
+			System.out.println("Tag does not match any cases");
+		}									
 		
 		// Increase the ticket count.
 		this.ticketer++;
@@ -817,6 +880,9 @@ public class LevelManager {
 	public void makeVine (String imageName, PropertyBook book, double xm, double ym) {
 		Vine vine = new Vine(this.ticketer, imageName);
 		
+		// Set the center location.
+		vine.setCenter(xm, ym);
+		
 		// Set the default property book.
 		String path = imageName.substring(10, vine.getPath().length() - 4);
 		vine.setDefaultPropertyBook(getCollisionBook(path));		
@@ -886,27 +952,7 @@ public class LevelManager {
 		);
 		
 		vine.updateProperties(window.getPropertyBook());
-	}
-	
-	public void makeNPC (String imageName, PropertyBook book, double xm, double ym) {
-		NPC npc = new NPC(this.ticketer, imageName);
-		
-		// Set the default property book.
-		String path = imageName.substring(10, npc.getPath().length() - 4);
-		npc.setDefaultPropertyBook(getCollisionBook(path));
-		
-		// Make an EditWindow.
-		makeNPCEditWindow(this.ticketer, npc, book);
-		
-		// Make its image.
-		setImage(npc, path);
-				
-		// Add it the known list of NPCs.
-		this.npcs.put(this.ticketer, npc);
-		
-		// Increase the ticket count.
-		this.ticketer++;
-	}
+	}	
 	
 	public void makeNPCEditWindow(int ticket, NPC npc, PropertyBook book) {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "NPC");		
@@ -969,6 +1015,9 @@ public class LevelManager {
 		} else {
 			newBoulder.setOldTicket(oldTicket);
 		}
+		
+		// Set the center.
+		newBoulder.setCenter(xm, ym);
 		
 		// Set the default property book.
 		String path = imageName.substring(10, newBoulder.getPath().length() - 4);
@@ -1053,27 +1102,7 @@ public class LevelManager {
 		);
 
 		boulder.updateProperties(window.getPropertyBook());
-	}
-	
-	public void makePeg (String imageName, PropertyBook book, double xm, double ym) {
-		Peg peg = new Peg(this.ticketer, imageName);
-		
-		// Set the default property book.
-		String path = imageName.substring(10, peg.getPath().length() - 4);
-		peg.setDefaultPropertyBook(getCollisionBook(path));
-		
-		// Make an EditWindow.
-		makePegEditWindow(this.ticketer, peg, book);
-		
-		// Make its image.
-		setImage(peg, path);
-				
-		// Add it the known list of NPCs.
-		this.pegs.put(this.ticketer, peg);
-		
-		// Increase the ticket count.
-		this.ticketer++;
-	}
+	}	
 	
 	public void makePegEditWindow(int ticket, Peg peg, PropertyBook book) {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "Peg");		
@@ -1338,16 +1367,16 @@ public class LevelManager {
 					boulder.getCenterXM(), boulder.getCenterYM(), boulder.getOldTicket());
 		});
 		old.pegs.forEach((ticket, peg) -> {
-			makePeg(peg.getPath(), peg.getPropertyBook(), peg.getCenterXM(), peg.getCenterYM());
+			makeInteractable(peg.getPath(), peg.getPropertyBook(), peg.getCenterXM(), peg.getCenterYM(), "Peg");
 		});		
 		old.npcs.forEach((ticket, npc) -> {
-			makeNPC(npc.getPath(), npc.getPropertyBook(), npc.getCenterXM(), npc.getCenterYM());
+			makeInteractable(npc.getPath(), npc.getPropertyBook(), npc.getCenterXM(), npc.getCenterYM(), "NPC");
 		});
 		old.plats.forEach((ticket, plat) -> {
-			makePlatform(plat.getPath(), plat.getPropertyBook(), plat.getCenterXM(), plat.getCenterYM());
+			makeInteractable(plat.getPath(), plat.getPropertyBook(), plat.getCenterXM(), plat.getCenterYM(), "Platform");
 		});		
 		old.vines.forEach((ticket, vine) -> {
-			makeVine(vine.getPath(), vine.getPropertyBook(), vine.getCenterXM(), vine.getCenterYM());
+			makeInteractable(vine.getPath(), vine.getPropertyBook(), vine.getCenterXM(), vine.getCenterYM(), "Vine");
 		});
 		
 		// Update the boulders to have their old tickets match their new.
@@ -1357,6 +1386,8 @@ public class LevelManager {
 		
 		
 		// Tell output window what the level names are, etc.
+		this.levelName = old.levelName;
+		this.nextLevelName = old.nextLevelName;
 		ltoAdapter.setLevelName(old.levelName);
 		ltoAdapter.setNextName(old.nextLevelName);
 		
@@ -1374,10 +1405,62 @@ public class LevelManager {
 	 */
 	public String makeJSON(String levelName, String nextName) {
 		this.levelName = levelName;
-		this.nextLevelName = nextName;
+		this.nextLevelName = nextName;	
 		
-		Gson gson = new GsonBuilder().create();
-		String output = gson.toJson(this);
+		Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls()
+				.registerTypeAdapterFactory(RuntimeTypeAdapterFactory
+						.of(AInteractable.class)
+						.registerSubtype(AInteractable.class)
+						.registerSubtype(Player.class)).create();
+		LevelFile level = new LevelFile();
+		String output;
+		
+		level.boulders = this.boulders;
+		
+		output = gson.toJson(level.boulders);
+		System.out.println("1 pass" + output);				
+		
+		level.characters = this.characters;	
+		
+		output = gson.toJson(level.characters);
+		System.out.println("2 pass" + output);
+		
+		return output;
+		/*
+		level.eol = this.eol;
+		
+		output = gson.toJson(level.eol);
+		System.out.println("3 pass" + output);
+		
+		level.levelName = this.levelName;
+		
+		output = gson.toJson(level.levelName);
+		System.out.println("4 pass" + output);
+				
+		level.nextLevelName = this.nextLevelName;
+		
+		output = gson.toJson(level.nextLevelName);
+		System.out.println("5 pass" + output);
+		
+		level.lvhm = this.lvhm;
+		
+		output = gson.toJson(level.lvhm);
+		System.out.println("6 pass" + output);
+		
+		level.lvwm = this.lvwm;
+		
+		output = gson.toJson(level.lvwm);
+		System.out.println("7 pass" + output);
+		
+		level.mToPixel = this.mToPixel;
+		level.npcs = this.npcs;
+		level.pegs = this.pegs;
+		level.plats = this.plats;
+		level.respawnPoints = this.respawnPoints;
+		level.vines = this.vines;		
+		
+		output = gson.toJson(level);
 		return output;	
-	}
+		*/
+	}	
 }
