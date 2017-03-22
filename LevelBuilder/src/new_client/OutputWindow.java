@@ -1,5 +1,7 @@
 package new_client;
 
+import static utils.Constants.COL_PATH;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -109,10 +111,10 @@ public class OutputWindow extends JFrame {
 					// Send over the name of the level, so everything before the '.' in the extension.
 					file.write(otlAdapter.makeJSON(
 					        levelName,
-							txtNextLevel.getText()).toJSONString());
+							txtNextLevel.getText()));
 					file.flush();
 					file.close();
-					System.out.println("Output JSON written to levelFiles folder.");
+					System.out.println("Output JSON written to " + COL_PATH);
 				} catch (IOException e1) {					
 					e1.printStackTrace();
 				}			
@@ -277,6 +279,22 @@ public class OutputWindow extends JFrame {
 		this.setSize(wm, hm);		
 	}		
 	
+	/**
+	 * Set the name of the current level.
+	 * @param name name of the level, sans .json
+	 */
+	public void setLevelName(String name) {
+		this.txtInputPath.setText(name);
+	}
+	
+	/**
+	 * Set the name of the next level.
+	 * @param name name of the next level, sans .json
+	 */
+	public void setNextName(String name) {
+		txtNextLevel.setText(name);
+	}
+		
 	/**
 	 * Redraws the panel with any new/deleted art.
 	 */

@@ -8,6 +8,11 @@ public class Boulder extends AInteractable {
 	private int oldTicket;
 	
 	/**
+	 * Scaled radius of the boulder.
+	 */
+	private double scaledRadius;
+	
+	/**
 	 * Makes a basic boulder.
 	 * @param ticket identifier
 	 * @param path path to the file that has the boulder image
@@ -23,5 +28,13 @@ public class Boulder extends AInteractable {
 	
 	public void updateTicket() {
 		this.oldTicket = getTicket();
+	}
+	
+	public double getScaledRadius() {
+		return this.scaledRadius;
+	}
+	
+	public void scaleRadius(double scale) {
+		this.scaledRadius = this.getDefaultPropertyBook().getDoubList().get("Radius") * scale;
 	}
 }

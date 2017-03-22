@@ -6,6 +6,8 @@ import java.awt.Graphics;
 
 import org.json.simple.JSONObject;
 
+import com.google.gson.Gson;
+
 import new_client.IControlToLevelAdapter;
 import new_client.ILayerToLevelAdapter;
 import new_client.IOutputToLevelAdapter;
@@ -149,7 +151,7 @@ public class Controller {
 			}
 
 			@Override
-			public JSONObject makeJSON(String levelName, String nextName) {
+			public String makeJSON(String levelName, String nextName) {
 				return level.makeJSON(levelName, nextName);
 			}
 

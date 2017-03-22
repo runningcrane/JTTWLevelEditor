@@ -2,6 +2,7 @@ package new_server;
 
 import static utils.Constants.ASSETS_PATH;
 import static utils.Constants.COL_PATH;
+import static utils.Constants.LEVELS_PATH;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -13,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +27,7 @@ import javax.swing.Timer;
 import org.json.simple.JSONObject;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import new_client.EditWindow;
 import new_interactable.Boulder;
@@ -78,11 +81,6 @@ public class LevelManager {
 	 * Viewport height (meters).
 	 */
 	private double vphm;
-
-	/**
-	 * Map of objects to their default JSON.
-	 */
-	private Map<String, JSONObject> defaultJSON;
 	
 	/**
 	 * List of respawn points for the level.
@@ -210,7 +208,6 @@ public class LevelManager {
 		this.lvhm = 15;
 
 		// Instantiate various lists.
-		this.defaultJSON = new HashMap<String, JSONObject>();
 		this.plats = new HashMap<Integer, Platform>();
 		this.fg = new ArrayList<INonInteractable>();
 		this.vines = new HashMap<Integer, Vine>();
@@ -877,8 +874,7 @@ public class LevelManager {
 				double scale = book.getDoubList().get("Scale");
 				
 				boulder.setScale(scale);
-					
-				// TODO: scaledRadius is for boulders; need to add scaledRadius in the makeBoulder() call.			
+				boulder.scaleRadius(scale);
 					
 				// Scale the image now.
 				boulder.setRI(resize(boulder.getBI(), boulder.getScaledIGWM(), boulder.getScaledIGHM()));
@@ -1023,6 +1019,18 @@ public class LevelManager {
 		this.vpOffset = new Point2D.Double(0, 0);
 	}
 	
+	/**
+	 * Manual call to reset the level dimensions.
+	 * 
+	 * @param wp
+	 *            width in pixels
+	 * @param hp
+	 *            height in pixels
+	 */
+	public void manualResize(double wp, double hp) {
+		this.setViewportDimensions(wp / this.mToPixel, hp / this.mToPixel);
+	}
+	
 	public void setViewportDimensions(double wm, double hm) {
 		ltoAdapter.setDimensions((int) (wm * mToPixel), (int) (hm * mToPixel));
 		this.vpwm = wm;
@@ -1121,5 +1129,44 @@ public class LevelManager {
 	public void start() {
 		setBg(ASSETS_PATH + "bgSunny.png");
 		this.timer.start();
+	}
+	
+	/**
+	 * Reads in a level from its GSON.
+	 * 
+	 * @param levelPath
+	 *            path to the level json file
+	 */
+	public void readJSON(String levelPath) {
+		Gson gson = new Gson();
+		LevelManager old;
+		
+		try {
+			System.out.println("Found path");
+			old = gson.fromJson(new FileReader(LEVELS_PATH + levelPath + ".json"), LevelManager.class);			
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found: " + LEVELS_PATH + levelPath + ".json");
+			// e.printStackTrace();			
+			return;			
+		}
+		
+		// Set the old variables.
+		
+		// Tell output window what the level names are, etc.
+
+	}
+	
+	/**
+	 * Outputs a JSON file.
+	 * 
+	 * @param levelName
+	 *            name of the level
+	 * @param nextName name of the next level
+	 * @return GSON to be outputted
+	 */
+	public String makeJSON(String levelName, String nextName) {
+		Gson gson = new GsonBuilder().create();
+		String output = gson.toJson(this);
+		return output;	
 	}
 }

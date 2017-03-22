@@ -1,5 +1,6 @@
 package new_interactable;
 
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
@@ -247,6 +248,16 @@ public abstract class AInteractable {
 	 */
 	protected void setScaledIGHM() {
 		this.scaledIGHM = this.heightm * this.scale;	
+	}
+	
+	/**
+	 * Rescale the collision points based on the current scale.
+	 */
+	protected void setScaledCoordinates() {
+		this.book.collPointList.clear();
+		this.defaultBook.collPointList.forEach((point) -> {
+			this.book.collPointList.add(new Point2D.Double(point.x * this.scale, point.y * this.scale));
+		});
 	}
 	
 	/**

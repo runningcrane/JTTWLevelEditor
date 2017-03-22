@@ -5,6 +5,8 @@ import java.awt.Graphics;
 
 import org.json.simple.JSONObject;
 
+import com.google.gson.Gson;
+
 public interface IOutputToLevelAdapter {
 
 	/**
@@ -20,7 +22,7 @@ public interface IOutputToLevelAdapter {
 	 * @param nextName name of the next level
 	 * @return JSON representation of the level
 	 */
-	public JSONObject makeJSON(String levelName, String nextName);
+	public String makeJSON(String levelName, String nextName);
 	
 	/**
 	 * Recreate a level from its JSON.
