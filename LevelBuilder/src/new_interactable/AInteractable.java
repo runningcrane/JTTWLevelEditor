@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 
-import com.google.gson.annotations.Expose;
+import utils.annotations.Exclude;
 
 public abstract class AInteractable {
 	
@@ -41,23 +41,25 @@ public abstract class AInteractable {
 	/**
 	 * Original image.
 	 */
-	@Expose(serialize = false)
+	@Exclude
 	private BufferedImage image;
 	
 	/**
 	 * Rescaled image for output on level editor.
 	 */
-	@Expose(serialize = false)
+	@Exclude
 	private ImageIcon rescaledImage;
 	
 	/**
 	 * Scaled in-game width [m]. 
 	 */
+	@Exclude
 	private double scaledIGWM;
 	
 	/**
 	 * Scaled in-game height [m].
 	 */
+	@Exclude
 	private double scaledIGHM;	
 	
 	/**

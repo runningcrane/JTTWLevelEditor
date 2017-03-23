@@ -1,6 +1,6 @@
 package new_client;
 
-import static utils.Constants.COL_PATH;
+import static utils.Constants.ASSETS_PATH;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -14,15 +14,12 @@ import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 /**
@@ -33,10 +30,10 @@ import java.awt.event.ActionEvent;
  */
 public class OutputWindow extends JFrame {
 
+	private static final long serialVersionUID = -7183297840701184781L;
 	private JPanel contentPane;
 	private JPanel pnlContent;
 	private IOutputToLevelAdapter otlAdapter;
-	private JTextField txtJsonOutputPath;
 	private JTextField txtOutputPath;
 	private JLabel lblCurLevel;
 		
@@ -92,32 +89,9 @@ public class OutputWindow extends JFrame {
 		JButton btnMakeJSON = new JButton("Make");
 		btnMakeJSON.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
-				 * Try to write out the JSON file.
-				 */
-				String fullPath;
-				String levelName;
-				if (txtOutputPath.getText().contains(".")) {
-					// They added their own extension, don't add json to the end.
-					fullPath = "../levelFiles/" + txtOutputPath.getText();
-					levelName = txtOutputPath.getText().substring(0, txtOutputPath.getText().indexOf('.'));
-				} else {
-					fullPath = "../levelFiles/" + txtOutputPath.getText() + ".json";
-					levelName = txtOutputPath.getText();
-				}
-				FileWriter file;
-				try {
-					file = new FileWriter(fullPath);
-					// Send over the name of the level, so everything before the '.' in the extension.
-					file.write(otlAdapter.makeJSON(
-					        levelName,
-							txtNextLevel.getText()));
-					file.flush();
-					file.close();
-					System.out.println("Output JSON written to " + COL_PATH);
-				} catch (IOException e1) {					
-					e1.printStackTrace();
-				}			
+				otlAdapter.makeJSON(
+						txtOutputPath.getText(),
+						txtNextLevel.getText());	
 			}
 		});
 		pnlControls.add(btnMakeJSON);
@@ -141,19 +115,7 @@ public class OutputWindow extends JFrame {
 		pnlControls.add(txtInputPath);
 		txtInputPath.setColumns(10);
 		JButton btnReadJSON = new JButton("Load Level");
-		btnReadJSON.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String fullPath;
-				String levelName;
-				if (txtOutputPath.getText().contains(".")) {
-					// They added their own extension, don't add json to the end.
-					fullPath = "../levelFiles/" + txtInputPath.getText();
-				} else {
-					fullPath = "../levelFiles/" + txtInputPath.getText() + ".json";
-				}
-				otlAdapter.readJSON(fullPath);
-			}
-		});
+		btnReadJSON.addActionListener((e) -> otlAdapter.readJSON(txtInputPath.getText()));
 				
 		pnlControls.add(btnReadJSON);
 		
@@ -170,7 +132,7 @@ public class OutputWindow extends JFrame {
 				otlAdapter.changeOffset(offset, 0);
 			}
 		});
-		ImageIcon iiWest = new ImageIcon("../assets/arWest.png");
+		ImageIcon iiWest = new ImageIcon(ASSETS_PATH + "arWest.png");
 		btnWest.setIcon(iiWest);
 		pnlWest.add(btnWest);
 		
@@ -184,7 +146,7 @@ public class OutputWindow extends JFrame {
 				otlAdapter.changeOffset(-1 * offset, 0);
 			}
 		});
-		ImageIcon iiEast = new ImageIcon("../assets/arEast.png");
+		ImageIcon iiEast = new ImageIcon(ASSETS_PATH + "arEast.png");
 		btnEast.setIcon(iiEast);
 		pnlEast.add(btnEast);
 		
@@ -198,7 +160,7 @@ public class OutputWindow extends JFrame {
 				otlAdapter.changeOffset(0, offset);
 			}
 		});
-		ImageIcon iiNorth = new ImageIcon("../assets/arNorth.png");
+		ImageIcon iiNorth = new ImageIcon(ASSETS_PATH + "arNorth.png");
 		btnNorth.setIcon(iiNorth);
 		pnlNorth.add(btnNorth);
 		
@@ -212,7 +174,7 @@ public class OutputWindow extends JFrame {
 				otlAdapter.changeOffset(0, -1 * offset);
 			}
 		});
-		ImageIcon iiSouth = new ImageIcon("../assets/arSouth.png");
+		ImageIcon iiSouth = new ImageIcon(ASSETS_PATH + "arSouth.png");
 		btnSouth.setIcon(iiSouth);
 		pnlSouth.add(btnSouth);
 		
