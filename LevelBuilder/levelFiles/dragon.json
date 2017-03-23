@@ -1,0 +1,24 @@
+{"levelEndX":42.388888888888886,"polygonCollision":true,"levelEndY":4.351851851851851,"boulders":[{"centerY":7.092592592592593,"imageName":"BoulderB.png","ticket":3,"centerX":-4.592592592592593,"mass":1000.0,"imageSizeHeight":6.0,"scale":2.0,"type":"CIRCLE","radius":6.0,"imageSizeWidth":6.0,"collisionPoints":[{"x":-2.46,"y":-2.56},{"x":-2.94,"y":-1.06},{"x":-2.78,"y":0.1},{"x":-2.88,"y":1.46},{"x":-2.54,"y":2.04},{"x":-1.36,"y":2.04},{"x":0.44,"y":2.92},{"x":1.82,"y":1.76},{"x":2.12,"y":0.06},{"x":2.56,"y":-1.26},{"x":2.94,"y":-1.7},{"x":2.84,"y":-2.74},{"x":0.94,"y":-2.8},{"x":0.34,"y":-3.0},{"x":-1.12,"y":-3.04}]}],"nextLevelName":"nextLevel","levelName":"dragon","boulderJoints":[],"respawnPoints":[],"platforms":[{"centerY":3.351851851851851,"imageName":"land.png","centerX":9.925925925925926,"moveable":false,"imageSizeHeight":3.9599999999999995,"scale":3.3,"velocity":1.0,"imageSizeWidth":33.0,"disappears":false,"collidable":true,"collisionPoints":[{"x":-16.467,"y":-2.013},{"x":-14.124,"y":1.4849999999999999},{"x":-4.653,"y":1.3529999999999998},{"x":6.9959999999999996,"y":1.452},{"x":10.823999999999998,"y":0.7919999999999999},{"x":13.167,"y":-0.231},{"x":16.401,"y":-2.046}],"springCK":1.0,"endY":0.0,"endX":0.0,"sinkable":false,"climbable":false},{"centerY":3.2407407407407405,"imageName":"sea.png","centerX":36.72222222222222,"moveable":false,"imageSizeHeight":3.24,"scale":2.7,"velocity":1.0,"imageSizeWidth":37.800000000000004,"disappears":false,"collidable":false,"collisionPoints":[],"springCK":1.0,"endY":0.0,"endX":0.0,"sinkable":false,"climbable":false},{"centerY":6.203703703703704,"imageName":"head.png","centerX":27.09259259259259,"moveable":false,"imageSizeHeight":7.72,"scale":1.93,"velocity":1.0,"imageSizeWidth":5.79,"disappears":false,"collidable":true,"collisionPoints":[],"springCK":1.0,"endY":0.0,"endX":0.0,"sinkable":false,"climbable":false},{"centerY":4.462962962962964,"imageName":"body.png","centerX":32.01851851851852,"moveable":false,"imageSizeHeight":4.2299999999999995,"scale":1.41,"velocity":1.0,"imageSizeWidth":7.05,"disappears":false,"collidable":true,"collisionPoints":[],"springCK":1.0,"endY":0.0,"endX":0.0,"sinkable":false,"climbable":false},{"centerY":5.648148148148149,"imageName":"tail.png","centerX":36.68518518518518,"moveable":false,"imageSizeHeight":5.888,"scale":1.28,"velocity":1.0,"imageSizeWidth":3.2,"disappears":false,"collidable":true,"collisionPoints":[],"springCK":1.0,"endY":0.0,"endX":0.0,"sinkable":false,"climbable":false}],"mToPixel":27.0,"characters":{"Monkey":{"startingXPos":-1.0,"startingYPos":6.277777777777779,"present":true},"Piggy":{"startingXPos":0.0,"startingYPos":0.0,"present":false},"Sandy":{"startingXPos":0.0,"startingYPos":0.0,"present":false},"Monk":{"startingXPos":-0.2962962962962963,"startingYPos":6.277777777777779,"present":true}},
+"attackZones":[
+  {
+    "minX" : -1000,
+    "maxX" : 1000,
+    "minY" : -1000,
+    "maxY" : 1000,
+    "projectile" : {
+        "FireType" : "ABSOLUTE",
+        "xVelMax" : -200,
+        "xVelMin": -500,
+        "yVelMax": 0,
+        "yVelMin" : -300,
+        "xPosition" : 27.09,
+        "yPosition" : 10,
+        "imageName" : "fireball.png",
+        "soundName" : "",
+        "imageWidth": 100,
+        "imageHeight" : 100
+    }
+  }
+],
+
+"background":{"imageName":"bgCloud.png","width":100.0,"height":15.0},"vines":[],"goldenPegs":[]}

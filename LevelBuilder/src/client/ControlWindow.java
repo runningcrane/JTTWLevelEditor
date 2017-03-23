@@ -50,7 +50,7 @@ public class ControlWindow extends JFrame {
 	private static final String[] PLATFORMS = {
 			"Pedestal", "blueGround", "canyonR", "canyonL", 
 			"ForestGround", "Tree1", "Tree2", "paradiserock",
-			"Ramp", "arEast"
+			"Ramp", "arEast", "land", "Shore", "sea"
 	};
 	private static final String[] ROCKS = {
 			"Rock1", "Rock2", "Rock3", "Rock4", "Rock5", 
@@ -75,7 +75,7 @@ public class ControlWindow extends JFrame {
 	};
 	
 	private static final String[] SPECIALS = {
-		    "BuddhaHand", "lvl1Gate"	
+		    "BuddhaHand", "lvl1Gate", "head", "body", "tail"	
 	}; 
 	
 	private JTextField txtLHeight;
