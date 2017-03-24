@@ -75,6 +75,11 @@ public interface IControlToLevelAdapter {
 	 */
 	public void makeBoulder(String path);
 	
+	/**
+	 * Request a new text tip to be added.
+	 */
+	public void makeTextTip();
+	
 	public void markRP();
 	
 	public void removeRP();

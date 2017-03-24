@@ -465,14 +465,17 @@ public class LevelManager {
 		});
 		
 		textTips.forEach((ticket, textTip) -> {
-			Point2D.Double point = getViewportCoordinates(textTip.getCenterXM() * this.mToPixel,
-					(this.levelHeightM - textTip.getCenterYM()) * this.mToPixel);
-			
-			g.setColor(Color.BLACK);
-			Font f = new Font(Font.DIALOG, Font.PLAIN, 15);
-			Font old = g.getFont(); 
-			g.setFont(f);
-			g.drawString(textTip.getString(), (int)point.x - textTip.getSize() / 2, (int)point.y - textTip.getSize() / 2);
+				// Don't draw until the font size has been decided.
+			if (textTip.getPropertyBook().getIntList().containsKey("fontSize")) {
+				Point2D.Double point = getViewportCoordinates(textTip.getCenterXM() * this.mToPixel,
+						(this.levelHeightM - textTip.getCenterYM()) * this.mToPixel);
+				
+				g.setColor(Color.BLACK);
+				Font f = new Font(Font.DIALOG, Font.PLAIN, 15);
+				Font old = g.getFont(); 
+				g.setFont(f);
+				g.drawString(textTip.getString(), (int)point.x - textTip.getSize() / 2, (int)point.y - textTip.getSize() / 2);
+			}
 		});
 	}
 	
@@ -518,6 +521,9 @@ public class LevelManager {
 		case MAKE_PEG: {
 			makeInteractable(this.requestPath, null, xm, ym, "Peg");
 			break;
+		}
+		case MAKE_TIP: {
+			makeInteractable(this.requestPath, null, xm, ym, "TextTip");
 		}
 		case EDIT_OLD_PLAT: {
 			Platform target = this.plats.get(requestNum);
@@ -681,6 +687,10 @@ public class LevelManager {
 			obj = new Peg(this.ticketer, imageName);
 			break;
 		}
+		case "TextTip" : {
+			obj = new TextTip(this.ticketer);
+			break;
+		}
 		default:
 			System.err.println("Tag does not match any cases");
 			return -1;
@@ -689,11 +699,12 @@ public class LevelManager {
 		// Set the center location.
 		obj.setCenter(xm, ym);
 		
-		// Set the default property book.
-		// Get the straight name.
-		System.out.println(type + ", " + obj.getPath() + ", " + imageName);
-		String path = imageName.substring(10, obj.getPath().length() - 4);
-		obj.setDefaultPropertyBook(getCollisionBook(path));		
+		// Set the default property book if there is a valid path.
+		String path = "";
+		if (!obj.getPath().equals("")) {
+			path = imageName.substring(10, obj.getPath().length() - 4);
+			obj.setDefaultPropertyBook(getCollisionBook(path));
+		}
 		
 		// Make an EditWindow.
 		switch (type) {
@@ -725,6 +736,11 @@ public class LevelManager {
 			makePegEditWindow(this.ticketer, (Peg)obj, book);
 			setImage(obj, path);
 			this.pegs.put(this.ticketer, (Peg)obj);
+			break;
+		}
+		case "TextTip" : {
+			makeTextEditWindow(this.ticketer, (TextTip)obj, book);
+			this.textTips.put(this.ticketer, (TextTip)obj);
 			break;
 		}
 		default: 
@@ -1162,6 +1178,45 @@ public class LevelManager {
 		peg.updateProperties(window.getPropertyBook());
 	}
 	
+	public void makeTextEditWindow(int ticket, TextTip tip, PropertyBook book) {
+		EditWindow window = ltlAdapter.makeEditWindow(ticket, "TextTip");		
+		
+		// Set up the submit listener.
+		window.setSubmitListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				tip.updateProperties(window.getPropertyBook());	
+				
+				// Text uses font size, not scale, so nothing else needs to be done.
+			}			
+		});
+		
+		// Set up text tip properties.
+		window.makeButton("New center", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				request = Request.EDIT_OLD_TIP;
+				requestNum = ticket;				
+			}		
+		});
+		
+		window.makeStringProperty("text", (book == null) 
+				? ""
+				: ((book.getStringList().get("text") == null 
+					? ""
+					: book.getStringList().get("text")))
+		);				
+		
+		window.makeIntProperty("fontSize", (book == null) 
+				? 15
+				: ((book.getIntList().get("fontSize") == null 
+					? 15 
+					: book.getIntList().get("fontSize")))
+		);
+		
+		tip.updateProperties(window.getPropertyBook());
+	}
+	
 	/**
 	 * Make the character visible and request for their position to be set.
 	 * @param name
@@ -1224,6 +1279,10 @@ public class LevelManager {
 		}
 		case "NPC": {
 			this.npcs.remove(number);
+			break;
+		}
+		case "TextTip": {
+			this.textTips.remove(number);
 			break;
 		}
 		}
@@ -1403,6 +1462,9 @@ public class LevelManager {
 		});		
 		old.vines.forEach((ticket, vine) -> {
 			makeInteractable(vine.getPath(), vine.getPropertyBook(), vine.getCenterXM(), vine.getCenterYM(), "Vine");
+		});
+		old.textTips.forEach((ticket, tip) -> {
+			makeInteractable("", tip.getPropertyBook(), tip.getCenterXM(), tip.getCenterYM(), "TextTip");
 		});
 		
 		// Update the boulders to have their old tickets match their new.

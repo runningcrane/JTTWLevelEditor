@@ -278,6 +278,20 @@ public class ControlWindow extends JFrame {
 		btnRPRemove.addActionListener((arg0) -> ctlAdapter.removeRP()); 
 		pnlRPControls.add(btnRPRemove);
 		
+		// Text tips for tutorials, etc.
+		JPanel pnlTextTip = new JPanel();
+		pnlTextTip.setLayout(new BoxLayout(pnlTextTip, BoxLayout.Y_AXIS));
+		pnlTextTip.setPreferredSize(new Dimension(50,50));
+		pnlBack.add(pnlTextTip);
+		
+		JLabel lblTextTip = new JLabel("<html><b>Text Tips</b></html>");
+		pnlTextTip.add(lblTextTip);
+		
+		
+		JButton btnTextTip = new JButton("Add new text tip");
+		btnTextTip.addActionListener((arg0) -> ctlAdapter.makeTextTip()); 
+		pnlTextTip.add(btnTextTip);
+		
 		// Background panel		
 		JPanel pnlBackground = new JPanel();
 		pnlBackground.setPreferredSize(dimPanel);

@@ -142,6 +142,11 @@ public class Controller {
 			public void makeBoulder(String path) {
 				level.setRequest(path, LevelManager.Request.MAKE_BOULDER);
 			}
+
+			@Override
+			public void makeTextTip() {
+				level.setRequest("", LevelManager.Request.MAKE_TIP);
+			}
 		});
 
 		layerWindow = new LayerWindow(new ILayerToLevelAdapter() {
