@@ -17,11 +17,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 import com.google.gson.Gson;
@@ -886,29 +890,6 @@ public class LevelManager {
 		plat.updateProperties(window.getPropertyBook());
 	}
 	
-	public void makeVine (String imageName, PropertyBook book, double xm, double ym) {
-		Vine vine = new Vine(this.ticketer, imageName);
-		
-		// Set the center location.
-		vine.setCenter(xm, ym);
-		
-		// Set the default property book.
-		String path = imageName.substring(10, vine.getPath().length() - 4);
-		vine.setDefaultPropertyBook(getCollisionBook(path));		
-		
-		// Make an EditWindow.
-		makeVineEditWindow(this.ticketer, vine, book);
-		
-		// Make the image.
-		setImage(vine, path);
-				
-		// Add it the known list of vines.
-		this.vines.put(this.ticketer, vine);
-		
-		// Increase the ticket count.
-		this.ticketer++;
-	}
-	
 	public void makeVineEditWindow(int ticket, Vine vine, PropertyBook book) {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "Vine");		
 		
@@ -1149,18 +1130,74 @@ public class LevelManager {
 		
 		window.makeStringProperty("Image path", peg.getPath());
 
-		int[] boulderID = {0};
 		// Boulder ID requires some extra checking, as it may have changed.
-		if (book != null && book.getIntList().get("Boulder ID") != null) {
-			// Look through the boulder IDs for the one that matches the old ID.
-			this.boulders.forEach((number, boulder) -> {
-				if (boulder.getOldTicket() == book.getIntList().get("Boulder ID")) {
-					boulderID[0] = number;
-				}				
+		int counter[] = {0};
+		if (book != null && book.getIntList().values() != null) {
+			/*
+			 * Look through the boulder IDs for the one that matches the old ID
+			 * and update the peg. TODO
+			 */
+			book.getIntList().values().forEach((oldBoulderID) -> {
+				this.boulders.forEach((number, boulder) -> {
+					if (boulder.getOldTicket() == oldBoulderID) {
+						System.out.println("oldBoudlerID:" + oldBoulderID + " new ID: " + number);
+						window.getPropertyBook().getIntList().put("boulder" + counter[0], number);
+						counter[0]++;
+					}
+				});
 			});
+			peg.updateProperties(window.getPropertyBook());	
 		}		
 		
-		window.makeIntProperty("Boulder ID", boulderID[0]);
+		JLabel affectedBoulders = new JLabel();
+		window.addComponentInstance("Affected boulders:", affectedBoulders);
+		// If loading a peg, show its current values.
+		String[] text = {""};
+		window.getPropertyBook().getIntList().values().forEach((value) -> {
+			text[0] += Integer.toString(value) + " ";
+		});
+		affectedBoulders.setText(text[0]);
+		
+		window.makeButton("Add affected boulder", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Request boulder number from user. Then, add it to int properties.
+				String idString = JOptionPane.showInputDialog(null, "Enter boulder ticket #");
+				int id = Integer.parseInt(idString);
+				
+				window.getPropertyBook().getIntList().put("boulder" + counter[0], id);
+				counter[0]++;
+				
+				// Let the JLabel show any currently affected boulders.
+				String[] text = {""};
+				window.getPropertyBook().getIntList().values().forEach((value) -> {
+					text[0] += Integer.toString(value) + " ";
+				});
+				affectedBoulders.setText(text[0]);
+				
+				peg.updateProperties(window.getPropertyBook());	
+			}		
+		});
+		
+		window.makeButton("Remove affected boulder", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Request boulder number from user. Then, remove it from int properties.
+				String idString = JOptionPane.showInputDialog(null, "Enter boulder ticket #");
+				int id = Integer.parseInt(idString);
+				
+				window.getPropertyBook().getIntList().remove("boulder" + id);	
+				
+				// Let the JLabel show any currently affected boulders.
+				String[] text = {""};
+				window.getPropertyBook().getIntList().values().forEach((value) -> {
+					text[0] += Integer.toString(value) + " ";
+				});
+				affectedBoulders.setText(text[0]);
+				
+				peg.updateProperties(window.getPropertyBook());	
+			}		
+		});
 		
 		window.makeDoubleProperty("Rotation (rad)", (book == null) 
 				? 0.0

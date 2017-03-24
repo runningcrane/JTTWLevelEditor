@@ -39,6 +39,6 @@ public class Boulder extends AInteractable {
 	}
 	
 	public void scaleRadius(double scale) {
-		this.scaledRadius = this.getDefaultPropertyBook().getDoubList().get("Radius") * scale;
+		this.scaledRadius = this.getDefaultPropertyBook().getDoubList().get("radius") * scale;
 	}
 }

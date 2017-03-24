@@ -9,6 +9,7 @@ import java.awt.event.FocusListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -281,6 +282,19 @@ public class EditWindow extends JPanel {
 		add(chckBox);
 		
 		book.getBoolList().put(text, defaultValue);
+		
+		this.twos++;
+		updateLayout();
+	}
+	
+	/**
+	 * Add a component with an optional label.
+	 * @param component
+	 */
+	public void addComponentInstance(String optional, JComponent component) {
+		JLabel label = new JLabel(optional);
+		add(label);
+		add(component);
 		
 		this.twos++;
 		updateLayout();
