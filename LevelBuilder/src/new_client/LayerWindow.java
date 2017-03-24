@@ -2,6 +2,7 @@ package new_client;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -74,6 +75,9 @@ public class LayerWindow extends JFrame {
         this.scrPaneScroll.setPreferredSize(d);
 		this.pack();	
 		
+		// Request focus.
+		window.requestFocus();		
+		window.scrollRectToVisible(window.getBounds());
 		return window;
 	}
 
@@ -111,6 +115,7 @@ public class LayerWindow extends JFrame {
 		JPanel contentPane = new JPanel();
 		pnlBack = new JPanel();
 		scrPaneScroll = new JScrollPane(pnlBack);
+		scrPaneScroll.setViewportView(pnlBack);
 		scrPaneScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
 		pnlBack.setBorder(new EmptyBorder(5, 5, 5, 5));
