@@ -779,7 +779,7 @@ public class LevelManager {
 				plat.updateProperties(window.getPropertyBook());
 				
 				// Next, update the relevant parts when scaling. Use resize()!
-				double scale = book.getDoubList().get("Scale");
+				double scale = window.getPropertyBook().getDoubList().get("Scale");
 				
 				plat.setScale(scale);					
 					
@@ -907,10 +907,9 @@ public class LevelManager {
 				vine.updateProperties(window.getPropertyBook());
 				
 				// Next, update the relevant parts when scaling. Use resize()!
-				double scale = book.getDoubList().get("Scale");
-				
+				double scale = window.getPropertyBook().getDoubList().get("Scale");
 				vine.setScale(scale);					
-					
+				
 				// Scale the image now.
 				vine.setRI(resize(vine.getBI(), vine.getScaledIGWM(), vine.getScaledIGHM()));
 			}			
@@ -961,7 +960,7 @@ public class LevelManager {
 				npc.updateProperties(window.getPropertyBook());	
 				
 				// Next, update the relevant parts when scaling. Use resize()!
-				double scale = book.getDoubList().get("Scale");
+				double scale = window.getPropertyBook().getDoubList().get("Scale");
 				
 				npc.setScale(scale);					
 					
@@ -1049,7 +1048,7 @@ public class LevelManager {
 				boulder.updateProperties(window.getPropertyBook());	
 				
 				// Next, update the relevant parts when scaling. Use resize()!
-				double scale = book.getDoubList().get("Scale");
+				double scale = window.getPropertyBook().getDoubList().get("Scale");
 				
 				boulder.setScale(scale);
 				boulder.scaleRadius(scale);
@@ -1111,7 +1110,7 @@ public class LevelManager {
 				peg.updateProperties(window.getPropertyBook());	
 				
 				// Next, update the relevant parts when scaling. Use resize()!
-				double scale = book.getDoubList().get("Scale");
+				double scale = window.getPropertyBook().getDoubList().get("Scale");
 				
 				peg.setScale(scale);					
 					

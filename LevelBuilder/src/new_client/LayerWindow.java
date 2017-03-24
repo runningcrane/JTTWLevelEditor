@@ -18,6 +18,9 @@ import javax.swing.JButton;
 
 public class LayerWindow extends JFrame {
 
+	JPanel pnlBack;
+	JScrollPane scrPaneScroll;
+	
 	private static final long serialVersionUID = -1435555721573127869L;
 	Map<Integer, EditWindow> windows;
 	Map<Integer, JSeparator> separators;
@@ -52,13 +55,24 @@ public class LayerWindow extends JFrame {
 		window.setRemoveListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				removeEditWindow(number);
+				removeEditWindow(number, jsep);
 			}			
 		});
 		
 		// Add it to our known lists.		
 		this.windows.put(number, window);
 		this.separators.put(number, jsep);
+		
+		// Add it to the window.
+		pnlBack.add(window);
+		
+		// Add a line to separate areas.
+		pnlBack.add(jsep);
+		
+		// Resize the frame.
+        Dimension d = new Dimension(500,300);
+        this.scrPaneScroll.setPreferredSize(d);
+		this.pack();	
 		
 		return window;
 	}
@@ -67,13 +81,17 @@ public class LayerWindow extends JFrame {
 	 * Remove an EditWindow.
 	 * @param number ticket number of object this is editing
 	 */
-	public void removeEditWindow(int number) {
-		String type = this.windows.get(number).getEditWindowType();
+	public void removeEditWindow(int number, JSeparator jsep) {
+		// Remove from the screen.
+		pnlBack.remove(this.windows.get(number));
+		pnlBack.remove(jsep);
 		
-		this.windows.remove(number);
+		// Remove from our known lists.
+		this.windows.remove(number);		
 		this.separators.remove(number);		
 		
 		// Remove the object from the level as well.
+		String type = this.windows.get(number).getEditWindowType();
 		ltlAdapter.removeEntity(number, type);
 		
 	}
@@ -89,8 +107,8 @@ public class LayerWindow extends JFrame {
 	public void initGUI() {		
 		// Make this a BoxY layout. 
 		JPanel contentPane = new JPanel();
-		JPanel pnlBack = new JPanel();
-		JScrollPane scrPaneScroll = new JScrollPane(pnlBack);
+		pnlBack = new JPanel();
+		scrPaneScroll = new JScrollPane(pnlBack);
 		scrPaneScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
 		pnlBack.setBorder(new EmptyBorder(5, 5, 5, 5));

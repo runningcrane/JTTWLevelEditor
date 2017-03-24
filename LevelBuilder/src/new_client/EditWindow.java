@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -149,13 +151,19 @@ public class EditWindow extends JPanel {
 	public void makeIntProperty(String text, int defaultValue) {
 		JLabel label = new JLabel(text);
 		JTextField txtField = new JTextField(Integer.toString(defaultValue) + ":");
-		txtField.addActionListener(new ActionListener() {
+		txtField.addFocusListener(new FocusListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				book.getIntList().replace(text, Integer.valueOf(txtField.getText()));
+			public void focusGained(FocusEvent arg0) {
 				
-			}			
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				book.getIntList().replace(text, Integer.valueOf(txtField.getText()));
+			}
+			
 		});
+		
 		add(label);
 		add(txtField);
 		
@@ -173,12 +181,17 @@ public class EditWindow extends JPanel {
 	public void makeDoubleProperty(String text, double defaultValue) {
 		JLabel label = new JLabel(text);
 		JTextField txtField = new JTextField(Double.toString(defaultValue));
-		txtField.addActionListener(new ActionListener() {
+		txtField.addFocusListener(new FocusListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				book.getDoubList().replace(text, Double.valueOf(txtField.getText()));
+			public void focusGained(FocusEvent arg0) {
 				
-			}			
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				book.getDoubList().replace(text, Double.valueOf(txtField.getText()));
+			}
+			
 		});
 		add(label);
 		add(txtField);
@@ -197,12 +210,17 @@ public class EditWindow extends JPanel {
 	public void makeFloatProperty(String text, float defaultValue) {
 		JLabel label = new JLabel(text);
 		JTextField txtField = new JTextField(Float.toString(defaultValue));
-		txtField.addActionListener(new ActionListener() {
+		txtField.addFocusListener(new FocusListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				book.getFloatList().replace(text, Float.valueOf(txtField.getText()));
+			public void focusGained(FocusEvent arg0) {
 				
-			}			
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				book.getFloatList().replace(text, Float.valueOf(txtField.getText()));
+			}
+			
 		});
 		add(label);
 		add(txtField);
@@ -221,12 +239,17 @@ public class EditWindow extends JPanel {
 	public void makeStringProperty(String text, String defaultValue) {
 		JLabel label = new JLabel(text);
 		JTextField txtField = new JTextField(defaultValue);
-		txtField.addActionListener(new ActionListener() {
+		txtField.addFocusListener(new FocusListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				book.getStringList().replace(text, txtField.getText());
+			public void focusGained(FocusEvent arg0) {
 				
-			}			
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				book.getStringList().replace(text, txtField.getText());				
+			}
+			
 		});
 		add(label);
 		add(txtField);
@@ -246,6 +269,7 @@ public class EditWindow extends JPanel {
 		JLabel label = new JLabel(text);
 		JCheckBox chckBox = new JCheckBox();
 		chckBox.setSelected(defaultValue);
+		// TODO: Check if this is OK as an actionListener and not a focusListener.
 		chckBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
