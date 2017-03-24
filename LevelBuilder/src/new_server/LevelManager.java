@@ -344,7 +344,7 @@ public class LevelManager {
 		
 					// Draw the line first.
 					g.setColor(Color.MAGENTA);
-					g.drawLine((int) vplp.getX(), (int) vplp.getY(), (int) vplbep.getX(), (int) vplbep.getY());
+					g.drawLine((int) vplp.getX() + 5, (int) vplp.getY() + 10, (int) vplbep.getX(), (int) vplbep.getY());
 		
 					// Then draw the endpoint.
 					g.setColor(Color.RED);
