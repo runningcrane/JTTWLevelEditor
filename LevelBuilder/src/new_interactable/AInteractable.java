@@ -53,13 +53,11 @@ public abstract class AInteractable {
 	/**
 	 * Scaled in-game width [m]. 
 	 */
-	@Exclude
 	private double scaledIGWM;
 	
 	/**
 	 * Scaled in-game height [m].
 	 */
-	@Exclude
 	private double scaledIGHM;	
 	
 	/**

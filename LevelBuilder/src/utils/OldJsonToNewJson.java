@@ -338,6 +338,7 @@ public class OldJsonToNewJson {
 		pb.getDoubList().put("Velocity", startingVel);
 		pb.getDoubList().put("Arc Length", arcLimit);		
 		pb.getDoubList().put("Length", hm);
+		pb.getDoubList().put("Width",  wm);
 		
 		lm.makeInteractable(path, pb, cxm, cym, "Vine");
     }
