@@ -2,6 +2,7 @@ package new_interactable;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class LevelFile {
@@ -71,6 +72,19 @@ public class LevelFile {
 	public String nextLevelName;
 	
 	public LevelFile() {
-		
+		// Make some defaults / initialize.
+		this.mToPixel = 100;
+		this.eol = new Point2D.Double(0, 0);
+		this.lvwm = 20;
+		this.lvhm = 20;
+		this.respawnPoints = new ArrayList<Point2D.Double>();
+		this.plats = new HashMap<Integer, Platform>();
+		this.characters = new HashMap<String, Player>();
+		this.vines = new HashMap<Integer, Vine>();
+		this.boulders = new HashMap<Integer, Boulder>();
+		this.pegs = new HashMap<Integer, Peg>();
+		this.npcs = new HashMap<Integer, NPC>();
+		this.levelName = "default";
+		this.nextLevelName = "nextLevelName";
 	}
 }
