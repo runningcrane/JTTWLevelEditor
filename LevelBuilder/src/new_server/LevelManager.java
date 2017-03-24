@@ -254,13 +254,13 @@ public class LevelManager {
 		String[] players = {"Monkey", "Monk", "Piggy", "Sandy"};
 		
 		for (int i = 0; i < 4; i++) {
-			String fullPath = ASSETS_PATH + players[i] + ".png";
-			Player player = new Player(fullPath);
+			String path = players[i] + ".png";
+			Player player = new Player(path);
 			BufferedImage playerBI;
 			try {
-				playerBI = ImageIO.read(new File(fullPath));
+				playerBI = ImageIO.read(new File(ASSETS_PATH + path));
 			} catch (IOException e) {
-				System.err.println("File not found: " + fullPath);
+				System.err.println("File not found: " + ASSETS_PATH + path);
 				e.printStackTrace();
 				return;
 			}

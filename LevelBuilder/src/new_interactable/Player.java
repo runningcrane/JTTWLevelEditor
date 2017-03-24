@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import utils.Constants;
+
 public class Player extends AInteractable {
 	
 	/**
@@ -22,9 +24,9 @@ public class Player extends AInteractable {
 	public void postDeserialization() {
 		BufferedImage playerBI;
 		try {
-			playerBI = ImageIO.read(new File(this.getPath()));
+			playerBI = ImageIO.read(new File(Constants.ASSETS_PATH + this.getPath()));
 		} catch (IOException e) {
-			System.err.println("File not found: " + this.getPath());
+			System.err.println("File not found: " + Constants.ASSETS_PATH + this.getPath());
 			e.printStackTrace();
 			return;
 		}
