@@ -2,9 +2,9 @@
   "VERSION": 2,
   "levelName": "level",
   "nextLevelName": "nextLevel",
-  "mToPixel": 18.0,
+  "mToPixel": 38.0,
   "bg": {
-    "path": "../assets/bgSunny.png",
+    "path": "../assets/bgCloud.png",
     "centerXm": 0.0,
     "centerYm": 0.0,
     "widthm": 20.0,
@@ -22,14 +22,16 @@
   "plats": {
     "4": {
       "endpoint": {
-        "x": 2.888888888888889,
-        "y": 4.166666666666666
+        "x": 3.710526315789474,
+        "y": 10.31578947368421
       },
-      "path": "../assets/Rock1.png",
-      "centerXM": 2.888888888888889,
-      "centerYM": 4.166666666666666,
+      "path": "../assets/Pedestal.png",
+      "centerXM": 3.710526315789474,
+      "centerYM": 10.31578947368421,
       "scale": 1.0,
       "ticket": 4,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.0,
       "book": {
         "intList": {},
         "doubList": {
@@ -39,49 +41,80 @@
         },
         "collPointList": [
           {
-            "x": -0.93,
-            "y": -3.54
+            "x": -1.47,
+            "y": -0.49
           },
           {
-            "x": -0.87,
-            "y": -0.82
+            "x": -1.5,
+            "y": 0.49
           },
           {
-            "x": -1.17,
-            "y": 1.38
+            "x": 1.47,
+            "y": 0.47
           },
           {
-            "x": -0.87,
-            "y": 3.32
-          },
-          {
-            "x": -0.45,
-            "y": 3.46
-          },
-          {
-            "x": 0.07,
-            "y": 2.46
-          },
-          {
-            "x": 0.69,
-            "y": 1.74
-          },
-          {
-            "x": 0.99,
-            "y": 1.16
-          },
-          {
-            "x": 0.85,
-            "y": -1.5
-          },
-          {
-            "x": 1.23,
-            "y": -3.5
+            "x": 1.4,
+            "y": -0.47
           }
         ],
         "floatList": {},
         "strList": {
-          "Image path": "../assets/Rock1.png"
+          "Image path": "../assets/Pedestal.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": false,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "5": {
+      "endpoint": {
+        "x": 7.2894736842105265,
+        "y": 8.473684210526315
+      },
+      "path": "../assets/Tree1.png",
+      "centerXM": 7.2894736842105265,
+      "centerYM": 8.473684210526315,
+      "scale": 1.0,
+      "ticket": 5,
+      "scaledIGWM": 3.5,
+      "scaledIGHM": 6.0,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -0.21,
+            "y": -2.87
+          },
+          {
+            "x": -0.16,
+            "y": 0.0
+          },
+          {
+            "x": -0.12,
+            "y": 0.64
+          },
+          {
+            "x": 0.26,
+            "y": 0.64
+          },
+          {
+            "x": 0.34,
+            "y": -2.9
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/Tree1.png"
         },
         "boolList": {
           "Collidable": false,
@@ -96,11 +129,13 @@
   },
   "characters": {
     "Monkey": {
-      "path": "../assets/Monkey.png",
-      "centerXM": 0.0,
-      "centerYM": 0.0,
+      "path": "Monkey.png",
+      "centerXM": 2.6578947368421053,
+      "centerYM": 11.710526315789474,
       "scale": 0.0,
       "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
       "book": {
         "intList": {},
         "doubList": {},
@@ -108,16 +143,18 @@
         "floatList": {},
         "strList": {},
         "boolList": {
-          "Present": false
+          "Present": true
         }
       }
     },
     "Piggy": {
-      "path": "../assets/Piggy.png",
+      "path": "Piggy.png",
       "centerXM": 0.0,
       "centerYM": 0.0,
       "scale": 0.0,
       "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
       "book": {
         "intList": {},
         "doubList": {},
@@ -130,11 +167,13 @@
       }
     },
     "Sandy": {
-      "path": "../assets/Sandy.png",
+      "path": "Sandy.png",
       "centerXM": 0.0,
       "centerYM": 0.0,
       "scale": 0.0,
       "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
       "book": {
         "intList": {},
         "doubList": {},
@@ -147,11 +186,13 @@
       }
     },
     "Monk": {
-      "path": "../assets/Monk.png",
-      "centerXM": 0.0,
-      "centerYM": 0.0,
+      "path": "Monk.png",
+      "centerXM": 4.947368421052632,
+      "centerYM": 11.947368421052632,
       "scale": 0.0,
       "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
       "book": {
         "intList": {},
         "doubList": {},
@@ -159,18 +200,20 @@
         "floatList": {},
         "strList": {},
         "boolList": {
-          "Present": false
+          "Present": true
         }
       }
     }
   },
   "vines": {
-    "5": {
+    "6": {
       "path": "../assets/vine1.png",
-      "centerXM": 4.833333333333333,
-      "centerYM": 11.222222222222221,
+      "centerXM": 10.236842105263158,
+      "centerYM": 13.263157894736842,
       "scale": 1.0,
-      "ticket": 5,
+      "ticket": 6,
+      "scaledIGWM": 1.0,
+      "scaledIGHM": 5.0,
       "book": {
         "intList": {},
         "doubList": {
@@ -196,203 +239,8 @@
       }
     }
   },
-  "boulders": {
-    "1": {
-      "oldTicket": 1,
-      "scaledRadius": 0.0,
-      "path": "../assets/BoulderA.png",
-      "centerXM": 9.0,
-      "centerYM": 3.833333333333334,
-      "scale": 1.0,
-      "ticket": 1,
-      "book": {
-        "intList": {},
-        "doubList": {
-          "Mass": 1000.0,
-          "Radius": 5.0,
-          "Scale": 1.0
-        },
-        "collPointList": [
-          {
-            "x": -1.43,
-            "y": -1.47
-          },
-          {
-            "x": -1.4,
-            "y": -0.57
-          },
-          {
-            "x": -0.92,
-            "y": -0.08
-          },
-          {
-            "x": -0.44,
-            "y": 1.23
-          },
-          {
-            "x": 0.35,
-            "y": 1.46
-          },
-          {
-            "x": 0.91,
-            "y": 0.36
-          },
-          {
-            "x": 1.51,
-            "y": -0.54
-          },
-          {
-            "x": 0.87,
-            "y": -1.33
-          }
-        ],
-        "floatList": {},
-        "strList": {
-          "Image path": "../assets/BoulderA.png"
-        },
-        "boolList": {
-          "Polygon collision": false
-        }
-      }
-    },
-    "2": {
-      "oldTicket": 2,
-      "scaledRadius": 0.0,
-      "path": "../assets/BoulderC.png",
-      "centerXM": 11.38888888888889,
-      "centerYM": 4.055555555555555,
-      "scale": 1.0,
-      "ticket": 2,
-      "book": {
-        "intList": {},
-        "doubList": {
-          "Mass": 1000.0,
-          "Radius": 5.0,
-          "Scale": 1.0
-        },
-        "collPointList": [
-          {
-            "x": -1.4466666666666665,
-            "y": -1.0333333333333334
-          },
-          {
-            "x": -1.1133333333333335,
-            "y": 0.8866666666666666
-          },
-          {
-            "x": -0.54,
-            "y": 1.46
-          },
-          {
-            "x": 0.8333333333333335,
-            "y": 1.06
-          },
-          {
-            "x": 1.1,
-            "y": 0.3133333333333333
-          },
-          {
-            "x": 1.4733333333333332,
-            "y": -0.3933333333333334
-          },
-          {
-            "x": 0.4333333333333334,
-            "y": -1.46
-          }
-        ],
-        "floatList": {},
-        "strList": {
-          "Image path": "../assets/BoulderC.png"
-        },
-        "boolList": {
-          "Polygon collision": false
-        }
-      }
-    },
-    "7": {
-      "oldTicket": 7,
-      "scaledRadius": 0.0,
-      "path": "../assets/BoulderA.png",
-      "centerXM": 15.333333333333334,
-      "centerYM": 3.7222222222222214,
-      "scale": 1.0,
-      "ticket": 7,
-      "book": {
-        "intList": {},
-        "doubList": {
-          "Mass": 1000.0,
-          "Radius": 5.0,
-          "Scale": 1.0
-        },
-        "collPointList": [
-          {
-            "x": -1.43,
-            "y": -1.47
-          },
-          {
-            "x": -1.4,
-            "y": -0.57
-          },
-          {
-            "x": -0.92,
-            "y": -0.08
-          },
-          {
-            "x": -0.44,
-            "y": 1.23
-          },
-          {
-            "x": 0.35,
-            "y": 1.46
-          },
-          {
-            "x": 0.91,
-            "y": 0.36
-          },
-          {
-            "x": 1.51,
-            "y": -0.54
-          },
-          {
-            "x": 0.87,
-            "y": -1.33
-          }
-        ],
-        "floatList": {},
-        "strList": {
-          "Image path": "../assets/BoulderA.png"
-        },
-        "boolList": {
-          "Polygon collision": false
-        }
-      }
-    }
-  },
-  "pegs": {
-    "3": {
-      "path": "../assets/peg.png",
-      "centerXM": 10.11111111111111,
-      "centerYM": 4.666666666666666,
-      "scale": 0.3,
-      "ticket": 3,
-      "book": {
-        "intList": {
-          "boulder1": 1,
-          "boulder2": 7,
-          "boulder0": 2
-        },
-        "doubList": {
-          "Rotation (rad)": 0.0,
-          "Scale": 0.3
-        },
-        "collPointList": [],
-        "floatList": {},
-        "strList": {
-          "Image path": "../assets/peg.png"
-        },
-        "boolList": {}
-      }
-    }
-  },
-  "npcs": {}
+  "boulders": {},
+  "pegs": {},
+  "npcs": {},
+  "textTips": {}
 }

@@ -686,8 +686,6 @@ public class LevelManager {
 			return -1;
 		}
 		
-		obj.updateProperties(book);
-
 		// Set the center location.
 		obj.setCenter(xm, ym);
 		
