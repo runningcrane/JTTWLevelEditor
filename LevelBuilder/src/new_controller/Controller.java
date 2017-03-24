@@ -65,17 +65,17 @@ public class Controller {
 		controlWindow = new ControlWindow(new IControlToLevelAdapter() {
 			@Override
 			public void makePlatform(String path) {
-				level.setRequest(path, "Platform");
+				level.setRequest(path, LevelManager.Request.MAKE_PLATFORM);
 			}
 
 			@Override
 			public void makeVine(String path) {
-				level.setRequest(path, "Vine");
+				level.setRequest(path, LevelManager.Request.MAKE_VINE);
 			}
 
 			@Override
 			public void markEOL() {
-				level.setRequest("", "EOL");
+				level.setRequest("", LevelManager.Request.MARK_EOL);
 			}
 
 			@Override
@@ -105,29 +105,28 @@ public class Controller {
 
 			@Override
 			public void markRP() {
-				level.setRequest("", "RP");	
+				level.setRequest("", LevelManager.Request.MARK_RP);	
 			}
 
 			@Override
 			public void removeRP() {
-				level.setRequest("", "RMRP");				
+				level.setRequest("", LevelManager.Request.REMOVE_RP);				
 			}
 
 			@Override
 			public void makePeg(String path) {
-				level.setRequest(path, "Peg");
+				level.setRequest(path, LevelManager.Request.MAKE_PEG);
 			}
 			
 			@Override
 			public void makeTrap(String path) {
-				level.setRequest(path, "Trap");
+				level.setRequest(path, LevelManager.Request.MAKE_TRAP);
 			}
 
 			@Override
 			public void makeBoulder(String path) {
-				level.setRequest(path, "Boulder");
+				level.setRequest(path, LevelManager.Request.MAKE_BOULDER);
 			}
-
 		});
 
 		layerWindow = new LayerWindow(new ILayerToLevelAdapter() {
