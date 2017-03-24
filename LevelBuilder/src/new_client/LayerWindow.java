@@ -55,7 +55,7 @@ public class LayerWindow extends JFrame {
 		window.setRemoveListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				removeEditWindow(number, jsep);
+				removeEditWindow(number);
 			}			
 		});
 		
@@ -81,17 +81,19 @@ public class LayerWindow extends JFrame {
 	 * Remove an EditWindow.
 	 * @param number ticket number of object this is editing
 	 */
-	public void removeEditWindow(int number, JSeparator jsep) {
+	public void removeEditWindow(int number) {
+		// Get the type of window for later use.
+		String type = this.windows.get(number).getEditWindowType();
+		
 		// Remove from the screen.
 		pnlBack.remove(this.windows.get(number));
-		pnlBack.remove(jsep);
+		pnlBack.remove(this.separators.get(number));
 		
 		// Remove from our known lists.
 		this.windows.remove(number);		
 		this.separators.remove(number);		
 		
-		// Remove the object from the level as well.
-		String type = this.windows.get(number).getEditWindowType();
+		// Remove the object from the level as well.		
 		ltlAdapter.removeEntity(number, type);
 		
 	}

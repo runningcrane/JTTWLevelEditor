@@ -1,5 +1,5 @@
 {
-  "levelName": "level",
+  "levelName": "level1",
   "nextLevelName": "nextLevel",
   "mToPixel": 32.0,
   "bg": {
@@ -21,8 +21,8 @@
   "plats": {
     "1": {
       "endpoint": {
-        "x": 1.09375,
-        "y": 8.875
+        "x": 0.9375,
+        "y": 5.0625
       },
       "path": "../assets/Rock1.png",
       "centerXM": 0.9375,
@@ -147,116 +147,6 @@
     },
     "3": {
       "endpoint": {
-        "x": 6.8125,
-        "y": 7.6875
-      },
-      "path": "../assets/Rock2.png",
-      "centerXM": 6.8125,
-      "centerYM": 7.6875,
-      "scale": 1.0,
-      "ticket": 3,
-      "book": {
-        "intList": {},
-        "doubList": {
-          "Scale": 1.0,
-          "Velocity": 1.0,
-          "Spring Constant K": 1.0
-        },
-        "collPointList": [
-          {
-            "x": -1.0766666666666667,
-            "y": -3.5
-          },
-          {
-            "x": -0.8633333333333334,
-            "y": 2.0733333333333333
-          },
-          {
-            "x": -0.5166666666666667,
-            "y": 2.873333333333333
-          },
-          {
-            "x": -0.05,
-            "y": 3.4466666666666668
-          },
-          {
-            "x": 0.6033333333333334,
-            "y": 2.54
-          },
-          {
-            "x": 0.9233333333333335,
-            "y": -0.39333333333333315
-          },
-          {
-            "x": 1.2033333333333334,
-            "y": -1.406666666666667
-          },
-          {
-            "x": 1.1766666666666665,
-            "y": -3.5133333333333336
-          }
-        ],
-        "floatList": {},
-        "strList": {
-          "Image path": "../assets/Rock2.png"
-        },
-        "boolList": {
-          "Collidable": false,
-          "Polygon collision": false,
-          "Moving": false,
-          "Climbable": false,
-          "Sinkable": false,
-          "Disappears": false
-        }
-      },
-      "defaultBook": {
-        "intList": {},
-        "doubList": {
-          "zoomLevel": 0.75,
-          "widthm": 2.5,
-          "heightm": 7.0
-        },
-        "collPointList": [
-          {
-            "x": -1.0766666666666667,
-            "y": -3.5
-          },
-          {
-            "x": -0.8633333333333334,
-            "y": 2.0733333333333333
-          },
-          {
-            "x": -0.5166666666666667,
-            "y": 2.873333333333333
-          },
-          {
-            "x": -0.05,
-            "y": 3.4466666666666668
-          },
-          {
-            "x": 0.6033333333333334,
-            "y": 2.54
-          },
-          {
-            "x": 0.9233333333333335,
-            "y": -0.39333333333333315
-          },
-          {
-            "x": 1.2033333333333334,
-            "y": -1.406666666666667
-          },
-          {
-            "x": 1.1766666666666665,
-            "y": -3.5133333333333336
-          }
-        ],
-        "floatList": {},
-        "strList": {},
-        "boolList": {}
-      }
-    },
-    "4": {
-      "endpoint": {
         "x": 10.53125,
         "y": 6.6875
       },
@@ -264,7 +154,7 @@
       "centerXM": 10.53125,
       "centerYM": 6.6875,
       "scale": 1.0,
-      "ticket": 4,
+      "ticket": 3,
       "book": {
         "intList": {},
         "doubList": {
@@ -358,6 +248,272 @@
           {
             "x": 1.09,
             "y": -4.5
+          }
+        ],
+        "floatList": {},
+        "strList": {},
+        "boolList": {}
+      }
+    },
+    "4": {
+      "endpoint": {
+        "x": 2.625,
+        "y": 14.5
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 2.625,
+      "centerYM": 14.5,
+      "scale": 1.0,
+      "ticket": 4,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.2,
+            "y": -0.53
+          },
+          {
+            "x": -1.28,
+            "y": 0.11
+          },
+          {
+            "x": 1.28,
+            "y": 0.05
+          },
+          {
+            "x": 1.03,
+            "y": -0.59
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": false,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      },
+      "defaultBook": {
+        "intList": {},
+        "doubList": {
+          "zoomLevel": 1.0,
+          "widthm": 3.0,
+          "heightm": 1.5
+        },
+        "collPointList": [
+          {
+            "x": -1.2,
+            "y": -0.53
+          },
+          {
+            "x": -1.28,
+            "y": 0.11
+          },
+          {
+            "x": 1.28,
+            "y": 0.05
+          },
+          {
+            "x": 1.03,
+            "y": -0.59
+          }
+        ],
+        "floatList": {},
+        "strList": {},
+        "boolList": {}
+      }
+    },
+    "5": {
+      "endpoint": {
+        "x": 6.90625,
+        "y": 12.78125
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 6.90625,
+      "centerYM": 12.78125,
+      "scale": 1.0,
+      "ticket": 5,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.2,
+            "y": -0.53
+          },
+          {
+            "x": -1.28,
+            "y": 0.11
+          },
+          {
+            "x": 1.28,
+            "y": 0.05
+          },
+          {
+            "x": 1.03,
+            "y": -0.59
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": false,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      },
+      "defaultBook": {
+        "intList": {},
+        "doubList": {
+          "zoomLevel": 1.0,
+          "widthm": 3.0,
+          "heightm": 1.5
+        },
+        "collPointList": [
+          {
+            "x": -1.2,
+            "y": -0.53
+          },
+          {
+            "x": -1.28,
+            "y": 0.11
+          },
+          {
+            "x": 1.28,
+            "y": 0.05
+          },
+          {
+            "x": 1.03,
+            "y": -0.59
+          }
+        ],
+        "floatList": {},
+        "strList": {},
+        "boolList": {}
+      }
+    },
+    "7": {
+      "endpoint": {
+        "x": 5.96875,
+        "y": 7.03125
+      },
+      "path": "../assets/Rock2.png",
+      "centerXM": 5.96875,
+      "centerYM": 7.03125,
+      "scale": 1.0,
+      "ticket": 7,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.0766666666666667,
+            "y": -3.5
+          },
+          {
+            "x": -0.8633333333333334,
+            "y": 2.0733333333333333
+          },
+          {
+            "x": -0.5166666666666667,
+            "y": 2.873333333333333
+          },
+          {
+            "x": -0.05,
+            "y": 3.4466666666666668
+          },
+          {
+            "x": 0.6033333333333334,
+            "y": 2.54
+          },
+          {
+            "x": 0.9233333333333335,
+            "y": -0.39333333333333315
+          },
+          {
+            "x": 1.2033333333333334,
+            "y": -1.406666666666667
+          },
+          {
+            "x": 1.1766666666666665,
+            "y": -3.5133333333333336
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/Rock2.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": false,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      },
+      "defaultBook": {
+        "intList": {},
+        "doubList": {
+          "zoomLevel": 0.75,
+          "widthm": 2.5,
+          "heightm": 7.0
+        },
+        "collPointList": [
+          {
+            "x": -1.0766666666666667,
+            "y": -3.5
+          },
+          {
+            "x": -0.8633333333333334,
+            "y": 2.0733333333333333
+          },
+          {
+            "x": -0.5166666666666667,
+            "y": 2.873333333333333
+          },
+          {
+            "x": -0.05,
+            "y": 3.4466666666666668
+          },
+          {
+            "x": 0.6033333333333334,
+            "y": 2.54
+          },
+          {
+            "x": 0.9233333333333335,
+            "y": -0.39333333333333315
+          },
+          {
+            "x": 1.2033333333333334,
+            "y": -1.406666666666667
+          },
+          {
+            "x": 1.1766666666666665,
+            "y": -3.5133333333333336
           }
         ],
         "floatList": {},
@@ -481,12 +637,12 @@
     }
   },
   "vines": {
-    "2": {
+    "6": {
       "path": "../assets/vine1.png",
       "centerXM": 3.0625,
       "centerYM": 14.5,
       "scale": 1.0,
-      "ticket": 2,
+      "ticket": 6,
       "book": {
         "intList": {},
         "doubList": {

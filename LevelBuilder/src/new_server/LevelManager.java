@@ -257,6 +257,8 @@ public class LevelManager {
 				e.printStackTrace();
 				return;
 			}
+			player.getDefaultPropertyBook().getDoubList().put("widthm", 0.7);
+			player.getDefaultPropertyBook().getDoubList().put("heightm", 1.7);
 			player.setBI(playerBI);
 			player.setRI(resize(playerBI, 0.7, 1.7));
 			player.setCenter(0, 0);
@@ -829,6 +831,9 @@ public class LevelManager {
 			}			
 		});
 		
+		// Make the default endpoint.
+		plat.setEndpoint(new Point2D.Double(plat.getCenterXM(), plat.getCenterYM()));
+		
 		window.makeDoubleProperty("Velocity", (book == null) 
 				? 1.0 
 				: ((book.getDoubList().get("Velocity") == null 
@@ -1364,7 +1369,13 @@ public class LevelManager {
 		this.eol = old.eol;
 		this.levelHeightM = old.levelHeightM;
 		this.levelWidthM = old.levelWidthM;
-		this.characters = old.characters;
+		
+		// Set up the characters
+		old.characters.forEach((name, player) -> {
+			this.characters.get(name).updateProperties(player.getPropertyBook());
+			this.characters.get(name).setCenter(player.getCenterXM(), player.getCenterYM());
+		});				
+		
 		this.respawnPoints = old.respawnPoints;
 		old.boulders.forEach((ticket, boulder) -> {
 			makeBoulder(boulder.getPath(), boulder.getPropertyBook(), 
@@ -1386,8 +1397,7 @@ public class LevelManager {
 		// Update the boulders to have their old tickets match their new.
 		this.boulders.forEach((number, boulder) -> {
 			boulder.updateTicket();
-		});
-		
+		});		
 		
 		// Tell output window what the level names are, etc.
 		this.levelName = old.levelName;
