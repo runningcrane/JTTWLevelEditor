@@ -6,6 +6,7 @@ import static utils.Constants.LEVELS_PATH;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,6 +38,7 @@ import new_interactable.Peg;
 import new_interactable.Platform;
 import new_interactable.Player;
 import new_interactable.PropertyBook;
+import new_interactable.TextTip;
 import new_interactable.Vine;
 import noninteractable.Background;
 import noninteractable.INonInteractable;
@@ -86,46 +88,47 @@ public class LevelManager {
 	/**
 	 * List of respawn points for the level.
 	 */
-	private ArrayList<Point2D.Double> respawnPoints; 
+	private ArrayList<Point2D.Double> respawnPoints = new ArrayList<Point2D.Double>(); 
 
 	/**
 	 * Platform array.
 	 */
-	private Map<Integer, Platform> plats;
+	private Map<Integer, Platform> plats = new HashMap<Integer, Platform>();;
 
 	/**
 	 * Character array.
 	 */
-	private Map<String, Player> characters;
+	private Map<String, Player> characters = new HashMap<String, Player>();;
 
 	/**
 	 * Vine array.
 	 */
-	private Map<Integer, Vine> vines;
+	private Map<Integer, Vine> vines = new HashMap<Integer, Vine>();
 
 	/**
 	 * Boulder map.
 	 */
-	private Map<Integer, Boulder> boulders;
+	private Map<Integer, Boulder> boulders = new HashMap<Integer, Boulder>();
 	
 	/**
 	 * Peg list. These are connected to boulder joints.
 	 */
-	private Map<Integer, Peg> pegs;
+	private Map<Integer, Peg> pegs = new HashMap<Integer, Peg>();
 
 	/**
 	 * NPC array.
 	 */
-	private Map<Integer, NPC> npcs;
-	
+	private Map<Integer, NPC> npcs = new HashMap<Integer, NPC>();
+
 	/**
 	 * Array of text tips (bits of text on screen floating in game).
 	 */ 
+	private Map<Integer, TextTip> textTips =  new HashMap<Integer, TextTip>();
 	
 	public enum Request {
 		NONE, 
-		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC, MAKE_PEG,
-		EDIT_OLD_PLAT, EDIT_OLD_VINE, EDIT_OLD_BOULDER, EDIT_OLD_PEG,
+		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC, MAKE_PEG, MAKE_TIP, MAKE_TRAP,
+		EDIT_OLD_PLAT, EDIT_OLD_VINE, EDIT_OLD_BOULDER, EDIT_OLD_PEG, EDIT_OLD_TIP, EDIT_OLD_TRAP,
 		EDIT_MONK, EDIT_MONKEY, EDIT_PIG, EDIT_SANDY,
 		SET_PLAT_ENDPOINT, MARK_EOL, MARK_RP,
 		REMOVE_RP
@@ -153,7 +156,7 @@ public class LevelManager {
 	 * Foreground array.
 	 */
 	@Exclude
-	private ArrayList<INonInteractable> fg;
+	private ArrayList<INonInteractable> fg = new ArrayList<INonInteractable>();
 	
 	@Exclude
 	private Request request;
@@ -244,17 +247,7 @@ public class LevelManager {
 		this.levelWidthM = 20;
 		this.levelHeightM = 15;
 
-		// Instantiate various lists.
-		this.plats = new HashMap<Integer, Platform>();
-		this.fg = new ArrayList<INonInteractable>();
-		this.vines = new HashMap<Integer, Vine>();
-		this.boulders = new HashMap<Integer, Boulder>();
-		this.respawnPoints = new ArrayList<Point2D.Double>();
-		this.pegs = new HashMap<Integer, Peg>();
-
 		// Set up the player characters.
-		characters = new HashMap<String, Player>();
-
 		String[] players = {"Monkey", "Monk", "Piggy", "Sandy"};
 		
 		for (int i = 0; i < 4; i++) {
@@ -278,10 +271,6 @@ public class LevelManager {
 			player.getPropertyBook().getBoolList().put("Present", false);
 			characters.put(players[i], player);
 		}		
-
-		// Initialize the NPCs.
-		npcs = new HashMap<Integer, NPC>();
-
 	}
 	
 	/**
@@ -474,6 +463,17 @@ public class LevelManager {
 					(this.levelHeightM - point.getY()) * this.mToPixel + 12);
 			g.drawString("RP", (int) (vprplb.getX()), (int) (vprplb.getY()));
 		});
+		
+		textTips.forEach((ticket, textTip) -> {
+			Point2D.Double point = getViewportCoordinates(textTip.getCenterXM() * this.mToPixel,
+					(this.levelHeightM - textTip.getCenterYM()) * this.mToPixel);
+			
+			g.setColor(Color.BLACK);
+			Font f = new Font(Font.DIALOG, Font.PLAIN, 15);
+			Font old = g.getFont(); 
+			g.setFont(f);
+			g.drawString(textTip.getString(), (int)point.x - textTip.getSize() / 2, (int)point.y - textTip.getSize() / 2);
+		});
 	}
 	
 	/**
@@ -481,65 +481,9 @@ public class LevelManager {
 	 * @param path image path name
 	 * @param requestType type of request
 	 */
-	public void setRequest(String path, String requestType) {
+	public void setRequest(String path, Request requestType) {
 		this.requestPath = path;			
-		
-		System.out.println("Received request type " + requestType);
-		
-		switch(requestType) {
-		case "Platform" : {
-			this.request = Request.MAKE_PLATFORM;
-			break;
-		}
-		case "Vine" : {
-			this.request = Request.MAKE_VINE;
-			break;
-		}
-		case "NPC" : {
-			this.request = Request.MAKE_NPC;
-			break;
-		}
-		case "Boulder" : {
-			this.request = Request.MAKE_BOULDER;
-			break;
-		}
-		case "Peg" : {
-			this.request = Request.MAKE_PEG;
-			break;
-		}
-		case "Monk" : {
-			this.request = Request.EDIT_MONK;
-			break;
-		}
-		case "Monkey" : {
-			this.request = Request.EDIT_MONKEY;
-			break;
-		}
-		case "Pig" : {
-			this.request = Request.EDIT_PIG;
-			break;
-		}
-		case "Sandy" : {
-			this.request = Request.EDIT_SANDY;
-			break;
-		}
-		case "EOL" : {
-			this.request = Request.MARK_EOL;
-			break;
-		}
-		case "RP" : {
-			this.request = Request.MARK_RP;
-			break;
-		}
-		case "RMRP" : {
-			this.request = Request.REMOVE_RP;
-			break;
-		}
-		default : 
-			this.request = Request.NONE;		
-		}
-		
-		System.out.println("Set request to " + this.request);
+		this.request = requestType;
 	}
 	
 	/**
@@ -661,6 +605,9 @@ public class LevelManager {
 			break;
 		}
 		case NONE: {
+			
+		}
+		default: {
 			
 		}
 		}
