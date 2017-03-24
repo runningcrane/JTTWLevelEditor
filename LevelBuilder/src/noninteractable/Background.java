@@ -1,6 +1,5 @@
 package noninteractable;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,11 +8,15 @@ import javax.swing.ImageIcon;
 
 import org.json.simple.JSONObject;
 
+import utils.annotations.Exclude;
+
 public class Background extends ANonInteractable {
 	
+	@Exclude
 	private BufferedImage image;
-	private ImageIcon rescaledImage;
 	
+	@Exclude
+	private ImageIcon rescaledImage;
 	
 	public Background(BufferedImage image, String path, double wm, double hm) {
 		this.image = image;

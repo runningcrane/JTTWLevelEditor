@@ -3,10 +3,6 @@ package new_client;
 import java.awt.Component;
 import java.awt.Graphics;
 
-import org.json.simple.JSONObject;
-
-import com.google.gson.Gson;
-
 public interface IOutputToLevelAdapter {
 
 	/**
@@ -17,12 +13,11 @@ public interface IOutputToLevelAdapter {
 	public void render(Component panel, Graphics g);
 	
 	/**
-	 * Request JSON form of level.
+	 * Saves the JSON form of level.
 	 * @param levelName name of the level
 	 * @param nextName name of the next level
-	 * @return JSON representation of the level
 	 */
-	public String makeJSON(String levelName, String nextName);
+	public void makeJSON(String levelName, String nextName);
 	
 	/**
 	 * Recreate a level from its JSON.

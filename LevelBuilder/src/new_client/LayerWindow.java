@@ -1,8 +1,5 @@
 package new_client;
 
-import static utils.Constants.ASSETS_PATH;
-import static utils.Constants.THUMBNAIL_PATH;
-
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -11,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -22,6 +18,7 @@ import javax.swing.JButton;
 
 public class LayerWindow extends JFrame {
 
+	private static final long serialVersionUID = -1435555721573127869L;
 	Map<Integer, EditWindow> windows;
 	Map<Integer, JSeparator> separators;
 	

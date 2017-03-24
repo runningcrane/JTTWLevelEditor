@@ -15,6 +15,8 @@ import new_interactable.PropertyBook;
 
 public class EditWindow extends JPanel {
 
+	private static final long serialVersionUID = 4911702070096013016L;
+
 	/**
 	 * Name of this type of edit window. 
 	 */

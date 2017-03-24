@@ -24,16 +24,12 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
-import org.json.simple.JSONObject;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.Expose;
 
 import new_client.EditWindow;
 import new_interactable.AInteractable;
 import new_interactable.Boulder;
-import new_interactable.LevelFile;
 import new_interactable.NPC;
 import new_interactable.Peg;
 import new_interactable.Platform;
@@ -42,9 +38,19 @@ import new_interactable.PropertyBook;
 import new_interactable.Vine;
 import noninteractable.Background;
 import noninteractable.INonInteractable;
-import utils.RuntimeTypeAdapterFactory;
+import utils.AnnotationExclusionStrategy;
+import utils.annotations.Exclude;
 
 public class LevelManager {
+	/**
+	 * Name of the currently-loaded level.
+	 */
+	private String levelName;
+	
+	/**
+	 * Name of the level after this level.
+	 */
+	private String nextLevelName;
 	
 	/**
 	 * Meter-to-pixel ratio. For example, 80 means 80 pixels : 1 m
@@ -52,53 +58,29 @@ public class LevelManager {
 	private double mToPixel;
 
 	/**
-	 * Viewport offset (px).
+	 * Background object.
 	 */
-	@Expose(serialize = false)
-	private Point2D.Double vpOffset;
-
+	private Background bg;
+	
 	/**
 	 * EOL location.
 	 */
 	private Point2D.Double eol;
-
-	/**
-	 * Background object.
-	 */
-	private Background bg;
-
+	
 	/**
 	 * Level width (meters).
 	 */
-	private double lvwm;
+	private double levelWidthM;
 
 	/**
 	 * Level height (meters).
 	 */
-	private double lvhm;
-
-	/**
-	 * Viewport width (meters).
-	 */
-	@Expose(serialize = false)
-	private double vpwm;
-
-	/**
-	 * Viewport height (meters).
-	 */
-	@Expose(serialize = false)
-	private double vphm;
+	private double levelHeightM;
 	
 	/**
 	 * List of respawn points for the level.
 	 */
 	private ArrayList<Point2D.Double> respawnPoints; 
-
-	/**
-	 * Foreground array.
-	 */
-	@Expose(serialize = false)
-	private ArrayList<INonInteractable> fg;
 
 	/**
 	 * Platform array.
@@ -138,64 +120,79 @@ public class LevelManager {
 		SET_PLAT_ENDPOINT, MARK_EOL, MARK_RP,
 		REMOVE_RP
 	}
-	@Expose(serialize = false)
+	
+	/**
+	 * Viewport offset (px).
+	 */
+	@Exclude
+	private Point2D.Double vpOffset;
+	
+	/**
+	 * Viewport width (meters).
+	 */
+	@Exclude
+	private double vpwm;
+
+	/**
+	 * Viewport height (meters).
+	 */
+	@Exclude
+	private double vphm;
+	
+	/**
+	 * Foreground array.
+	 */
+	@Exclude
+	private ArrayList<INonInteractable> fg;
+	
+	@Exclude
 	private Request request;
 	
-	@Expose(serialize = false)
+	@Exclude
 	private String requestPath;
 	
 	/**
 	 * Ticket number of the requesting object.
 	 */
-	@Expose(serialize = false)
+	@Exclude
 	private int requestNum;		
 
 	/**
 	 * Gives out ticket values.
 	 */
-	@Expose(serialize = false)
+	@Exclude
 	int ticketer;
 	
 	/**
 	 * Adapter from the LevelManager to a LayerWIndow.
 	 */
-	@Expose(serialize = false)
+	@Exclude
 	ILevelToLayerAdapter ltlAdapter;
 	
 	/**
 	 * Adapter from the LevelManager to the OuputWindow.
 	 */
-	@Expose(serialize = false)
+	@Exclude
 	ILevelToOutputAdapter ltoAdapter;
 	
 	/**
 	 * Adapter to communicate with the controls panel.
 	 */
-	@Expose(serialize = false)
+	@Exclude
 	private ILevelToControlAdapter ltcAdapter;
 	
 	/**
 	 * Time to update the level view.
 	 */
-	@Expose(serialize = false)
+	@Exclude
 	private Timer timer;
 
 	/**
 	 * How often the timer should be called.
 	 */
-	@Expose(serialize = false)
+	@Exclude
 	private int timeSlice;
-	
-	/**
-	 * Name of the currently-loaded level.
-	 */
-	private String levelName;
-	
-	/**
-	 * Name of the level after this level.
-	 */
-	private String nextLevelName;
-	
+
 	/**
 	 * The model side of the MVC structure. Level Manager manages everything 
 	 * about the current level, including loading and saving levels.
@@ -234,8 +231,8 @@ public class LevelManager {
 		// background.
 		this.vpwm = 8;
 		this.vphm = 6;
-		this.lvwm = 20;
-		this.lvhm = 15;
+		this.levelWidthM = 20;
+		this.levelHeightM = 15;
 
 		// Instantiate various lists.
 		this.plats = new HashMap<Integer, Platform>();
@@ -315,7 +312,7 @@ public class LevelManager {
 				 * reverse the ys to get them in cocos.
 				 */
 				double ulxp = (plat.getCenterXM() - plat.getScaledIGWM() / 2.0) * this.mToPixel;
-				double ulyp = ((this.lvhm - plat.getCenterYM()) - plat.getScaledIGHM() / 2.0) * this.mToPixel;
+				double ulyp = ((this.levelHeightM - plat.getCenterYM()) - plat.getScaledIGHM() / 2.0) * this.mToPixel;
 				Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
 		
 				g.drawImage(plat.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
@@ -323,20 +320,20 @@ public class LevelManager {
 				// Draw the label on top of it. In the center, maybe?
 				g.setColor(Color.MAGENTA);
 				Point2D.Double vplp = getViewportCoordinates(plat.getCenterXM() * this.mToPixel,
-						(this.lvhm - (plat.getCenterYM())) * this.mToPixel);
+						(this.levelHeightM - (plat.getCenterYM())) * this.mToPixel);
 				g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
 		
 				// Label point
 				g.setColor(Color.BLACK);
 				Point2D.Double vplbp = getViewportCoordinates(plat.getCenterXM() * this.mToPixel + 5,
-						(this.lvhm - (plat.getCenterYM())) * this.mToPixel + 10);
+						(this.levelHeightM - (plat.getCenterYM())) * this.mToPixel + 10);
 				g.drawString(Integer.toString(number), (int) (vplbp.getX()), (int) (vplbp.getY()));
 		
 				// If moveable, show its endpoint and a line to its endpoint.
 				if (plat.getPropertyBook().getBoolList().get("Moving").booleanValue()) {
 					Point2D.Double endpoint = plat.getEndpoint();
 					Point2D.Double vplbep = getViewportCoordinates(endpoint.getX() * this.mToPixel + 5,
-							(this.lvhm - (endpoint.getY())) * this.mToPixel + 10);
+							(this.levelHeightM - (endpoint.getY())) * this.mToPixel + 10);
 		
 					// Draw the line first.
 					g.setColor(Color.MAGENTA);
@@ -349,7 +346,7 @@ public class LevelManager {
 					// Then label it.
 					g.setColor(Color.BLACK);
 					Point2D.Double vplbnep = getViewportCoordinates(endpoint.getX() * this.mToPixel + 5,
-							(this.lvhm - (endpoint.getY())) * this.mToPixel + 10);
+							(this.levelHeightM - (endpoint.getY())) * this.mToPixel + 10);
 					g.drawString(Integer.toString(number) + "EP", (int) (vplbnep.getX()), (int) (vplbnep.getY()));
 				}
 			}
@@ -361,7 +358,7 @@ public class LevelManager {
 			// Don't draw until the image has been made.
 			if (boulder.getRI() != null) {
 				double ulxp = (boulder.getCenterXM() - boulder.getScaledIGWM() / 2.0) * this.mToPixel;
-				double ulyp = ((this.lvhm - boulder.getCenterYM()) - boulder.getScaledIGHM() / 2.0) * this.mToPixel;
+				double ulyp = ((this.levelHeightM - boulder.getCenterYM()) - boulder.getScaledIGHM() / 2.0) * this.mToPixel;
 				Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
 	
 				g.drawImage(boulder.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
@@ -369,13 +366,13 @@ public class LevelManager {
 				// Draw the label on top of it. In the center, maybe?
 				g.setColor(Color.MAGENTA);
 				Point2D.Double vplp = getViewportCoordinates(boulder.getCenterXM() * this.mToPixel,
-						(this.lvhm - (boulder.getCenterYM())) * this.mToPixel);
+						(this.levelHeightM - (boulder.getCenterYM())) * this.mToPixel);
 				g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
 	
 				// Label point
 				g.setColor(Color.BLACK);
 				Point2D.Double vplbp = getViewportCoordinates(boulder.getCenterXM() * this.mToPixel + 5,
-						(this.lvhm - (boulder.getCenterYM())) * this.mToPixel + 10);
+						(this.levelHeightM - (boulder.getCenterYM())) * this.mToPixel + 10);
 				g.drawString(Integer.toString(ticket), (int) (vplbp.getX()), (int) (vplbp.getY()));
 			}
 		});
@@ -385,7 +382,7 @@ public class LevelManager {
 			// Don't draw until the image has been made.
 			if (peg.getRI() != null) {
 				double ulxp = (peg.getCenterXM() - peg.getScaledIGWM() / 2.0) * this.mToPixel;
-				double ulyp = ((this.lvhm - peg.getCenterYM()) - peg.getScaledIGHM() / 2.0) * this.mToPixel;
+				double ulyp = ((this.levelHeightM - peg.getCenterYM()) - peg.getScaledIGHM() / 2.0) * this.mToPixel;
 				Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
 	
 				g.drawImage(peg.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
@@ -393,13 +390,13 @@ public class LevelManager {
 				// Draw the label on top of it. In the center, maybe?
 				g.setColor(Color.MAGENTA);
 				Point2D.Double vplp = getViewportCoordinates(peg.getCenterXM() * this.mToPixel,
-						(this.lvhm - (peg.getCenterYM())) * this.mToPixel);
+						(this.levelHeightM - (peg.getCenterYM())) * this.mToPixel);
 				g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
 	
 				// Label point
 				g.setColor(Color.BLACK);
 				Point2D.Double vplbp = getViewportCoordinates(peg.getCenterXM() * this.mToPixel + 5,
-						(this.lvhm - (peg.getCenterYM())) * this.mToPixel + 10);
+						(this.levelHeightM - (peg.getCenterYM())) * this.mToPixel + 10);
 				g.drawString(Integer.toString(ticket), (int) (vplbp.getX()), (int) (vplbp.getY()));
 			}
 		});
@@ -409,7 +406,7 @@ public class LevelManager {
 			// Don't draw until the image has been made.
 			if (vine.getRI() != null) {				
 				double ulxp = (vine.getCenterXM() - vine.getInGameWidth() / 2.0) * this.mToPixel;
-				double ulyp = ((this.lvhm - vine.getCenterYM())) * this.mToPixel;
+				double ulyp = ((this.levelHeightM - vine.getCenterYM())) * this.mToPixel;
 				Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);			
 				
 				g.drawImage(vine.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
@@ -417,13 +414,13 @@ public class LevelManager {
 				// Draw the label on top of it.
 				g.setColor(Color.MAGENTA);
 				Point2D.Double vplp = getViewportCoordinates(vine.getCenterXM() * this.mToPixel,
-						(this.lvhm - (vine.getCenterYM() - vine.getInGameHeight() / 2)) * this.mToPixel);
+						(this.levelHeightM - (vine.getCenterYM() - vine.getInGameHeight() / 2)) * this.mToPixel);
 				g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
 	
 				// Label point
 				g.setColor(Color.BLACK);
 				Point2D.Double vplbp = getViewportCoordinates(vine.getCenterXM() * this.mToPixel + 5,
-						(this.lvhm - (vine.getCenterYM() - vine.getInGameHeight() / 2)) * this.mToPixel + 10);
+						(this.levelHeightM - (vine.getCenterYM() - vine.getInGameHeight() / 2)) * this.mToPixel + 10);
 				g.drawString(Integer.toString(ticket), (int) (vplbp.getX()), (int) (vplbp.getY()));
 			}
 		});
@@ -432,7 +429,7 @@ public class LevelManager {
 		characters.forEach((name, player) -> {
 			if (player.getPropertyBook().getBoolList().get("Present").booleanValue()) {
 				double ulxp = (player.getCenterXM() - player.getInGameWidth() / 2.0) * this.mToPixel;
-				double ulyp = ((this.lvhm - (player.getCenterYM())) - player.getInGameHeight() / 2.0) * this.mToPixel;
+				double ulyp = ((this.levelHeightM - (player.getCenterYM())) - player.getInGameHeight() / 2.0) * this.mToPixel;
 				Point2D.Double vpcp = getViewportCoordinates(ulxp, ulyp);
 				g.drawImage(player.getRI().getImage(), (int) vpcp.getX(), (int) vpcp.getY(), null);
 			}
@@ -441,25 +438,25 @@ public class LevelManager {
 		// Draw EOL
 		g.setColor(Color.GREEN);
 		Point2D.Double vpeol = getViewportCoordinates(this.eol.getX() * this.mToPixel,
-				(this.lvhm - (this.eol.getY())) * this.mToPixel);
+				(this.levelHeightM - (this.eol.getY())) * this.mToPixel);
 		g.fillOval((int) (vpeol.getX()), (int) (vpeol.getY()), 15, 15);
 
 		g.setColor(Color.BLACK);
 		Point2D.Double vplbeol = getViewportCoordinates(this.eol.getX() * this.mToPixel + 5,
-				(this.lvhm - (this.eol.getY())) * this.mToPixel + 10);
+				(this.levelHeightM - (this.eol.getY())) * this.mToPixel + 10);
 		g.drawString("EOL", (int) (vplbeol.getX()), (int) (vplbeol.getY()));
 		
 		// Draw respawn points		
 		respawnPoints.forEach((point) -> {
 			g.setColor(Color.BLUE);
 			Point2D.Double vprp = getViewportCoordinates(point.getX() * this.mToPixel,
-					(this.lvhm - point.getY()) * this.mToPixel);
+					(this.levelHeightM - point.getY()) * this.mToPixel);
 			g.fillOval((int) (vprp.getX()), (int) (vprp.getY()), 15, 15);
 
 			// Label point
 			g.setColor(Color.WHITE);
 			Point2D.Double vprplb = getViewportCoordinates(point.getX() * this.mToPixel,
-					(this.lvhm - point.getY()) * this.mToPixel + 12);
+					(this.levelHeightM - point.getY()) * this.mToPixel + 12);
 			g.drawString("RP", (int) (vprplb.getX()), (int) (vprplb.getY()));
 		});
 	}
@@ -537,7 +534,7 @@ public class LevelManager {
 	 */
 	public void receiveCoordinates(double xp, double yp) {
 		double xm = (xp - this.vpOffset.getX()) / this.mToPixel;
-		double ym = this.lvhm - (yp - this.vpOffset.getY()) / this.mToPixel;
+		double ym = this.levelHeightM - (yp - this.vpOffset.getY()) / this.mToPixel;
 		
 		System.out.println("Received swing coordinates " + xp + ", " + yp + ";\ntranslated to " +
 				xm + ", " + ym + " cocos coordinates");
@@ -1252,8 +1249,8 @@ public class LevelManager {
 	 *            height in in-game meters
 	 */
 	public void setLevelDimensions(double wm, double hm) {
-		this.lvwm = wm;
-		this.lvhm = hm;
+		this.levelWidthM = wm;
+		this.levelHeightM = hm;
 
 		// Need to resize the background based on whichever scale is the biggest
 		this.setBg(this.bg.getPath());
@@ -1281,7 +1278,7 @@ public class LevelManager {
 				.setRI(resize(boulder.getBI(), boulder.getScaledIGWM(), boulder.getScaledIGHM())));
 		this.npcs.forEach((name, enemy) -> enemy
 				.setRI(resize(enemy.getBI(), enemy.getScaledIGWM(), enemy.getScaledIGHM())));
-		this.bg.setRescaled(resize(this.bg.getImage(), this.lvwm, this.lvhm));
+		this.bg.setRescaled(resize(this.bg.getImage(), this.levelWidthM, this.levelHeightM));
 	}
 	
 	/**
@@ -1300,8 +1297,8 @@ public class LevelManager {
 			return;
 		}
 
-		this.bg = new Background(bgImage, path, this.lvwm, this.lvhm);
-		this.bg.setRescaled(resize(bgImage, this.lvwm, this.lvhm));
+		this.bg = new Background(bgImage, path, this.levelWidthM, this.levelHeightM);
+		this.bg.setRescaled(resize(bgImage, this.levelWidthM, this.levelHeightM));
 	}
 	
 	/**
@@ -1336,19 +1333,27 @@ public class LevelManager {
 	/**
 	 * Reads in a level from its GSON.
 	 * 
-	 * @param levelPath
-	 *            path to the level json file
+	 * @param levelName
+	 *            name of the level json file
 	 */
-	public void readJSON(String levelPath) {
-		Gson gson = new Gson();
+	public void readJSON(String levelName) {
+		Gson gson = new GsonBuilder().setExclusionStrategies(new AnnotationExclusionStrategy()).create();
 		LevelManager old;
 		
+		String fullPath;
+		if (levelName.contains(".")) {
+			// They added their own extension, don't add json to the end.
+			fullPath = LEVELS_PATH + levelName;
+		} else {
+			fullPath = LEVELS_PATH + levelName + ".json";
+		}
+		
 		try {
+			old = gson.fromJson(new FileReader(fullPath), LevelManager.class);	
 			System.out.println("Found path");
-			old = gson.fromJson(new FileReader(LEVELS_PATH + levelPath + ".json"), LevelManager.class);			
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found: " + LEVELS_PATH + levelPath + ".json");
-			// e.printStackTrace();			
+			System.out.println("File not found: " + fullPath);
+			// e.printStackTrace();		
 			return;			
 		}
 		
@@ -1358,8 +1363,8 @@ public class LevelManager {
 		// Load in the level.
 		this.setBg(old.bg.getPath());
 		this.eol = old.eol;
-		this.lvhm = old.lvhm;
-		this.lvwm = old.lvwm;
+		this.levelHeightM = old.levelHeightM;
+		this.levelWidthM = old.levelWidthM;
 		this.characters = old.characters;
 		this.respawnPoints = old.respawnPoints;
 		old.boulders.forEach((ticket, boulder) -> {
@@ -1401,86 +1406,38 @@ public class LevelManager {
 	 * @param levelName
 	 *            name of the level
 	 * @param nextName name of the next level
-	 * @return GSON to be outputted
 	 */
-	public String makeJSON(String levelName, String nextName) {
+	public void makeJSON(String levelName, String nextName) {
 		this.levelName = levelName;
 		this.nextLevelName = nextName;	
 		
-		Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
-		
-		LevelFile level = new LevelFile();
-		String output;
-		
-		level.boulders = this.boulders;
-		
-		output = gson.toJson(level.boulders);
-		System.out.println("1 pass" + output);				
-		
-		level.characters = this.characters;	
-		
-		output = gson.toJson(level.characters);
-		System.out.println("2 pass" + output);
-		
-		level.eol = this.eol;
-		
-		output = gson.toJson(level.eol);
-		System.out.println("3 pass" + output);
-		
-		level.levelName = this.levelName;
-		
-		output = gson.toJson(level.levelName);
-		System.out.println("4 pass" + output);
-				
-		level.nextLevelName = this.nextLevelName;
-		
-		output = gson.toJson(level.nextLevelName);
-		System.out.println("5 pass" + output);
-		
-		level.lvhm = this.lvhm;
-		
-		output = gson.toJson(level.lvhm);
-		System.out.println("6 pass" + output);
-		
-		level.lvwm = this.lvwm;
-		
-		output = gson.toJson(level.lvwm);
-		System.out.println("7 pass" + output);
-		
-		level.mToPixel = this.mToPixel;
+		/*
+		 * Try to write out the JSON file.
+		 */
+		String fullPath;
+		if (levelName.contains(".")) {
+			// They added their own extension, don't add json to the end.
+			fullPath = LEVELS_PATH + levelName;
+			levelName = levelName.substring(0, levelName.indexOf('.'));
+		} else {
+			fullPath = LEVELS_PATH + levelName + ".json";
+		}
 
-		output = gson.toJson(level.mToPixel);
-		System.out.println("8 pass" + output);
+		Gson gson = new GsonBuilder().setPrettyPrinting().setExclusionStrategies(new AnnotationExclusionStrategy()).serializeNulls().create();
 		
-		level.npcs = this.npcs;
+		String output = gson.toJson(this);
 		
-		output = gson.toJson(level.npcs);
-		System.out.println("9 pass" + output);
-		
-		level.pegs = this.pegs;
-		
-		output = gson.toJson(level.pegs);
-		System.out.println("10 pass" + output);
-		
-		level.plats = this.plats;
-		
-		output = gson.toJson(level.plats);
-		System.out.println("11 pass" + output);
-		
-		level.respawnPoints = this.respawnPoints;
-		
-		output = gson.toJson(level.respawnPoints);
-		System.out.println("12 pass" + output);
-		
-		level.vines = this.vines;		
-		
-		output = gson.toJson(level.vines);
-		System.out.println("13 pass" + output);
-		
-		output = gson.toJson(level);
-		
-		System.out.println("Expected total: " + output);
-		return output;	
-		
+		FileWriter file;
+		try {
+			file = new FileWriter(fullPath);
+			// Send over the name of the level, so everything before the '.' in the extension.
+			file.write(output);
+			file.flush();
+			file.close();
+			System.out.println("Output JSON written to " + LEVELS_PATH);
+		} catch (IOException e1) {					
+			e1.printStackTrace();
+		}		
+		return;	
 	}	
 }
