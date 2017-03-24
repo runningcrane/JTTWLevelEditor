@@ -29,7 +29,7 @@ public class LayerWindow extends JFrame {
 	Dimension dimButton = new Dimension(68, 70);
 	
 	private static final String[] TYPES = {
-			"All", "Platform", "Rock", "Vine", "Peg", "Trap"
+			"All", "Platform", "Boulder", "Peg", "Vine", "NPC"
 	};;
 		
 	ILayerToLevelAdapter ltlAdapter;
@@ -100,6 +100,8 @@ public class LayerWindow extends JFrame {
 		// Remove the object from the level as well.		
 		ltlAdapter.removeEntity(number, type);
 		
+		// Repaint our layer window.
+		this.repaint();
 	}
 	
 	/**
@@ -126,19 +128,7 @@ public class LayerWindow extends JFrame {
 		// Add a panel that toggles all.
 		JPanel pnlToggle = new JPanel();
 		pnlToggle.setLayout(new GridLayout(2, 3, 0, 0));
-		pnlBack.add(pnlToggle);
-		
-		JButton btnAll = new JButton("All");
-		btnAll.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				windows.forEach((ticket,window) -> {
-					window.setVisible(true);
-					separators.get(ticket).setVisible(true);
-				});				
-			}			
-		});
-		pnlToggle.add(btnAll);		
+		pnlBack.add(pnlToggle);		
 		
 		for (String type : TYPES) { 
 			JButton btnBg = new JButton(type);
@@ -147,7 +137,7 @@ public class LayerWindow extends JFrame {
 				public void actionPerformed(ActionEvent arg0) {
 					// Make invisible only objects that share this type. 
 					windows.forEach((ticket, window) -> {
-						if (window.getEditWindowType().equals(type)) {
+						if (window.getEditWindowType().equals(type) || type.equals("All")) {
 							window.setVisible(true);
 							separators.get(ticket).setVisible(true);
 						} else {
@@ -158,7 +148,7 @@ public class LayerWindow extends JFrame {
 				}				
 			}); 			
 			btnBg.setPreferredSize(dimButton);
-			pnlToggle.add(btnAll);
+			pnlToggle.add(btnBg);
 		}		
 	}
 	
