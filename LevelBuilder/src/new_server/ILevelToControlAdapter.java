@@ -7,4 +7,12 @@ public interface ILevelToControlAdapter {
 	 * @param mToPixel
 	 */
 	public void setMToPixel(double mToPixel);
+	
+	public static ILevelToControlAdapter VoidPattern = new ILevelToControlAdapter() {
+
+		@Override
+		public void setMToPixel(double mToPixel) {}
+	};
 }
+
+

@@ -177,8 +177,7 @@ public class EditWindow extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				book.getDoubList().replace(text, Double.valueOf(txtField.getText()));
-				
-			}			
+			}	
 		});
 		add(label);
 		add(txtField);

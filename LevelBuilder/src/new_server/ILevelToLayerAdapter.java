@@ -15,4 +15,16 @@ public interface ILevelToLayerAdapter {
 	 * Clear all layers.
 	 */
 	public void clear();
+	
+	public static ILevelToLayerAdapter VoidPattern = new ILevelToLayerAdapter(){
+
+		@Override
+		public EditWindow makeEditWindow(int number, String name) { 
+			return new EditWindow("?", 2); 
+		}
+
+		@Override
+		public void clear() { /* do nothing */ }
+		
+	};
 }

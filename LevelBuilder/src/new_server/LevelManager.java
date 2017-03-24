@@ -42,6 +42,8 @@ import utils.AnnotationExclusionStrategy;
 import utils.annotations.Exclude;
 
 public class LevelManager {
+	private final int VERSION = 2;
+	
 	/**
 	 * Name of the currently-loaded level.
 	 */
@@ -248,17 +250,20 @@ public class LevelManager {
 		String[] players = {"Monkey", "Monk", "Piggy", "Sandy"};
 		
 		for (int i = 0; i < 4; i++) {
-			Player player = new Player(ASSETS_PATH + players[i] + ".png");
+			String fullPath = ASSETS_PATH + players[i] + ".png";
+			Player player = new Player(fullPath);
 			BufferedImage playerBI;
 			try {
-				playerBI = ImageIO.read(new File(ASSETS_PATH + players[i] + ".png"));
+				playerBI = ImageIO.read(new File(fullPath));
 			} catch (IOException e) {
-				System.err.println("File not found: " + ASSETS_PATH + players[i] + ".png");
+				System.err.println("File not found: " + fullPath);
 				e.printStackTrace();
 				return;
 			}
 			player.setBI(playerBI);
 			player.setRI(resize(playerBI, 0.7, 1.7));
+			player.getDefaultPropertyBook().getDoubList().put("widthm", 0.7);
+			player.getDefaultPropertyBook().getDoubList().put("heightm",  1.7);
 			player.setCenter(0, 0);
 			player.getPropertyBook().getBoolList().put("Present", false);
 			characters.put(players[i], player);
@@ -695,7 +700,8 @@ public class LevelManager {
 		object.setRI(resize(image, object.getScaledIGWM(), object.getScaledIGHM()));
 	}
 	
-	public void makeInteractable (String imageName, PropertyBook book, double xm, double ym, String type) {
+	/* Returns ticket.s */
+	public int makeInteractable (String imageName, PropertyBook book, double xm, double ym, String type) {
 		AInteractable obj;
 		switch (type) {
 		case "Platform": {
@@ -712,14 +718,15 @@ public class LevelManager {
 		}
 		case "Boulder" : {
 			System.err.println("Please call makeBoulder() instead.");
-			return;
+			return -1;
 		}
 		case "Peg" : {
 			obj = new Peg(this.ticketer, imageName);
 			break;
 		}
 		default:
-			return;
+			System.err.println("Tag does not match any cases");
+			return -1;
 		}
 						
 		// Set the center location.
@@ -766,7 +773,8 @@ public class LevelManager {
 		}									
 		
 		// Increase the ticket count.
-		this.ticketer++;
+		int tick = this.ticketer++;
+		return tick;
 	}
 	
 	public void makePlatEditWindow(int ticket, Platform plat, PropertyBook book) {
@@ -796,7 +804,6 @@ public class LevelManager {
 				requestNum = ticket;	
 			}		
 		});
-		
 		
 		window.makeDoubleProperty("Scale", (book == null) 
 				? 1.0 
@@ -1357,6 +1364,9 @@ public class LevelManager {
 			return;			
 		}
 		
+		// Post processing on the characters.
+		old.characters.forEach((name, character) ->  character.postDeserialization());
+		
 		// Do some preliminary cleaning.		
 		clearAndSet();
 		
@@ -1365,7 +1375,7 @@ public class LevelManager {
 		this.eol = old.eol;
 		this.levelHeightM = old.levelHeightM;
 		this.levelWidthM = old.levelWidthM;
-		this.characters = old.characters;
+		this.characters.forEach((name, player) -> player.updateProperties(old.characters.get(name).getPropertyBook()));
 		this.respawnPoints = old.respawnPoints;
 		old.boulders.forEach((ticket, boulder) -> {
 			makeBoulder(boulder.getPath(), boulder.getPropertyBook(), 
@@ -1378,7 +1388,8 @@ public class LevelManager {
 			makeInteractable(npc.getPath(), npc.getPropertyBook(), npc.getCenterXM(), npc.getCenterYM(), "NPC");
 		});
 		old.plats.forEach((ticket, plat) -> {
-			makeInteractable(plat.getPath(), plat.getPropertyBook(), plat.getCenterXM(), plat.getCenterYM(), "Platform");
+			int tick = makeInteractable(plat.getPath(), plat.getPropertyBook(), plat.getCenterXM(), plat.getCenterYM(), "Platform");
+			this.plats.get(tick).setEndpoint(plat.getEndpoint());
 		});		
 		old.vines.forEach((ticket, vine) -> {
 			makeInteractable(vine.getPath(), vine.getPropertyBook(), vine.getCenterXM(), vine.getCenterYM(), "Vine");
@@ -1388,7 +1399,6 @@ public class LevelManager {
 		this.boulders.forEach((number, boulder) -> {
 			boulder.updateTicket();
 		});
-		
 		
 		// Tell output window what the level names are, etc.
 		this.levelName = old.levelName;
@@ -1440,4 +1450,29 @@ public class LevelManager {
 		}		
 		return;	
 	}	
+	
+	public void setEOL(Point2D.Double eolM) {
+		this.eol = eolM;
+	}
+	
+	public void addRP(Point2D.Double rp) {
+	    this.respawnPoints.add(rp);
+	}
+	
+	public void setEndPoint(Point2D.Double endPoint, int ticket) {
+	    this.plats.get(ticket).setEndpoint(endPoint);	
+	}
+	
+	public int getNewBoulderTicketFromOld(int oldTicket) {
+	    for (Map.Entry<Integer, Boulder> b : boulders.entrySet()) {
+	    	if (b.getValue().getOldTicket() == oldTicket) {
+	    		return b.getKey();
+	    	}
+	    }
+	    return -1;
+	}
+	
+	public Player getCharacter(String name) {
+		return characters.get(name);
+	}
 }
