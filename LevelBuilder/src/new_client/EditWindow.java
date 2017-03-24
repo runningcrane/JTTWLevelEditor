@@ -191,7 +191,6 @@ public class EditWindow extends JPanel {
 			public void focusLost(FocusEvent arg0) {
 				book.getDoubList().replace(text, Double.valueOf(txtField.getText()));
 			}
-			
 		});
 		add(label);
 		add(txtField);

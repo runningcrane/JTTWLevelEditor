@@ -1,0 +1,21 @@
+{
+  "intList": {},
+  "doubList": {
+    "widthm": 1.0,
+    "zoomLevel": 1.0,
+    "heightm": 5.0
+  },
+  "collPointList": [
+    {
+      "x": 0.06,
+      "y": -2.5
+    },
+    {
+      "x": -0.04,
+      "y": 2.41
+    }
+  ],
+  "floatList": {},
+  "strList": {},
+  "boolList": {}
+}

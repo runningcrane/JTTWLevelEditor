@@ -26,4 +26,18 @@ public interface ILevelToOutputAdapter {
 	 */
 	public void setNextName(String nextName);
 
+	public static ILevelToOutputAdapter VoidPattern = new ILevelToOutputAdapter() {
+
+		@Override
+		public void setDimensions(int wm, int hm) {}
+
+		@Override
+		public void redraw() {}
+
+		@Override
+		public void setLevelName(String levelName) {}
+		
+		@Override
+		public void setNextName(String nextName) {}
+	};
 }

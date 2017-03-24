@@ -21,11 +21,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 import com.google.gson.GsonBuilder;
 import com.google.gson.Gson;
 
@@ -43,7 +38,6 @@ import javax.swing.JSlider;
 import javax.swing.JLabel;
 
 import static utils.Constants.*;
-
 
 /**
  * Helper window for setting a collision box for an image.

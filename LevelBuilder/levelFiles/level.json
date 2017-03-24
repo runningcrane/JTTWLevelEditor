@@ -28,7 +28,7 @@
       "centerXM": 0.9375,
       "centerYM": 5.0625,
       "scale": 1.0,
-      "ticket": 1,
+      "ticket": 4,
       "book": {
         "intList": {},
         "doubList": {
@@ -533,7 +533,148 @@
       }
     }
   },
-  "boulders": {},
-  "pegs": {},
+  "boulders": {
+    "1": {
+      "oldTicket": 1,
+      "scaledRadius": 0.0,
+      "path": "../assets/BoulderA.png",
+      "centerXM": 1.73,
+      "centerYM": 13.04,
+      "scale": 1.0,
+      "ticket": 1,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Mass": 1000.0,
+          "Radius": 5.0,
+          "Scale": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.43,
+            "y": -1.47
+          },
+          {
+            "x": -1.4,
+            "y": -0.57
+          },
+          {
+            "x": -0.92,
+            "y": -0.08
+          },
+          {
+            "x": -0.44,
+            "y": 1.23
+          },
+          {
+            "x": 0.35,
+            "y": 1.46
+          },
+          {
+            "x": 0.91,
+            "y": 0.36
+          },
+          {
+            "x": 1.51,
+            "y": -0.54
+          },
+          {
+            "x": 0.87,
+            "y": -1.33
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/BoulderA.png"
+        },
+        "boolList": {
+          "Polygon collision": false
+        }
+      },
+      "defaultBook": {
+        "intList": {},
+        "doubList": {
+          "zoomLevel": 1.0,
+          "mass": 1000.0,
+          "widthm": 3.0,
+          "radius": 1.5,
+          "heightm": 3.0
+        },
+        "collPointList": [
+          {
+            "x": -1.43,
+            "y": -1.47
+          },
+          {
+            "x": -1.4,
+            "y": -0.57
+          },
+          {
+            "x": -0.92,
+            "y": -0.08
+          },
+          {
+            "x": -0.44,
+            "y": 1.23
+          },
+          {
+            "x": 0.35,
+            "y": 1.46
+          },
+          {
+            "x": 0.91,
+            "y": 0.36
+          },
+          {
+            "x": 1.51,
+            "y": -0.54
+          },
+          {
+            "x": 0.87,
+            "y": -1.33
+          }
+        ],
+        "floatList": {},
+        "strList": {},
+        "boolList": {}
+      }
+    }
+  },
+  "pegs": {
+    "3": {
+      "path": "../assets/peg.png",
+      "centerXM": 4.09,
+      "centerYM": 13.89,
+      "scale": 1.0,
+      "ticket": 3,
+      "book": {
+        "intList": {
+          "Boulder ID": 0
+        },
+        "doubList": {
+          "Rotation (rad)": 0.0,
+          "Scale": 1.0
+        },
+        "collPointList": [],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/peg.png"
+        },
+        "boolList": {}
+      },
+      "defaultBook": {
+        "intList": {},
+        "doubList": {
+          "zoomLevel": 1.0,
+          "widthm": 3.0,
+          "heightm": 3.0
+        },
+        "collPointList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {}
+      }
+    }
+  },
   "npcs": {}
 }

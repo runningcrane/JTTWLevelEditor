@@ -70,6 +70,7 @@ public abstract class AInteractable {
 	/**
 	 * Book of default properties.
 	 */
+	@Exclude
 	private PropertyBook defaultBook;
 	
 	/**
