@@ -46,6 +46,8 @@ import utils.AnnotationExclusionStrategy;
 import utils.annotations.Exclude;
 
 public class LevelManager {
+	// Unused, but printed to json and used in the game.
+	@SuppressWarnings("unused")
 	private final int VERSION = 2;
 	
 	/**
@@ -734,7 +736,9 @@ public class LevelManager {
 			System.err.println("Tag does not match any cases");
 			return -1;
 		}
-						
+		
+		obj.updateProperties(book);
+
 		// Set the center location.
 		obj.setCenter(xm, ym);
 		

@@ -47,6 +47,8 @@
       "centerYM": 2.200000000000003,
       "scale": 1.0,
       "ticket": 1,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 7.0,
       "book": {
         "intList": {},
         "doubList": {
@@ -120,6 +122,8 @@
       "centerYM": 0.0,
       "scale": 0.76,
       "ticket": 2,
+      "scaledIGWM": 2.2800000000000002,
+      "scaledIGHM": 1.1400000000000001,
       "book": {
         "intList": {},
         "doubList": {
@@ -169,6 +173,8 @@
       "centerYM": -1.147058823529413,
       "scale": 1.4,
       "ticket": 3,
+      "scaledIGWM": 4.199999999999999,
+      "scaledIGHM": 2.0999999999999996,
       "book": {
         "intList": {},
         "doubList": {
@@ -218,6 +224,8 @@
       "centerYM": 3.235294117647058,
       "scale": 1.21,
       "ticket": 4,
+      "scaledIGWM": 3.63,
+      "scaledIGHM": 1.815,
       "book": {
         "intList": {},
         "doubList": {
@@ -267,6 +275,8 @@
       "centerYM": 3.3999999999999986,
       "scale": 1.0,
       "ticket": 5,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 7.0,
       "book": {
         "intList": {},
         "doubList": {
@@ -336,6 +346,8 @@
       "centerYM": 0.08823529411764497,
       "scale": 1.0,
       "ticket": 6,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
       "book": {
         "intList": {},
         "doubList": {
@@ -385,6 +397,8 @@
       "centerYM": 13.125,
       "scale": 1.0,
       "ticket": 7,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
       "book": {
         "intList": {},
         "doubList": {
@@ -438,6 +452,8 @@
       "centerYM": 14.024999999999999,
       "scale": 0.74,
       "ticket": 8,
+      "scaledIGWM": 2.2199999999999998,
+      "scaledIGHM": 1.1099999999999999,
       "book": {
         "intList": {},
         "doubList": {
@@ -487,6 +503,8 @@
       "centerYM": 14.100000000000001,
       "scale": 1.23,
       "ticket": 9,
+      "scaledIGWM": 3.69,
+      "scaledIGHM": 1.845,
       "book": {
         "intList": {},
         "doubList": {
@@ -536,6 +554,8 @@
       "centerYM": 14.300000000000004,
       "scale": 1.0,
       "ticket": 10,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
       "book": {
         "intList": {},
         "doubList": {
@@ -585,6 +605,8 @@
       "centerYM": -0.3500000000000014,
       "scale": 1.21,
       "ticket": 11,
+      "scaledIGWM": 3.63,
+      "scaledIGHM": 2.904,
       "book": {
         "intList": {},
         "doubList": {
@@ -658,6 +680,8 @@
       "centerYM": 1.676470588235297,
       "scale": 1.0,
       "ticket": 12,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 2.5,
       "book": {
         "intList": {},
         "doubList": {
@@ -727,6 +751,8 @@
       "centerYM": 3.299999999999997,
       "scale": 1.0,
       "ticket": 13,
+      "scaledIGWM": 4.0,
+      "scaledIGHM": 7.0,
       "book": {
         "intList": {},
         "doubList": {
@@ -788,6 +814,8 @@
       "centerYM": 4.200000000000003,
       "scale": 1.0,
       "ticket": 14,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
       "book": {
         "intList": {},
         "doubList": {
@@ -837,6 +865,8 @@
       "centerYM": 6.299999999999997,
       "scale": 1.0,
       "ticket": 15,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
       "book": {
         "intList": {},
         "doubList": {
@@ -886,6 +916,8 @@
       "centerYM": 8.441176470588236,
       "scale": 1.0,
       "ticket": 16,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
       "book": {
         "intList": {},
         "doubList": {
@@ -935,6 +967,8 @@
       "centerYM": 11.5,
       "scale": 1.0,
       "ticket": 17,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
       "book": {
         "intList": {},
         "doubList": {
@@ -984,6 +1018,8 @@
       "centerYM": 12.941176470588236,
       "scale": 1.17,
       "ticket": 18,
+      "scaledIGWM": 3.51,
+      "scaledIGHM": 1.755,
       "book": {
         "intList": {},
         "doubList": {
@@ -1033,6 +1069,8 @@
       "centerYM": 20.2,
       "scale": 0.69,
       "ticket": 19,
+      "scaledIGWM": 2.07,
+      "scaledIGHM": 1.035,
       "book": {
         "intList": {},
         "doubList": {
@@ -1082,6 +1120,8 @@
       "centerYM": 20.275,
       "scale": 1.0,
       "ticket": 20,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
       "book": {
         "intList": {},
         "doubList": {
@@ -1131,6 +1171,8 @@
       "centerYM": 19.8,
       "scale": 1.0,
       "ticket": 21,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
       "book": {
         "intList": {},
         "doubList": {
@@ -1180,6 +1222,8 @@
       "centerYM": 10.205882352941174,
       "scale": 1.0,
       "ticket": 22,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
       "book": {
         "intList": {},
         "doubList": {
@@ -1233,6 +1277,8 @@
       "centerYM": 12.029411764705884,
       "scale": 1.0,
       "ticket": 23,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
       "book": {
         "intList": {},
         "doubList": {
@@ -1286,6 +1332,8 @@
       "centerYM": 13.088235294117649,
       "scale": 1.0,
       "ticket": 24,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
       "book": {
         "intList": {},
         "doubList": {
@@ -1335,6 +1383,8 @@
       "centerYM": 18.65,
       "scale": 1.0,
       "ticket": 25,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
       "book": {
         "intList": {},
         "doubList": {
@@ -1384,6 +1434,8 @@
       "centerYM": 18.325,
       "scale": 0.87,
       "ticket": 26,
+      "scaledIGWM": 2.61,
+      "scaledIGHM": 1.305,
       "book": {
         "intList": {},
         "doubList": {
@@ -1433,6 +1485,8 @@
       "centerYM": 18.85,
       "scale": 0.82,
       "ticket": 27,
+      "scaledIGWM": 2.46,
+      "scaledIGHM": 1.23,
       "book": {
         "intList": {},
         "doubList": {
@@ -1482,6 +1536,8 @@
       "centerYM": 18.5,
       "scale": 1.0,
       "ticket": 28,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
       "book": {
         "intList": {},
         "doubList": {
@@ -1531,6 +1587,8 @@
       "centerYM": 18.475,
       "scale": 1.0,
       "ticket": 29,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
       "book": {
         "intList": {},
         "doubList": {
@@ -1580,6 +1638,8 @@
       "centerYM": 8.774999999999999,
       "scale": 1.0,
       "ticket": 30,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
       "book": {
         "intList": {},
         "doubList": {
@@ -1629,6 +1689,8 @@
       "centerYM": 4.058823529411768,
       "scale": 1.3,
       "ticket": 31,
+      "scaledIGWM": 5.2,
+      "scaledIGHM": 9.1,
       "book": {
         "intList": {},
         "doubList": {
@@ -1698,6 +1760,8 @@
       "centerYM": 0.41176470588235503,
       "scale": 0.89,
       "ticket": 32,
+      "scaledIGWM": 2.67,
+      "scaledIGHM": 1.335,
       "book": {
         "intList": {},
         "doubList": {
@@ -1747,6 +1811,8 @@
       "centerYM": 0.529411764705884,
       "scale": 1.0,
       "ticket": 33,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
       "book": {
         "intList": {},
         "doubList": {
@@ -1800,6 +1866,8 @@
       "centerYM": 0.05882352941176805,
       "scale": 1.28,
       "ticket": 34,
+      "scaledIGWM": 3.84,
+      "scaledIGHM": 1.92,
       "book": {
         "intList": {},
         "doubList": {
@@ -1853,6 +1921,8 @@
       "centerYM": 0.029411764705884025,
       "scale": 1.28,
       "ticket": 35,
+      "scaledIGWM": 3.84,
+      "scaledIGHM": 3.2,
       "book": {
         "intList": {},
         "doubList": {
@@ -1922,6 +1992,8 @@
       "centerYM": -0.235294117647058,
       "scale": 1.26,
       "ticket": 36,
+      "scaledIGWM": 3.7800000000000002,
+      "scaledIGHM": 1.8900000000000001,
       "book": {
         "intList": {},
         "doubList": {
@@ -1971,6 +2043,8 @@
       "centerYM": 18.882352941176475,
       "scale": 2.0,
       "ticket": 37,
+      "scaledIGWM": 6.0,
+      "scaledIGHM": 3.0,
       "book": {
         "intList": {},
         "doubList": {
@@ -2024,6 +2098,8 @@
       "centerYM": -0.08823529411764497,
       "scale": 1.6,
       "ticket": 38,
+      "scaledIGWM": 4.800000000000001,
+      "scaledIGHM": 2.4000000000000004,
       "book": {
         "intList": {},
         "doubList": {
@@ -2077,6 +2153,8 @@
       "centerYM": -0.117647058823529,
       "scale": 1.52,
       "ticket": 39,
+      "scaledIGWM": 4.5600000000000005,
+      "scaledIGHM": 2.2800000000000002,
       "book": {
         "intList": {},
         "doubList": {
@@ -2126,6 +2204,8 @@
       "centerYM": 1.441176470588232,
       "scale": 0.72,
       "ticket": 40,
+      "scaledIGWM": 2.16,
+      "scaledIGHM": 1.728,
       "book": {
         "intList": {},
         "doubList": {
@@ -2199,6 +2279,8 @@
       "centerYM": 0.235294117647058,
       "scale": 1.13,
       "ticket": 41,
+      "scaledIGWM": 3.3899999999999997,
+      "scaledIGHM": 1.6949999999999998,
       "book": {
         "intList": {},
         "doubList": {
@@ -2252,6 +2334,8 @@
       "centerYM": -0.05882352941176805,
       "scale": 0.78,
       "ticket": 42,
+      "scaledIGWM": 2.34,
+      "scaledIGHM": 1.17,
       "book": {
         "intList": {},
         "doubList": {
@@ -2301,6 +2385,8 @@
       "centerYM": 0.0,
       "scale": 0.82,
       "ticket": 43,
+      "scaledIGWM": 2.46,
+      "scaledIGHM": 2.05,
       "book": {
         "intList": {},
         "doubList": {
@@ -2370,6 +2456,8 @@
       "centerYM": 6.205882352941174,
       "scale": 1.34,
       "ticket": 44,
+      "scaledIGWM": 4.0200000000000005,
+      "scaledIGHM": 6.7,
       "book": {
         "intList": {},
         "doubList": {
@@ -2435,6 +2523,8 @@
       "centerYM": 2.823529411764703,
       "scale": 0.59,
       "ticket": 45,
+      "scaledIGWM": 1.77,
+      "scaledIGHM": 0.885,
       "book": {
         "intList": {},
         "doubList": {
@@ -2484,6 +2574,8 @@
       "centerYM": 2.823529411764703,
       "scale": 0.67,
       "ticket": 46,
+      "scaledIGWM": 2.0100000000000002,
+      "scaledIGHM": 1.0050000000000001,
       "book": {
         "intList": {},
         "doubList": {
@@ -2533,6 +2625,8 @@
       "centerYM": 2.382352941176471,
       "scale": 0.4,
       "ticket": 47,
+      "scaledIGWM": 1.2000000000000002,
+      "scaledIGHM": 0.6000000000000001,
       "book": {
         "intList": {},
         "doubList": {
@@ -2586,6 +2680,8 @@
       "centerYM": 3.676470588235297,
       "scale": 0.4,
       "ticket": 48,
+      "scaledIGWM": 1.2000000000000002,
+      "scaledIGHM": 0.96,
       "book": {
         "intList": {},
         "doubList": {
@@ -2659,6 +2755,8 @@
       "centerYM": 4.970588235294116,
       "scale": 1.0,
       "ticket": 49,
+      "scaledIGWM": 3.5,
+      "scaledIGHM": 6.0,
       "book": {
         "intList": {},
         "doubList": {
@@ -2712,6 +2810,8 @@
       "centerYM": 5.529411764705884,
       "scale": 1.0,
       "ticket": 50,
+      "scaledIGWM": 3.5,
+      "scaledIGHM": 6.0,
       "book": {
         "intList": {},
         "doubList": {
@@ -2765,6 +2865,8 @@
       "centerYM": 3.882352941176471,
       "scale": 1.0,
       "ticket": 51,
+      "scaledIGWM": 3.5,
+      "scaledIGHM": 6.0,
       "book": {
         "intList": {},
         "doubList": {
@@ -2818,6 +2920,8 @@
       "centerYM": 2.058823529411768,
       "scale": 1.0,
       "ticket": 52,
+      "scaledIGWM": 3.5,
+      "scaledIGHM": 6.0,
       "book": {
         "intList": {},
         "doubList": {
@@ -2871,6 +2975,8 @@
       "centerYM": 5.676470588235297,
       "scale": 1.0,
       "ticket": 53,
+      "scaledIGWM": 3.5,
+      "scaledIGHM": 6.0,
       "book": {
         "intList": {},
         "doubList": {
@@ -2924,6 +3030,8 @@
       "centerYM": 4.205882352941174,
       "scale": 1.0,
       "ticket": 54,
+      "scaledIGWM": 3.5,
+      "scaledIGHM": 6.0,
       "book": {
         "intList": {},
         "doubList": {
@@ -2977,6 +3085,8 @@
       "centerYM": 4.0,
       "scale": 1.0,
       "ticket": 55,
+      "scaledIGWM": 3.5,
+      "scaledIGHM": 6.0,
       "book": {
         "intList": {},
         "doubList": {
@@ -3030,6 +3140,8 @@
       "centerYM": 3.941176470588232,
       "scale": 1.0,
       "ticket": 56,
+      "scaledIGWM": 3.5,
+      "scaledIGHM": 6.0,
       "book": {
         "intList": {},
         "doubList": {
@@ -3081,6 +3193,8 @@
       "centerYM": 6.475,
       "scale": 0.0,
       "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
       "book": {
         "intList": {},
         "doubList": {},
@@ -3098,6 +3212,8 @@
       "centerYM": 0.0,
       "scale": 0.0,
       "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
       "book": {
         "intList": {},
         "doubList": {},
@@ -3115,6 +3231,8 @@
       "centerYM": 0.0,
       "scale": 0.0,
       "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
       "book": {
         "intList": {},
         "doubList": {},
@@ -3132,6 +3250,8 @@
       "centerYM": 0.0,
       "scale": 0.0,
       "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
       "book": {
         "intList": {},
         "doubList": {},
@@ -3151,11 +3271,16 @@
       "centerYM": 20.147058823529413,
       "scale": 1.0,
       "ticket": 57,
+      "scaledIGWM": 1.0,
+      "scaledIGHM": 5.0,
       "book": {
         "intList": {},
         "doubList": {
+          "Length": 8.0,
+          "Arc Length": 360.0,
           "Scale": 1.0,
           "Velocity": 1.0,
+          "Width": 0.8,
           "Arc Length (deg)": 180.0
         },
         "collPointList": [
@@ -3181,11 +3306,16 @@
       "centerYM": 14.0,
       "scale": 1.0,
       "ticket": 58,
+      "scaledIGWM": 1.0,
+      "scaledIGHM": 5.0,
       "book": {
         "intList": {},
         "doubList": {
+          "Length": 5.0,
+          "Arc Length": 360.0,
           "Scale": 1.0,
           "Velocity": 1.0,
+          "Width": 1.0,
           "Arc Length (deg)": 180.0
         },
         "collPointList": [
@@ -3211,11 +3341,16 @@
       "centerYM": 18.41176470588235,
       "scale": 1.0,
       "ticket": 59,
+      "scaledIGWM": 1.0,
+      "scaledIGHM": 5.0,
       "book": {
         "intList": {},
         "doubList": {
+          "Length": 8.0,
+          "Arc Length": 360.0,
           "Scale": 1.0,
           "Velocity": 1.0,
+          "Width": 0.8,
           "Arc Length (deg)": 180.0
         },
         "collPointList": [
@@ -3241,11 +3376,16 @@
       "centerYM": 18.425,
       "scale": 1.0,
       "ticket": 60,
+      "scaledIGWM": 1.0,
+      "scaledIGHM": 5.0,
       "book": {
         "intList": {},
         "doubList": {
+          "Length": 8.0,
+          "Arc Length": 360.0,
           "Scale": 1.0,
           "Velocity": -0.8,
+          "Width": 0.8,
           "Arc Length (deg)": 180.0
         },
         "collPointList": [
