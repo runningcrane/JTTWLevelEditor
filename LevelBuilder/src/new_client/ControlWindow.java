@@ -330,7 +330,7 @@ public class ControlWindow extends JFrame {
 		JToggleButton tglMonkey = new JToggleButton("Monkey");
 		tglMonkey.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {								
-				ctlAdapter.togglePlayer("Monkey", tglMonkey.isSelected());
+				ctlAdapter.toggleMonkey();
 			}
 		});
 		tglMonkey.setIcon(iiMonkey);
@@ -341,7 +341,7 @@ public class ControlWindow extends JFrame {
 		JToggleButton tglMonk = new JToggleButton("Monk");
 		tglMonk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.togglePlayer("Monk", tglMonk.isSelected());
+				ctlAdapter.toggleMonk();
 			}
 		});
 		tglMonk.setIcon(iiMonk);
@@ -352,7 +352,7 @@ public class ControlWindow extends JFrame {
 		JToggleButton tglPig = new JToggleButton("Piggy");
 		tglPig.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.togglePlayer("Piggy", tglPig.isSelected());
+				ctlAdapter.togglePiggy();
 			}
 		});
 		tglPig.setIcon(iiPig);
@@ -363,7 +363,7 @@ public class ControlWindow extends JFrame {
 		JToggleButton tglSandy = new JToggleButton("Sandy");
 		tglSandy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.togglePlayer("Sandy", tglSandy.isSelected());
+				ctlAdapter.toggleSandy();
 			}
 		});
 		tglSandy.setIcon(iiSandy);

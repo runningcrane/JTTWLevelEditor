@@ -1164,6 +1164,16 @@ public class LevelManager {
 		peg.updateProperties(window.getPropertyBook());
 	}
 	
+	/**
+	 * Make the character visible and request for their position to be set.
+	 * @param name
+	 * @req requesttype
+	 */
+	public void togglePlayer(String name, Request req) {
+		this.characters.get(name).setPresent(true);
+		setRequest("", req);
+	}
+	
 	public void changeOffset(double xm, double ym) {
 
 		this.vpOffset = new Point2D.Double(this.vpOffset.getX() + xm * this.mToPixel,

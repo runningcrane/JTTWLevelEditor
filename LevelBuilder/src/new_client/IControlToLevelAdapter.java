@@ -23,11 +23,24 @@ public interface IControlToLevelAdapter {
 	public void setViewportDimensions(double wm, double hm);
 	
 	/**
-	 * Toggle whether a character is in this scene.
-	 * @param name name of character to toggle existence
-	 * @param status state to toggle to
+	 * Make present the character and request a new position for them.
 	 */
-	public void togglePlayer (String name, boolean status);
+	public void toggleMonk();
+	
+	/**
+	 * Make present the character and request a new position for them.
+	 */
+	public void toggleMonkey();
+	
+	/**
+	 * Make present the character and request a new position for them.
+	 */
+	public void togglePiggy();
+	
+	/**
+	 * Make present the character and request a new position for them.
+	 */
+	public void toggleSandy();
 	
 	/**
 	 * Request to change background of OutputWindow.

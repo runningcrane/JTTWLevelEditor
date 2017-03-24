@@ -99,8 +99,23 @@ public class Controller {
 			}
 
 			@Override
-			public void togglePlayer(String name, boolean status) {
-				// TODO: level.togglePlayer(name, status);
+			public void toggleMonk() {
+				level.togglePlayer("Monk", LevelManager.Request.EDIT_MONK);
+			}
+			
+			@Override
+			public void toggleMonkey() {
+				level.togglePlayer("Monkey", LevelManager.Request.EDIT_MONKEY);
+			}
+			
+			@Override
+			public void togglePiggy() {
+				level.togglePlayer("Piggy", LevelManager.Request.EDIT_PIG);				
+			}
+			
+			@Override
+			public void toggleSandy() {
+				level.togglePlayer("Sandy", LevelManager.Request.EDIT_SANDY);
 			}
 
 			@Override
