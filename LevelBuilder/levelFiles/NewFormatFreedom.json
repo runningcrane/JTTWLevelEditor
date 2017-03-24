@@ -3188,7 +3188,7 @@
   },
   "characters": {
     "Monkey": {
-      "path": "../assets/Monkey.png",
+      "path": "Monkey.png",
       "centerXM": 1.475,
       "centerYM": 6.475,
       "scale": 0.0,
@@ -3207,7 +3207,7 @@
       }
     },
     "Piggy": {
-      "path": "../assets/Piggy.png",
+      "path": "Piggy.png",
       "centerXM": 0.0,
       "centerYM": 0.0,
       "scale": 0.0,
@@ -3226,7 +3226,7 @@
       }
     },
     "Sandy": {
-      "path": "../assets/Sandy.png",
+      "path": "Sandy.png",
       "centerXM": 0.0,
       "centerYM": 0.0,
       "scale": 0.0,
@@ -3245,7 +3245,7 @@
       }
     },
     "Monk": {
-      "path": "../assets/Monk.png",
+      "path": "Monk.png",
       "centerXM": 0.0,
       "centerYM": 0.0,
       "scale": 0.0,
@@ -3408,5 +3408,19 @@
   },
   "boulders": {},
   "pegs": {},
-  "npcs": {}
+  "npcs": {},
+  "tutorials": [
+  {
+    "tipString": "Move with arrow keys",
+    "fontSize": 50,
+    "centerX": 1.475,
+    "centerY": 8.0
+  },
+  {
+    "tipString": "Jump with space bar",
+    "fontSize": 50,
+    "centerX": 5.0,
+    "centerY": 11.0
+  }
+]
 }

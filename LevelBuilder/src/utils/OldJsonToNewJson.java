@@ -370,7 +370,14 @@ public class OldJsonToNewJson {
     		mass = 1000;
     	} else {
     		mass = massD.doubleValue();
-    	}			
+    	}	
+    	
+    	Double rotation = (Double) boulder.get("rotation");
+    	if (rotation == null) {
+    		rotation = 0.0;
+    	} else {
+    		rotation = rotation.doubleValue();
+    	}	
     			
     	JSONArray collisionPoints = (JSONArray) boulder.get("collisionPoints");
 
@@ -397,8 +404,11 @@ public class OldJsonToNewJson {
     	PropertyBook pb = new PropertyBook();
     	pb.getDoubList().put("Mass", mass);
     	pb.getDoubList().put("Radius", 1.0);
+    	
     	pb.getCollPoints().addAll(points);
     	pb.getBoolList().put("Polygon collision", polygon);
+    	
+    	pb.getDoubList().put("Rotation (rad)", rotation);
     	
     	lm.makeBoulder(path, pb, cxm, cym, oldTicket);
     }
@@ -406,7 +416,7 @@ public class OldJsonToNewJson {
     public static void readInPegs(JSONArray pegs, new_server.LevelManager lm) {
     	for (Object o : pegs) {
     		JSONObject peg = (JSONObject) o;
-    		JSONArray bouldersAffected = (JSONArray)peg.get("boudersAffected");
+    		JSONArray bouldersAffected = (JSONArray)peg.get("bouldersAffected");
             
     		PropertyBook pb = new PropertyBook();
     		
@@ -414,7 +424,7 @@ public class OldJsonToNewJson {
     		
     		for (Object o2 : bouldersAffected) {
     			bNum += 1;
-    			int bTicket = (Integer) o2;
+    			int bTicket = Math.toIntExact((long) o2);
     			int newTicket = lm.getNewBoulderTicketFromOld(bTicket);
     			if (newTicket != -1) {
     				// TODO: HOW THE HELL DO WE STORE MULTIPLE BOULDERS?
@@ -433,7 +443,7 @@ public class OldJsonToNewJson {
 			//double imageHeight = (double)peg.get("imageHeight");			
 			
 			pb.getDoubList().put("Rotation", rotation);
-			lm.makeInteractable(imageName, pb, centerXm, centerYm, "Peg");	
+			lm.makeInteractable(ASSETS_PATH + imageName, pb, centerXm, centerYm, "Peg");	
     	}
     }
     

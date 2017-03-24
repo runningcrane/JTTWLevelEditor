@@ -17,8 +17,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -119,6 +117,10 @@ public class LevelManager {
 	 * NPC array.
 	 */
 	private Map<Integer, NPC> npcs;
+	
+	/**
+	 * Array of text tips (bits of text on screen floating in game).
+	 */ 
 	
 	public enum Request {
 		NONE, 
@@ -668,8 +670,8 @@ public class LevelManager {
 		this.requestPath = "";
 	}
 	
-	public PropertyBook getCollisionBook(String truncatedName) {		
-		
+	public PropertyBook getCollisionBook(String truncatedName) {	
+		System.out.println("Name of object: " + truncatedName);
 		Gson gson = new Gson();
 		PropertyBook collisionBook;		
 		try {			
@@ -743,6 +745,8 @@ public class LevelManager {
 		obj.setCenter(xm, ym);
 		
 		// Set the default property book.
+		// Get the straight name.
+		System.out.println(type + ", " + obj.getPath() + ", " + imageName);
 		String path = imageName.substring(10, obj.getPath().length() - 4);
 		obj.setDefaultPropertyBook(getCollisionBook(path));		
 		
@@ -1052,7 +1056,7 @@ public class LevelManager {
 					
 				// Scale the image now.
 				boulder.setRI(resize(boulder.getBI(), boulder.getScaledIGWM(), boulder.getScaledIGHM()));
-			}			
+			}
 		});
 		
 		// Set up boulder properties.
@@ -1145,7 +1149,7 @@ public class LevelManager {
 				this.boulders.forEach((number, boulder) -> {
 					if (boulder.getOldTicket() == oldBoulderID) {
 						System.out.println("oldBoudlerID:" + oldBoulderID + " new ID: " + number);
-						window.getPropertyBook().getIntList().put("boulder" + counter[0], number);
+						window.getPropertyBook().getIntList().put("old boulder " + oldBoulderID, number);
 						counter[0]++;
 					}
 				});
