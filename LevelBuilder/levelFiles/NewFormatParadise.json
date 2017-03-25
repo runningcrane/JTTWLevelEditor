@@ -1,8 +1,10 @@
 {
   "VERSION": 2,
-  "levelName": "../levelFiles/NewFormatParadise.json",
-  "nextLevelName": "Freedom",
-  "mToPixel": 41.0,
+  "levelFileName": "NewFormatParadise",
+  "levelName": "Paradise",
+  "levelNumber": 0,
+  "nextLevelName": "NewFormatFreedom",
+  "mToPixel": 34.0,
   "bg": {
     "path": "../assets/bgSunny.png",
     "centerXm": 0.0,
@@ -13,8 +15,8 @@
     "collisionHeight": 0.0
   },
   "eol": {
-    "x": 9.28048780487805,
-    "y": 14.390243902439025
+    "x": 14.911764705882353,
+    "y": 9.764705882352942
   },
   "levelWidthM": 20.0,
   "levelHeightM": 15.0,
@@ -26,8 +28,8 @@
         "y": 0.0
       },
       "path": "../assets/paradiserock.png",
-      "centerXM": 2.36,
-      "centerYM": 13.27,
+      "centerXM": 5.676470588235294,
+      "centerYM": 6.411764705882353,
       "scale": 3.0,
       "ticket": 1,
       "scaledIGWM": 9.0,
@@ -101,8 +103,8 @@
         "y": 0.0
       },
       "path": "../assets/cldSunset.png",
-      "centerXM": 8.207317073170731,
-      "centerYM": 14.78048780487805,
+      "centerXM": 11.647058823529411,
+      "centerYM": 8.382352941176471,
       "scale": 1.0,
       "ticket": 2,
       "scaledIGWM": 2.0,
@@ -152,8 +154,8 @@
         "y": 0.0
       },
       "path": "../assets/cldSunsetDiagL.png",
-      "centerXM": 9.914634146341463,
-      "centerYM": 15.829268292682928,
+      "centerXM": 13.823529411764707,
+      "centerYM": 9.205882352941178,
       "scale": 1.0,
       "ticket": 3,
       "scaledIGWM": 2.0,
@@ -208,13 +210,76 @@
           "Disappears": false
         }
       }
+    },
+    "4": {
+      "endpoint": {
+        "x": 16.029411764705884,
+        "y": 10.294117647058822
+      },
+      "path": "../assets/cldSunsetUp.png",
+      "centerXM": 16.029411764705884,
+      "centerYM": 10.294117647058822,
+      "scale": 1.0,
+      "ticket": 4,
+      "scaledIGWM": 2.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -0.89,
+            "y": -0.55
+          },
+          {
+            "x": -1.0,
+            "y": -0.24
+          },
+          {
+            "x": -0.77,
+            "y": -0.11
+          },
+          {
+            "x": 0.75,
+            "y": -0.02
+          },
+          {
+            "x": 1.0,
+            "y": -0.24
+          },
+          {
+            "x": 0.89,
+            "y": -0.63
+          },
+          {
+            "x": 0.38,
+            "y": -0.63
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldSunsetUp.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": false,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
     }
   },
   "characters": {
     "Monkey": {
       "path": "Monkey.png",
-      "centerXM": -0.975609756097561,
-      "centerYM": 15.073170731707316,
+      "centerXM": 3.088235294117647,
+      "centerYM": 8.617647058823529,
       "scale": 0.0,
       "ticket": 0,
       "scaledIGWM": 0.0,
@@ -291,5 +356,6 @@
   "vines": {},
   "boulders": {},
   "pegs": {},
-  "npcs": {}
+  "npcs": {},
+  "textTips": {}
 }

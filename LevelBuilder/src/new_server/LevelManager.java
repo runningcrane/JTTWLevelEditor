@@ -4,10 +4,12 @@ import static utils.Constants.ASSETS_PATH;
 import static utils.Constants.COL_PATH;
 import static utils.Constants.LEVELS_PATH;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
@@ -32,6 +34,7 @@ import com.google.gson.GsonBuilder;
 
 import new_client.EditWindow;
 import new_interactable.AInteractable;
+import new_interactable.AttackZone;
 import new_interactable.Boulder;
 import new_interactable.NPC;
 import new_interactable.Peg;
@@ -46,14 +49,26 @@ import utils.AnnotationExclusionStrategy;
 import utils.annotations.Exclude;
 
 public class LevelManager {
-	// Unused, but printed to json and used in the game.
+	// Unused, but printed to JSON and used in the game.
 	@SuppressWarnings("unused")
 	private final int VERSION = 2;
 	
 	/**
-	 * Name of the currently-loaded level.
+	 * Name of the currently-loaded level file (something.json).
+	 */
+	private String levelFileName;
+	
+	/**
+	 * Name of the currently-loaded level. (Dawn of Something).
+	 * Can be more elaborate and contain spaces (which file names shouldn't).
 	 */
 	private String levelName;
+	
+	/**
+	 * The number of this level.
+	 * Used to sort the levels by progression in game.
+	 */
+	private int levelNumber;
 	
 	/**
 	 * Name of the level after this level.
@@ -73,7 +88,14 @@ public class LevelManager {
 	/**
 	 * EOL location.
 	 */
-	private Point2D.Double eol;
+	private Point2D.Double eolPoint;
+	
+	/**
+	 * EOL direction: numbered by quadrants:   2 | 1
+	 * Level doesn't end until players go      -----
+	 * in that direction.                      3 | 4
+	 */
+	private int eolQuadrant; 
 	
 	/**
 	 * Level width (meters).
@@ -91,48 +113,29 @@ public class LevelManager {
 	private ArrayList<Point2D.Double> respawnPoints = new ArrayList<Point2D.Double>(); 
 
 	/**
-	 * Platform array.
+	 * Ticket items, all stored in separate maps for easy access.
 	 */
-	private Map<Integer, Platform> plats = new HashMap<Integer, Platform>();;
-
-	/**
-	 * Character array.
-	 */
-	private Map<String, Player> characters = new HashMap<String, Player>();;
-
-	/**
-	 * Vine array.
-	 */
+	private Map<Integer, Platform> plats = new HashMap<Integer, Platform>();
+	private Map<String, Player> characters = new HashMap<String, Player>();
 	private Map<Integer, Vine> vines = new HashMap<Integer, Vine>();
-
-	/**
-	 * Boulder map.
-	 */
 	private Map<Integer, Boulder> boulders = new HashMap<Integer, Boulder>();
-	
-	/**
-	 * Peg list. These are connected to boulder joints.
-	 */
 	private Map<Integer, Peg> pegs = new HashMap<Integer, Peg>();
-
-	/**
-	 * NPC array.
-	 */
 	private Map<Integer, NPC> npcs = new HashMap<Integer, NPC>();
-
-	/**
-	 * Array of text tips (bits of text on screen floating in game).
-	 */ 
 	private Map<Integer, TextTip> textTips =  new HashMap<Integer, TextTip>();
+    private Map<Integer, AttackZone> attackZones = new HashMap<Integer, AttackZone>();
 	
 	public enum Request {
 		NONE, 
-		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC, MAKE_PEG, MAKE_TIP, MAKE_TRAP,
-		EDIT_OLD_PLAT, EDIT_OLD_VINE, EDIT_OLD_BOULDER, EDIT_OLD_PEG, EDIT_OLD_TIP, EDIT_OLD_TRAP,
+		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC, MAKE_PEG, MAKE_TIP, 
+		    MAKE_TRAP, MAKE_ATTACK_ZONE,
+		EDIT_OLD_PLAT, EDIT_OLD_VINE, EDIT_OLD_BOULDER, EDIT_OLD_PEG, 
+		    EDIT_OLD_TIP, EDIT_OLD_TRAP, EDIT_OLD_ATTACK_ZONE,
 		EDIT_MONK, EDIT_MONKEY, EDIT_PIG, EDIT_SANDY,
-		SET_PLAT_ENDPOINT, MARK_EOL, MARK_RP,
+		SET_PLAT_ENDPOINT, MARK_EOL, MARK_EOL_QUADRANT, MARK_RP,
 		REMOVE_RP
 	}
+	
+	//////// Members that aren't serialized into the level JSON file. ////////////
 	
 	/**
 	 * Viewport offset (px).
@@ -174,19 +177,19 @@ public class LevelManager {
 	 * Gives out ticket values.
 	 */
 	@Exclude
-	int ticketer;
+	private int ticketer;
 	
 	/**
 	 * Adapter from the LevelManager to a LayerWIndow.
 	 */
 	@Exclude
-	ILevelToLayerAdapter ltlAdapter;
+	private ILevelToLayerAdapter ltlAdapter;
 	
 	/**
 	 * Adapter from the LevelManager to the OuputWindow.
 	 */
 	@Exclude
-	ILevelToOutputAdapter ltoAdapter;
+	private ILevelToOutputAdapter ltoAdapter;
 	
 	/**
 	 * Adapter to communicate with the controls panel.
@@ -220,11 +223,14 @@ public class LevelManager {
 		this.request = Request.NONE;
 		this.requestNum = 1;
 		this.requestPath = "";
-		this.levelName = "default";
+		this.levelFileName = "default";
+		this.levelName = "Communism will rise again";
 		this.nextLevelName  = "";
+		this.levelNumber = 0;
 		
 		// No real reason to put it to 5,8 other than just to initialize it.
-		this.eol = new Point2D.Double(5, 8);
+		this.eolPoint = new Point2D.Double(5, 8);
+		this.eolQuadrant = 1; // top right, most levels will keep this.
 		
 		this.mToPixel = 100;
 		this.vpOffset = new Point2D.Double(0, 0);
@@ -438,17 +444,62 @@ public class LevelManager {
 				g.drawImage(player.getRI().getImage(), (int) vpcp.getX(), (int) vpcp.getY(), null);
 			}
 		});
+		
+		attackZones.forEach((num, zone) -> {
+			double ulxp = (zone.getPropertyBook().getDoubList().get("xmin")) * this.mToPixel;
+			double ulyp = (this.levelHeightM - zone.getPropertyBook().getDoubList().get("ymin")) * this.mToPixel;
+			Point2D.Double ul = getViewportCoordinates(ulxp, ulyp);
+			double width = zone.getWidth() * this.mToPixel;
+			double height = zone.getHeight() * this.mToPixel;
+			g.setColor(Color.BLACK);
+			g.drawRect((int) ul.x, (int)ul.y - (int) height, (int)width, (int)height);
+			
+			Point2D.Double c = getViewportCoordinates((zone.getCenterXM() * this.mToPixel), ((this.levelHeightM - zone.getCenterYM()) * this.mToPixel));
+			
+			g.drawOval((int)c.x,  (int)c.y, 30, 30);
+		});
 
 		// Draw EOL
 		g.setColor(Color.GREEN);
-		Point2D.Double vpeol = getViewportCoordinates(this.eol.getX() * this.mToPixel,
-				(this.levelHeightM - (this.eol.getY())) * this.mToPixel);
+		Point2D.Double vpeol = getViewportCoordinates(this.eolPoint.getX() * this.mToPixel,
+				(this.levelHeightM - (this.eolPoint.getY())) * this.mToPixel);
 		g.fillOval((int) (vpeol.getX()), (int) (vpeol.getY()), 15, 15);
 
 		g.setColor(Color.BLACK);
-		Point2D.Double vplbeol = getViewportCoordinates(this.eol.getX() * this.mToPixel + 5,
-				(this.levelHeightM - (this.eol.getY())) * this.mToPixel + 10);
+		Point2D.Double vplbeol = getViewportCoordinates(this.eolPoint.getX() * this.mToPixel + 5,
+				(this.levelHeightM - (this.eolPoint.getY())) * this.mToPixel + 10);
 		g.drawString("EOL", (int) (vplbeol.getX()), (int) (vplbeol.getY()));
+		
+		// Draw EOL arrow.
+		int x =  (int) (vplbeol.getX()), y = (int) (vplbeol.getY()), x2, y2;
+		switch (eolQuadrant) {
+		case 1:
+			x2 = x + 20;
+			y2 = y - 20;
+			break;
+		
+		case 2:
+			x2 = x - 20;
+			y2 = y - 20;
+			break;
+			
+		case 3:
+			x2 = x - 20;
+			y2 = y + 20;
+			break;
+			
+		case 4: 
+			x2 = x + 20;
+			y2 = y + 20;
+			break;
+		default:
+			x2 = x + 20;
+			y2 = y;
+			break;
+		}
+		g.setColor(Color.GREEN);
+		((Graphics2D) g).setStroke(new BasicStroke(4));
+		g.drawLine(x, y, x2, y2);
 		
 		// Draw respawn points		
 		respawnPoints.forEach((point) -> {
@@ -464,6 +515,7 @@ public class LevelManager {
 			g.drawString("RP", (int) (vprplb.getX()), (int) (vprplb.getY()));
 		});
 		
+		Font old = g.getFont(); 
 		textTips.forEach((ticket, textTip) -> {
 				// Don't draw until the font size has been decided.
 			if (textTip.getPropertyBook().getIntList().containsKey("fontSize")) {
@@ -472,11 +524,11 @@ public class LevelManager {
 				
 				g.setColor(Color.BLACK);
 				Font f = new Font(Font.DIALOG, Font.PLAIN, 15);
-				Font old = g.getFont(); 
 				g.setFont(f);
 				g.drawString(textTip.getString(), (int)point.x - textTip.getSize() / 2, (int)point.y - textTip.getSize() / 2);
 			}
 		});
+		g.setFont(old); 
 	}
 	
 	/**
@@ -524,11 +576,14 @@ public class LevelManager {
 		}
 		case MAKE_TIP: {
 			makeInteractable(this.requestPath, null, xm, ym, "TextTip");
+			break;
+		}
+		case MAKE_ATTACK_ZONE: {
+			makeInteractable(this.requestPath, null, xm, ym, "AttackZone");
 		}
 		case EDIT_OLD_PLAT: {
 			Platform target = this.plats.get(requestNum);
 			if (target != null) {
-				// Set the center.
 				target.setCenter(xm, ym);
 			}
 			break;
@@ -536,7 +591,6 @@ public class LevelManager {
 		case EDIT_OLD_VINE: {
 			Vine target = this.vines.get(requestNum);
 			if (target != null) {
-				// Set the center.
 				target.setCenter(xm, ym);
 			}
 			break;
@@ -544,7 +598,6 @@ public class LevelManager {
 		case EDIT_OLD_BOULDER: {
 			Boulder target = this.boulders.get(requestNum);
 			if (target != null) {
-				// Set the center.
 				target.setCenter(xm, ym);
 			}
 			break;
@@ -552,10 +605,20 @@ public class LevelManager {
 		case EDIT_OLD_PEG: {
 			Peg target = this.pegs.get(requestNum);
 			if (target != null) {
-				// Set the center.
 				target.setCenter(xm, ym);
 			}
 			break;
+		}
+		case EDIT_OLD_ATTACK_ZONE: {
+			// TODO
+			// TODO
+			// TODO
+			// TODO
+			// TODO: set the min/max values in the edit window from here too.
+			AttackZone zone = this.attackZones.get(requestNum);
+			if (zone != null) {
+				zone.setCenter(xm, ym);
+			}
 		}
 		case EDIT_MONK: {
 			this.characters.get("Monk").setCenter(xm, ym);
@@ -578,7 +641,24 @@ public class LevelManager {
 			break;
 		}
 		case MARK_EOL: {
-			this.eol = new Point2D.Double(xm, ym);
+			this.eolPoint = new Point2D.Double(xm, ym);
+			request = Request.MARK_EOL_QUADRANT;
+			return;
+		}
+		case MARK_EOL_QUADRANT: {
+			if (ym > eolPoint.y) {
+				if (xm > eolPoint.x) {
+					this.eolQuadrant = 1;
+				} else {
+					this.eolQuadrant = 2;
+				}
+			} else {
+				if (xm < eolPoint.x) {
+					this.eolQuadrant = 3;
+				} else {
+					this.eolQuadrant = 4;
+				}
+			}
 			break;
 		}
 		case MARK_RP: {
@@ -610,12 +690,8 @@ public class LevelManager {
 			}
 			break;
 		}
-		case NONE: {
-			
-		}
-		default: {
-			
-		}
+		case NONE: {}
+		default: {}
 		}
 		
 		this.request = Request.NONE;
@@ -631,7 +707,6 @@ public class LevelManager {
 			collisionBook = gson.fromJson(new FileReader(COL_PATH + truncatedName + ".json"), PropertyBook.class);			
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found: " + COL_PATH + truncatedName + ".json");
-			// e.printStackTrace();
 			PropertyBook defaultBook = new PropertyBook();
 			defaultBook.getDoubList().put("zoomLevel", 1.0);
 			defaultBook.getDoubList().put("widthm", 3.0);
@@ -691,6 +766,10 @@ public class LevelManager {
 			obj = new TextTip(this.ticketer);
 			break;
 		}
+		case "AttackZone" : {
+			obj = new AttackZone(this.ticketer);
+			break;
+		}
 		default:
 			System.err.println("Tag does not match any cases");
 			return -1;
@@ -743,8 +822,13 @@ public class LevelManager {
 			this.textTips.put(this.ticketer, (TextTip)obj);
 			break;
 		}
+		case "AttackZone" : {
+			makeAttackZoneWindow(this.ticketer, (AttackZone)obj, book);
+			this.attackZones.put(this.ticketer, (AttackZone)obj);
+			break;
+		}
 		default: 
-			System.out.println("Tag does not match any cases");
+			System.err.println("Tag does not match any cases");
 		}									
 		
 		// Increase the ticket count.
@@ -752,13 +836,41 @@ public class LevelManager {
 		return tick;
 	}
 	
+	private void makeAttackZoneWindow(int ticket, AttackZone zone, PropertyBook book) {
+		EditWindow window = ltlAdapter.makeEditWindow(ticket, "AttackZone");
+		window.setSubmitListener((arg0) -> {
+			zone.updateProperties(window.getPropertyBook());
+			// TODO: do we need to update the view at all?
+		});
+		
+		window.makeButton("New center",  (e) -> {
+			request = Request.EDIT_OLD_ATTACK_ZONE;
+			requestNum = ticket;
+		});
+		
+		window.makeStringProperty("soundName", "", book);
+		window.makeStringProperty("FireType", "ABSOLUTE", book); 
+		window.makeDoubleProperty("xmin", 0.0, book); 
+		window.makeDoubleProperty("xmax", 0.0,  book);
+		window.makeDoubleProperty("ymin",  0.0,  book);
+		window.makeDoubleProperty("ymax",  0.0,  book);
+		window.makeDoubleProperty("xVelMin", 0.0,  book);
+		window.makeDoubleProperty("xVelMax", 0.0,  book);
+		window.makeDoubleProperty("yVelMin",  0.0,  book);
+		window.makeDoubleProperty("yVelMax",  0.0,  book);
+		window.makeDoubleProperty("xOffsetMin", 0.0, book);
+		window.makeDoubleProperty("xOffsetMax", 0.0, book);
+		window.makeDoubleProperty("yOffsetMin",  0.0,  book);
+		window.makeDoubleProperty("yOffsetMax", 0.0,  book);
+		
+		zone.updateProperties(window.getPropertyBook());
+	}
+
 	public void makePlatEditWindow(int ticket, Platform plat, PropertyBook book) {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "Platform");		
 		
 		// Set up the the submit listener.
-		window.setSubmitListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
+		window.setSubmitListener((arg0) -> {
 				plat.updateProperties(window.getPropertyBook());
 				
 				// Next, update the relevant parts when scaling. Use resize()!
@@ -767,94 +879,33 @@ public class LevelManager {
 				plat.setScale(scale);					
 					
 				// Scale the image now.
-				plat.setRI(resize(plat.getBI(), plat.getScaledIGWM(), plat.getScaledIGHM()));
-			}			
+				plat.setRI(resize(plat.getBI(), plat.getScaledIGWM(), plat.getScaledIGHM()));	
 		});
 		
 		// Set up platform properties.
-		window.makeButton("New center", new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		window.makeButton("New center", (e) -> {
 				request = Request.EDIT_OLD_PLAT;
 				requestNum = ticket;	
-			}		
 		});
 		
-		window.makeDoubleProperty("Scale", (book == null) 
-				? 1.0 
-				: ((book.getDoubList().get("Scale") == null 
-					? 1.0  
-					: book.getDoubList().get("Scale")))
-		);
-		
-		window.makeStringProperty("Image path", plat.getPath());
-		
-		window.makeBooleanProperty("Disappears", (book == null) 
-				? false 
-				: ((book.getBoolList().get("Disappears") == null 
-					? false
-					: book.getBoolList().get("Disappears")))
-		);
-		
-		window.makeBooleanProperty("Moving", (book == null) 
-				? false 
-				: ((book.getBoolList().get("Moving") == null 
-					? false
-					: book.getBoolList().get("Moving")))
-		);
-		
-		window.makeButton("Set Endpoint", new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		window.makeDoubleProperty("Scale", 1.0, book);
+		window.makeStringProperty("Image path", plat.getPath(), null);		
+		window.makeBooleanProperty("Disappears", false, book); 		
+		window.makeBooleanProperty("Moving", false, book); 
+		window.makeButton("Set Endpoint", (e) -> {
 				request = Request.SET_PLAT_ENDPOINT;
-				requestNum = ticket;
-			}			
+				requestNum = ticket;		
 		});
 		
 		// Make the default endpoint.
 		plat.setEndpoint(new Point2D.Double(plat.getCenterXM(), plat.getCenterYM()));
 		
-		window.makeDoubleProperty("Velocity", (book == null) 
-				? 1.0 
-				: ((book.getDoubList().get("Velocity") == null 
-					? 1.0  
-					: book.getDoubList().get("Velocity")))
-		);
-		
-		window.makeBooleanProperty("Sinkable", (book == null) 
-				? false 
-				: ((book.getBoolList().get("Sinkable") == null 
-					? false
-					: book.getBoolList().get("Sinkable")))
-		);
-		
-		window.makeDoubleProperty("Spring Constant K", (book == null) 
-				? 1.0 
-				: ((book.getDoubList().get("Spring Constant K") == null 
-					? 1.0  
-					: book.getDoubList().get("Spring Constant K")))
-		);
-		
-		window.makeBooleanProperty("Climbable", (book == null) 
-				? false 
-				: ((book.getBoolList().get("Climbable") == null 
-					? false
-					: book.getBoolList().get("Climbable")))
-		);
-		
-		window.makeBooleanProperty("Collidable", (book == null) 
-				? false 
-				: ((book.getBoolList().get("Collidable") == null 
-					? false
-					: book.getBoolList().get("Collidable")))
-		);
-		
-		window.makeBooleanProperty("Polygon collision", (book == null) 
-				? false
-				: ((book.getBoolList().get("Polygon collision") == null 
-					? false
-					: book.getBoolList().get("Polygon collision")))
-		);
+		window.makeDoubleProperty("Velocity", 1.0, book); 		
+		window.makeBooleanProperty("Sinkable", false, book); 		
+		window.makeDoubleProperty("Spring Constant K", 1.0, book);
+		window.makeBooleanProperty("Climbable", false, book); 
+		window.makeBooleanProperty("Collidable", true, book); 
+		window.makeBooleanProperty("Polygon collision", true, book); 
 
 		plat.updateProperties(window.getPropertyBook());
 	}
@@ -863,9 +914,7 @@ public class LevelManager {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "Vine");		
 		
 		// Set up the the submit listener.
-		window.setSubmitListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
+		window.setSubmitListener((arg0) -> {
 				vine.updateProperties(window.getPropertyBook());
 				
 				// Next, update the relevant parts when scaling. Use resize()!
@@ -873,41 +922,19 @@ public class LevelManager {
 				vine.setScale(scale);					
 				
 				// Scale the image now.
-				vine.setRI(resize(vine.getBI(), vine.getScaledIGWM(), vine.getScaledIGHM()));
-			}			
+				vine.setRI(resize(vine.getBI(), vine.getScaledIGWM(), vine.getScaledIGHM()));		
 		});
 		
 		// Set up vine properties.
-		window.makeButton("New center", new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		window.makeButton("New center", (e) -> {
 				request = Request.EDIT_OLD_VINE;
-				requestNum = ticket;	
-			}		
+				requestNum = ticket;		
 		});
 		
-		window.makeDoubleProperty("Scale", (book == null) 
-				? 1.0 
-				: ((book.getDoubList().get("Scale") == null 
-					? 1.0  
-					: book.getDoubList().get("Scale")))
-		);
-		
-		window.makeStringProperty("Image path", vine.getPath());
-		
-		window.makeDoubleProperty("Arc Length (deg)", (book == null) 
-				? 180.0
-				: ((book.getDoubList().get("Arc Length (deg)") == null 
-					? 180.0 
-					: book.getDoubList().get("Arc Length (deg)")))
-		);
-		
-		window.makeDoubleProperty("Velocity", (book == null) 
-				? 1.0 
-				: ((book.getDoubList().get("Velocity") == null 
-					? 1.0  
-					: book.getDoubList().get("Velocity")))
-		);
+		window.makeDoubleProperty("Scale", 1.0, book); 
+		window.makeStringProperty("Image path", vine.getPath(), null);
+		window.makeDoubleProperty("Arc Length (deg)", 180, book);
+		window.makeDoubleProperty("Velocity", 1.0, book); 
 		
 		vine.updateProperties(window.getPropertyBook());
 	}	
@@ -916,9 +943,7 @@ public class LevelManager {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "NPC");		
 		
 		// Set up the the submit listener.
-		window.setSubmitListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
+		window.setSubmitListener((arg0) -> {
 				npc.updateProperties(window.getPropertyBook());	
 				
 				// Next, update the relevant parts when scaling. Use resize()!
@@ -927,41 +952,19 @@ public class LevelManager {
 				npc.setScale(scale);					
 					
 				// Scale the image now.
-				npc.setRI(resize(npc.getBI(), npc.getScaledIGWM(), npc.getScaledIGHM()));
-			}			
+				npc.setRI(resize(npc.getBI(), npc.getScaledIGWM(), npc.getScaledIGHM()));		
 		});
 		
 		// Set up NPC properties.
-		window.makeButton("New center", new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		window.makeButton("New center", (e) -> {
 				request = Request.EDIT_OLD_VINE;
-				requestNum = ticket;	
-			}		
+				requestNum = ticket;		
 		});
 		
-		window.makeDoubleProperty("Scale", (book == null) 
-				? 1.0 
-				: ((book.getDoubList().get("Scale") == null 
-					? 1.0  
-					: book.getDoubList().get("Scale")))
-		);
-		
-		window.makeStringProperty("Image path", npc.getPath());		
-		
-		window.makeDoubleProperty("Velocity", (book == null) 
-				? 1.0 
-				: ((book.getDoubList().get("Velocity") == null 
-					? 1.0  
-					: book.getDoubList().get("Velocity")))
-		);
-		
-		window.makeDoubleProperty("Range (m)", (book == null) 
-				? 5.0 
-				: ((book.getDoubList().get("Velocity") == null 
-					? 5.0  
-					: book.getDoubList().get("Velocity")))
-		);
+		window.makeDoubleProperty("Scale", 1.0, book); 
+		window.makeStringProperty("Image path", npc.getPath(), null);		
+		window.makeDoubleProperty("Velocity", 1.0, book); 
+		window.makeDoubleProperty("Range (m)", 5.0, book); 
 		
 		npc.updateProperties(window.getPropertyBook());
 	}
@@ -1004,9 +1007,7 @@ public class LevelManager {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "Boulder");		
 		
 		// Set up the the submit listener.
-		window.setSubmitListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
+		window.setSubmitListener((arg0) -> {
 				boulder.updateProperties(window.getPropertyBook());	
 				
 				// Next, update the relevant parts when scaling. Use resize()!
@@ -1017,47 +1018,19 @@ public class LevelManager {
 					
 				// Scale the image now.
 				boulder.setRI(resize(boulder.getBI(), boulder.getScaledIGWM(), boulder.getScaledIGHM()));
-			}
 		});
 		
 		// Set up boulder properties.
-		window.makeButton("New center", new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		window.makeButton("New center", (e) -> {
 				request = Request.EDIT_OLD_BOULDER;
-				requestNum = ticket;	
-			}		
+				requestNum = ticket;		
 		});
 		
-		window.makeDoubleProperty("Scale", (book == null) 
-				? 1.0 
-				: ((book.getDoubList().get("Scale") == null 
-					? 1.0  
-					: book.getDoubList().get("Scale")))
-		);
-		
-		window.makeStringProperty("Image path", boulder.getPath());
-		
-		window.makeDoubleProperty("Mass", (book == null) 
-				? 1000.0 
-				: ((book.getDoubList().get("Mass") == null 
-					? 1000.0 
-					: book.getDoubList().get("Mass")))
-		);
-		
-		window.makeDoubleProperty("Radius", (book == null) 
-				? 5.0
-				: ((book.getDoubList().get("Radius") == null 
-					? 5.0
-					: book.getDoubList().get("Radius")))
-		);
-		
-		window.makeBooleanProperty("Polygon collision", (book == null) 
-				? false
-				: ((book.getBoolList().get("Polygon collision") == null 
-					? false
-					: book.getBoolList().get("Polygon collision")))
-		);
+		window.makeDoubleProperty("Scale", 1.0, book); 
+		window.makeStringProperty("Image path", boulder.getPath(), null);
+		window.makeDoubleProperty("Mass", 1000.0, book); 
+		window.makeDoubleProperty("Radius", 5.0, book); 
+		window.makeBooleanProperty("Polygon collision", false, book); 
 
 		boulder.updateProperties(window.getPropertyBook());
 	}	
@@ -1082,22 +1055,13 @@ public class LevelManager {
 		});
 		
 		// Set up peg properties.
-		window.makeButton("New center", new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		window.makeButton("New center", (e) -> {
 				request = Request.EDIT_OLD_PEG;
-				requestNum = ticket;				
-			}		
+				requestNum = ticket;					
 		});
 		
-		window.makeDoubleProperty("Scale", (book == null) 
-				? 1.0 
-				: ((book.getDoubList().get("Scale") == null 
-					? 1.0  
-					: book.getDoubList().get("Scale")))
-		);
-		
-		window.makeStringProperty("Image path", peg.getPath());
+		window.makeDoubleProperty("Scale", 1.0, book); 
+		window.makeStringProperty("Image path", peg.getPath(), null);
 
 		// Boulder ID requires some extra checking, as it may have changed.
 		int counter[] = {0};
@@ -1116,7 +1080,7 @@ public class LevelManager {
 				});
 			});
 			peg.updateProperties(window.getPropertyBook());	
-		}		
+		}
 		
 		JLabel affectedBoulders = new JLabel();
 		window.addComponentInstance("Affected boulders:", affectedBoulders);
@@ -1145,7 +1109,7 @@ public class LevelManager {
 				affectedBoulders.setText(text[0]);
 				
 				peg.updateProperties(window.getPropertyBook());	
-			}		
+			}
 		});
 		
 		window.makeButton("Remove affected boulder", new ActionListener() {
@@ -1168,12 +1132,7 @@ public class LevelManager {
 			}		
 		});
 		
-		window.makeDoubleProperty("Rotation (rad)", (book == null) 
-				? 0.0
-				: ((book.getDoubList().get("Rotation (rad)") == null 
-					? 0.0  
-					: book.getDoubList().get("Rotation (rad)")))
-		);
+		window.makeDoubleProperty("Rotation (rad)", 0.0, book); 
 		
 		peg.updateProperties(window.getPropertyBook());
 	}
@@ -1182,37 +1141,19 @@ public class LevelManager {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "TextTip");		
 		
 		// Set up the submit listener.
-		window.setSubmitListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
+		window.setSubmitListener((arg0) -> {
 				tip.updateProperties(window.getPropertyBook());	
-				
-				// Text uses font size, not scale, so nothing else needs to be done.
-			}			
+				// Text uses font size, not scale, so nothing else needs to be done.		
 		});
 		
 		// Set up text tip properties.
-		window.makeButton("New center", new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		window.makeButton("New center", (e) -> {
 				request = Request.EDIT_OLD_TIP;
 				requestNum = ticket;				
-			}		
 		});
 		
-		window.makeStringProperty("text", (book == null) 
-				? ""
-				: ((book.getStringList().get("text") == null 
-					? ""
-					: book.getStringList().get("text")))
-		);				
-		
-		window.makeIntProperty("fontSize", (book == null) 
-				? 15
-				: ((book.getIntList().get("fontSize") == null 
-					? 15 
-					: book.getIntList().get("fontSize")))
-		);
+		window.makeStringProperty("text", "", book); 
+		window.makeIntProperty("fontSize", 15, book); 
 		
 		tip.updateProperties(window.getPropertyBook());
 	}
@@ -1237,17 +1178,14 @@ public class LevelManager {
 		// Reset the NPCs.
 		this.npcs.clear();
 
-		// Clear the current list of platforms.
+		// Clear all of current lists.
 		this.plats.clear();
-
-		// Clear the current list of vines.
 		this.vines.clear();
-		
-		// Clear the current list of boulders.
-		this.boulders.clear();
-		
-		// Clear the current list of respawn points.		
+		this.boulders.clear();		
 		this.respawnPoints.clear();
+		this.textTips.clear();
+		this.pegs.clear();
+		this.attackZones.clear();
 		
 		// By the way, they all need to be removed from the LayerWindow as well.
 		this.ltlAdapter.clear();
@@ -1284,6 +1222,9 @@ public class LevelManager {
 		case "TextTip": {
 			this.textTips.remove(number);
 			break;
+		}
+		case "AttackZone": {
+			this.attackZones.remove(number);
 		}
 		}
 	}
@@ -1391,7 +1332,6 @@ public class LevelManager {
 				(int) (original.getHeight() * heightScale), java.awt.Image.SCALE_SMOOTH));
 	}
 	
-	
 	/**
 	 * After constructor is done initializing, start operations.
 	 */
@@ -1404,7 +1344,7 @@ public class LevelManager {
 	 * Reads in a level from its GSON.
 	 * 
 	 * @param levelName
-	 *            name of the level json file
+	 *            name of the level JSON file
 	 */
 	public void readJSON(String levelName) {
 		Gson gson = new GsonBuilder().setExclusionStrategies(new AnnotationExclusionStrategy()).create();
@@ -1412,7 +1352,7 @@ public class LevelManager {
 		
 		String fullPath;
 		if (levelName.contains(".")) {
-			// They added their own extension, don't add json to the end.
+			// They added their own extension, don't add JSON to the end.
 			fullPath = LEVELS_PATH + levelName;
 		} else {
 			fullPath = LEVELS_PATH + levelName + ".json";
@@ -1435,7 +1375,8 @@ public class LevelManager {
 		
 		// Load in the level.
 		this.setBg(old.bg.getPath());
-		this.eol = old.eol;
+		this.eolPoint = old.eolPoint;
+		this.eolQuadrant = old.eolQuadrant;
 		this.levelHeightM = old.levelHeightM;
 		this.levelWidthM = old.levelWidthM;
 		
@@ -1473,9 +1414,11 @@ public class LevelManager {
 		});
 		
 		// Tell output window what the level names are, etc.
-		this.levelName = old.levelName;
+		this.levelFileName = old.levelFileName;
 		this.nextLevelName = old.nextLevelName;
-		ltoAdapter.setLevelName(old.levelName);
+		this.levelName = old.levelName;
+		this.levelNumber = old.levelNumber;
+		ltoAdapter.setLevelName(old.levelFileName);
 		ltoAdapter.setNextName(old.nextLevelName);
 		
 		// Resize as necessary.
@@ -1489,20 +1432,20 @@ public class LevelManager {
 	 *            name of the level
 	 * @param nextName name of the next level
 	 */
-	public void makeJSON(String levelName, String nextName) {
+	public void makeJSON(String levelFile, String levelName, String nextName, int levelNumber) {
+		this.levelFileName = levelFile;
 		this.levelName = levelName;
 		this.nextLevelName = nextName;	
+		this.levelNumber = levelNumber;
 		
-		/*
-		 * Try to write out the JSON file.
-		 */
+		// Try to write out the JSON file.
 		String fullPath;
 		if (levelName.contains(".")) {
-			// They added their own extension, don't add json to the end.
-			fullPath = LEVELS_PATH + levelName;
+			// They added their own extension, don't add JSON to the end.
+			fullPath = LEVELS_PATH + levelFile;
 			levelName = levelName.substring(0, levelName.indexOf('.'));
 		} else {
-			fullPath = LEVELS_PATH + levelName + ".json";
+			fullPath = LEVELS_PATH + levelFile + ".json";
 		}
 
 		Gson gson = new GsonBuilder().setPrettyPrinting().setExclusionStrategies(new AnnotationExclusionStrategy()).serializeNulls().create();
@@ -1524,7 +1467,7 @@ public class LevelManager {
 	}	
 	
 	public void setEOL(Point2D.Double eolM) {
-		this.eol = eolM;
+		this.eolPoint = eolM;
 	}
 	
 	public void addRP(Point2D.Double rp) {

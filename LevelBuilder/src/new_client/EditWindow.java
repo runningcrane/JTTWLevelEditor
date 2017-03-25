@@ -149,9 +149,13 @@ public class EditWindow extends JPanel {
 	 * @param text property's name & jlabel's text
 	 * @param defaultValue default value for this textbox
 	 */
-	public void makeIntProperty(String text, int defaultValue) {
+	public void makeIntProperty(String text, int defaultValue, PropertyBook pb) {
+		int actualVal = defaultValue;
+		if (pb != null && pb.getIntList().get(text) != null) {
+			actualVal = pb.getIntList().get(text);
+		}
 		JLabel label = new JLabel(text);
-		JTextField txtField = new JTextField(Integer.toString(defaultValue) + ":");
+		JTextField txtField = new JTextField(Integer.toString(actualVal) + ":");
 		txtField.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
@@ -168,7 +172,7 @@ public class EditWindow extends JPanel {
 		add(label);
 		add(txtField);
 		
-		book.getIntList().put(text, defaultValue);
+		book.getIntList().put(text, actualVal);
 		
 		this.twos++;
 		updateLayout();
@@ -179,9 +183,14 @@ public class EditWindow extends JPanel {
 	 * @param text property's name & jlabel's text
 	 * @param defaultValue default value for this textbox
 	 */
-	public void makeDoubleProperty(String text, double defaultValue) {
+	public void makeDoubleProperty(String text, double defaultValue, PropertyBook pb) {
+		double actualVal = defaultValue;
+		if (pb != null && pb.getDoubList().get(text) != null) {
+			actualVal = pb.getDoubList().get(text);
+		}
+		
 		JLabel label = new JLabel(text);
-		JTextField txtField = new JTextField(Double.toString(defaultValue));
+		JTextField txtField = new JTextField(Double.toString(actualVal));
 		txtField.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
@@ -196,7 +205,7 @@ public class EditWindow extends JPanel {
 		add(label);
 		add(txtField);
 		
-		book.getDoubList().put(text, defaultValue);
+		book.getDoubList().put(text, actualVal);
 		
 		this.twos++;
 		updateLayout();
@@ -207,9 +216,14 @@ public class EditWindow extends JPanel {
 	 * @param text property's name & jlabel's text
 	 * @param defaultValue default value for this textbox
 	 */
-	public void makeFloatProperty(String text, float defaultValue) {
+	public void makeFloatProperty(String text, float defaultValue, PropertyBook pb) {
+		float actualVal = defaultValue;
+		if (pb != null && pb.getFloatList().get(text) != null) {
+			actualVal = pb.getFloatList().get(text);
+		}
+		
 		JLabel label = new JLabel(text);
-		JTextField txtField = new JTextField(Float.toString(defaultValue));
+		JTextField txtField = new JTextField(Float.toString(actualVal));
 		txtField.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
@@ -225,7 +239,7 @@ public class EditWindow extends JPanel {
 		add(label);
 		add(txtField);
 		
-		book.getFloatList().put(text, defaultValue);
+		book.getFloatList().put(text, actualVal);
 		
 		this.twos++;
 		updateLayout();
@@ -236,9 +250,14 @@ public class EditWindow extends JPanel {
 	 * @param text property's name & jlabel's text
 	 * @param defaultValue default value for this textbox
 	 */
-	public void makeStringProperty(String text, String defaultValue) {
+	public void makeStringProperty(String text, String defaultValue, PropertyBook pb) {
+		String actualVal = defaultValue;
+		if (pb != null && pb.getStringList().get(text) != null) {
+			actualVal = pb.getStringList().get(text);
+		}
+		
 		JLabel label = new JLabel(text);
-		JTextField txtField = new JTextField(defaultValue);
+		JTextField txtField = new JTextField(actualVal);
 		txtField.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
@@ -254,7 +273,7 @@ public class EditWindow extends JPanel {
 		add(label);
 		add(txtField);
 		
-		book.getStringList().put(text, defaultValue);
+		book.getStringList().put(text, actualVal);
 		
 		this.twos++;
 		updateLayout();
@@ -265,10 +284,15 @@ public class EditWindow extends JPanel {
 	 * @param text property's name & jlabel's text
 	 * @param defaultValue default value for this JCheckBox
 	 */
-	public void makeBooleanProperty(String text, boolean defaultValue) {
+	public void makeBooleanProperty(String text, boolean defaultValue, PropertyBook pb) {
+		boolean actualVal = defaultValue;
+		if (pb != null && pb.getBoolList().get(text) != null) {
+			actualVal = pb.getBoolList().get(text);
+		}
+		
 		JLabel label = new JLabel(text);
 		JCheckBox chckBox = new JCheckBox();
-		chckBox.setSelected(defaultValue);
+		chckBox.setSelected(actualVal);
 		// TODO: Check if this is OK as an actionListener and not a focusListener.
 		chckBox.addActionListener(new ActionListener() {
 			@Override
@@ -281,7 +305,7 @@ public class EditWindow extends JPanel {
 		add(label);
 		add(chckBox);
 		
-		book.getBoolList().put(text, defaultValue);
+		book.getBoolList().put(text, actualVal);
 		
 		this.twos++;
 		updateLayout();

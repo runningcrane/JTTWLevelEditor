@@ -16,6 +16,12 @@ public interface ILevelToOutputAdapter {
 	
 	/**
 	 * Set the flavor text of the level.
+	 * @param levelFile name of the level file loaded in.
+	 */
+	public void setLevelFile(String levelFile);
+	
+	/**
+	 * Set the flavor text of the level.
 	 * @param levelName name of the level loaded in
 	 */
 	public void setLevelName(String levelName);
@@ -26,6 +32,12 @@ public interface ILevelToOutputAdapter {
 	 */
 	public void setNextName(String nextName);
 
+	/**
+	 * Set the flavor text for the level number.
+	 * @param levelNumber
+	 */
+	public void setLevelNumber(int levelNumber);
+	
 	public static ILevelToOutputAdapter VoidPattern = new ILevelToOutputAdapter() {
 
 		@Override
@@ -39,5 +51,11 @@ public interface ILevelToOutputAdapter {
 		
 		@Override
 		public void setNextName(String nextName) {}
+
+		@Override
+		public void setLevelFile(String levelFile) {}
+
+		@Override
+		public void setLevelNumber(int levelNumber) {}
 	};
 }

@@ -287,10 +287,22 @@ public class ControlWindow extends JFrame {
 		JLabel lblTextTip = new JLabel("<html><b>Text Tips</b></html>");
 		pnlTextTip.add(lblTextTip);
 		
-		
 		JButton btnTextTip = new JButton("Add new text tip");
 		btnTextTip.addActionListener((arg0) -> ctlAdapter.makeTextTip()); 
 		pnlTextTip.add(btnTextTip);
+		
+		// Zones.
+		JPanel pnlZones = new JPanel();
+		pnlZones.setLayout(new BoxLayout(pnlZones, BoxLayout.Y_AXIS));
+		pnlZones.setPreferredSize(new Dimension(50, 50));
+		pnlBack.add(pnlZones);
+		JLabel lblZones = new JLabel("<html><b>Zones</b></html>");
+		pnlZones.add(lblZones);
+
+		JButton btnAttackZone = new JButton("Add new Attack Zone");
+		btnAttackZone.addActionListener((arg0) -> ctlAdapter.makeAttackZone()); 
+		pnlZones.add(btnAttackZone);
+		
 		
 		// Background panel		
 		JPanel pnlBackground = new JPanel();
