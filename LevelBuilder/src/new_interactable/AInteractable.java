@@ -292,59 +292,6 @@ public abstract class AInteractable {
 	}
 	
 	/**
-	 * Updates the properties of this object. 
-	 * If the new property book contains properties not in this book,
-	 * those properties will be added.
-	 * @param newBook new book of properties
-	 */
-	public void updateProperties(PropertyBook newBook) {				
-		// Integers.		
-		newBook.getIntList().forEach((name, value) -> {
-			if (book.getIntList().containsKey(name)) {
-				book.getIntList().replace(name, value);
-			} else {
-				book.getIntList().put(name, value);
-			}
-		});
-		
-		// Doubles.
-		newBook.getDoubList().forEach((name, value) -> {
-			if (book.getDoubList().containsKey(name)) {
-				book.getDoubList().replace(name, value);
-			} else {
-				book.getDoubList().put(name, value);
-			}
-		});
-		
-		// Float.
-		newBook.getFloatList().forEach((name, value) -> {
-			if (book.getFloatList().containsKey(name)) {
-				book.getFloatList().replace(name, value);
-			} else {
-				book.getFloatList().put(name, value);
-			}
-		});
-		
-		// Strings.
-		newBook.getStringList().forEach((name, value) -> {
-			if (book.getStringList().containsKey(name)) {
-				book.getStringList().replace(name, value);
-			} else {
-				book.getStringList().put(name, value);
-			}
-		});
-		
-		// Booleans.
-		newBook.getBoolList().forEach((name, value) -> {
-			if (book.getBoolList().containsKey(name)) {
-				book.getBoolList().replace(name, value);
-			} else {
-				book.getBoolList().put(name, value);
-			}
-		});
-	}	
-	
-	/**
 	 * Change where this object is located.
 	 * @param x [cocos,m] coordinates
 	 * @param y [cocos,m] coordinates
@@ -358,4 +305,14 @@ public abstract class AInteractable {
 		this.book = new PropertyBook();
 		this.defaultBook = new PropertyBook();
 	}
+
+	/**
+	 * Updates the properties of this object. 
+	 * If the new property book contains properties not in this book,
+	 * those properties will be added.
+	 * @param newBook new book of properties
+	 */
+	public void updateProperties(PropertyBook newBook) {				
+        this.book.updateProperties(newBook);
+	}	
 }

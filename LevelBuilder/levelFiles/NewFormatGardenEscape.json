@@ -12,7 +12,7 @@
     "collisionWidth": 0.0,
     "collisionHeight": 0.0
   },
-  "eol": {
+  "eolPoint": {
     "x": 119.91111111111111,
     "y": 17.62222222222222
   },

@@ -115,14 +115,14 @@ public class LevelManager {
 	/**
 	 * Ticket items, all stored in separate maps for easy access.
 	 */
-	private Map<Integer, Platform> plats = new HashMap<Integer, Platform>();
-	private Map<String, Player> characters = new HashMap<String, Player>();
-	private Map<Integer, Vine> vines = new HashMap<Integer, Vine>();
-	private Map<Integer, Boulder> boulders = new HashMap<Integer, Boulder>();
-	private Map<Integer, Peg> pegs = new HashMap<Integer, Peg>();
-	private Map<Integer, NPC> npcs = new HashMap<Integer, NPC>();
-	private Map<Integer, TextTip> textTips =  new HashMap<Integer, TextTip>();
-    private Map<Integer, AttackZone> attackZones = new HashMap<Integer, AttackZone>();
+	private Map<Integer, Platform> plats = new HashMap<>();
+	private Map<String, Player> characters = new HashMap<>();
+	private Map<Integer, Vine> vines = new HashMap<>();
+	private Map<Integer, Boulder> boulders = new HashMap<>();
+	private Map<Integer, Peg> pegs = new HashMap<>();
+	private Map<Integer, NPC> npcs = new HashMap<>();
+	private Map<Integer, TextTip> textTips =  new HashMap<>();
+    private Map<Integer, AttackZone> attackZones = new HashMap<>();
 	
 	public enum Request {
 		NONE, 
@@ -166,6 +166,9 @@ public class LevelManager {
 	
 	@Exclude
 	private String requestPath;
+	
+	@Exclude
+    private EditWindow callingWindow;
 	
 	/**
 	 * Ticket number of the requesting object.
@@ -456,7 +459,7 @@ public class LevelManager {
 			
 			Point2D.Double c = getViewportCoordinates((zone.getCenterXM() * this.mToPixel), ((this.levelHeightM - zone.getCenterYM()) * this.mToPixel));
 			
-			g.drawOval((int)c.x,  (int)c.y, 30, 30);
+			g.drawImage(zone.getRI().getImage(), (int)c.x,  (int)c.y, null);
 		});
 
 		// Draw EOL
@@ -610,14 +613,12 @@ public class LevelManager {
 			break;
 		}
 		case EDIT_OLD_ATTACK_ZONE: {
-			// TODO
-			// TODO
-			// TODO
-			// TODO
-			// TODO: set the min/max values in the edit window from here too.
 			AttackZone zone = this.attackZones.get(requestNum);
 			if (zone != null) {
 				zone.setCenter(xm, ym);
+			}
+			if (callingWindow != null) {
+			    callingWindow.updateProperties(zone.getPropertyBook());
 			}
 		}
 		case EDIT_MONK: {
@@ -767,7 +768,7 @@ public class LevelManager {
 			break;
 		}
 		case "AttackZone" : {
-			obj = new AttackZone(this.ticketer);
+			obj = new AttackZone(this.ticketer, imageName);
 			break;
 		}
 		default:
@@ -824,6 +825,7 @@ public class LevelManager {
 		}
 		case "AttackZone" : {
 			makeAttackZoneWindow(this.ticketer, (AttackZone)obj, book);
+			setImage(obj, path);
 			this.attackZones.put(this.ticketer, (AttackZone)obj);
 			break;
 		}
@@ -846,8 +848,10 @@ public class LevelManager {
 		window.makeButton("New center",  (e) -> {
 			request = Request.EDIT_OLD_ATTACK_ZONE;
 			requestNum = ticket;
+			callingWindow = window;
 		});
 		
+		window.makeDoubleProperty("Scale", 1.0, book);
 		window.makeStringProperty("soundName", "", book);
 		window.makeStringProperty("FireType", "ABSOLUTE", book); 
 		window.makeDoubleProperty("xmin", 0.0, book); 
@@ -1289,6 +1293,7 @@ public class LevelManager {
 				.setRI(resize(boulder.getBI(), boulder.getScaledIGWM(), boulder.getScaledIGHM())));
 		this.npcs.forEach((name, enemy) -> enemy
 				.setRI(resize(enemy.getBI(), enemy.getScaledIGWM(), enemy.getScaledIGHM())));
+		
 		this.bg.setRescaled(resize(this.bg.getImage(), this.levelWidthM, this.levelHeightM));
 	}
 	
@@ -1404,9 +1409,16 @@ public class LevelManager {
 		old.vines.forEach((ticket, vine) -> {
 			makeInteractable(vine.getPath(), vine.getPropertyBook(), vine.getCenterXM(), vine.getCenterYM(), "Vine");
 		});
-		old.textTips.forEach((ticket, tip) -> {
-			makeInteractable("", tip.getPropertyBook(), tip.getCenterXM(), tip.getCenterYM(), "TextTip");
-		});
+		if (old.textTips != null) {
+		    old.textTips.forEach((ticket, tip) -> {
+		    	makeInteractable("", tip.getPropertyBook(), tip.getCenterXM(), tip.getCenterYM(), "TextTip");
+		    });
+		}
+		if (old.attackZones != null) {
+		    old.attackZones.forEach((ticket, zone) -> {
+			    makeInteractable(zone.getPath(), zone.getPropertyBook(), zone.getCenterXM(), zone.getCenterYM(), "AttackZone");
+	    	});
+		}
 		
 		// Update the boulders to have their old tickets match their new.
 		this.boulders.forEach((number, boulder) -> {
@@ -1418,8 +1430,10 @@ public class LevelManager {
 		this.nextLevelName = old.nextLevelName;
 		this.levelName = old.levelName;
 		this.levelNumber = old.levelNumber;
-		ltoAdapter.setLevelName(old.levelFileName);
+		ltoAdapter.setLevelName(old.levelName);
 		ltoAdapter.setNextName(old.nextLevelName);
+		ltoAdapter.setLevelNumber(old.levelNumber);
+		ltoAdapter.setLevelFile(old.levelFileName);
 		
 		// Resize as necessary.
 		setMToPixel(old.mToPixel);

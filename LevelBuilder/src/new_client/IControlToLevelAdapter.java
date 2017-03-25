@@ -84,5 +84,5 @@ public interface IControlToLevelAdapter {
 	
 	public void removeRP();
 
-	public void makeAttackZone();
+	public void makeAttackZone(String string);
 }

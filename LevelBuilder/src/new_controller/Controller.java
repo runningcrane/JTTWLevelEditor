@@ -149,8 +149,8 @@ public class Controller {
 			}
 
 			@Override
-			public void makeAttackZone() {
-				level.setRequest("", LevelManager.Request.MAKE_ATTACK_ZONE);
+			public void makeAttackZone(String path) {
+				level.setRequest(path, LevelManager.Request.MAKE_ATTACK_ZONE);
 			}
 		});
 

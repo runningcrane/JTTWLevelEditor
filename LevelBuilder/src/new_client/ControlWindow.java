@@ -41,11 +41,12 @@ public class ControlWindow extends JFrame {
 	/**
 	 * All of the assets that we can use. To add another, just put the
 	 * file name (without extension) in here and the image in ASSETS_PATH.
-	 * 
-	 * TODO: Read this stuff in from the assets folder automatically. 
 	 */
 	private static final String[] BACKGROUNDS = {
 			"bgSunny", "bgCloud"
+	};
+	private static final String[] ATTACKZONES = {
+		    "spear", "fireball"	
 	};
 	private static final String[] PLATFORMS = {
 			"Pedestal", "blueGround", "canyonR", "canyonL", 
@@ -100,8 +101,9 @@ public class ControlWindow extends JFrame {
 		try {
 			initGUI();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			System.err.println("Can't find the arrows, something is wrong the the assets folder");
 			e.printStackTrace();
+			System.exit(2);
 		}
 	}
 	
@@ -180,8 +182,11 @@ public class ControlWindow extends JFrame {
 		      public void stateChanged(ChangeEvent event) {
 		        int value = slMToPixel.getValue();			        
 		        
-				// TODO: negative numbers check				
-				ctlAdapter.setMToPixel(value + 10);		        
+		        if (value + 10 > 0) {
+		        	ctlAdapter.setMToPixel(value + 10);
+		        } else {
+		        	System.err.println("Don't be a jerk: No negative numbers in the mToPixel Field.");
+		        }
 		      }
 		    });
 		pnlLevelResize.add(slMToPixel);
@@ -212,9 +217,12 @@ public class ControlWindow extends JFrame {
 							"Height must be an number.");
 					return;
 				}
-				
-				// TODO: negative numbers check				
-				ctlAdapter.setViewportDimensions(width, height);
+					
+				if (width > 0 && height > 0) {
+				    ctlAdapter.setViewportDimensions(width, height);
+				} else {
+				    System.err.println("Don't be a jerk: No negative numbers in the vp width and height.");
+				}
 			}
 		});
 		
@@ -238,9 +246,12 @@ public class ControlWindow extends JFrame {
 							"Height must be an number.");
 					return;
 				}
-				
-				// TODO: negative numbers check				
-				ctlAdapter.setLevelDimensions(width, height);
+
+				if (width > 0 && height > 0) {
+				    ctlAdapter.setLevelDimensions(width, height);
+				} else {
+				    System.err.println("Don't be a jerk: No negative numbers in level width and height.");
+				}
 			}
 		});
 		
@@ -299,10 +310,13 @@ public class ControlWindow extends JFrame {
 		JLabel lblZones = new JLabel("<html><b>Zones</b></html>");
 		pnlZones.add(lblZones);
 
-		JButton btnAttackZone = new JButton("Add new Attack Zone");
-		btnAttackZone.addActionListener((arg0) -> ctlAdapter.makeAttackZone()); 
-		pnlZones.add(btnAttackZone);
-		
+		for (String z : ATTACKZONES) {
+		    JButton btnAttackZone = new JButton(z);
+		    btnAttackZone.setIcon(new ImageIcon(THUMBNAIL_PATH + z + "Thumbnail.png"));
+		    btnAttackZone.addActionListener((arg0) -> ctlAdapter.makeAttackZone(ASSETS_PATH + z + ".png")); 
+		    btnAttackZone.setPreferredSize(dimButton);
+		    pnlZones.add(btnAttackZone);
+		}
 		
 		// Background panel		
 		JPanel pnlBackground = new JPanel();

@@ -10,9 +10,9 @@ public class AttackZone extends AInteractable {
 	private static final String X_MAX = "xmax";
 	private static final String Y_MAX = "ymax";
 	
-	public AttackZone(int ticket) {
+	public AttackZone(int ticket, String imageName) {
 		this.setTicket(ticket);
-		this.setPath("");
+		this.setPath(imageName);
 	}
 	
 	public double getWidth() {

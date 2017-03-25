@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -49,6 +51,8 @@ public class EditWindow extends JPanel {
 	 * Map of property ids to the property.
 	 */
 	PropertyBook book;
+	
+	Map<String, JTextField> fields = new HashMap<>();
 	
 	/**
 	 * A window to edit the properties of an in-game object.
@@ -171,6 +175,7 @@ public class EditWindow extends JPanel {
 		
 		add(label);
 		add(txtField);
+		fields.put(text, txtField);
 		
 		book.getIntList().put(text, actualVal);
 		
@@ -205,6 +210,7 @@ public class EditWindow extends JPanel {
 		add(label);
 		add(txtField);
 		
+		fields.put(text, txtField);
 		book.getDoubList().put(text, actualVal);
 		
 		this.twos++;
@@ -239,6 +245,7 @@ public class EditWindow extends JPanel {
 		add(label);
 		add(txtField);
 		
+		fields.put(text, txtField);
 		book.getFloatList().put(text, actualVal);
 		
 		this.twos++;
@@ -273,6 +280,7 @@ public class EditWindow extends JPanel {
 		add(label);
 		add(txtField);
 		
+		fields.put(text, txtField);
 		book.getStringList().put(text, actualVal);
 		
 		this.twos++;
@@ -357,4 +365,24 @@ public class EditWindow extends JPanel {
 	int getTicket() {
 		return this.ticket;
 	}
+	
+	/**
+	 * Updates the properties of this window. 
+	 * If the new property book contains properties not in this book,
+	 * those properties will be added.
+	 * @param newBook new book of properties
+	 */
+	public void updateProperties(PropertyBook newBook) {				
+        this.book.updateProperties(newBook);
+        for (Map.Entry<String, Double> e : book.getDoubList().entrySet()) {
+        	System.out.println(e + ": " + e.getKey() + ", " + e.getValue());
+        	fields.get(e.getKey()).setText(Double.toString(e.getValue()));
+        }
+        for (Map.Entry<String, Integer> e : book.getIntList().entrySet()) {
+        	fields.get(e.getKey()).setText(Integer.toString(e.getValue()));
+        }
+        for (Map.Entry<String, String> e : book.getStringList().entrySet()) {
+        	fields.get(e.getKey()).setText(e.getValue());
+        }
+	}	
 }
