@@ -1,9 +1,9 @@
 {
   "VERSION": 2,
-  "levelFileName": "NewFormatParadise",
+  "levelFileName": "Paradise",
   "levelName": "Paradise",
   "levelNumber": 0,
-  "nextLevelName": "NewFormatFreedom",
+  "nextLevelName": "Freedom",
   "mToPixel": 34.0,
   "bg": {
     "path": "../assets/bgSunny.png",
