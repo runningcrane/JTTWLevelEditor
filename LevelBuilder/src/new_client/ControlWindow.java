@@ -78,6 +78,9 @@ public class ControlWindow extends JFrame {
 	private static final String[] SPECIALS = {
 		    "BuddhaHand", "lvl1Gate"	
 	}; 
+	private static final String[] TRAPS = {
+		    "cage1"
+	};
 	
 	private JTextField txtLHeight;
 	private JTextField txtLWidth;
@@ -302,22 +305,6 @@ public class ControlWindow extends JFrame {
 		btnTextTip.addActionListener((arg0) -> ctlAdapter.makeTextTip()); 
 		pnlTextTip.add(btnTextTip);
 		
-		// Zones.
-		JPanel pnlZones = new JPanel();
-		pnlZones.setLayout(new BoxLayout(pnlZones, BoxLayout.Y_AXIS));
-		pnlZones.setPreferredSize(new Dimension(50, 50));
-		pnlBack.add(pnlZones);
-		JLabel lblZones = new JLabel("<html><b>Zones</b></html>");
-		pnlZones.add(lblZones);
-
-		for (String z : ATTACKZONES) {
-		    JButton btnAttackZone = new JButton(z);
-		    btnAttackZone.setIcon(new ImageIcon(THUMBNAIL_PATH + z + "Thumbnail.png"));
-		    btnAttackZone.addActionListener((arg0) -> ctlAdapter.makeAttackZone(ASSETS_PATH + z + ".png")); 
-		    btnAttackZone.setPreferredSize(dimButton);
-		    pnlZones.add(btnAttackZone);
-		}
-		
 		// Background panel		
 		JPanel pnlBackground = new JPanel();
 		pnlBackground.setPreferredSize(dimPanel);
@@ -511,6 +498,38 @@ public class ControlWindow extends JFrame {
 			platToggleGroup.add(tglSpec);
 		}
 
+		// Zones.
+		JPanel pnlZones = new JPanel();
+		pnlZones.setLayout(new BoxLayout(pnlZones, BoxLayout.Y_AXIS));
+		pnlZones.setPreferredSize(new Dimension(50, 50));
+		pnlBack.add(pnlZones);
+		JLabel lblZones = new JLabel("<html><b>Zones</b></html>");
+		pnlZones.add(lblZones);
+
+		for (String z : ATTACKZONES) {
+		    JButton btnAttackZone = new JButton(z);
+		    btnAttackZone.setIcon(new ImageIcon(THUMBNAIL_PATH + z + "Thumbnail.png"));
+		    btnAttackZone.addActionListener((arg0) -> ctlAdapter.makeAttackZone(ASSETS_PATH + z + ".png")); 
+		    btnAttackZone.setPreferredSize(dimButton);
+		    pnlZones.add(btnAttackZone);
+		}
+		
+		// Traps 
+		JPanel pnlTraps = new JPanel();
+		pnlTraps.setLayout(new BoxLayout(pnlTraps, BoxLayout.Y_AXIS));
+		pnlTraps.setPreferredSize(new Dimension(50, 50));
+		pnlBack.add(pnlTraps);
+		JLabel lblTraps = new JLabel("<html><b>Traps</b></html>");
+		pnlTraps.add(lblTraps);
+
+		for (String trap : TRAPS) {
+			JButton btnTrap = new JButton(trap);
+			btnTrap.setIcon(new ImageIcon(THUMBNAIL_PATH + trap + "Thumbnail.png"));
+			btnTrap.addActionListener((arg0) -> ctlAdapter.makeTrap(ASSETS_PATH + trap + ".png"));
+			btnTrap.setPreferredSize(dimButton);
+			pnlTraps.add(btnTrap);
+		}
+		
 		// Boulders.
 		JPanel pnlBoulders = new JPanel();
 		pnlBoulders.setLayout(new BoxLayout(pnlBoulders, BoxLayout.Y_AXIS));

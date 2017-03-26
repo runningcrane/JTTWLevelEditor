@@ -42,6 +42,7 @@ import new_interactable.Platform;
 import new_interactable.Player;
 import new_interactable.PropertyBook;
 import new_interactable.TextTip;
+import new_interactable.Trap;
 import new_interactable.Vine;
 import noninteractable.Background;
 import noninteractable.INonInteractable;
@@ -123,7 +124,8 @@ public class LevelManager {
 	private Map<Integer, NPC> npcs = new HashMap<>();
 	private Map<Integer, TextTip> textTips =  new HashMap<>();
     private Map<Integer, AttackZone> attackZones = new HashMap<>();
-	
+	private Map<Integer, Trap> traps = new HashMap<>();
+    
 	public enum Request {
 		NONE, 
 		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC, MAKE_PEG, MAKE_TIP, 
@@ -448,6 +450,16 @@ public class LevelManager {
 			}
 		});
 		
+		traps.forEach((num, trap) -> {
+			Point2D.Double c = getViewportCoordinates(((trap.getCenterXM() - trap.getScaledIGWM() / 2.0) * this.mToPixel), (((this.levelHeightM - trap.getCenterYM()) - trap.getScaledIGHM() / 2.0) * this.mToPixel));
+			g.drawImage(trap.getRI().getImage(), (int)c.x,  (int)c.y, null);
+			// Label point
+			g.setColor(Color.BLACK);
+			Point2D.Double vplbp = getViewportCoordinates(trap.getCenterXM() * this.mToPixel + 5,
+					(this.levelHeightM - (trap.getCenterYM() - trap.getInGameHeight() / 2)) * this.mToPixel + 10);
+			g.drawString(Integer.toString(num), (int) (vplbp.getX()), (int) (vplbp.getY()));
+		});
+		
 		attackZones.forEach((num, zone) -> {
 			double ulxp = (zone.getPropertyBook().getDoubList().get("xmin")) * this.mToPixel;
 			double ulyp = (this.levelHeightM - zone.getPropertyBook().getDoubList().get("ymin")) * this.mToPixel;
@@ -577,12 +589,17 @@ public class LevelManager {
 			makeInteractable(this.requestPath, null, xm, ym, "Peg");
 			break;
 		}
+		case MAKE_TRAP: {
+			makeInteractable(this.requestPath, null, xm, ym, "Trap");
+			break;
+		}
 		case MAKE_TIP: {
 			makeInteractable(this.requestPath, null, xm, ym, "TextTip");
 			break;
 		}
 		case MAKE_ATTACK_ZONE: {
 			makeInteractable(this.requestPath, null, xm, ym, "AttackZone");
+			break;
 		}
 		case EDIT_OLD_PLAT: {
 			Platform target = this.plats.get(requestNum);
@@ -612,6 +629,13 @@ public class LevelManager {
 			}
 			break;
 		}
+		case EDIT_OLD_TRAP: {
+			Trap t = this.traps.get(requestNum);
+			if (t != null) {
+				t.setCenter(xm, ym);
+			}
+			break;
+		}
 		case EDIT_OLD_ATTACK_ZONE: {
 			AttackZone zone = this.attackZones.get(requestNum);
 			if (zone != null) {
@@ -620,6 +644,7 @@ public class LevelManager {
 			if (callingWindow != null) {
 			    callingWindow.updateProperties(zone.getPropertyBook());
 			}
+			break;
 		}
 		case EDIT_MONK: {
 			this.characters.get("Monk").setCenter(xm, ym);
@@ -763,6 +788,10 @@ public class LevelManager {
 			obj = new Peg(this.ticketer, imageName);
 			break;
 		}
+		case "Trap" : {
+			obj = new Trap(this.ticketer, imageName);
+			break;
+		}
 		case "TextTip" : {
 			obj = new TextTip(this.ticketer);
 			break;
@@ -818,6 +847,12 @@ public class LevelManager {
 			this.pegs.put(this.ticketer, (Peg)obj);
 			break;
 		}
+		case "Trap" : {
+			makeTrapEditWindow(this.ticketer, (Trap)obj, book);
+			setImage(obj, path);
+			this.traps.put(this.ticketer, (Trap)obj);
+			break;
+		}
 		case "TextTip" : {
 			makeTextEditWindow(this.ticketer, (TextTip)obj, book);
 			this.textTips.put(this.ticketer, (TextTip)obj);
@@ -838,6 +873,30 @@ public class LevelManager {
 		return tick;
 	}
 	
+	private void makeTrapEditWindow(int ticket, Trap trap, PropertyBook book) {
+		EditWindow window = ltlAdapter.makeEditWindow(ticket, "Trap");
+		window.setSubmitListener((arg0) -> {
+			trap.updateProperties(window.getPropertyBook());
+		});
+		
+		window.makeButton("New center",  (e) -> {
+			request = Request.EDIT_OLD_TRAP;
+			requestNum = ticket;
+			callingWindow = window;
+		});
+		
+		window.makeDoubleProperty("Scale",  1.0,  book);
+		window.makeDoubleProperty("density", 1.0,  book);
+		window.makeDoubleProperty("bounciness", 1.0, book);
+		window.makeDoubleProperty("friction", 1.0, book);
+		window.makeDoubleProperty("wallThickness", 0.1,  book);
+		window.makeDoubleProperty("offset",  -.5,  book);
+		window.makeDoubleProperty("trapWidth", 1,  book);
+		window.makeDoubleProperty("trapHeight", 1,  book);
+		
+		trap.updateProperties(window.getPropertyBook());
+	}
+
 	private void makeAttackZoneWindow(int ticket, AttackZone zone, PropertyBook book) {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "AttackZone");
 		window.setSubmitListener((arg0) -> {
@@ -1190,6 +1249,7 @@ public class LevelManager {
 		this.textTips.clear();
 		this.pegs.clear();
 		this.attackZones.clear();
+		this.traps.clear();
 		
 		// By the way, they all need to be removed from the LayerWindow as well.
 		this.ltlAdapter.clear();
@@ -1409,6 +1469,11 @@ public class LevelManager {
 		old.vines.forEach((ticket, vine) -> {
 			makeInteractable(vine.getPath(), vine.getPropertyBook(), vine.getCenterXM(), vine.getCenterYM(), "Vine");
 		});
+		if (old.traps != null) {
+			old.traps.forEach((ticket, trap) -> {
+				makeInteractable(trap.getPath(), trap.getPropertyBook(), trap.getCenterXM(), trap.getCenterYM(), "Trap");
+			});
+		}
 		if (old.textTips != null) {
 		    old.textTips.forEach((ticket, tip) -> {
 		    	makeInteractable("", tip.getPropertyBook(), tip.getCenterXM(), tip.getCenterYM(), "TextTip");
@@ -1474,7 +1539,7 @@ public class LevelManager {
 			file.flush();
 			file.close();
 			System.out.println("Output JSON written to " + LEVELS_PATH);
-		} catch (IOException e1) {					
+		} catch (IOException e1) {			
 			e1.printStackTrace();
 		}		
 		return;	
