@@ -1090,6 +1090,7 @@ public class LevelManager {
 		});
 		
 		window.makeDoubleProperty("Scale", 1.0, book); 
+		window.makeBooleanProperty("StartFixed", true, book);
 		window.makeStringProperty("Image path", boulder.getPath(), null);
 		window.makeDoubleProperty("Mass", 1000.0, book); 
 		window.makeDoubleProperty("Radius", 5.0, book); 

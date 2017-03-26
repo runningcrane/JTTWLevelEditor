@@ -384,7 +384,8 @@
           "Image path": "../assets/boulder4.png"
         },
         "boolList": {
-          "Polygon collision": true
+          "Polygon collision": true,
+          "StartFixed": true
         }
       }
     },
@@ -444,7 +445,8 @@
           "Image path": "../assets/boulder5.png"
         },
         "boolList": {
-          "Polygon collision": true
+          "Polygon collision": true,
+          "StartFixed": true
         }
       }
     },
@@ -516,7 +518,8 @@
           "Image path": "../assets/boulder6.png"
         },
         "boolList": {
-          "Polygon collision": true
+          "Polygon collision": true,
+          "StartFixed": true
         }
       }
     },
@@ -584,7 +587,8 @@
           "Image path": "../assets/boulder7.png"
         },
         "boolList": {
-          "Polygon collision": true
+          "Polygon collision": true,
+          "StartFixed": true
         }
       }
     },
@@ -640,7 +644,8 @@
           "Image path": "../assets/boulder8.png"
         },
         "boolList": {
-          "Polygon collision": true
+          "Polygon collision": true,
+          "StartFixed": true
         }
       }
     },
@@ -692,7 +697,8 @@
           "Image path": "../assets/boulder9.png"
         },
         "boolList": {
-          "Polygon collision": true
+          "Polygon collision": true,
+          "StartFixed": true
         }
       }
     },
@@ -752,7 +758,8 @@
           "Image path": "../assets/BoulderA.png"
         },
         "boolList": {
-          "Polygon collision": true
+          "Polygon collision": true,
+          "StartFixed": true
         }
       }
     },
@@ -840,7 +847,8 @@
           "Image path": "../assets/BoulderB.png"
         },
         "boolList": {
-          "Polygon collision": true
+          "Polygon collision": true,
+          "StartFixed": true
         }
       }
     },
@@ -908,7 +916,8 @@
           "Image path": "../assets/boulder0.png"
         },
         "boolList": {
-          "Polygon collision": true
+          "Polygon collision": true,
+          "StartFixed": true
         }
       }
     },
@@ -976,7 +985,8 @@
           "Image path": "../assets/boulder1.png"
         },
         "boolList": {
-          "Polygon collision": true
+          "Polygon collision": true,
+          "StartFixed": true
         }
       }
     },
@@ -1036,7 +1046,8 @@
           "Image path": "../assets/boulder2.png"
         },
         "boolList": {
-          "Polygon collision": true
+          "Polygon collision": true,
+          "StartFixed": true
         }
       }
     },
@@ -1096,7 +1107,8 @@
           "Image path": "../assets/boulder3.png"
         },
         "boolList": {
-          "Polygon collision": true
+          "Polygon collision": true,
+          "StartFixed": true
         }
       }
     },
@@ -1152,7 +1164,8 @@
           "Image path": "../assets/BoulderC.png"
         },
         "boolList": {
-          "Polygon collision": true
+          "Polygon collision": true,
+          "StartFixed": true
         }
       }
     }
@@ -1160,15 +1173,15 @@
   "pegs": {
     "16": {
       "path": "../assets/peg.png",
-      "centerXM": 17.025,
-      "centerYM": 8.575,
+      "centerXM": 14.9,
+      "centerYM": 3.7249999999999996,
       "scale": 1.0,
       "ticket": 16,
       "scaledIGWM": 3.0,
       "scaledIGHM": 3.0,
       "book": {
         "intList": {
-          "old boulder 6": 2
+          "old boulder 9": 9
         },
         "doubList": {
           "Rotation (rad)": 0.0,
@@ -1184,21 +1197,15 @@
     },
     "17": {
       "path": "../assets/peg.png",
-      "centerXM": 19.625,
-      "centerYM": 10.175,
+      "centerXM": 5.425,
+      "centerYM": 4.525,
       "scale": 1.0,
       "ticket": 17,
       "scaledIGWM": 3.0,
       "scaledIGHM": 3.0,
       "book": {
         "intList": {
-          "old boulder 9": 5,
-          "old boulder 10": 6,
-          "old boulder 8": 4,
-          "old boulder 7": 3,
-          "old boulder 5": 1,
-          "old boulder 15": 11,
-          "old boulder 16": 12
+          "old boulder 13": 13
         },
         "doubList": {
           "Rotation (rad)": 0.0,
@@ -1214,15 +1221,15 @@
     },
     "14": {
       "path": "../assets/peg.png",
-      "centerXM": 14.9,
-      "centerYM": 3.7249999999999996,
+      "centerXM": 17.025,
+      "centerYM": 8.575,
       "scale": 1.0,
       "ticket": 14,
       "scaledIGWM": 3.0,
       "scaledIGHM": 3.0,
       "book": {
         "intList": {
-          "old boulder 13": 9
+          "old boulder 2": 2
         },
         "doubList": {
           "Rotation (rad)": 0.0,
@@ -1238,15 +1245,21 @@
     },
     "15": {
       "path": "../assets/peg.png",
-      "centerXM": 5.425,
-      "centerYM": 4.525,
+      "centerXM": 19.625,
+      "centerYM": 10.175,
       "scale": 1.0,
       "ticket": 15,
       "scaledIGWM": 3.0,
       "scaledIGHM": 3.0,
       "book": {
         "intList": {
-          "old boulder 17": 13
+          "old boulder 11": 11,
+          "old boulder 6": 6,
+          "old boulder 12": 12,
+          "old boulder 5": 5,
+          "old boulder 4": 4,
+          "old boulder 3": 3,
+          "old boulder 1": 1
         },
         "doubList": {
           "Rotation (rad)": 0.0,
