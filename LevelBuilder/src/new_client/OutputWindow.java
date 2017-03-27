@@ -34,13 +34,15 @@ public class OutputWindow extends JFrame {
 	private JPanel contentPane;
 	private JPanel pnlContent;
 	private IOutputToLevelAdapter otlAdapter;
-	private JTextField txtOutputPath;
 	private JLabel lblCurLevel;
-		
+
+	private JTextField txtOutputPath;
+	private JTextField txtName;
+	private JTextField txtNumber;
+	private JTextField txtNextLevel;
 	private JTextField txtInputPath;
 	
 	private double offset;
-	private JTextField txtNextLevel;
 
 	/**
 	 * Create the frame.
@@ -75,10 +77,10 @@ public class OutputWindow extends JFrame {
 		contentPane.add(lblCurLevel, BorderLayout.SOUTH);
 		
 		JPanel pnlControls = new JPanel();
-		pnlControls.setLayout(new GridLayout(3,3));
+		pnlControls.setLayout(new GridLayout(6,3));
 		getContentPane().add(pnlControls, BorderLayout.NORTH);
 		
-		JLabel lblOutputPath = new JLabel("LevelName");
+		JLabel lblOutputPath = new JLabel("File Name");
 		pnlControls.add(lblOutputPath);
 		
 		txtOutputPath = new JTextField();
@@ -87,38 +89,52 @@ public class OutputWindow extends JFrame {
 		txtOutputPath.setColumns(10);
 		
 		JButton btnMakeJSON = new JButton("Make");
-		btnMakeJSON.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnMakeJSON.addActionListener((e) ->
 				otlAdapter.makeJSON(
 						txtOutputPath.getText(),
-						txtNextLevel.getText());	
-			}
-		});
+						txtName.getText(),
+						txtNextLevel.getText(),
+						Integer.parseInt(txtNumber.getText())));
 		pnlControls.add(btnMakeJSON);
 		
-		JLabel lblNextName = new JLabel("NextLevelName");
-		pnlControls.add(lblNextName);
+		JLabel lblName = new JLabel("Level Name");
+		pnlControls.add(lblName);
+		txtName = new JTextField();
+		txtName.setText("My Level");
+		pnlControls.add(txtName);
+		txtName.setColumns(10);
 		
+		pnlControls.add(new JLabel(""));
+		
+		JLabel lblNextName = new JLabel("Next Level File");
+		pnlControls.add(lblNextName);
 		txtNextLevel = new JTextField();
 		txtNextLevel.setText("nextLevel");
 		pnlControls.add(txtNextLevel);
 		txtNextLevel.setColumns(10);
+	
+		pnlControls.add(new JLabel(""));
 		
-		JLabel lblBlank = new JLabel("");
-		pnlControls.add(lblBlank);
-		
-		JLabel lblLoadPath = new JLabel("Load LevelName");
+		JLabel lblLoadPath = new JLabel("Load Level File");
 		pnlControls.add(lblLoadPath);
-		
 		txtInputPath = new JTextField();
 		txtInputPath.setText("nextLevel");
 		pnlControls.add(txtInputPath);
 		txtInputPath.setColumns(10);
+		
 		JButton btnReadJSON = new JButton("Load Level");
 		btnReadJSON.addActionListener((e) -> otlAdapter.readJSON(txtInputPath.getText()));
-				
-		pnlControls.add(btnReadJSON);
+		pnlControls.add(btnReadJSON);	
+
+		JLabel lblNumber = new JLabel("Level Number");
+		pnlControls.add(lblNumber);
+		txtNumber = new JTextField();
+		txtNumber.setText("0");
+		pnlControls.add(txtNumber);
+		txtNumber.setColumns(10);
 		
+		pnlControls.add(new JLabel(""));
+
 		JPanel pnlOutput = new JPanel(new BorderLayout());
 		getContentPane().add(pnlOutput, BorderLayout.CENTER);
 		
@@ -221,7 +237,7 @@ public class OutputWindow extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 				
-			}		    
+			}	    
 		});
 	}
 	/**
@@ -262,5 +278,13 @@ public class OutputWindow extends JFrame {
 	 */
 	public void redraw() {
 		pnlContent.repaint();
+	}
+
+	public void setLevelFile(String levelFile) {
+		this.txtName.setText(levelFile);
+	}
+
+	public void setLevelNumber(int levelNumber) {
+		this.txtNumber.setText(Integer.toString(levelNumber));
 	}	
 }

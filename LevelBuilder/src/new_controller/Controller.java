@@ -147,6 +147,11 @@ public class Controller {
 			public void makeTextTip() {
 				level.setRequest("", LevelManager.Request.MAKE_TIP);
 			}
+
+			@Override
+			public void makeAttackZone(String path) {
+				level.setRequest(path, LevelManager.Request.MAKE_ATTACK_ZONE);
+			}
 		});
 
 		layerWindow = new LayerWindow(new ILayerToLevelAdapter() {
@@ -166,8 +171,8 @@ public class Controller {
 			}
 
 			@Override
-			public void makeJSON(String levelName, String nextName) {
-				level.makeJSON(levelName, nextName);
+			public void makeJSON(String levelFile, String levelName, String nextName, int levelNumber) {
+				level.makeJSON(levelFile, levelName, nextName, levelNumber);
 			}
 
 			@Override
@@ -219,6 +224,16 @@ public class Controller {
 			@Override
 			public void setNextName(String nextName) {
 				outputWindow.setNextName(nextName);
+			}
+
+			@Override
+			public void setLevelFile(String levelFile) {
+				outputWindow.setLevelFile(levelFile);
+			}
+
+			@Override
+			public void setLevelNumber(int levelNumber) {
+				outputWindow.setLevelNumber(levelNumber);
 			}
 
 		}, new ILevelToLayerAdapter() {

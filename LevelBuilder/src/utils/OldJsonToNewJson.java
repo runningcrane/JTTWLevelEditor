@@ -24,7 +24,7 @@ public class OldJsonToNewJson {
 	
 	/**
 	 * 
-	 * @param args[0]: from level file (always in old json format).
+	 * @param args[0]: from level file (always in old JSON format).
 	 *        args[1]: to level file (not yet created, etc)
 	 */
     @SuppressWarnings("unchecked")
@@ -184,8 +184,7 @@ public class OldJsonToNewJson {
 		}
 		lm.setMToPixel(mToPixel);
     	
-		lm.makeJSON(LEVELS_PATH + outputFile, nextName);
-		
+		lm.makeJSON(LEVELS_PATH + outputFile, name, nextName, -1);
     }
     
     public static void addPlatform(JSONObject plat, new_server.LevelManager lm, boolean polygon) {

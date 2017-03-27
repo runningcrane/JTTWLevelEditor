@@ -2,7 +2,6 @@ package new_client;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -29,7 +28,7 @@ public class LayerWindow extends JFrame {
 	Dimension dimButton = new Dimension(68, 70);
 	
 	private static final String[] TYPES = {
-			"All", "Platform", "Boulder", "Peg", "Vine", "NPC", "TextTip"
+			"All", "Platform", "Boulder", "Peg", "Vine", "NPC", "TextTip", "AttackZone"
 	};;
 		
 	ILayerToLevelAdapter ltlAdapter;

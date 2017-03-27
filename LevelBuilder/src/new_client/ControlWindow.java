@@ -41,11 +41,12 @@ public class ControlWindow extends JFrame {
 	/**
 	 * All of the assets that we can use. To add another, just put the
 	 * file name (without extension) in here and the image in ASSETS_PATH.
-	 * 
-	 * TODO: Read this stuff in from the assets folder automatically. 
 	 */
 	private static final String[] BACKGROUNDS = {
 			"bgSunny", "bgCloud"
+	};
+	private static final String[] ATTACKZONES = {
+		    "spear", "fireball"	
 	};
 	private static final String[] PLATFORMS = {
 			"Pedestal", "blueGround", "canyonR", "canyonL", 
@@ -77,6 +78,9 @@ public class ControlWindow extends JFrame {
 	private static final String[] SPECIALS = {
 		    "BuddhaHand", "lvl1Gate"	
 	}; 
+	private static final String[] TRAPS = {
+		    "cage1"
+	};
 	
 	private JTextField txtLHeight;
 	private JTextField txtLWidth;
@@ -100,8 +104,9 @@ public class ControlWindow extends JFrame {
 		try {
 			initGUI();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			System.err.println("Can't find the arrows, something is wrong the the assets folder");
 			e.printStackTrace();
+			System.exit(2);
 		}
 	}
 	
@@ -180,8 +185,11 @@ public class ControlWindow extends JFrame {
 		      public void stateChanged(ChangeEvent event) {
 		        int value = slMToPixel.getValue();			        
 		        
-				// TODO: negative numbers check				
-				ctlAdapter.setMToPixel(value + 10);		        
+		        if (value + 10 > 0) {
+		        	ctlAdapter.setMToPixel(value + 10);
+		        } else {
+		        	System.err.println("Don't be a jerk: No negative numbers in the mToPixel Field.");
+		        }
 		      }
 		    });
 		pnlLevelResize.add(slMToPixel);
@@ -212,9 +220,12 @@ public class ControlWindow extends JFrame {
 							"Height must be an number.");
 					return;
 				}
-				
-				// TODO: negative numbers check				
-				ctlAdapter.setViewportDimensions(width, height);
+					
+				if (width > 0 && height > 0) {
+				    ctlAdapter.setViewportDimensions(width, height);
+				} else {
+				    System.err.println("Don't be a jerk: No negative numbers in the vp width and height.");
+				}
 			}
 		});
 		
@@ -238,9 +249,12 @@ public class ControlWindow extends JFrame {
 							"Height must be an number.");
 					return;
 				}
-				
-				// TODO: negative numbers check				
-				ctlAdapter.setLevelDimensions(width, height);
+
+				if (width > 0 && height > 0) {
+				    ctlAdapter.setLevelDimensions(width, height);
+				} else {
+				    System.err.println("Don't be a jerk: No negative numbers in level width and height.");
+				}
 			}
 		});
 		
@@ -286,7 +300,6 @@ public class ControlWindow extends JFrame {
 		
 		JLabel lblTextTip = new JLabel("<html><b>Text Tips</b></html>");
 		pnlTextTip.add(lblTextTip);
-		
 		
 		JButton btnTextTip = new JButton("Add new text tip");
 		btnTextTip.addActionListener((arg0) -> ctlAdapter.makeTextTip()); 
@@ -485,6 +498,38 @@ public class ControlWindow extends JFrame {
 			platToggleGroup.add(tglSpec);
 		}
 
+		// Zones.
+		JPanel pnlZones = new JPanel();
+		pnlZones.setLayout(new BoxLayout(pnlZones, BoxLayout.Y_AXIS));
+		pnlZones.setPreferredSize(new Dimension(50, 50));
+		pnlBack.add(pnlZones);
+		JLabel lblZones = new JLabel("<html><b>Zones</b></html>");
+		pnlZones.add(lblZones);
+
+		for (String z : ATTACKZONES) {
+		    JButton btnAttackZone = new JButton(z);
+		    btnAttackZone.setIcon(new ImageIcon(THUMBNAIL_PATH + z + "Thumbnail.png"));
+		    btnAttackZone.addActionListener((arg0) -> ctlAdapter.makeAttackZone(ASSETS_PATH + z + ".png")); 
+		    btnAttackZone.setPreferredSize(dimButton);
+		    pnlZones.add(btnAttackZone);
+		}
+		
+		// Traps 
+		JPanel pnlTraps = new JPanel();
+		pnlTraps.setLayout(new BoxLayout(pnlTraps, BoxLayout.Y_AXIS));
+		pnlTraps.setPreferredSize(new Dimension(50, 50));
+		pnlBack.add(pnlTraps);
+		JLabel lblTraps = new JLabel("<html><b>Traps</b></html>");
+		pnlTraps.add(lblTraps);
+
+		for (String trap : TRAPS) {
+			JButton btnTrap = new JButton(trap);
+			btnTrap.setIcon(new ImageIcon(THUMBNAIL_PATH + trap + "Thumbnail.png"));
+			btnTrap.addActionListener((arg0) -> ctlAdapter.makeTrap(ASSETS_PATH + trap + ".png"));
+			btnTrap.setPreferredSize(dimButton);
+			pnlTraps.add(btnTrap);
+		}
+		
 		// Boulders.
 		JPanel pnlBoulders = new JPanel();
 		pnlBoulders.setLayout(new BoxLayout(pnlBoulders, BoxLayout.Y_AXIS));
