@@ -21,10 +21,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.google.gson.GsonBuilder;
+import com.google.gson.Gson;
+
+import new_interactable.PropertyBook;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -38,7 +38,6 @@ import javax.swing.JSlider;
 import javax.swing.JLabel;
 
 import static utils.Constants.*;
-
 
 /**
  * Helper window for setting a collision box for an image.
@@ -124,37 +123,36 @@ public class CollisionWindow extends JFrame {
 		clear();
 		
 		// Try finding the file to parse.
-		JSONParser parser = new JSONParser();
-		Object obj;
+		Gson gson = new Gson();
+		PropertyBook book;
 		
 		String path = txtName.getText();
 		try {
-			obj = parser.parse(new FileReader(COL_PATH + path + ".json"));
+			book = gson.fromJson(new FileReader(COL_PATH + path + ".json"), PropertyBook.class);
+			System.out.println("Found path");
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found: " + COL_PATH + path + ".json");
 			// e.printStackTrace();
 			makeDefault(path);
 			return;
-		} catch (IOException e) {
-			System.out.println("Illegal path: " + COL_PATH + path + ".json");
-			e.printStackTrace();
-			makeDefault(path);
-			return;
-		} catch (ParseException e) {
-			System.out.println("Cannot parse JSON at: " + COL_PATH + path + ".json");
-			e.printStackTrace();
-			makeDefault(path);
-			return;
 		}
 		
-		JSONObject object = (JSONObject) obj;
-		String name = (String) object.get("name");
+		// Make the image.		
+		try {
+			this.image = ImageIO.read(new File(ASSETS_PATH + path + ".png"));
+		} catch (IOException e) {
+			System.err.println("File not found: " + ASSETS_PATH + path + ".png");
+			e.printStackTrace();
+			return;
+		}
+				
+		String name = book.getStringList().get("Name");
 		// Check if null.
 		if (name == null) {
 			name = path;
 		}				
 		
-		Double zoomLevelD = (Double) object.get("zoomLevel");
+		Double zoomLevelD = book.getDoubList().get("zoomLevel");
 		double zoomLevel;
 		// Check if null.
 		if (zoomLevelD == null) {
@@ -163,52 +161,31 @@ public class CollisionWindow extends JFrame {
 			zoomLevel = zoomLevelD.doubleValue();
 		}
 		
-		Double widthD = (Double) object.get("width");
+		Double widthD = book.getDoubList().get("widthm");
 		double width;
 		// Check if null.
 		if (widthD == null) {
-			width = 3;
+			width = this.image.getWidth() / this.mToPixel;
 		} else {
 			width = widthD.doubleValue();
 			txtWidth.setText(Double.toString(width));
 		}
 			
-		Double heightD = (Double) object.get("height");
+		Double heightD = book.getDoubList().get("heightm");
 		double height;
 		// Check if null.
 		if (heightD == null) {
-			height = 3;
+			height = this.image.getHeight() / this.mToPixel;
 		} else {
 			height = heightD.doubleValue();
 			txtHeight.setText(Double.toString(height));
 		}
 				
-		JSONArray jsonPoints = (JSONArray) object.get("points");
 		ArrayList<Point2D.Double> points = new ArrayList<Point2D.Double>();
 		// Check if null.
-		if (jsonPoints != null) {
-			for (Object objPoint : jsonPoints) {			
-				JSONObject jsonPoint = (JSONObject) objPoint;
-				
-				Double xpointD = (Double) jsonPoint.get("x");
-				double xpoint;
-				// Check if null.
-				if (xpointD == null) {
-					xpoint = 0;
-				} else {
-					xpoint = xpointD.doubleValue();
-				}
-				
-				Double ypointD = (Double) jsonPoint.get("y");
-				double ypoint;
-				// Check if null.
-				if (ypointD == null) {
-					ypoint = 0;
-				} else {
-					ypoint = ypointD.doubleValue();
-				}								
-				
-				points.add(new Point2D.Double(xpoint,  ypoint));
+		if (!book.getCollPoints().isEmpty()) {			
+			for (Point2D.Double point : book.getCollPoints()) {											
+				points.add(point);
 			}
 		}				
 		
@@ -219,15 +196,6 @@ public class CollisionWindow extends JFrame {
 		this.imgWidth = width;
 		this.imgHeight = height;
 		
-		// Make the image.		
-		try {
-			this.image = ImageIO.read(new File(ASSETS_PATH + path + ".png"));
-		} catch (IOException e) {
-			System.err.println("File not found: " + ASSETS_PATH + path + ".png");
-			e.printStackTrace();
-			return;
-		}
-		
 		// Show type-specific options.
 		if (path.toLowerCase().contains("boulder")) {
 			// Set the boulder-related objects visible.
@@ -235,7 +203,7 @@ public class CollisionWindow extends JFrame {
 			this.txtRadius.setEnabled(true);
 			this.btnBoulderDim.setEnabled(true);
 			
-			Double massD = (Double) object.get("mass");
+			Double massD = book.getDoubList().get("mass");
 			double mass;
 			// Check if null.
 			if (massD == null) {
@@ -245,7 +213,7 @@ public class CollisionWindow extends JFrame {
 				txtMass.setText(Double.toString(mass));
 			}
 			
-			Double radiusD = (Double) object.get("radius");
+			Double radiusD = book.getDoubList().get("radius");
 			double radius;
 			// Check if null.
 			if (radiusD == null) {
@@ -276,7 +244,7 @@ public class CollisionWindow extends JFrame {
 		this.repaint();
 	}
 	
-	public void rescalePlat() {
+	public void rescalePlat() {		
 		// Rescale the loaded image.
 		if (this.image != null) {
 			this.rescaledImage = new ImageIcon(this.image.getScaledInstance((int)(this.imgWidth * this.mToPixel * this.zoomLevel), 
@@ -298,33 +266,35 @@ public class CollisionWindow extends JFrame {
 	}
 	
 	public void outputJSON() {
+		PropertyBook book = new PropertyBook();
+		
 		FileWriter file;
-		JSONObject edited = new JSONObject();
-		edited.put("width", this.imgWidth);
-		edited.put("height", this.imgHeight);
-		edited.put("zoomLevel", this.zoomLevel);
+		book.getDoubList().put("widthm", this.imgWidth);
+		book.getDoubList().put("heightm", this.imgHeight);
+		book.getDoubList().put("zoomLevel", this.zoomLevel);
 		
 		// Change the points to cocos points
 		ArrayList<Point2D.Double> cocosPoints = swingToCocos();
 		
-		JSONArray jsonCP = new JSONArray();
+		int[] pointID = {0};
 		cocosPoints.forEach((cocosP) -> {
-			JSONObject indivP = new JSONObject();
-			indivP.put("x", cocosP.x);
-			indivP.put("y", cocosP.y);
-			jsonCP.add(indivP);
-		});
-		
-		edited.put("points", jsonCP);
+			book.getCollPoints().add(cocosP);
+			pointID[0]++;
+		});		
 		
 		if (this.name.toLowerCase().contains("boulder")) {
-			edited.put("radius", this.radius);
-			edited.put("mass", this.mass);
+			book.getDoubList().put("radius", this.radius);
+			book.getDoubList().put("mass", this.mass);
 		}
-		
+				
 		try {
+			// Make the GSON writer.
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+			// Try writing it out.
 			file = new FileWriter(COL_PATH + this.name + ".json");
-			file.write(edited.toJSONString());
+			String output = gson.toJson(book);
+			file.write(output);
 			file.flush();
 			file.close();
 			System.out.println("Output JSON written to " + COL_PATH);
@@ -463,6 +433,15 @@ public class CollisionWindow extends JFrame {
 		pnlControls.add(btnClear);
 		pnlControls.add(btnOutput);
 		btnBoulderDim.setEnabled(false);
+		
+		JButton btnCenter = new JButton("Center");
+		btnCenter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vpOffset = new Point2D.Double(0,0);
+				changeOffset(0,0);
+			}
+		});
+		pnlControls.add(btnCenter);
 		
 		// Display the image to make points of
 		JPanel pnlDisplay = new JPanel();	

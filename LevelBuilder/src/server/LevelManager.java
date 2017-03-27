@@ -32,6 +32,8 @@ import interactable.GoldenPeg;
 import interactable.Platform;
 import interactable.Player;
 import interactable.Vine;
+import new_server.ILevelToControlAdapter;
+import new_server.ILevelToOutputAdapter;
 import noninteractable.Background;
 import noninteractable.INonInteractable;
 
@@ -1948,7 +1950,7 @@ public class LevelManager {
 	}
 
 	public void setRockPosition(String path) {
-		ltoAdapter.makeRock(path);
+		ltoAdapter.makeBoulder(path);
 	}
 
 	public void setVelocityPlat(int ticket, double velocity) {

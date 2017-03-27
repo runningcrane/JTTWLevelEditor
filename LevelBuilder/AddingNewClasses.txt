@@ -1,0 +1,27 @@
+To add a new type....
+
+0. Make a NewClass class that extends AInteractable. See the other classes in new_interactable, but the constructor should basically just take (int ticket, String path) and call "setTicket(ticket)" and "this.setPath(path)" in that constructor.
+
+1. Add a new map to LevelManager. Preferred format is HashMap<Integer, NewClass> where it is assigned a ticket, but if tickets are not necessary a la respawnpoints this could be implemented as an ArrayList<NewClass>.
+
+2. Instantiate it somewhere, either on declaration line or in the LevelManager constructor.
+
+3. Modify Request to have MAKE_NEWCLASS and EDIT_OLD_NEWCLASS, and anything else you think is necessary.
+
+4. Make a "makeNewClassEditWindow()" method. It will probably take (int ticket, NewClass newClass, PropertyBook book). In this method you must make a new EditWindow, give it a submitListener, and any other necessary properties.
+
+5. Edit TYPES in LayerWindow to include the class tag of your new class. This will also automatically make a filter button on LayerWindow, so don't worry about doing that.
+
+6. Edit receiveCoordinates() to include the new enums you made - this should call makeInteractable, unless more things than what's in AInteractable need to be scaled via AInteractable's setScale. See makeBoulder as an example.
+
+6.5. If you called makeInteractable, add in a case for your new class in it using the new tag made in receiveCoordinates().
+
+7. Edit removeEntity() to include the new enums.
+
+8. Edit setMToPixel() to call .setRescaled on all new objects of NewClass.
+
+9. Edit readJSON() to read in old instances.
+
+10. Edit render() to draw it.
+
+11. Add it to ControlWindow. Hook it up to LevelManager via an Adapter and Controller().
