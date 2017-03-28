@@ -1,24 +1,661 @@
-{"levelEndX":42.388888888888886,"polygonCollision":true,"levelEndY":4.351851851851851,"boulders":[{"centerY":7.092592592592593,"imageName":"BoulderB.png","ticket":3,"centerX":-4.592592592592593,"mass":1000.0,"imageSizeHeight":6.0,"scale":2.0,"type":"CIRCLE","radius":6.0,"imageSizeWidth":6.0,"collisionPoints":[{"x":-2.46,"y":-2.56},{"x":-2.94,"y":-1.06},{"x":-2.78,"y":0.1},{"x":-2.88,"y":1.46},{"x":-2.54,"y":2.04},{"x":-1.36,"y":2.04},{"x":0.44,"y":2.92},{"x":1.82,"y":1.76},{"x":2.12,"y":0.06},{"x":2.56,"y":-1.26},{"x":2.94,"y":-1.7},{"x":2.84,"y":-2.74},{"x":0.94,"y":-2.8},{"x":0.34,"y":-3.0},{"x":-1.12,"y":-3.04}]}],"nextLevelName":"nextLevel","levelName":"dragon","boulderJoints":[],"respawnPoints":[],"platforms":[{"centerY":3.351851851851851,"imageName":"land.png","centerX":9.925925925925926,"moveable":false,"imageSizeHeight":3.9599999999999995,"scale":3.3,"velocity":1.0,"imageSizeWidth":33.0,"disappears":false,"collidable":true,"collisionPoints":[{"x":-16.467,"y":-2.013},{"x":-14.124,"y":1.4849999999999999},{"x":-4.653,"y":1.3529999999999998},{"x":6.9959999999999996,"y":1.452},{"x":10.823999999999998,"y":0.7919999999999999},{"x":13.167,"y":-0.231},{"x":16.401,"y":-2.046}],"springCK":1.0,"endY":0.0,"endX":0.0,"sinkable":false,"climbable":false},{"centerY":3.2407407407407405,"imageName":"sea.png","centerX":36.72222222222222,"moveable":false,"imageSizeHeight":3.24,"scale":2.7,"velocity":1.0,"imageSizeWidth":37.800000000000004,"disappears":false,"collidable":false,"collisionPoints":[],"springCK":1.0,"endY":0.0,"endX":0.0,"sinkable":false,"climbable":false},{"centerY":6.203703703703704,"imageName":"head.png","centerX":27.09259259259259,"moveable":false,"imageSizeHeight":7.72,"scale":1.93,"velocity":1.0,"imageSizeWidth":5.79,"disappears":false,"collidable":true,"collisionPoints":[],"springCK":1.0,"endY":0.0,"endX":0.0,"sinkable":false,"climbable":false},{"centerY":4.462962962962964,"imageName":"body.png","centerX":32.01851851851852,"moveable":false,"imageSizeHeight":4.2299999999999995,"scale":1.41,"velocity":1.0,"imageSizeWidth":7.05,"disappears":false,"collidable":true,"collisionPoints":[],"springCK":1.0,"endY":0.0,"endX":0.0,"sinkable":false,"climbable":false},{"centerY":5.648148148148149,"imageName":"tail.png","centerX":36.68518518518518,"moveable":false,"imageSizeHeight":5.888,"scale":1.28,"velocity":1.0,"imageSizeWidth":3.2,"disappears":false,"collidable":true,"collisionPoints":[],"springCK":1.0,"endY":0.0,"endX":0.0,"sinkable":false,"climbable":false}],"mToPixel":27.0,"characters":{"Monkey":{"startingXPos":-1.0,"startingYPos":6.277777777777779,"present":true},"Piggy":{"startingXPos":0.0,"startingYPos":0.0,"present":false},"Sandy":{"startingXPos":0.0,"startingYPos":0.0,"present":false},"Monk":{"startingXPos":-0.2962962962962963,"startingYPos":6.277777777777779,"present":true}},
-"attackZones":[
-  {
-    "minX" : -1000,
-    "maxX" : 1000,
-    "minY" : -1000,
-    "maxY" : 1000,
-    "projectile" : {
-        "FireType" : "ABSOLUTE",
-        "xVelMax" : -200,
-        "xVelMin": -500,
-        "yVelMax": 0,
-        "yVelMin" : -300,
-        "xPosition" : 27.09,
-        "yPosition" : 10,
-        "imageName" : "fireball.png",
-        "soundName" : "",
-        "imageWidth": 100,
-        "imageHeight" : 100
+{
+  "VERSION": 2,
+  "levelFileName": "dragon",
+  "levelName": "Battle with the Dragon",
+  "levelNumber": 5,
+  "nextLevelName": "",
+  "mToPixel": 28.0,
+  "bg": {
+    "path": "../assets/bgCloud.png",
+    "centerXm": 0.0,
+    "centerYm": 0.0,
+    "widthm": 20.0,
+    "heightm": 15.0,
+    "collisionWidth": 0.0,
+    "collisionHeight": 0.0
+  },
+  "eolPoint": {
+    "x": 78.60714285714286,
+    "y": 10.642857142857142
+  },
+  "eolQuadrant": 4,
+  "levelWidthM": 100.0,
+  "levelHeightM": 25.0,
+  "respawnPoints": [],
+  "plats": {
+    "2": {
+      "endpoint": {
+        "x": 2.19,
+        "y": 10.32
+      },
+      "path": "../assets/land.png",
+      "centerXM": 17.285714285714285,
+      "centerYM": 3.428571428571429,
+      "scale": 3.3,
+      "ticket": 2,
+      "scaledIGWM": 33.0,
+      "scaledIGHM": 3.9599999999999995,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 3.3,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -16.5,
+            "y": -1.936
+          },
+          {
+            "x": -14.563999999999998,
+            "y": 1.2319999999999998
+          },
+          {
+            "x": 9.152000000000001,
+            "y": 1.2319999999999998
+          },
+          {
+            "x": 12.98,
+            "y": -0.17599999999999985
+          },
+          {
+            "x": 16.323999999999998,
+            "y": -1.936
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/land.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "3": {
+      "endpoint": {
+        "x": 35.75,
+        "y": 3.571428571428573
+      },
+      "path": "../assets/sea.png",
+      "centerXM": 48.464285714285715,
+      "centerYM": 3.178571428571427,
+      "scale": 3.0,
+      "ticket": 3,
+      "scaledIGWM": 42.0,
+      "scaledIGHM": 3.5999999999999996,
+      "book": {
+        "intList": {
+          "Z-order": 3
+        },
+        "doubList": {
+          "Scale": 3.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": 16.23,
+            "y": -1.59
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/sea.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "4": {
+      "endpoint": {
+        "x": 35.392857142857146,
+        "y": 5.214285714285715
+      },
+      "path": "../assets/head.png",
+      "centerXM": 32.5,
+      "centerYM": 6.178571428571427,
+      "scale": 2.0,
+      "ticket": 4,
+      "scaledIGWM": 6.0,
+      "scaledIGHM": 8.0,
+      "book": {
+        "intList": {
+          "Z-order": 2
+        },
+        "doubList": {
+          "Scale": 2.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/head.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "5": {
+      "endpoint": {
+        "x": 38.42857142857143,
+        "y": 4.25
+      },
+      "path": "../assets/body.png",
+      "centerXM": 37.57142857142857,
+      "centerYM": 4.25,
+      "scale": 1.6,
+      "ticket": 5,
+      "scaledIGWM": 8.0,
+      "scaledIGHM": 4.800000000000001,
+      "book": {
+        "intList": {
+          "Z-order": 2
+        },
+        "doubList": {
+          "Scale": 1.6,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/body.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "6": {
+      "endpoint": {
+        "x": 41.535714285714285,
+        "y": 4.5
+      },
+      "path": "../assets/tail.png",
+      "centerXM": 43.57142857142857,
+      "centerYM": 6.035714285714285,
+      "scale": 1.6,
+      "ticket": 6,
+      "scaledIGWM": 4.0,
+      "scaledIGHM": 7.359999999999999,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.6,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/tail.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "7": {
+      "endpoint": {
+        "x": 72.46428571428571,
+        "y": 3.5357142857142847
+      },
+      "path": "../assets/Shore.png",
+      "centerXM": 74.21428571428571,
+      "centerYM": 3.2142857142857153,
+      "scale": 3.0,
+      "ticket": 7,
+      "scaledIGWM": 18.0,
+      "scaledIGHM": 3.5999999999999996,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 3.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -8.97,
+            "y": -1.77
+          },
+          {
+            "x": -6.48,
+            "y": 1.02
+          },
+          {
+            "x": -4.5600000000000005,
+            "y": 1.6500000000000001
+          },
+          {
+            "x": 3.51,
+            "y": 0.6900000000000001
+          },
+          {
+            "x": 7.38,
+            "y": 0.03
+          },
+          {
+            "x": 8.94,
+            "y": -1.8599999999999999
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/Shore.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "8": {
+      "endpoint": {
+        "x": 28.321428571428573,
+        "y": 12.107142857142858
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 15.321428571428571,
+      "centerYM": 11.75,
+      "scale": 1.0,
+      "ticket": 8,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.2,
+            "y": -0.53
+          },
+          {
+            "x": -1.28,
+            "y": 0.11
+          },
+          {
+            "x": 1.28,
+            "y": 0.05
+          },
+          {
+            "x": 1.03,
+            "y": -0.59
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": true,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "9": {
+      "endpoint": {
+        "x": 15.214285714285714,
+        "y": 10.75
+      },
+      "path": "../assets/cldClearDiagL.png",
+      "centerXM": 15.321428571428571,
+      "centerYM": 6.142857142857142,
+      "scale": 1.0,
+      "ticket": 9,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.44,
+            "y": -0.65
+          },
+          {
+            "x": -1.41,
+            "y": 0.11
+          },
+          {
+            "x": 1.29,
+            "y": 0.15
+          },
+          {
+            "x": 1.49,
+            "y": -0.27
+          },
+          {
+            "x": 0.0,
+            "y": -0.44
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClearDiagL.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": true,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "10": {
+      "endpoint": {
+        "x": 13.071428571428571,
+        "y": 10.714285714285714
+      },
+      "path": "../assets/cldClearUp.png",
+      "centerXM": 12.571428571428571,
+      "centerYM": 10.535714285714286,
+      "scale": 1.0,
+      "ticket": 10,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 2.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.13,
+            "y": -0.95
+          },
+          {
+            "x": -1.49,
+            "y": -0.68
+          },
+          {
+            "x": -1.36,
+            "y": -0.21
+          },
+          {
+            "x": 0.69,
+            "y": -0.16
+          },
+          {
+            "x": 1.26,
+            "y": -0.05
+          },
+          {
+            "x": 1.49,
+            "y": -0.52
+          },
+          {
+            "x": 1.13,
+            "y": -1.15
+          },
+          {
+            "x": 0.6,
+            "y": -1.09
+          },
+          {
+            "x": -0.65,
+            "y": -1.04
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClearUp.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
     }
-  }
-],
-
-"background":{"imageName":"bgCloud.png","width":100.0,"height":15.0},"vines":[],"goldenPegs":[]}
+  },
+  "characters": {
+    "Monkey": {
+      "path": "Monkey.png",
+      "centerXM": 8.571428571428571,
+      "centerYM": 6.642857142857142,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": true
+        }
+      }
+    },
+    "Piggy": {
+      "path": "Piggy.png",
+      "centerXM": 0.0,
+      "centerYM": 0.0,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": false
+        }
+      }
+    },
+    "Sandy": {
+      "path": "Sandy.png",
+      "centerXM": 77.14285714285714,
+      "centerYM": 5.428571428571427,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": true
+        }
+      }
+    },
+    "Monk": {
+      "path": "Monk.png",
+      "centerXM": 7.392857142857143,
+      "centerYM": 6.75,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": true
+        }
+      }
+    }
+  },
+  "vines": {},
+  "boulders": {
+    "1": {
+      "oldTicket": 1,
+      "scaledRadius": 0.0,
+      "path": "../assets/boulder5.png",
+      "centerXM": 2.2142857142857144,
+      "centerYM": 6.535714285714285,
+      "scale": 3.0,
+      "ticket": 1,
+      "scaledIGWM": 9.0,
+      "scaledIGHM": 9.0,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Mass": 1000.0,
+          "Radius": 5.0,
+          "Scale": 3.0
+        },
+        "collPointList": [
+          {
+            "x": -3.87,
+            "y": -4.35
+          },
+          {
+            "x": -4.47,
+            "y": -2.07
+          },
+          {
+            "x": -3.3600000000000003,
+            "y": 0.03
+          },
+          {
+            "x": -3.06,
+            "y": 2.67
+          },
+          {
+            "x": 0.12,
+            "y": 4.41
+          },
+          {
+            "x": 3.42,
+            "y": 2.25
+          },
+          {
+            "x": 4.41,
+            "y": -0.81
+          },
+          {
+            "x": 0.78,
+            "y": -3.63
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/boulder5.png"
+        },
+        "boolList": {
+          "Polygon collision": true,
+          "StartFixed": true
+        }
+      }
+    }
+  },
+  "pegs": {},
+  "npcs": {},
+  "textTips": {},
+  "attackZones": {
+    "11": {
+      "path": "../assets/fireball.png",
+      "centerXM": 31.428571428571427,
+      "centerYM": 8.035714285714285,
+      "scale": 1.0,
+      "ticket": 11,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 3.0,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "ymin": 0.0,
+          "xmin": 12.0,
+          "xVelMin": -200.0,
+          "xOffsetMin": 0.0,
+          "Scale": 0.28,
+          "yOffsetMin": 0.0,
+          "xVelMax": -100.0,
+          "yOffsetMax": 0.0,
+          "ymax": 20.0,
+          "xmax": 35.0,
+          "yVelMax": -10.0,
+          "xOffsetMax": 0.0,
+          "yVelMin": -100.0
+        },
+        "collPointList": [],
+        "floatList": {},
+        "strList": {
+          "FireType": "ABSOLUTE",
+          "soundName": "fireball.wav"
+        },
+        "boolList": {
+          "dynamic": false
+        }
+      }
+    }
+  },
+  "traps": {}
+}

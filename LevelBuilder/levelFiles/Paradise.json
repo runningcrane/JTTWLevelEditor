@@ -15,9 +15,10 @@
     "collisionHeight": 0.0
   },
   "eolPoint": {
-    "x": 14.911764705882353,
-    "y": 9.764705882352942
+    "x": 17.88235294117647,
+    "y": 18.970588235294116
   },
+  "eolQuadrant": 4,
   "levelWidthM": 20.0,
   "levelHeightM": 15.0,
   "respawnPoints": [],
@@ -35,7 +36,9 @@
       "scaledIGWM": 9.0,
       "scaledIGHM": 9.0,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 3.0,
           "Velocity": 1.0,
@@ -110,7 +113,9 @@
       "scaledIGWM": 2.0,
       "scaledIGHM": 1.0,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -161,7 +166,9 @@
       "scaledIGWM": 2.0,
       "scaledIGHM": 1.0,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -217,14 +224,16 @@
         "y": 10.294117647058822
       },
       "path": "../assets/cldSunsetUp.png",
-      "centerXM": 16.029411764705884,
-      "centerYM": 10.294117647058822,
+      "centerXM": 16.352941176470587,
+      "centerYM": 13.264705882352942,
       "scale": 1.0,
       "ticket": 4,
       "scaledIGWM": 2.0,
       "scaledIGHM": 1.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -263,6 +272,177 @@
         "floatList": {},
         "strList": {
           "Image path": "../assets/cldSunsetUp.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": false,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "8": {
+      "endpoint": {
+        "x": 19.705882352941178,
+        "y": 13.176470588235293
+      },
+      "path": "../assets/cldSunset.png",
+      "centerXM": 19.705882352941178,
+      "centerYM": 13.176470588235293,
+      "scale": 1.0,
+      "ticket": 8,
+      "scaledIGWM": 2.0,
+      "scaledIGHM": 1.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -0.89,
+            "y": -0.33
+          },
+          {
+            "x": -0.87,
+            "y": 0.05
+          },
+          {
+            "x": 0.8,
+            "y": 0.18
+          },
+          {
+            "x": 0.72,
+            "y": -0.38
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldSunset.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "10": {
+      "endpoint": {
+        "x": -0.2647058823529412,
+        "y": 14.0
+      },
+      "path": "../assets/cldSunsetUp.png",
+      "centerXM": -0.2647058823529412,
+      "centerYM": 14.0,
+      "scale": 2.7,
+      "ticket": 10,
+      "scaledIGWM": 5.4,
+      "scaledIGHM": 4.050000000000001,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 2.7,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -2.403,
+            "y": -1.4850000000000003
+          },
+          {
+            "x": -2.7,
+            "y": -0.648
+          },
+          {
+            "x": -2.079,
+            "y": -0.29700000000000004
+          },
+          {
+            "x": 2.0250000000000004,
+            "y": -0.054000000000000006
+          },
+          {
+            "x": 2.7,
+            "y": -0.648
+          },
+          {
+            "x": 2.403,
+            "y": -1.701
+          },
+          {
+            "x": 1.026,
+            "y": -1.701
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldSunsetUp.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": false,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "11": {
+      "endpoint": {
+        "x": 9.264705882352942,
+        "y": 14.941176470588236
+      },
+      "path": "../assets/cldSunset.png",
+      "centerXM": 9.264705882352942,
+      "centerYM": 14.941176470588236,
+      "scale": 1.4,
+      "ticket": 11,
+      "scaledIGWM": 2.8,
+      "scaledIGHM": 1.4,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.4,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.246,
+            "y": -0.46199999999999997
+          },
+          {
+            "x": -1.218,
+            "y": 0.06999999999999999
+          },
+          {
+            "x": 1.1199999999999999,
+            "y": 0.252
+          },
+          {
+            "x": 1.008,
+            "y": -0.5319999999999999
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldSunset.png"
         },
         "boolList": {
           "Collidable": false,
@@ -357,5 +537,71 @@
   "boulders": {},
   "pegs": {},
   "npcs": {},
-  "textTips": {}
+  "textTips": {
+    "5": {
+      "path": "",
+      "centerXM": 2.8823529411764706,
+      "centerYM": 10.823529411764707,
+      "scale": 0.0,
+      "ticket": 5,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {
+          "fontSize": 40
+        },
+        "doubList": {},
+        "collPointList": [],
+        "floatList": {},
+        "strList": {
+          "text": "Move with the arrow keys"
+        },
+        "boolList": {}
+      }
+    },
+    "6": {
+      "path": "",
+      "centerXM": 9.352941176470589,
+      "centerYM": 10.558823529411764,
+      "scale": 0.0,
+      "ticket": 6,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {
+          "fontSize": 40
+        },
+        "doubList": {},
+        "collPointList": [],
+        "floatList": {},
+        "strList": {
+          "text": "Jump with Space"
+        },
+        "boolList": {}
+      }
+    },
+    "9": {
+      "path": "",
+      "centerXM": 13.411764705882353,
+      "centerYM": 12.264705882352942,
+      "scale": 0.0,
+      "ticket": 9,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {
+          "fontSize": 40
+        },
+        "doubList": {},
+        "collPointList": [],
+        "floatList": {},
+        "strList": {
+          "text": "Hold to go higher"
+        },
+        "boolList": {}
+      }
+    }
+  },
+  "attackZones": {},
+  "traps": {}
 }

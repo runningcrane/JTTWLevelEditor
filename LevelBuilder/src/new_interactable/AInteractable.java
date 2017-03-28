@@ -3,8 +3,6 @@ package new_interactable;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
-import javax.swing.ImageIcon;
-
 import utils.annotations.Exclude;
 
 public abstract class AInteractable {
@@ -48,7 +46,7 @@ public abstract class AInteractable {
 	 * Rescaled image for output on level editor.
 	 */
 	@Exclude
-	private ImageIcon rescaledImage;
+	private BufferedImage rescaledImage;
 	
 	/**
 	 * Scaled in-game width [m]. 
@@ -173,7 +171,7 @@ public abstract class AInteractable {
 	 * Get the rescaled image of this entity.
 	 * @return rescaled image icon to fit into the level
 	 */
-	public ImageIcon getRI() {
+	public BufferedImage getRI() {
 		return this.rescaledImage;
 	}
 	
@@ -181,7 +179,7 @@ public abstract class AInteractable {
 	 * Set the rescaled image of the entity.
 	 * @param RI rescaled image icon
 	 */
-	public void setRI(ImageIcon RI) {
+	public void setRI(BufferedImage RI) {
 		this.rescaledImage = RI;
 	}
 	

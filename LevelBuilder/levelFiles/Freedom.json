@@ -1,14 +1,16 @@
 {
   "VERSION": 2,
+  "levelFileName": "Freedom",
   "levelName": "Freedom",
+  "levelNumber": 1,
   "nextLevelName": "SecretGarden",
   "mToPixel": 34.0,
   "bg": {
     "path": "../assets/bgSunny.png",
     "centerXm": 0.0,
     "centerYm": 0.0,
-    "widthm": 120.0,
-    "heightm": 40.0,
+    "widthm": 20.0,
+    "heightm": 15.0,
     "collisionWidth": 0.0,
     "collisionHeight": 0.0
   },
@@ -16,6 +18,7 @@
     "x": 104.44117647058823,
     "y": 8.029411764705884
   },
+  "eolQuadrant": 4,
   "levelWidthM": 120.0,
   "levelHeightM": 40.0,
   "respawnPoints": [
@@ -28,12 +31,12 @@
       "y": 14.441176470588236
     },
     {
-      "x": 67.94117647058823,
-      "y": 14.264705882352942
-    },
-    {
       "x": 92.05882352941177,
       "y": 10.235294117647058
+    },
+    {
+      "x": 65.3529411764706,
+      "y": 14.411764705882351
     }
   ],
   "plats": {
@@ -50,7 +53,9 @@
       "scaledIGWM": 3.0,
       "scaledIGHM": 7.0,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -125,7 +130,9 @@
       "scaledIGWM": 2.2800000000000002,
       "scaledIGHM": 1.1400000000000001,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 0.76,
           "Velocity": 1.0,
@@ -176,7 +183,9 @@
       "scaledIGWM": 4.199999999999999,
       "scaledIGHM": 2.0999999999999996,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.4,
           "Velocity": 1.0,
@@ -227,7 +236,9 @@
       "scaledIGWM": 3.63,
       "scaledIGHM": 1.815,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.21,
           "Velocity": 1.0,
@@ -278,7 +289,9 @@
       "scaledIGWM": 3.0,
       "scaledIGHM": 7.0,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -349,7 +362,9 @@
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -400,7 +415,9 @@
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -455,7 +472,9 @@
       "scaledIGWM": 2.2199999999999998,
       "scaledIGHM": 1.1099999999999999,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 0.74,
           "Velocity": 1.0,
@@ -506,7 +525,9 @@
       "scaledIGWM": 3.69,
       "scaledIGHM": 1.845,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.23,
           "Velocity": 1.0,
@@ -557,7 +578,9 @@
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -608,7 +631,9 @@
       "scaledIGWM": 3.63,
       "scaledIGHM": 2.904,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.21,
           "Velocity": 1.0,
@@ -672,8 +697,8 @@
     },
     "12": {
       "endpoint": {
-        "x": 9.647058823529411,
-        "y": 4.676470588235297
+        "x": 9.676470588235293,
+        "y": 5.323529411764703
       },
       "path": "../assets/cldClearUp.png",
       "centerXM": 9.794117647058824,
@@ -683,10 +708,12 @@
       "scaledIGWM": 3.0,
       "scaledIGHM": 2.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
-          "Velocity": 0.9,
+          "Velocity": 1.3,
           "Spring Constant K": 1.0
         },
         "collPointList": [
@@ -754,7 +781,9 @@
       "scaledIGWM": 4.0,
       "scaledIGHM": 7.0,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -817,7 +846,9 @@
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -868,7 +899,9 @@
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -919,7 +952,9 @@
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -970,7 +1005,9 @@
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -1021,7 +1058,9 @@
       "scaledIGWM": 3.51,
       "scaledIGHM": 1.755,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.17,
           "Velocity": 1.0,
@@ -1072,7 +1111,9 @@
       "scaledIGWM": 2.07,
       "scaledIGHM": 1.035,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 0.69,
           "Velocity": 1.0,
@@ -1123,7 +1164,9 @@
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -1174,7 +1217,9 @@
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -1214,8 +1259,8 @@
     },
     "22": {
       "endpoint": {
-        "x": 56.94117647058823,
-        "y": 10.411764705882351
+        "x": 53.44117647058823,
+        "y": 10.294117647058822
       },
       "path": "../assets/cldClearDiagL.png",
       "centerXM": 47.73529411764705,
@@ -1225,10 +1270,12 @@
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
-          "Velocity": 1.2,
+          "Velocity": 1.7,
           "Spring Constant K": 1.0
         },
         "collPointList": [
@@ -1269,18 +1316,20 @@
     },
     "23": {
       "endpoint": {
-        "x": 56.8235294117647,
-        "y": 11.823529411764707
+        "x": 53.94117647058823,
+        "y": 11.941176470588236
       },
       "path": "../assets/cldClearDiagL.png",
-      "centerXM": 65.79411764705883,
-      "centerYM": 12.029411764705884,
+      "centerXM": 61.5,
+      "centerYM": 11.794117647058822,
       "scale": 1.0,
       "ticket": 23,
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.2,
@@ -1328,14 +1377,16 @@
         "y": 11.75
       },
       "path": "../assets/cldClear.png",
-      "centerXM": 68.26470588235294,
+      "centerXM": 65.61764705882354,
       "centerYM": 13.088235294117649,
       "scale": 1.0,
       "ticket": 24,
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -1386,7 +1437,9 @@
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -1437,7 +1490,9 @@
       "scaledIGWM": 2.61,
       "scaledIGHM": 1.305,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 0.87,
           "Velocity": 1.0,
@@ -1488,7 +1543,9 @@
       "scaledIGWM": 2.46,
       "scaledIGHM": 1.23,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 0.82,
           "Velocity": 1.0,
@@ -1539,7 +1596,9 @@
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -1590,7 +1649,9 @@
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -1634,14 +1695,16 @@
         "y": 0.0
       },
       "path": "../assets/cldClear.png",
-      "centerXM": 92.25,
-      "centerYM": 8.774999999999999,
+      "centerXM": 92.32352941176471,
+      "centerYM": 7.676470588235297,
       "scale": 1.0,
       "ticket": 30,
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -1692,7 +1755,9 @@
       "scaledIGWM": 5.2,
       "scaledIGHM": 9.1,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.3,
           "Velocity": 1.0,
@@ -1763,7 +1828,9 @@
       "scaledIGWM": 2.67,
       "scaledIGHM": 1.335,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 0.89,
           "Velocity": 1.0,
@@ -1814,7 +1881,9 @@
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -1869,7 +1938,9 @@
       "scaledIGWM": 3.84,
       "scaledIGHM": 1.92,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.28,
           "Velocity": 1.0,
@@ -1924,7 +1995,9 @@
       "scaledIGWM": 3.84,
       "scaledIGHM": 3.2,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.28,
           "Velocity": 1.0,
@@ -1995,7 +2068,9 @@
       "scaledIGWM": 3.7800000000000002,
       "scaledIGHM": 1.8900000000000001,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.26,
           "Velocity": 1.0,
@@ -2039,14 +2114,16 @@
         "y": 0.0
       },
       "path": "../assets/cldClearDiagL.png",
-      "centerXM": 64.38235294117646,
-      "centerYM": 18.882352941176475,
+      "centerXM": 55.5,
+      "centerYM": 19.352941176470587,
       "scale": 2.0,
       "ticket": 37,
       "scaledIGWM": 6.0,
       "scaledIGHM": 3.0,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 2.0,
           "Velocity": 1.0,
@@ -2101,7 +2178,9 @@
       "scaledIGWM": 4.800000000000001,
       "scaledIGHM": 2.4000000000000004,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.6,
           "Velocity": 1.0,
@@ -2156,7 +2235,9 @@
       "scaledIGWM": 4.5600000000000005,
       "scaledIGHM": 2.2800000000000002,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.52,
           "Velocity": 1.0,
@@ -2207,7 +2288,9 @@
       "scaledIGWM": 2.16,
       "scaledIGHM": 1.728,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 0.72,
           "Velocity": 1.0,
@@ -2282,7 +2365,9 @@
       "scaledIGWM": 3.3899999999999997,
       "scaledIGHM": 1.6949999999999998,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.13,
           "Velocity": 1.0,
@@ -2337,7 +2422,9 @@
       "scaledIGWM": 2.34,
       "scaledIGHM": 1.17,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 0.78,
           "Velocity": 1.0,
@@ -2388,7 +2475,9 @@
       "scaledIGWM": 2.46,
       "scaledIGHM": 2.05,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 0.82,
           "Velocity": 1.0,
@@ -2459,7 +2548,9 @@
       "scaledIGWM": 4.0200000000000005,
       "scaledIGHM": 6.7,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.34,
           "Velocity": 1.0,
@@ -2526,7 +2617,9 @@
       "scaledIGWM": 1.77,
       "scaledIGHM": 0.885,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 0.59,
           "Velocity": 1.0,
@@ -2577,7 +2670,9 @@
       "scaledIGWM": 2.0100000000000002,
       "scaledIGHM": 1.0050000000000001,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 0.67,
           "Velocity": 1.0,
@@ -2628,7 +2723,9 @@
       "scaledIGWM": 1.2000000000000002,
       "scaledIGHM": 0.6000000000000001,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 0.4,
           "Velocity": 1.0,
@@ -2683,7 +2780,9 @@
       "scaledIGWM": 1.2000000000000002,
       "scaledIGHM": 0.96,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 0.4,
           "Velocity": 1.0,
@@ -2758,7 +2857,9 @@
       "scaledIGWM": 3.5,
       "scaledIGHM": 6.0,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -2766,24 +2867,20 @@
         },
         "collPointList": [
           {
-            "x": -0.21,
-            "y": -2.87
+            "x": -0.23,
+            "y": -2.826666666666666
           },
           {
-            "x": -0.16,
-            "y": 0.0
+            "x": -0.15,
+            "y": 0.68
           },
           {
-            "x": -0.12,
-            "y": 0.64
+            "x": 0.21,
+            "y": 0.6933333333333335
           },
           {
-            "x": 0.26,
-            "y": 0.64
-          },
-          {
-            "x": 0.34,
-            "y": -2.9
+            "x": 0.3166666666666666,
+            "y": -2.8533333333333335
           }
         ],
         "floatList": {},
@@ -2813,7 +2910,9 @@
       "scaledIGWM": 3.5,
       "scaledIGHM": 6.0,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -2821,24 +2920,20 @@
         },
         "collPointList": [
           {
-            "x": -0.21,
-            "y": -2.87
+            "x": -0.23,
+            "y": -2.826666666666666
           },
           {
-            "x": -0.16,
-            "y": 0.0
+            "x": -0.15,
+            "y": 0.68
           },
           {
-            "x": -0.12,
-            "y": 0.64
+            "x": 0.21,
+            "y": 0.6933333333333335
           },
           {
-            "x": 0.26,
-            "y": 0.64
-          },
-          {
-            "x": 0.34,
-            "y": -2.9
+            "x": 0.3166666666666666,
+            "y": -2.8533333333333335
           }
         ],
         "floatList": {},
@@ -2868,7 +2963,9 @@
       "scaledIGWM": 3.5,
       "scaledIGHM": 6.0,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -2876,24 +2973,20 @@
         },
         "collPointList": [
           {
-            "x": -0.21,
-            "y": -2.87
+            "x": -0.23,
+            "y": -2.826666666666666
           },
           {
-            "x": -0.16,
-            "y": 0.0
+            "x": -0.15,
+            "y": 0.68
           },
           {
-            "x": -0.12,
-            "y": 0.64
+            "x": 0.21,
+            "y": 0.6933333333333335
           },
           {
-            "x": 0.26,
-            "y": 0.64
-          },
-          {
-            "x": 0.34,
-            "y": -2.9
+            "x": 0.3166666666666666,
+            "y": -2.8533333333333335
           }
         ],
         "floatList": {},
@@ -2923,7 +3016,9 @@
       "scaledIGWM": 3.5,
       "scaledIGHM": 6.0,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -2931,24 +3026,20 @@
         },
         "collPointList": [
           {
-            "x": -0.21,
-            "y": -2.87
+            "x": -0.23,
+            "y": -2.826666666666666
           },
           {
-            "x": -0.16,
-            "y": 0.0
+            "x": -0.15,
+            "y": 0.68
           },
           {
-            "x": -0.12,
-            "y": 0.64
+            "x": 0.21,
+            "y": 0.6933333333333335
           },
           {
-            "x": 0.26,
-            "y": 0.64
-          },
-          {
-            "x": 0.34,
-            "y": -2.9
+            "x": 0.3166666666666666,
+            "y": -2.8533333333333335
           }
         ],
         "floatList": {},
@@ -2978,7 +3069,9 @@
       "scaledIGWM": 3.5,
       "scaledIGHM": 6.0,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -2986,24 +3079,20 @@
         },
         "collPointList": [
           {
-            "x": -0.21,
-            "y": -2.87
+            "x": -0.23,
+            "y": -2.826666666666666
           },
           {
-            "x": -0.16,
-            "y": 0.0
+            "x": -0.15,
+            "y": 0.68
           },
           {
-            "x": -0.12,
-            "y": 0.64
+            "x": 0.21,
+            "y": 0.6933333333333335
           },
           {
-            "x": 0.26,
-            "y": 0.64
-          },
-          {
-            "x": 0.34,
-            "y": -2.9
+            "x": 0.3166666666666666,
+            "y": -2.8533333333333335
           }
         ],
         "floatList": {},
@@ -3033,7 +3122,9 @@
       "scaledIGWM": 3.5,
       "scaledIGHM": 6.0,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -3041,24 +3132,20 @@
         },
         "collPointList": [
           {
-            "x": -0.21,
-            "y": -2.87
+            "x": -0.23,
+            "y": -2.826666666666666
           },
           {
-            "x": -0.16,
-            "y": 0.0
+            "x": -0.15,
+            "y": 0.68
           },
           {
-            "x": -0.12,
-            "y": 0.64
+            "x": 0.21,
+            "y": 0.6933333333333335
           },
           {
-            "x": 0.26,
-            "y": 0.64
-          },
-          {
-            "x": 0.34,
-            "y": -2.9
+            "x": 0.3166666666666666,
+            "y": -2.8533333333333335
           }
         ],
         "floatList": {},
@@ -3088,7 +3175,9 @@
       "scaledIGWM": 3.5,
       "scaledIGHM": 6.0,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -3096,24 +3185,20 @@
         },
         "collPointList": [
           {
-            "x": -0.21,
-            "y": -2.87
+            "x": -0.23,
+            "y": -2.826666666666666
           },
           {
-            "x": -0.16,
-            "y": 0.0
+            "x": -0.15,
+            "y": 0.68
           },
           {
-            "x": -0.12,
-            "y": 0.64
+            "x": 0.21,
+            "y": 0.6933333333333335
           },
           {
-            "x": 0.26,
-            "y": 0.64
-          },
-          {
-            "x": 0.34,
-            "y": -2.9
+            "x": 0.3166666666666666,
+            "y": -2.8533333333333335
           }
         ],
         "floatList": {},
@@ -3143,7 +3228,9 @@
       "scaledIGWM": 3.5,
       "scaledIGHM": 6.0,
       "book": {
-        "intList": {},
+        "intList": {
+          "Z-order": 4
+        },
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
@@ -3151,29 +3238,265 @@
         },
         "collPointList": [
           {
-            "x": -0.21,
-            "y": -2.87
+            "x": -0.23,
+            "y": -2.826666666666666
           },
           {
-            "x": -0.16,
-            "y": 0.0
+            "x": -0.15,
+            "y": 0.68
           },
           {
-            "x": -0.12,
-            "y": 0.64
+            "x": 0.21,
+            "y": 0.6933333333333335
           },
           {
-            "x": 0.26,
-            "y": 0.64
-          },
-          {
-            "x": 0.34,
-            "y": -2.9
+            "x": 0.3166666666666666,
+            "y": -2.8533333333333335
           }
         ],
         "floatList": {},
         "strList": {
           "Image path": "../assets/Tree1.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "57": {
+      "endpoint": {
+        "x": 114.44117647058823,
+        "y": 15.558823529411764
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 114.44117647058823,
+      "centerYM": 15.558823529411764,
+      "scale": 2.0,
+      "ticket": 57,
+      "scaledIGWM": 6.0,
+      "scaledIGHM": 3.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 2.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -2.4,
+            "y": -1.06
+          },
+          {
+            "x": -2.56,
+            "y": 0.22
+          },
+          {
+            "x": 2.56,
+            "y": 0.1
+          },
+          {
+            "x": 2.06,
+            "y": -1.18
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "58": {
+      "endpoint": {
+        "x": 113.47058823529412,
+        "y": 0.05882352941176805
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 113.47058823529412,
+      "centerYM": 0.05882352941176805,
+      "scale": 3.0,
+      "ticket": 58,
+      "scaledIGWM": 9.0,
+      "scaledIGHM": 4.5,
+      "book": {
+        "intList": {
+          "Z-order": 5
+        },
+        "doubList": {
+          "Scale": 3.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -3.5999999999999996,
+            "y": -1.59
+          },
+          {
+            "x": -3.84,
+            "y": 0.33
+          },
+          {
+            "x": 3.84,
+            "y": 0.15000000000000002
+          },
+          {
+            "x": 3.09,
+            "y": -1.77
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "59": {
+      "endpoint": {
+        "x": 107.1470588235294,
+        "y": 1.117647058823529
+      },
+      "path": "../assets/cldClearDiagL.png",
+      "centerXM": 107.1470588235294,
+      "centerYM": 1.117647058823529,
+      "scale": 3.0,
+      "ticket": 59,
+      "scaledIGWM": 9.0,
+      "scaledIGHM": 4.5,
+      "book": {
+        "intList": {
+          "Z-order": 5
+        },
+        "doubList": {
+          "Scale": 3.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -4.32,
+            "y": -1.9500000000000002
+          },
+          {
+            "x": -4.2299999999999995,
+            "y": 0.33
+          },
+          {
+            "x": 3.87,
+            "y": 0.44999999999999996
+          },
+          {
+            "x": 4.47,
+            "y": -0.81
+          },
+          {
+            "x": 0.0,
+            "y": -1.32
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClearDiagL.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "64": {
+      "endpoint": {
+        "x": 69.73529411764706,
+        "y": 13.0
+      },
+      "path": "../assets/cldClearDiagR.png",
+      "centerXM": 69.73529411764706,
+      "centerYM": 13.0,
+      "scale": 1.0,
+      "ticket": 64,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 2.4,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.38,
+            "y": -0.98
+          },
+          {
+            "x": -1.5,
+            "y": -0.53
+          },
+          {
+            "x": -1.32,
+            "y": -0.24
+          },
+          {
+            "x": -0.84,
+            "y": -0.16
+          },
+          {
+            "x": -0.29,
+            "y": -0.11
+          },
+          {
+            "x": 1.0,
+            "y": 0.0
+          },
+          {
+            "x": 1.36,
+            "y": -0.14
+          },
+          {
+            "x": 1.47,
+            "y": -0.57
+          },
+          {
+            "x": 1.13,
+            "y": -1.01
+          },
+          {
+            "x": -0.34,
+            "y": -0.94
+          }
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClearDiagR.png"
         },
         "boolList": {
           "Collidable": true,
@@ -3265,19 +3588,18 @@
     }
   },
   "vines": {
-    "57": {
+    "60": {
       "path": "../assets/vine3.png",
       "centerXM": 44.61764705882353,
       "centerYM": 20.147058823529413,
       "scale": 1.0,
-      "ticket": 57,
+      "ticket": 60,
       "scaledIGWM": 1.0,
       "scaledIGHM": 5.0,
       "book": {
         "intList": {},
         "doubList": {
           "Length": 8.0,
-          "Arc Length": 360.0,
           "Scale": 1.0,
           "Velocity": 1.0,
           "Width": 0.8,
@@ -3300,21 +3622,20 @@
         "boolList": {}
       }
     },
-    "58": {
+    "61": {
       "path": "../assets/vine3.png",
       "centerXM": 14.45,
       "centerYM": 14.0,
       "scale": 1.0,
-      "ticket": 58,
+      "ticket": 61,
       "scaledIGWM": 1.0,
       "scaledIGHM": 5.0,
       "book": {
         "intList": {},
         "doubList": {
-          "Length": 5.0,
-          "Arc Length": 360.0,
+          "Length": 6.0,
           "Scale": 1.0,
-          "Velocity": 1.0,
+          "Velocity": 1.5,
           "Width": 1.0,
           "Arc Length (deg)": 180.0
         },
@@ -3335,21 +3656,20 @@
         "boolList": {}
       }
     },
-    "59": {
+    "62": {
       "path": "../assets/vine1.png",
       "centerXM": 76.02941176470588,
       "centerYM": 18.41176470588235,
       "scale": 1.0,
-      "ticket": 59,
+      "ticket": 62,
       "scaledIGWM": 1.0,
       "scaledIGHM": 5.0,
       "book": {
         "intList": {},
         "doubList": {
           "Length": 8.0,
-          "Arc Length": 360.0,
           "Scale": 1.0,
-          "Velocity": 1.0,
+          "Velocity": 2.2,
           "Width": 0.8,
           "Arc Length (deg)": 180.0
         },
@@ -3370,21 +3690,20 @@
         "boolList": {}
       }
     },
-    "60": {
+    "63": {
       "path": "../assets/vine2.png",
       "centerXM": 84.65,
       "centerYM": 18.425,
       "scale": 1.0,
-      "ticket": 60,
+      "ticket": 63,
       "scaledIGWM": 1.0,
       "scaledIGHM": 5.0,
       "book": {
         "intList": {},
         "doubList": {
           "Length": 8.0,
-          "Arc Length": 360.0,
           "Scale": 1.0,
-          "Velocity": -0.8,
+          "Velocity": -2.4,
           "Width": 0.8,
           "Arc Length (deg)": 180.0
         },
@@ -3409,18 +3728,50 @@
   "boulders": {},
   "pegs": {},
   "npcs": {},
-  "tutorials": [
-  {
-    "tipString": "Move with arrow keys",
-    "fontSize": 50,
-    "centerX": 1.475,
-    "centerY": 8.0
+  "textTips": {
+    "65": {
+      "path": "",
+      "centerXM": 11.264705882352942,
+      "centerYM": 11.264705882352942,
+      "scale": 0.0,
+      "ticket": 65,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {
+          "fontSize": 35
+        },
+        "doubList": {},
+        "collPointList": [],
+        "floatList": {},
+        "strList": {
+          "text": "Swing with arrow keys!"
+        },
+        "boolList": {}
+      }
+    },
+    "66": {
+      "path": "",
+      "centerXM": 17.735294117647058,
+      "centerYM": 11.941176470588236,
+      "scale": 0.0,
+      "ticket": 66,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {
+          "fontSize": 35
+        },
+        "doubList": {},
+        "collPointList": [],
+        "floatList": {},
+        "strList": {
+          "text": "Scale with up and down"
+        },
+        "boolList": {}
+      }
+    }
   },
-  {
-    "tipString": "Jump with space bar",
-    "fontSize": 50,
-    "centerX": 5.0,
-    "centerY": 11.0
-  }
-]
+  "attackZones": {},
+  "traps": {}
 }

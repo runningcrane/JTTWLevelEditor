@@ -1,1 +1,12 @@
-{"zoomLevel":1.0,"width":3.0,"height":4.0,"points":[]}
+{
+  "intList": {},
+  "doubList": {
+    "widthm": 3.0,
+    "zoomLevel": 1.0,
+    "heightm": 4.0
+  },
+  "collPointList": [],
+  "floatList": {},
+  "strList": {},
+  "boolList": {}
+}
