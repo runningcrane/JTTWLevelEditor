@@ -1,6 +1,5 @@
 package new_client;
 
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -71,20 +70,12 @@ public class EditWindow extends JPanel {
 				
 		// Make the submit button.
 		this.submit = new JButton("Submit");
-		submit.setBackground(Color.GREEN);
-		submit.setOpaque(true);
-		submit.setBorderPainted(false);
-		submit.setForeground(Color.WHITE);
 		add(this.submit);
 		
 		// Make the remove button.
 		JLabel lblBlank = new JLabel();
 		add(lblBlank);
 		this.remove = new JButton("Remove");
-		remove.setBackground(Color.RED);
-		remove.setOpaque(true);
-		remove.setBorderPainted(false);
-		remove.setForeground(Color.WHITE);
 		add(this.remove);
 		
 		setLayout(new GridLayout(2,2,0,0));
@@ -159,7 +150,7 @@ public class EditWindow extends JPanel {
 			actualVal = pb.getIntList().get(text);
 		}
 		JLabel label = new JLabel(text);
-		JTextField txtField = new JTextField(Integer.toString(actualVal) + ":");
+		JTextField txtField = new JTextField(Integer.toString(actualVal));
 		txtField.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
@@ -306,7 +297,6 @@ public class EditWindow extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				book.getBoolList().replace(text, chckBox.isSelected());
-				
 			}			
 		});
 		

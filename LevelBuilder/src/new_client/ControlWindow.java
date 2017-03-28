@@ -51,7 +51,7 @@ public class ControlWindow extends JFrame {
 	private static final String[] PLATFORMS = {
 			"Pedestal", "blueGround", "canyonR", "canyonL", 
 			"ForestGround", "Tree1", "Tree2", "paradiserock",
-			"Ramp", "arEast"
+			"Ramp", "arEast", "land", "Shore", "sea"
 	};
 	private static final String[] ROCKS = {
 			"Rock1", "Rock2", "Rock3", "Rock4", "Rock5", 
@@ -76,7 +76,7 @@ public class ControlWindow extends JFrame {
 	};
 	
 	private static final String[] SPECIALS = {
-		    "BuddhaHand", "lvl1Gate"	
+		    "BuddhaHand", "lvl1Gate", "head", "body", "tail"
 	}; 
 	private static final String[] TRAPS = {
 		    "cage1"
@@ -501,17 +501,23 @@ public class ControlWindow extends JFrame {
 		// Zones.
 		JPanel pnlZones = new JPanel();
 		pnlZones.setLayout(new BoxLayout(pnlZones, BoxLayout.Y_AXIS));
-		pnlZones.setPreferredSize(new Dimension(50, 50));
+		//pnlZones.setPreferredSize(new Dimension(50, 50));
 		pnlBack.add(pnlZones);
 		JLabel lblZones = new JLabel("<html><b>Zones</b></html>");
 		pnlZones.add(lblZones);
 
+		ButtonGroup zoneToggleGroup = new ButtonGroup();
+		JPanel pnlZoneGrid = new JPanel();
+		pnlZoneGrid.setLayout(new GridLayout(3,3));
+		pnlZones.add(pnlZoneGrid);
+		
 		for (String z : ATTACKZONES) {
 		    JButton btnAttackZone = new JButton(z);
 		    btnAttackZone.setIcon(new ImageIcon(THUMBNAIL_PATH + z + "Thumbnail.png"));
 		    btnAttackZone.addActionListener((arg0) -> ctlAdapter.makeAttackZone(ASSETS_PATH + z + ".png")); 
 		    btnAttackZone.setPreferredSize(dimButton);
-		    pnlZones.add(btnAttackZone);
+		    pnlZoneGrid.add(btnAttackZone);
+		    zoneToggleGroup.add(btnAttackZone);
 		}
 		
 		// Traps 

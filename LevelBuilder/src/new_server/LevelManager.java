@@ -12,7 +12,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,7 +26,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
@@ -310,7 +311,7 @@ public class LevelManager {
 		// Draw background
 		if (bg.getRescaled() != null) {
 			Point2D.Double vpbg = getViewportCoordinates(0, 0);
-			g.drawImage(bg.getRescaled().getImage(), (int) vpbg.getX(), (int) vpbg.getY(), null);
+			g.drawImage(bg.getRescaled(), (int) vpbg.getX(), (int) vpbg.getY(), null);
 		}
 
 		// Draw platforms
@@ -330,7 +331,7 @@ public class LevelManager {
 				double ulyp = ((this.levelHeightM - plat.getCenterYM()) - plat.getScaledIGHM() / 2.0) * this.mToPixel;
 				Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
 		
-				g.drawImage(plat.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
+				g.drawImage(plat.getRI(), (int) vpulp.getX(), (int) vpulp.getY(), null);
 		
 				// Draw the label on top of it. In the center, maybe?
 				g.setColor(Color.MAGENTA);
@@ -376,7 +377,7 @@ public class LevelManager {
 				double ulyp = ((this.levelHeightM - boulder.getCenterYM()) - boulder.getScaledIGHM() / 2.0) * this.mToPixel;
 				Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
 	
-				g.drawImage(boulder.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
+				g.drawImage(boulder.getRI(), (int) vpulp.getX(), (int) vpulp.getY(), null);
 	
 				// Draw the label on top of it. In the center, maybe?
 				g.setColor(Color.MAGENTA);
@@ -400,7 +401,10 @@ public class LevelManager {
 				double ulyp = ((this.levelHeightM - peg.getCenterYM()) - peg.getScaledIGHM() / 2.0) * this.mToPixel;
 				Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
 	
-				g.drawImage(peg.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
+				double rot =  Math.toRadians(peg.getPropertyBook().getDoubList().get("Rotation (deg)"));
+				AffineTransform tx = AffineTransform.getRotateInstance(-rot, peg.getRI().getWidth()/2, peg.getRI().getHeight()/2);
+				AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+				g.drawImage(op.filter(peg.getRI(), null), (int) vpulp.getX(), (int) vpulp.getY(), null);
 	
 				// Draw the label on top of it. In the center, maybe?
 				g.setColor(Color.MAGENTA);
@@ -424,7 +428,7 @@ public class LevelManager {
 				double ulyp = ((this.levelHeightM - vine.getCenterYM())) * this.mToPixel;
 				Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);			
 				
-				g.drawImage(vine.getRI().getImage(), (int) vpulp.getX(), (int) vpulp.getY(), null);
+				g.drawImage(vine.getRI(), (int) vpulp.getX(), (int) vpulp.getY(), null);
 	
 				// Draw the label on top of it.
 				g.setColor(Color.MAGENTA);
@@ -446,13 +450,13 @@ public class LevelManager {
 				double ulxp = (player.getCenterXM() - player.getInGameWidth() / 2.0) * this.mToPixel;
 				double ulyp = ((this.levelHeightM - (player.getCenterYM())) - player.getInGameHeight() / 2.0) * this.mToPixel;
 				Point2D.Double vpcp = getViewportCoordinates(ulxp, ulyp);
-				g.drawImage(player.getRI().getImage(), (int) vpcp.getX(), (int) vpcp.getY(), null);
+				g.drawImage(player.getRI(), (int) vpcp.getX(), (int) vpcp.getY(), null);
 			}
 		});
 		
 		traps.forEach((num, trap) -> {
 			Point2D.Double c = getViewportCoordinates(((trap.getCenterXM() - trap.getScaledIGWM() / 2.0) * this.mToPixel), (((this.levelHeightM - trap.getCenterYM()) - trap.getScaledIGHM() / 2.0) * this.mToPixel));
-			g.drawImage(trap.getRI().getImage(), (int)c.x,  (int)c.y, null);
+			g.drawImage(trap.getRI(), (int)c.x,  (int)c.y, null);
 			// Label point
 			g.setColor(Color.BLACK);
 			Point2D.Double vplbp = getViewportCoordinates(trap.getCenterXM() * this.mToPixel + 5,
@@ -471,7 +475,7 @@ public class LevelManager {
 			
 			Point2D.Double c = getViewportCoordinates((zone.getCenterXM() * this.mToPixel), ((this.levelHeightM - zone.getCenterYM()) * this.mToPixel));
 			
-			g.drawImage(zone.getRI().getImage(), (int)c.x,  (int)c.y, null);
+			g.drawImage(zone.getRI(), (int)c.x,  (int)c.y, null);
 		});
 
 		// Draw EOL
@@ -901,7 +905,13 @@ public class LevelManager {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "AttackZone");
 		window.setSubmitListener((arg0) -> {
 			zone.updateProperties(window.getPropertyBook());
-			// TODO: do we need to update the view at all?
+			// Next, update the relevant parts when scaling. Use resize()!
+			double scale = window.getPropertyBook().getDoubList().get("Scale");
+			
+			zone.setScale(scale);					
+				
+			// Scale the image now.
+			zone.setRI(resize(zone.getBI(), zone.getScaledIGWM(), zone.getScaledIGHM()));
 		});
 		
 		window.makeButton("New center",  (e) -> {
@@ -912,6 +922,7 @@ public class LevelManager {
 		
 		window.makeDoubleProperty("Scale", 1.0, book);
 		window.makeStringProperty("soundName", "", book);
+		window.makeBooleanProperty("dynamic", true, book);
 		window.makeStringProperty("FireType", "ABSOLUTE", book); 
 		window.makeDoubleProperty("xmin", 0.0, book); 
 		window.makeDoubleProperty("xmax", 0.0,  book);
@@ -969,6 +980,7 @@ public class LevelManager {
 		window.makeBooleanProperty("Climbable", false, book); 
 		window.makeBooleanProperty("Collidable", true, book); 
 		window.makeBooleanProperty("Polygon collision", true, book); 
+		window.makeIntProperty("Z-order", 4, book);
 
 		plat.updateProperties(window.getPropertyBook());
 	}
@@ -998,6 +1010,8 @@ public class LevelManager {
 		window.makeStringProperty("Image path", vine.getPath(), null);
 		window.makeDoubleProperty("Arc Length (deg)", 180, book);
 		window.makeDoubleProperty("Velocity", 1.0, book); 
+		window.makeDoubleProperty("Width", 1.0, book);
+		window.makeDoubleProperty("Length", 5.0,  book);
 		
 		vine.updateProperties(window.getPropertyBook());
 	}	
@@ -1196,7 +1210,7 @@ public class LevelManager {
 			}		
 		});
 		
-		window.makeDoubleProperty("Rotation (rad)", 0.0, book); 
+		window.makeDoubleProperty("Rotation (deg)", 0.0, book); 
 		
 		peg.updateProperties(window.getPropertyBook());
 	}
@@ -1387,15 +1401,20 @@ public class LevelManager {
 	 *            contains image in original pixel dimensions
 	 * @return
 	 */
-	public ImageIcon resize(BufferedImage original, double wm, double hm) {
+	public BufferedImage resize(BufferedImage original, double wm, double hm) {
 		double expectedWidth = wm * this.mToPixel;
 		double widthScale = expectedWidth / original.getWidth();
 
 		double expectedHeight = hm * this.mToPixel;
 		double heightScale = expectedHeight / original.getHeight();
-
-		return new ImageIcon(original.getScaledInstance((int) (original.getWidth() * widthScale),
-				(int) (original.getHeight() * heightScale), java.awt.Image.SCALE_SMOOTH));
+		
+		BufferedImage after = new BufferedImage((int)expectedWidth, (int)expectedHeight, BufferedImage.TYPE_INT_ARGB);
+		AffineTransform at = new AffineTransform();
+		at.scale(widthScale, heightScale);
+		AffineTransformOp scaleOp = 
+		   new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+		after = scaleOp.filter(original, after);
+		return after;
 	}
 	
 	/**

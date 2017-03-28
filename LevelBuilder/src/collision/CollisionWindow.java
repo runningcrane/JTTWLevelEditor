@@ -247,6 +247,7 @@ public class CollisionWindow extends JFrame {
 	public void rescalePlat() {		
 		// Rescale the loaded image.
 		if (this.image != null) {
+			System.out.println(this.mToPixel + ", " + this.zoomLevel + ", " + this.imgWidth);
 			this.rescaledImage = new ImageIcon(this.image.getScaledInstance((int)(this.imgWidth * this.mToPixel * this.zoomLevel), 
 					(int)(this.imgHeight * this.mToPixel * this.zoomLevel), java.awt.Image.SCALE_SMOOTH));
 		}

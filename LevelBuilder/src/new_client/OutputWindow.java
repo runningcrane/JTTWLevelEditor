@@ -262,7 +262,7 @@ public class OutputWindow extends JFrame {
 	 * @param name name of the level, sans .json
 	 */
 	public void setLevelName(String name) {
-		this.txtInputPath.setText(name);
+		this.txtName.setText(name);
 	}
 	
 	/**
@@ -281,7 +281,7 @@ public class OutputWindow extends JFrame {
 	}
 
 	public void setLevelFile(String levelFile) {
-		this.txtName.setText(levelFile);
+		this.txtOutputPath.setText(levelFile);
 	}
 
 	public void setLevelNumber(int levelNumber) {

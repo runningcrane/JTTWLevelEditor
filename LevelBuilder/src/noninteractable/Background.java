@@ -4,8 +4,6 @@ import java.awt.image.BufferedImage;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.ImageIcon;
-
 import org.json.simple.JSONObject;
 
 import utils.annotations.Exclude;
@@ -16,7 +14,7 @@ public class Background extends ANonInteractable {
 	private BufferedImage image;
 	
 	@Exclude
-	private ImageIcon rescaledImage;
+	private BufferedImage rescaledImage;
 	
 	public Background(BufferedImage image, String path, double wm, double hm) {
 		this.image = image;
@@ -32,11 +30,11 @@ public class Background extends ANonInteractable {
 		return this.image;
 	}	
 	
-	public ImageIcon getRescaled() {
+	public BufferedImage getRescaled() {
 		return this.rescaledImage;
 	}
 	
-	public void setRescaled(ImageIcon rescaled) {
+	public void setRescaled(BufferedImage rescaled) {
 		this.rescaledImage = rescaled;
 	}
 	
