@@ -3,13 +3,13 @@
   "levelFileName": "dragon",
   "levelName": "Battle with the Dragon",
   "levelNumber": 5,
-  "nextLevelName": "",
+  "nextLevelName": "RescuePiggy",
   "mToPixel": 28.0,
   "bg": {
     "path": "../assets/bgCloud.png",
     "centerXm": 0.0,
     "centerYm": 0.0,
-    "widthm": 20.0,
+    "widthm": 40.0,
     "heightm": 15.0,
     "collisionWidth": 0.0,
     "collisionHeight": 0.0
@@ -66,6 +66,7 @@
             "y": -1.936
           }
         ],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/land.png"
@@ -107,6 +108,7 @@
             "y": -1.59
           }
         ],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/sea.png"
@@ -143,6 +145,7 @@
           "Spring Constant K": 1.0
         },
         "collPointList": [],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/head.png"
@@ -179,6 +182,7 @@
           "Spring Constant K": 1.0
         },
         "collPointList": [],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/body.png"
@@ -215,6 +219,7 @@
           "Spring Constant K": 1.0
         },
         "collPointList": [],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/tail.png"
@@ -276,6 +281,7 @@
             "y": -1.8599999999999999
           }
         ],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/Shore.png"
@@ -313,21 +319,27 @@
         },
         "collPointList": [
           {
-            "x": -1.2,
-            "y": -0.53
+            "x": -1.24,
+            "y": -0.52
           },
           {
-            "x": -1.28,
-            "y": 0.11
+            "x": -1.23,
+            "y": 0.17
           },
           {
-            "x": 1.28,
-            "y": 0.05
+            "x": 1.27,
+            "y": 0.12
           },
           {
-            "x": 1.03,
+            "x": 1.05,
             "y": -0.59
           }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
         ],
         "floatList": {},
         "strList": {
@@ -366,25 +378,27 @@
         },
         "collPointList": [
           {
-            "x": -1.44,
-            "y": -0.65
+            "x": -1.39,
+            "y": -0.64
           },
           {
-            "x": -1.41,
-            "y": 0.11
+            "x": -1.38,
+            "y": 0.12
           },
           {
             "x": 1.29,
-            "y": 0.15
+            "y": 0.13
           },
           {
-            "x": 1.49,
-            "y": -0.27
-          },
-          {
-            "x": 0.0,
-            "y": -0.44
+            "x": 1.3,
+            "y": -0.58
           }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
         ],
         "floatList": {},
         "strList": {
@@ -423,41 +437,57 @@
         },
         "collPointList": [
           {
-            "x": -1.13,
-            "y": -0.95
+            "x": -1.14,
+            "y": -0.98
           },
           {
-            "x": -1.49,
-            "y": -0.68
+            "x": -1.43,
+            "y": -0.81
           },
           {
-            "x": -1.36,
-            "y": -0.21
+            "x": -1.51,
+            "y": -0.47
           },
           {
-            "x": 0.69,
-            "y": -0.16
+            "x": -1.41,
+            "y": -0.22
           },
           {
-            "x": 1.26,
-            "y": -0.05
+            "x": 1.46,
+            "y": -0.31
           },
           {
-            "x": 1.49,
-            "y": -0.52
+            "x": 1.45,
+            "y": -0.71
           },
           {
-            "x": 1.13,
-            "y": -1.15
-          },
-          {
-            "x": 0.6,
-            "y": -1.09
-          },
-          {
-            "x": -0.65,
+            "x": 1.28,
             "y": -1.04
+          },
+          {
+            "x": 0.86,
+            "y": -1.19
+          },
+          {
+            "x": 0.15,
+            "y": -1.24
+          },
+          {
+            "x": -0.54,
+            "y": -1.17
           }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
         ],
         "floatList": {},
         "strList": {
@@ -487,6 +517,7 @@
         "intList": {},
         "doubList": {},
         "collPointList": [],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -506,6 +537,7 @@
         "intList": {},
         "doubList": {},
         "collPointList": [],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -525,6 +557,7 @@
         "intList": {},
         "doubList": {},
         "collPointList": [],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -544,6 +577,7 @@
         "intList": {},
         "doubList": {},
         "collPointList": [],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -605,6 +639,7 @@
             "y": -3.63
           }
         ],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/boulder5.png"
@@ -624,10 +659,10 @@
       "path": "../assets/fireball.png",
       "centerXM": 31.428571428571427,
       "centerYM": 8.035714285714285,
-      "scale": 1.0,
+      "scale": 0.28,
       "ticket": 11,
-      "scaledIGWM": 3.0,
-      "scaledIGHM": 3.0,
+      "scaledIGWM": 0.8400000000000001,
+      "scaledIGHM": 0.8400000000000001,
       "book": {
         "intList": {},
         "doubList": {
@@ -646,6 +681,7 @@
           "yVelMin": -100.0
         },
         "collPointList": [],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {
           "FireType": "ABSOLUTE",

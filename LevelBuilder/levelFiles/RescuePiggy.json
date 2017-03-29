@@ -9,8 +9,8 @@
     "path": "../assets/bgSunny.png",
     "centerXm": 0.0,
     "centerYm": 0.0,
-    "widthm": 20.0,
-    "heightm": 15.0,
+    "widthm": 100.0,
+    "heightm": 25.0,
     "collisionWidth": 0.0,
     "collisionHeight": 0.0
   },
@@ -70,6 +70,7 @@
             "y": -2.48
           }
         ],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/Shore.png"
@@ -131,6 +132,7 @@
             "y": -1.984
           }
         ],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/Shore.png"
@@ -172,6 +174,7 @@
             "y": -1.06
           }
         ],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/sea.png"
@@ -209,37 +212,37 @@
         },
         "collPointList": [
           {
-            "x": -1.0766666666666667,
-            "y": -3.5
+            "x": -1.09,
+            "y": -3.48
           },
           {
-            "x": -0.8633333333333334,
-            "y": 2.0733333333333333
+            "x": -0.93,
+            "y": 2.12
           },
           {
-            "x": -0.5166666666666667,
-            "y": 2.873333333333333
+            "x": -0.47,
+            "y": 2.58
           },
           {
-            "x": -0.05,
-            "y": 3.4466666666666668
+            "x": 0.69,
+            "y": 2.56
           },
           {
-            "x": 0.6033333333333334,
-            "y": 2.54
+            "x": 1.27,
+            "y": -1.5
           },
           {
-            "x": 0.9233333333333335,
-            "y": -0.39333333333333315
-          },
-          {
-            "x": 1.2033333333333334,
-            "y": -1.406666666666667
-          },
-          {
-            "x": 1.1766666666666665,
-            "y": -3.5133333333333336
+            "x": 1.23,
+            "y": -3.48
           }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
         ],
         "floatList": {},
         "strList": {
@@ -269,6 +272,7 @@
         "intList": {},
         "doubList": {},
         "collPointList": [],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -288,6 +292,7 @@
         "intList": {},
         "doubList": {},
         "collPointList": [],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -307,6 +312,7 @@
         "intList": {},
         "doubList": {},
         "collPointList": [],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -326,6 +332,7 @@
         "intList": {},
         "doubList": {},
         "collPointList": [],
+        "edgeFrictionList": [],
         "floatList": {},
         "strList": {},
         "boolList": {

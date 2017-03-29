@@ -18,9 +18,15 @@ public class PropertyBook {
 	Map<String, Double> doubList;
 	
 	/**
-	 * List of Point2D.Double values - collision points.
+	 * List of Point2D.Double values - collision points, in cocos frame.
 	 */
 	ArrayList<Point2D.Double> collPointList; 
+	
+	/**
+	 * List of friction values for each edge.
+	 * 0 corresponds to the edge between collPoints 0 and 1, etc.
+	 */
+	ArrayList<Double> edgeFrictionList;
 	
 	/**
 	 * Map of property IDs to float values.
@@ -38,12 +44,13 @@ public class PropertyBook {
 	Map<String, Boolean> boolList;	
 	
 	public PropertyBook() {
-		this.intList = new HashMap<String, Integer>();
-		this.doubList = new HashMap<String, Double>();
-		this.collPointList = new ArrayList<Point2D.Double>();
-		this.floatList = new HashMap<String, Float>();
-		this.strList = new HashMap<String, String>();
-		this.boolList = new HashMap<String, Boolean>();
+		this.intList = new HashMap<>();
+		this.doubList = new HashMap<>();
+		this.collPointList = new ArrayList<>();
+		this.edgeFrictionList = new ArrayList<>();
+		this.floatList = new HashMap<>();
+		this.strList = new HashMap<>();
+		this.boolList = new HashMap<>();
 	}
 	
 	public Map<String, Integer> getIntList() {
@@ -56,6 +63,10 @@ public class PropertyBook {
 	
 	public ArrayList<Point2D.Double> getCollPoints() {
 		return this.collPointList;
+	}
+	
+	public ArrayList<Double> getEdgeFrictions() {
+		return this.edgeFrictionList;
 	}
 	
 	public Map<String, Float> getFloatList() {
@@ -77,49 +88,10 @@ public class PropertyBook {
 	 * @param newBook new book of properties
 	 */
 	public void updateProperties(PropertyBook newBook) {				
-		// Integers.		
-		newBook.getIntList().forEach((name, value) -> {
-			if (getIntList().containsKey(name)) {
-				getIntList().replace(name, value);
-			} else {
-				getIntList().put(name, value);
-			}
-		});
-		
-		// Doubles.
-		newBook.getDoubList().forEach((name, value) -> {
-			if (getDoubList().containsKey(name)) {
-				getDoubList().replace(name, value);
-			} else {
-				getDoubList().put(name, value);
-			}
-		});
-		
-		// Float.
-		newBook.getFloatList().forEach((name, value) -> {
-			if (getFloatList().containsKey(name)) {
-				getFloatList().replace(name, value);
-			} else {
-				getFloatList().put(name, value);
-			}
-		});
-		
-		// Strings.
-		newBook.getStringList().forEach((name, value) -> {
-			if (getStringList().containsKey(name)) {
-				getStringList().replace(name, value);
-			} else {
-				getStringList().put(name, value);
-			}
-		});
-		
-		// Booleans.
-		newBook.getBoolList().forEach((name, value) -> {
-			if (getBoolList().containsKey(name)) {
-				getBoolList().replace(name, value);
-			} else {
-				getBoolList().put(name, value);
-			}
-		});
+		getIntList().putAll(newBook.getIntList());
+		getDoubList().putAll(newBook.getDoubList());
+		getFloatList().putAll(newBook.getFloatList());
+		getStringList().putAll(newBook.getStringList());
+		getBoolList().putAll(newBook.getBoolList());;
 	}	
 }

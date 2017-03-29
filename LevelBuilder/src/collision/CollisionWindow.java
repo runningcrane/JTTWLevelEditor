@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
@@ -32,6 +34,7 @@ import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.UIManager;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JSlider;
@@ -55,8 +58,11 @@ public class CollisionWindow extends JFrame {
 	private JLabel lblRadius;
 	private JLabel lblWidth;
 	private JLabel lblHeight;
+	private JLabel lblFriction;
+	private JLabel lblFrictionVal;
 	private JButton btnPlatDim;
 	private JButton btnBoulderDim;
+	private JPanel pnlContent;
 		
 	String name;
 	private double imgWidth;
@@ -64,7 +70,9 @@ public class CollisionWindow extends JFrame {
 	private double zoomLevel;
 	private double mass;
 	private double radius;
-	private ArrayList<Point2D.Double> points;
+	private double currentFriction = 0.0;
+	private ArrayList<Point2D.Double> points = new ArrayList<>();
+	private ArrayList<Double> edgeFrics = new ArrayList<>();
 	
 	private BufferedImage image;
 	private ImageIcon rescaledImage;
@@ -85,8 +93,7 @@ public class CollisionWindow extends JFrame {
 		this.imgWidth = 3;
 		this.imgHeight = 3;
 		this.zoomLevel = 1;
-		this.points = new ArrayList<Point2D.Double>();
-		
+
 		// Viewport stuff
 		this.vpOffset = new Point2D.Double(0, 0);
 		this.offset = 1.5;				
@@ -94,21 +101,26 @@ public class CollisionWindow extends JFrame {
 		initGUI();
 	}
 	
-	public void makeDefault(String path) {
+	/**
+	 * Makes a default collision file for a new assets.
+	 * @param name The asset name (without extension).
+	 * @return 0 if new default was created, -1 on error.
+	 */
+	public int makeDefault(String name) {
 		// Check if the image exists.	
 		try {
-			this.image = ImageIO.read(new File(ASSETS_PATH + path + ".png"));
+			this.image = ImageIO.read(new File(ASSETS_PATH + name + ".png"));
 		} catch (IOException e) {
-			System.err.println("Image not found in assets folder: " + path);
+			System.err.println("Image not found in assets folder: " + name);
 			e.printStackTrace();
-			return;
+			return -1;
 		}
 		
 		// If the image exists, then make a JSON file for it.
-		this.name = path;
+		this.name = name;
 		this.outputJSON();
-		
-		System.out.println("Default file made. Please try again.");
+
+		return 0;
 	}
 	
 	public void clear() {
@@ -132,8 +144,10 @@ public class CollisionWindow extends JFrame {
 			System.out.println("Found path");
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found: " + COL_PATH + path + ".json");
-			// e.printStackTrace();
-			makeDefault(path);
+			if (makeDefault(path) == 0) {
+			    // Make default worked, so Call readJSON again. 
+			    readJSON();
+			}
 			return;
 		}
 		
@@ -181,13 +195,15 @@ public class CollisionWindow extends JFrame {
 			txtHeight.setText(Double.toString(height));
 		}
 				
-		ArrayList<Point2D.Double> points = new ArrayList<Point2D.Double>();
-		// Check if null.
-		if (!book.getCollPoints().isEmpty()) {			
-			for (Point2D.Double point : book.getCollPoints()) {											
-				points.add(point);
-			}
-		}				
+		ArrayList<Point2D.Double> points = new ArrayList<>();
+		// Check if null.		
+		for (Point2D.Double point : book.getCollPoints()) {											
+			points.add(point);
+		}
+		
+		for (Double d : book.getEdgeFrictions()) {
+		    this.edgeFrics.add(d);
+		}
 		
 		// Set shared fields.
 		this.name = name;	
@@ -277,11 +293,13 @@ public class CollisionWindow extends JFrame {
 		// Change the points to cocos points
 		ArrayList<Point2D.Double> cocosPoints = swingToCocos();
 		
-		int[] pointID = {0};
 		cocosPoints.forEach((cocosP) -> {
 			book.getCollPoints().add(cocosP);
-			pointID[0]++;
-		});		
+		});
+		
+		this.edgeFrics.forEach((f) -> book.getEdgeFrictions().add(f));
+		// Make sure the last friction (between point n and point 1) is the current friction.
+		book.getEdgeFrictions().add(currentFriction);
 		
 		if (this.name.toLowerCase().contains("boulder")) {
 			book.getDoubList().put("radius", this.radius);
@@ -314,9 +332,69 @@ public class CollisionWindow extends JFrame {
 		
 		// Control panel
 		JPanel pnlControls = new JPanel();
-		pnlControls.setLayout(new GridLayout(8,2));
+		pnlControls.setLayout(new GridLayout(9,2));
 		pnlControls.setBackground(UIManager.getColor("inactiveCaption"));
 		contentPane.add(pnlControls, BorderLayout.NORTH);
+		
+		
+		KeyEventDispatcher d = new KeyEventDispatcher() {
+            @Override
+			public boolean dispatchKeyEvent(KeyEvent e) {
+            	if (!e.isControlDown()) {
+            		return false;
+            	}
+				switch (e.getKeyCode()) {
+				case '1':
+					currentFriction = 1.0;
+					break;
+					
+				case '2':
+					currentFriction = 0.2;
+					break;
+					
+				case '3':
+					currentFriction = 0.3;
+					break;
+					
+				case '4':
+					currentFriction = 0.4;
+					break;
+					
+				case '5':
+					currentFriction = 0.5;
+					break;
+					
+				case '6':
+					currentFriction = 0.6;
+					break;
+					
+				case '7':
+					currentFriction = 0.7;
+					break;
+					
+				case '8':
+					currentFriction = 0.8;
+					break;
+					
+				case '9':
+					currentFriction = 0.9;
+					break;
+					
+				case '0':
+					currentFriction = 0.0;
+					break;
+					
+				default:
+					return false;
+				}
+				lblFrictionVal.setText(Double.toString(currentFriction));
+				pnlControls.repaint();
+				return true;
+			}
+		};
+		
+		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+		manager.addKeyEventDispatcher(d);
 		
 		txtName = new JTextField();
 		txtName.setText("Name");
@@ -380,6 +458,11 @@ public class CollisionWindow extends JFrame {
 		pnlControls.add(txtHeight);
 		txtHeight.setColumns(10);
 		
+		lblFriction = new JLabel("Friciton");
+		lblFrictionVal = new JLabel("0");
+		pnlControls.add(lblFriction);
+		pnlControls.add(lblFrictionVal);
+		
 		lblMass = new JLabel("Mass:");
 		pnlControls.add(lblMass);
 		
@@ -408,8 +491,10 @@ public class CollisionWindow extends JFrame {
 		JButton btnClear = new JButton("Clear Points");
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Remove all made points.
+				// Remove all made points and edge values.
 				points.clear();
+				edgeFrics.clear();
+				pnlContent.repaint();
 			}
 		});
 		
@@ -506,7 +591,7 @@ public class CollisionWindow extends JFrame {
 		btnEast.setIcon(iiEast);
 		pnlEast.add(btnEast);
 		
-		JPanel pnlContent = new JPanel() {
+		pnlContent = new JPanel() {
 			/**
 			 * UID for serialization.
 			 */
@@ -548,33 +633,17 @@ public class CollisionWindow extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 			    int xp = e.getX();
 			    int yp = e.getY();
-			    points.add(new Point2D.Double((xp - vpOffset.x)/zoomLevel, (yp - vpOffset.y)/zoomLevel));			    
+			    points.add(new Point2D.Double((xp - vpOffset.x)/zoomLevel, (yp - vpOffset.y)/zoomLevel));
+			    if (points.size() > 1) {
+			    	edgeFrics.add(currentFriction);
+			    }
 			    pnlContent.repaint();
 		    }
 
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mouseEntered(MouseEvent arg0) {}
+			public void mouseExited(MouseEvent arg0) {}
+			public void mousePressed(MouseEvent arg0) {}
+			public void mouseReleased(MouseEvent arg0) {}
 		});
 	}	
 	
@@ -598,7 +667,7 @@ public class CollisionWindow extends JFrame {
 			correctedPoints.add(new Point2D.Double(sx, sy));
 		});
 		return correctedPoints;
-	}	
+	}
 	
 	public ArrayList<Point2D.Double> swingToCocos() {
 		ArrayList<Point2D.Double> correctedPoints = new ArrayList<Point2D.Double>();
