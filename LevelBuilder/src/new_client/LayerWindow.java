@@ -1,5 +1,6 @@
 package new_client;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -115,6 +116,8 @@ public class LayerWindow extends JFrame {
 	
 	public void initGUI() {		
 		// Make this a BoxY layout. 
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(950, 50, 100, 100);
 		JPanel contentPane = new JPanel();
 		pnlBack = new JPanel();
 		scrPaneScroll = new JScrollPane(pnlBack);		
@@ -150,16 +153,17 @@ public class LayerWindow extends JFrame {
 				}				
 			}); 			
 			btnBg.setPreferredSize(dimButton);
+			btnBg.setBackground(new Color(143, 214, 248));
 			pnlToggle.add(btnBg);
 		}		
 		
 		// Add the group selection buttons.
-		JButton btnMoveSelected = new JButton("Group move");
-		btnMoveSelected.addFocusListener(new FocusListener() {
+		JButton btnSelectAll = new JButton("Select all");
+		btnSelectAll.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				// Tell the level manager to group move.
-				ltlAdapter.groupMove();	
+				// Tell the level manager to select all.
+				ltlAdapter.selectAll();	
 			}
 
 			@Override
@@ -168,8 +172,9 @@ public class LayerWindow extends JFrame {
 				
 			}			
 		});
-		btnMoveSelected.setPreferredSize(dimButton);
-		pnlToggle.add(btnMoveSelected);
+		btnSelectAll.setPreferredSize(dimButton);
+		btnSelectAll.setBackground(new Color(143, 251, 140));
+		pnlToggle.add(btnSelectAll);
 		
 		JButton btnDeselectAll = new JButton("Deselect all");
 		btnDeselectAll.addFocusListener(new FocusListener() {
@@ -188,12 +193,12 @@ public class LayerWindow extends JFrame {
 		btnDeselectAll.setPreferredSize(dimButton);
 		pnlToggle.add(btnDeselectAll);
 		
-		JButton btnSelectAll = new JButton("Select all");
-		btnSelectAll.addFocusListener(new FocusListener() {
+		JButton btnMoveSelected = new JButton("Group move");
+		btnMoveSelected.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				// Tell the level manager to select all.
-				ltlAdapter.selectAll();	
+				// Tell the level manager to group move.
+				ltlAdapter.groupMove();	
 			}
 
 			@Override
@@ -202,8 +207,9 @@ public class LayerWindow extends JFrame {
 				
 			}			
 		});
-		btnSelectAll.setPreferredSize(dimButton);
-		pnlToggle.add(btnSelectAll);
+		btnMoveSelected.setPreferredSize(dimButton);
+		btnMoveSelected.setBackground(new Color(248, 143, 151));
+		pnlToggle.add(btnMoveSelected);			
 	}
 	
 	public void start() {

@@ -16,6 +16,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -335,11 +336,18 @@ public class LevelManager {
 				Point2D.Double vpulp = getViewportCoordinates(ulxp, ulyp);
 		
 				g.drawImage(plat.getRI(), (int) vpulp.getX(), (int) vpulp.getY(), null);
-		
-				// Draw the label on top of it. In the center, maybe?
-				g.setColor(Color.MAGENTA);
+				
+				// If part of the group selection, draw a notifying 1m x 1m red box.
 				Point2D.Double vplp = getViewportCoordinates(plat.getCenterXM() * this.mToPixel,
 						(this.levelHeightM - (plat.getCenterYM())) * this.mToPixel);
+				if (this.groupSelect.containsKey(number)){
+					g.setColor(new Color(255, 40, 40, 200));				
+					g.fillRect((int) (vplp.getX() - this.mToPixel/2), (int) (vplp.getY() - this.mToPixel/2), 
+							(int)this.mToPixel, (int)this.mToPixel);
+				}
+		
+				// Draw the label on top of it. In the center, maybe?
+				g.setColor(Color.MAGENTA);				
 				g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
 		
 				// Label point
@@ -382,10 +390,17 @@ public class LevelManager {
 	
 				g.drawImage(boulder.getRI(), (int) vpulp.getX(), (int) vpulp.getY(), null);
 	
-				// Draw the label on top of it. In the center, maybe?
-				g.setColor(Color.MAGENTA);
+				// If part of the group selection, draw a notifying 1m x 1m red box.
 				Point2D.Double vplp = getViewportCoordinates(boulder.getCenterXM() * this.mToPixel,
 						(this.levelHeightM - (boulder.getCenterYM())) * this.mToPixel);
+				if (this.groupSelect.containsKey(ticket)){
+					g.setColor(new Color(255, 40, 40, 200));				
+					g.fillRect((int) (vplp.getX() - this.mToPixel/2), (int) (vplp.getY() - this.mToPixel/2), 
+							(int)this.mToPixel, (int)this.mToPixel);
+				}
+				
+				// Draw the label on top of it. In the center, maybe?
+				g.setColor(Color.MAGENTA);
 				g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
 	
 				// Label point
@@ -409,10 +424,17 @@ public class LevelManager {
 				AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 				g.drawImage(op.filter(peg.getRI(), null), (int) vpulp.getX(), (int) vpulp.getY(), null);
 	
-				// Draw the label on top of it. In the center, maybe?
-				g.setColor(Color.MAGENTA);
+				// If part of the group selection, draw a notifying 1m x 1m red box.
 				Point2D.Double vplp = getViewportCoordinates(peg.getCenterXM() * this.mToPixel,
 						(this.levelHeightM - (peg.getCenterYM())) * this.mToPixel);
+				if (this.groupSelect.containsKey(ticket)){
+					g.setColor(new Color(255, 40, 40, 200));				
+					g.fillRect((int) (vplp.getX() - this.mToPixel/2), (int) (vplp.getY() - this.mToPixel/2), 
+							(int)this.mToPixel, (int)this.mToPixel);
+				}
+								
+				// Draw the label on top of it. In the center, maybe?
+				g.setColor(Color.MAGENTA);
 				g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
 	
 				// Label point
@@ -433,10 +455,17 @@ public class LevelManager {
 				
 				g.drawImage(vine.getRI(), (int) vpulp.getX(), (int) vpulp.getY(), null);
 	
-				// Draw the label on top of it.
-				g.setColor(Color.MAGENTA);
+				// If part of the group selection, draw a notifying 1m x 1m red box.
 				Point2D.Double vplp = getViewportCoordinates(vine.getCenterXM() * this.mToPixel,
 						(this.levelHeightM - (vine.getCenterYM() - vine.getInGameHeight() / 2)) * this.mToPixel);
+				if (this.groupSelect.containsKey(ticket)){
+					g.setColor(new Color(255, 40, 40, 200));				
+					g.fillRect((int) (vplp.getX() - this.mToPixel/2), (int) (vplp.getY() - this.mToPixel/2), 
+							(int)this.mToPixel, (int)this.mToPixel);
+				}
+										
+				// Draw the label on top of it.
+				g.setColor(Color.MAGENTA);
 				g.fillOval((int) (vplp.getX()), (int) (vplp.getY()), 15, 15);
 	
 				// Label point
@@ -460,10 +489,18 @@ public class LevelManager {
 		traps.forEach((num, trap) -> {
 			Point2D.Double c = getViewportCoordinates(((trap.getCenterXM() - trap.getScaledIGWM() / 2.0) * this.mToPixel), (((this.levelHeightM - trap.getCenterYM()) - trap.getScaledIGHM() / 2.0) * this.mToPixel));
 			g.drawImage(trap.getRI(), (int)c.x,  (int)c.y, null);
-			// Label point
-			g.setColor(Color.BLACK);
+			
+			// If part of the group selection, draw a notifying 1m x 1m red box.
 			Point2D.Double vplbp = getViewportCoordinates(trap.getCenterXM() * this.mToPixel + 5,
 					(this.levelHeightM - (trap.getCenterYM() - trap.getInGameHeight() / 2)) * this.mToPixel + 10);
+			if (this.groupSelect.containsKey(num)){
+				g.setColor(new Color(255, 40, 40, 200));				
+				g.fillRect((int) (vplbp.getX() - this.mToPixel/2), (int) (vplbp.getY() - this.mToPixel/2), 
+						(int)this.mToPixel, (int)this.mToPixel);
+			}					
+			
+			// Label point.
+			g.setColor(Color.BLACK);									
 			g.drawString(Integer.toString(num), (int) (vplbp.getX()), (int) (vplbp.getY()));
 		});
 		
@@ -479,6 +516,16 @@ public class LevelManager {
 			Point2D.Double c = getViewportCoordinates((zone.getCenterXM() * this.mToPixel), ((this.levelHeightM - zone.getCenterYM()) * this.mToPixel));
 			
 			g.drawImage(zone.getRI(), (int)c.x,  (int)c.y, null);
+			
+			// If part of the group selection, draw a notifying 1m x 1m red box.
+			Point2D.Double vplbp = getViewportCoordinates(zone.getCenterXM() * this.mToPixel + 5,
+					(this.levelHeightM - (zone.getCenterYM() - zone.getInGameHeight() / 2)) * this.mToPixel + 10);
+			if (this.groupSelect.containsKey(num)){
+				g.setColor(new Color(255, 40, 40, 200));				
+				g.fillRect((int) (vplbp.getX() - this.mToPixel/2), (int) (vplbp.getY() - this.mToPixel/2), 
+						(int)this.mToPixel, (int)this.mToPixel);
+			}					
+			
 		});
 
 		// Draw EOL
