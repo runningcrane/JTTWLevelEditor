@@ -117,9 +117,10 @@ public class LayerWindow extends JFrame {
 		// Make this a BoxY layout. 
 		JPanel contentPane = new JPanel();
 		pnlBack = new JPanel();
-		scrPaneScroll = new JScrollPane(pnlBack);
+		scrPaneScroll = new JScrollPane(pnlBack);		
 		scrPaneScroll.setViewportView(pnlBack);
 		scrPaneScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrPaneScroll.getVerticalScrollBar().setUnitIncrement(16);
 		
 		pnlBack.setBorder(new EmptyBorder(5, 5, 5, 5));
 		pnlBack.setLayout(new BoxLayout(pnlBack, BoxLayout.Y_AXIS));
@@ -184,6 +185,8 @@ public class LayerWindow extends JFrame {
 				
 			}			
 		});
+		btnDeselectAll.setPreferredSize(dimButton);
+		pnlToggle.add(btnDeselectAll);
 		
 		JButton btnSelectAll = new JButton("Select all");
 		btnSelectAll.addFocusListener(new FocusListener() {
@@ -199,6 +202,8 @@ public class LayerWindow extends JFrame {
 				
 			}			
 		});
+		btnSelectAll.setPreferredSize(dimButton);
+		pnlToggle.add(btnSelectAll);
 	}
 	
 	public void start() {

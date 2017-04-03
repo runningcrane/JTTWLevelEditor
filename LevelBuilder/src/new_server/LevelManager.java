@@ -619,7 +619,7 @@ public class LevelManager {
 					lowestTicket[0] = ticketNum;
 					switch (requestType) {
 					case EDIT_OLD_PLAT: {
-						Platform target = this.plats.get(requestNum);
+						Platform target = this.plats.get(ticketNum);
 						if (target != null) {
 							offset[0] = xm - target.getCenterXM();
 							offset[1] = ym - target.getCenterYM();
@@ -627,7 +627,7 @@ public class LevelManager {
 						break;
 					}
 					case EDIT_OLD_VINE: {
-						Vine target = this.vines.get(requestNum);
+						Vine target = this.vines.get(ticketNum);
 						if (target != null) {
 							offset[0] = xm - target.getCenterXM();
 							offset[1] = ym - target.getCenterYM();
@@ -635,7 +635,7 @@ public class LevelManager {
 						break;
 					}
 					case EDIT_OLD_BOULDER: {
-						Boulder target = this.boulders.get(requestNum);
+						Boulder target = this.boulders.get(ticketNum);
 						if (target != null) {
 							offset[0] = xm - target.getCenterXM();
 							offset[1] = ym - target.getCenterYM();
@@ -643,7 +643,7 @@ public class LevelManager {
 						break;
 					}
 					case EDIT_OLD_PEG: {
-						Peg target = this.pegs.get(requestNum);
+						Peg target = this.pegs.get(ticketNum);
 						if (target != null) {
 							offset[0] = xm - target.getCenterXM();
 							offset[1] = ym - target.getCenterYM();
@@ -651,7 +651,7 @@ public class LevelManager {
 						break;
 					}
 					case EDIT_OLD_TIP: {
-						TextTip target = this.textTips.get(requestNum);
+						TextTip target = this.textTips.get(ticketNum);
 						if (target != null) {
 							offset[0] = xm - target.getCenterXM();
 							offset[1] = ym - target.getCenterYM();
@@ -659,7 +659,7 @@ public class LevelManager {
 						break;
 					}
 					case EDIT_OLD_TRAP: {
-						Trap target = this.traps.get(requestNum);
+						Trap target = this.traps.get(ticketNum);
 						if (target != null) {
 							offset[0] = xm - target.getCenterXM();
 							offset[1] = ym - target.getCenterYM();
@@ -667,7 +667,7 @@ public class LevelManager {
 						break;
 					}
 					case EDIT_OLD_ATTACK_ZONE: {
-						AttackZone target = this.attackZones.get(requestNum);
+						AttackZone target = this.attackZones.get(ticketNum);
 						if (target != null) {
 							offset[0] = xm - target.getCenterXM();
 							offset[1] = ym - target.getCenterYM();
@@ -675,7 +675,7 @@ public class LevelManager {
 						break;
 					}
 					case EDIT_OLD_NPC: {
-						NPC target = this.npcs.get(requestNum);
+						NPC target = this.npcs.get(ticketNum);
 						if (target != null) {
 							offset[0] = xm - target.getCenterXM();
 							offset[1] = ym - target.getCenterYM();
@@ -686,11 +686,8 @@ public class LevelManager {
 						return;
 					}
 					}
-					System.out.println("Updated to ticket " + lowestTicket[0] + "'s offset: " + offset[0] + ", " + offset[1]);
 				}
 			});
-			
-			System.out.println("Offset: " + offset[0] + ", " + offset[1]);
 			
 			// Now that we have the offset, go offset each.
 			this.groupSelect.forEach((ticketNum, requestType) -> {
@@ -768,8 +765,6 @@ public class LevelManager {
 					return;
 				}
 				}
-				
-				System.out.println("Center found: " + centerVal[0] + ", " + centerVal[1]);
 				
 				double newXP = ((centerVal[0] + offset[0]) * this.mToPixel) + this.vpOffset.getX();				
 				double newYP = (this.levelHeightM - (centerVal[1] + offset[1])) * this.mToPixel + this.vpOffset.getY();
@@ -1192,6 +1187,7 @@ public class LevelManager {
 				} else {
 					// Add to the group selection list.
 					groupSelect.put(ticket, Request.EDIT_OLD_PLAT);
+					System.out.println("Added ticket " + ticket + " to group");
 				}
 			}
 			@Override
