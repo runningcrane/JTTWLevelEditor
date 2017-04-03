@@ -238,7 +238,7 @@ public class LevelManager {
 		this.eolPoint = new Point2D.Double(5, 8);
 		this.eolQuadrant = 1; // top right, most levels will keep this.
 		
-		this.mToPixel = 100;
+		this.mToPixel = 50;
 		this.vpOffset = new Point2D.Double(0, 0);
 		
 		// Call upon the layer view to render itself frequently.
@@ -569,7 +569,7 @@ public class LevelManager {
 		double xm = (xp - this.vpOffset.getX()) / this.mToPixel;
 		double ym = this.levelHeightM - (yp - this.vpOffset.getY()) / this.mToPixel;
 		
-		System.out.println("Received swing coordinates " + xp + ", " + yp + ";\ntranslated to " +
+		System.out.println("Request type: " + request + ".Received swing coordinates " + xp + ", " + yp + ";\ntranslated to " +
 				xm + ", " + ym + " cocos coordinates");
 		
 		switch (request) {
@@ -879,16 +879,19 @@ public class LevelManager {
 	
 	private void makeTrapEditWindow(int ticket, Trap trap, PropertyBook book) {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "Trap");
+		
+		// Set up the needed listeners.
 		window.setSubmitListener((arg0) -> {
 			trap.updateProperties(window.getPropertyBook());
 		});
 		
-		window.makeButton("New center",  (e) -> {
+		window.setCenterListener((e) -> {
 			request = Request.EDIT_OLD_TRAP;
 			requestNum = ticket;
 			callingWindow = window;
 		});
 		
+		// Make the other properties.
 		window.makeDoubleProperty("Scale",  1.0,  book);
 		window.makeDoubleProperty("density", 1.0,  book);
 		window.makeDoubleProperty("bounciness", 1.0, book);
@@ -903,6 +906,8 @@ public class LevelManager {
 
 	private void makeAttackZoneWindow(int ticket, AttackZone zone, PropertyBook book) {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "AttackZone");
+		
+		// Set up the listeners.
 		window.setSubmitListener((arg0) -> {
 			zone.updateProperties(window.getPropertyBook());
 			// Next, update the relevant parts when scaling. Use resize()!
@@ -914,12 +919,13 @@ public class LevelManager {
 			zone.setRI(resize(zone.getBI(), zone.getScaledIGWM(), zone.getScaledIGHM()));
 		});
 		
-		window.makeButton("New center",  (e) -> {
+		window.setCenterListener((e) -> {
 			request = Request.EDIT_OLD_ATTACK_ZONE;
 			requestNum = ticket;
 			callingWindow = window;
 		});
 		
+		// Set up the other properties.
 		window.makeDoubleProperty("Scale", 1.0, book);
 		window.makeStringProperty("soundName", "", book);
 		window.makeBooleanProperty("dynamic", true, book);
@@ -955,13 +961,13 @@ public class LevelManager {
 				// Scale the image now.
 				plat.setRI(resize(plat.getBI(), plat.getScaledIGWM(), plat.getScaledIGHM()));	
 		});
-		
+
+		window.setCenterListener((e) -> {
+			request = Request.EDIT_OLD_PLAT;
+			requestNum = ticket;	
+	    });
+	
 		// Set up platform properties.
-		window.makeButton("New center", (e) -> {
-				request = Request.EDIT_OLD_PLAT;
-				requestNum = ticket;	
-		});
-		
 		window.makeDoubleProperty("Scale", 1.0, book);
 		window.makeStringProperty("Image path", plat.getPath(), null);		
 		window.makeBooleanProperty("Disappears", false, book); 		
@@ -1000,12 +1006,12 @@ public class LevelManager {
 				vine.setRI(resize(vine.getBI(), vine.getScaledIGWM(), vine.getScaledIGHM()));		
 		});
 		
-		// Set up vine properties.
-		window.makeButton("New center", (e) -> {
-				request = Request.EDIT_OLD_VINE;
-				requestNum = ticket;		
-		});
+		window.setCenterListener((e) -> {
+			request = Request.EDIT_OLD_VINE;
+			requestNum = ticket;		
+	    });
 		
+		// Set up vine properties.		
 		window.makeDoubleProperty("Scale", 1.0, book); 
 		window.makeStringProperty("Image path", vine.getPath(), null);
 		window.makeDoubleProperty("Arc Length (deg)", 180, book);
@@ -1032,12 +1038,12 @@ public class LevelManager {
 				npc.setRI(resize(npc.getBI(), npc.getScaledIGWM(), npc.getScaledIGHM()));		
 		});
 		
-		// Set up NPC properties.
-		window.makeButton("New center", (e) -> {
-				request = Request.EDIT_OLD_VINE;
-				requestNum = ticket;		
-		});
+		window.setCenterListener((e) -> {
+			request = Request.EDIT_OLD_VINE;
+			requestNum = ticket;		
+     	});
 		
+		// Set up NPC properties.		
 		window.makeDoubleProperty("Scale", 1.0, book); 
 		window.makeStringProperty("Image path", npc.getPath(), null);		
 		window.makeDoubleProperty("Velocity", 1.0, book); 
@@ -1083,7 +1089,7 @@ public class LevelManager {
 	public void makeBoulderEditWindow(int ticket, Boulder boulder, PropertyBook book) {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "Boulder");		
 		
-		// Set up the the submit listener.
+		// Set up the the relevant listeners.
 		window.setSubmitListener((arg0) -> {
 				boulder.updateProperties(window.getPropertyBook());	
 				
@@ -1097,12 +1103,12 @@ public class LevelManager {
 				boulder.setRI(resize(boulder.getBI(), boulder.getScaledIGWM(), boulder.getScaledIGHM()));
 		});
 		
-		// Set up boulder properties.
-		window.makeButton("New center", (e) -> {
-				request = Request.EDIT_OLD_BOULDER;
-				requestNum = ticket;		
-		});
+		window.setCenterListener((e) -> {
+			request = Request.EDIT_OLD_BOULDER;
+			requestNum = ticket;		
+	    });
 		
+		// Set up boulder properties.		
 		window.makeDoubleProperty("Scale", 1.0, book); 
 		window.makeBooleanProperty("StartFixed", true, book);
 		window.makeStringProperty("Image path", boulder.getPath(), null);
@@ -1116,7 +1122,7 @@ public class LevelManager {
 	public void makePegEditWindow(int ticket, Peg peg, PropertyBook book) {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "Peg");		
 		
-		// Set up the the submit listener.
+		// Set up the needed listeners.
 		window.setSubmitListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -1132,12 +1138,12 @@ public class LevelManager {
 			}			
 		});
 		
-		// Set up peg properties.
-		window.makeButton("New center", (e) -> {
-				request = Request.EDIT_OLD_PEG;
-				requestNum = ticket;					
+		window.setCenterListener((e) -> {
+			request = Request.EDIT_OLD_PEG;
+			requestNum = ticket;					
 		});
 		
+		// Set up peg properties.
 		window.makeDoubleProperty("Scale", 1.0, book); 
 		window.makeStringProperty("Image path", peg.getPath(), null);
 
@@ -1218,18 +1224,18 @@ public class LevelManager {
 	public void makeTextEditWindow(int ticket, TextTip tip, PropertyBook book) {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "TextTip");		
 		
-		// Set up the submit listener.
+		// Set up the relevant listeners.
 		window.setSubmitListener((arg0) -> {
 				tip.updateProperties(window.getPropertyBook());	
 				// Text uses font size, not scale, so nothing else needs to be done.		
 		});
 		
-		// Set up text tip properties.
-		window.makeButton("New center", (e) -> {
-				request = Request.EDIT_OLD_TIP;
-				requestNum = ticket;				
-		});
+		window.setCenterListener((e) -> {
+			request = Request.EDIT_OLD_TIP;
+			requestNum = ticket;				
+	    });
 		
+		// Set up text tip properties.		
 		window.makeStringProperty("text", "", book); 
 		window.makeIntProperty("fontSize", 15, book); 
 		

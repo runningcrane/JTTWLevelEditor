@@ -42,9 +42,14 @@ public class EditWindow extends JPanel {
 	JButton submit;
 	
 	/**
+	 * JButton for recentering.
+	 */
+	JButton center;
+	
+	/**
 	 * JButton for removing this window.
 	 */
-	JButton remove;
+	JButton remove;	
 	
 	/**
 	 * Map of property ids to the property.
@@ -72,11 +77,13 @@ public class EditWindow extends JPanel {
 		this.submit = new JButton("Submit");
 		add(this.submit);
 		
+		// Make the centering button.
+		this.center = new JButton("New center");
+		add(this.center);
+		
 		// Make the remove button.
-		JLabel lblBlank = new JLabel();
-		add(lblBlank);
 		this.remove = new JButton("Remove");
-		add(this.remove);
+		add(this.remove);		
 		
 		setLayout(new GridLayout(2,2,0,0));
 		this.twos = 2;
@@ -103,6 +110,14 @@ public class EditWindow extends JPanel {
 	 */
 	void setRemoveListener(ActionListener listener) {
 		this.remove.addActionListener(listener);
+	}
+	
+	/**
+	 * Set the action lister for telling the LayerManager to change center positions.
+	 * @param listener
+	 */
+	public void setCenterListener(ActionListener listener) {
+		this.center.addActionListener(listener);
 	}
 	
 	/**
