@@ -140,6 +140,10 @@ public class EditWindow extends JPanel {
 		this.chkGroupSelect.addFocusListener(listener);		
 	}
 	
+	public void setChckGroupSelect(boolean status) {
+		this.chkGroupSelect.setSelected(status);
+	}
+	
 	/**
 	 * Return this edit window's properties and values
 	 * @return properties

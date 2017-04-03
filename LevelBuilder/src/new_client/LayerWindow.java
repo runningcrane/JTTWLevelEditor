@@ -158,12 +158,20 @@ public class LayerWindow extends JFrame {
 		}		
 		
 		// Add the group selection buttons.
+		LayerWindow thisWindow = this;
 		JButton btnSelectAll = new JButton("Select all");
 		btnSelectAll.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent e) {
 				// Tell the level manager to select all.
 				ltlAdapter.selectAll();	
+				
+				// Set all group select checkboxes to true.
+				windows.forEach((ticket, window) -> {
+					window.setChckGroupSelect(true);
+				});
+				
+				thisWindow.repaint();
 			}
 
 			@Override
@@ -182,6 +190,13 @@ public class LayerWindow extends JFrame {
 			public void focusGained(FocusEvent e) {
 				// Tell the level manager to deselect all.
 				ltlAdapter.deselectAll();
+				
+				// Set all group select checkboxes to false.
+				windows.forEach((ticket, window) -> {
+					window.setChckGroupSelect(false);
+				});
+				
+				thisWindow.repaint();
 			}
 
 			@Override
@@ -191,6 +206,7 @@ public class LayerWindow extends JFrame {
 			}			
 		});
 		btnDeselectAll.setPreferredSize(dimButton);
+		btnDeselectAll.setBackground(new Color(248, 143, 151));
 		pnlToggle.add(btnDeselectAll);
 		
 		JButton btnMoveSelected = new JButton("Group move");
@@ -198,7 +214,7 @@ public class LayerWindow extends JFrame {
 			@Override
 			public void focusGained(FocusEvent e) {
 				// Tell the level manager to group move.
-				ltlAdapter.groupMove();	
+				ltlAdapter.groupMove();				
 			}
 
 			@Override
@@ -208,7 +224,6 @@ public class LayerWindow extends JFrame {
 			}			
 		});
 		btnMoveSelected.setPreferredSize(dimButton);
-		btnMoveSelected.setBackground(new Color(248, 143, 151));
 		pnlToggle.add(btnMoveSelected);			
 	}
 	

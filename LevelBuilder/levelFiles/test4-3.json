@@ -1,0 +1,1540 @@
+{
+  "VERSION": 2,
+  "levelFileName": "test4-3",
+  "levelName": "My Level",
+  "levelNumber": 0,
+  "nextLevelName": "nextLevel",
+  "mToPixel": 30.0,
+  "bg": {
+    "path": "../assets/bgSunny.png",
+    "centerXm": 0.0,
+    "centerYm": 0.0,
+    "widthm": 20.0,
+    "heightm": 15.0,
+    "collisionWidth": 0.0,
+    "collisionHeight": 0.0
+  },
+  "eolPoint": {
+    "x": 5.0,
+    "y": 8.0
+  },
+  "eolQuadrant": 1,
+  "levelWidthM": 20.0,
+  "levelHeightM": 15.0,
+  "respawnPoints": [],
+  "groupSelect": {},
+  "plats": {
+    "1": {
+      "endpoint": {
+        "x": 0.96,
+        "y": 13.42
+      },
+      "path": "../assets/Rock1.png",
+      "centerXM": 11.7,
+      "centerYM": 7.5,
+      "scale": 1.0,
+      "ticket": 1,
+      "scaledIGWM": 2.5,
+      "scaledIGHM": 7.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -0.93,
+            "y": -3.46
+          },
+          {
+            "x": -0.91,
+            "y": -1.04
+          },
+          {
+            "x": -1.11,
+            "y": 0.52
+          },
+          {
+            "x": -1.17,
+            "y": 1.42
+          },
+          {
+            "x": 0.85,
+            "y": 1.48
+          },
+          {
+            "x": 0.99,
+            "y": 1.06
+          },
+          {
+            "x": 0.93,
+            "y": -1.56
+          },
+          {
+            "x": 1.25,
+            "y": -3.48
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/Rock1.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "3": {
+      "endpoint": {
+        "x": 5.5,
+        "y": 12.94
+      },
+      "path": "../assets/Rock2.png",
+      "centerXM": 16.24,
+      "centerYM": 7.02,
+      "scale": 1.0,
+      "ticket": 3,
+      "scaledIGWM": 2.5,
+      "scaledIGHM": 7.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.09,
+            "y": -3.48
+          },
+          {
+            "x": -0.93,
+            "y": 2.12
+          },
+          {
+            "x": -0.47,
+            "y": 2.58
+          },
+          {
+            "x": 0.69,
+            "y": 2.56
+          },
+          {
+            "x": 1.27,
+            "y": -1.5
+          },
+          {
+            "x": 1.23,
+            "y": -3.48
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/Rock2.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "4": {
+      "endpoint": {
+        "x": 8.34,
+        "y": 12.82
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 8.34,
+      "centerYM": 12.82,
+      "scale": 1.0,
+      "ticket": 4,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "5": {
+      "endpoint": {
+        "x": 10.18,
+        "y": 12.84
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 10.18,
+      "centerYM": 12.84,
+      "scale": 1.0,
+      "ticket": 5,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "6": {
+      "endpoint": {
+        "x": 9.62,
+        "y": 11.44
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 9.62,
+      "centerYM": 11.44,
+      "scale": 1.0,
+      "ticket": 6,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "7": {
+      "endpoint": {
+        "x": 12.34,
+        "y": 12.2
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 12.34,
+      "centerYM": 12.2,
+      "scale": 1.0,
+      "ticket": 7,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "8": {
+      "endpoint": {
+        "x": 11.84,
+        "y": 13.48
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 11.84,
+      "centerYM": 13.48,
+      "scale": 1.0,
+      "ticket": 8,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "9": {
+      "endpoint": {
+        "x": 9.82,
+        "y": 13.8
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 9.82,
+      "centerYM": 13.8,
+      "scale": 1.0,
+      "ticket": 9,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "10": {
+      "endpoint": {
+        "x": 10.98,
+        "y": 14.34
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 10.98,
+      "centerYM": 14.34,
+      "scale": 1.0,
+      "ticket": 10,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "11": {
+      "endpoint": {
+        "x": 10.5,
+        "y": 12.1
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 10.5,
+      "centerYM": 12.1,
+      "scale": 1.0,
+      "ticket": 11,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "12": {
+      "endpoint": {
+        "x": 11.9,
+        "y": 11.32
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 11.9,
+      "centerYM": 11.32,
+      "scale": 1.0,
+      "ticket": 12,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "13": {
+      "endpoint": {
+        "x": 12.88,
+        "y": 14.32
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 12.88,
+      "centerYM": 14.32,
+      "scale": 1.0,
+      "ticket": 13,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "14": {
+      "endpoint": {
+        "x": 13.16,
+        "y": 12.94
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 13.16,
+      "centerYM": 12.94,
+      "scale": 1.0,
+      "ticket": 14,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "15": {
+      "endpoint": {
+        "x": 13.68,
+        "y": 11.74
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 13.68,
+      "centerYM": 11.74,
+      "scale": 1.0,
+      "ticket": 15,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "16": {
+      "endpoint": {
+        "x": 10.14,
+        "y": 10.08
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 10.14,
+      "centerYM": 10.08,
+      "scale": 1.0,
+      "ticket": 16,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "17": {
+      "endpoint": {
+        "x": 11.66,
+        "y": 10.36
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 11.66,
+      "centerYM": 10.36,
+      "scale": 1.0,
+      "ticket": 17,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "18": {
+      "endpoint": {
+        "x": 13.46,
+        "y": 10.6
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 13.46,
+      "centerYM": 10.6,
+      "scale": 1.0,
+      "ticket": 18,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "19": {
+      "endpoint": {
+        "x": 13.26,
+        "y": 9.379999999999999
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 13.26,
+      "centerYM": 9.379999999999999,
+      "scale": 1.0,
+      "ticket": 19,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "20": {
+      "endpoint": {
+        "x": 15.36,
+        "y": 9.74
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 15.36,
+      "centerYM": 9.74,
+      "scale": 1.0,
+      "ticket": 20,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "21": {
+      "endpoint": {
+        "x": 15.16,
+        "y": 11.24
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 15.16,
+      "centerYM": 11.24,
+      "scale": 1.0,
+      "ticket": 21,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "22": {
+      "endpoint": {
+        "x": 16.18,
+        "y": 12.7
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 16.18,
+      "centerYM": 12.7,
+      "scale": 1.0,
+      "ticket": 22,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "23": {
+      "endpoint": {
+        "x": 17.34,
+        "y": 10.7
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 17.34,
+      "centerYM": 10.7,
+      "scale": 1.0,
+      "ticket": 23,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "24": {
+      "endpoint": {
+        "x": 16.88,
+        "y": 11.76
+      },
+      "path": "../assets/cldClear.png",
+      "centerXM": 16.88,
+      "centerYM": 11.76,
+      "scale": 1.0,
+      "ticket": 24,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.24,
+            "y": -0.52
+          },
+          {
+            "x": -1.23,
+            "y": 0.17
+          },
+          {
+            "x": 1.27,
+            "y": 0.12
+          },
+          {
+            "x": 1.05,
+            "y": -0.59
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClear.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    }
+  },
+  "characters": {
+    "Monkey": {
+      "path": "Monkey.png",
+      "centerXM": 0.0,
+      "centerYM": 0.0,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": false
+        }
+      }
+    },
+    "Piggy": {
+      "path": "Piggy.png",
+      "centerXM": 0.0,
+      "centerYM": 0.0,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": false
+        }
+      }
+    },
+    "Sandy": {
+      "path": "Sandy.png",
+      "centerXM": 0.0,
+      "centerYM": 0.0,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": false
+        }
+      }
+    },
+    "Monk": {
+      "path": "Monk.png",
+      "centerXM": 0.0,
+      "centerYM": 0.0,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": false
+        }
+      }
+    }
+  },
+  "vines": {
+    "2": {
+      "path": "../assets/vine1.png",
+      "centerXM": 3.64,
+      "centerYM": 13.16,
+      "scale": 1.0,
+      "ticket": 2,
+      "scaledIGWM": 1.0,
+      "scaledIGHM": 5.0,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Scale": 1.0,
+          "Length": 5.0,
+          "Velocity": 1.0,
+          "Width": 1.0,
+          "Arc Length (deg)": 180.0
+        },
+        "collPointList": [
+          {
+            "x": -0.52,
+            "y": -2.34
+          },
+          {
+            "x": 0.15,
+            "y": 2.4
+          }
+        ],
+        "edgeFrictionList": [],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/vine1.png"
+        },
+        "boolList": {}
+      }
+    }
+  },
+  "boulders": {},
+  "pegs": {},
+  "npcs": {},
+  "textTips": {},
+  "attackZones": {},
+  "traps": {}
+}
