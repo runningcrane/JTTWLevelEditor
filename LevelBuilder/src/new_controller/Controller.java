@@ -161,6 +161,21 @@ public class Controller {
 				level.removeEntity(number, type);
 			}
 
+			@Override
+			public void groupMove() {
+				level.groupMove();
+			}
+
+			@Override
+			public void deselectAll() {
+				level.deselectAll();
+			}
+
+			@Override
+			public void selectAll() {
+				level.selectAll();
+			}
+
 		});
 
 		outputWindow = new OutputWindow(new IOutputToLevelAdapter() {

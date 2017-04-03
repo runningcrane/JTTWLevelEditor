@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import client.OutputWindow.Request;
 import new_interactable.PropertyBook;
 
 public class EditWindow extends JPanel {
@@ -52,6 +53,11 @@ public class EditWindow extends JPanel {
 	JButton remove;	
 	
 	/**
+	 * JCheckBox for adding/removing this object to the mass group-move.
+	 */
+	JCheckBox chkGroupSelect;
+	
+	/**
 	 * Map of property ids to the property.
 	 */
 	PropertyBook book;
@@ -85,8 +91,14 @@ public class EditWindow extends JPanel {
 		this.remove = new JButton("Remove");
 		add(this.remove);		
 		
-		setLayout(new GridLayout(2,2,0,0));
-		this.twos = 2;
+		// Make the group move checkbox.
+		JLabel groupLabel = new JLabel("");
+		add(groupLabel);
+		this.chkGroupSelect = new JCheckBox("Group select");
+		add(this.chkGroupSelect);
+		
+		setLayout(new GridLayout(3,2,0,0));
+		this.twos = 3;
 	}
 	
 	/**
@@ -118,6 +130,14 @@ public class EditWindow extends JPanel {
 	 */
 	public void setCenterListener(ActionListener listener) {
 		this.center.addActionListener(listener);
+	}
+	
+	/**
+	 * Set the Group selection listener.
+	 * @param type
+	 */
+	public void setGroupSelectListener(FocusListener listener) {
+		this.chkGroupSelect.addFocusListener(listener);		
 	}
 	
 	/**

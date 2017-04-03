@@ -12,6 +12,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.AffineTransformOp;
@@ -117,6 +119,7 @@ public class LevelManager {
 	/**
 	 * Ticket items, all stored in separate maps for easy access.
 	 */
+	private Map<Integer, Request> groupSelect = new HashMap<>();
 	private Map<Integer, Platform> plats = new HashMap<>();
 	private Map<String, Player> characters = new HashMap<>();
 	private Map<Integer, Vine> vines = new HashMap<>();
@@ -132,10 +135,10 @@ public class LevelManager {
 		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC, MAKE_PEG, MAKE_TIP, 
 		    MAKE_TRAP, MAKE_ATTACK_ZONE,
 		EDIT_OLD_PLAT, EDIT_OLD_VINE, EDIT_OLD_BOULDER, EDIT_OLD_PEG, 
-		    EDIT_OLD_TIP, EDIT_OLD_TRAP, EDIT_OLD_ATTACK_ZONE,
+		    EDIT_OLD_TIP, EDIT_OLD_TRAP, EDIT_OLD_ATTACK_ZONE, EDIT_OLD_NPC, EDIT_GROUP,
 		EDIT_MONK, EDIT_MONKEY, EDIT_PIG, EDIT_SANDY,
 		SET_PLAT_ENDPOINT, MARK_EOL, MARK_EOL_QUADRANT, MARK_RP,
-		REMOVE_RP
+			REMOVE_RP
 	}
 	
 	//////// Members that aren't serialized into the level JSON file. ////////////
@@ -605,6 +608,175 @@ public class LevelManager {
 			makeInteractable(this.requestPath, null, xm, ym, "AttackZone");
 			break;
 		}
+		case EDIT_GROUP: {
+			// Moves relative to the lowest ticket number.
+			int[] lowestTicket = {Integer.MAX_VALUE};
+			double[] offset = {0,0};
+			
+			// First, get the offset of the lowest ticket number.
+			this.groupSelect.forEach((ticketNum, requestType) -> {
+				if (ticketNum < lowestTicket[0]) {
+					lowestTicket[0] = ticketNum;
+					switch (requestType) {
+					case EDIT_OLD_PLAT: {
+						Platform target = this.plats.get(requestNum);
+						if (target != null) {
+							offset[0] = xm - target.getCenterXM();
+							offset[1] = ym - target.getCenterYM();
+						}
+						break;
+					}
+					case EDIT_OLD_VINE: {
+						Vine target = this.vines.get(requestNum);
+						if (target != null) {
+							offset[0] = xm - target.getCenterXM();
+							offset[1] = ym - target.getCenterYM();
+						}
+						break;
+					}
+					case EDIT_OLD_BOULDER: {
+						Boulder target = this.boulders.get(requestNum);
+						if (target != null) {
+							offset[0] = xm - target.getCenterXM();
+							offset[1] = ym - target.getCenterYM();
+						}
+						break;
+					}
+					case EDIT_OLD_PEG: {
+						Peg target = this.pegs.get(requestNum);
+						if (target != null) {
+							offset[0] = xm - target.getCenterXM();
+							offset[1] = ym - target.getCenterYM();
+						}
+						break;
+					}
+					case EDIT_OLD_TIP: {
+						TextTip target = this.textTips.get(requestNum);
+						if (target != null) {
+							offset[0] = xm - target.getCenterXM();
+							offset[1] = ym - target.getCenterYM();
+						}
+						break;
+					}
+					case EDIT_OLD_TRAP: {
+						Trap target = this.traps.get(requestNum);
+						if (target != null) {
+							offset[0] = xm - target.getCenterXM();
+							offset[1] = ym - target.getCenterYM();
+						}
+						break;
+					}
+					case EDIT_OLD_ATTACK_ZONE: {
+						AttackZone target = this.attackZones.get(requestNum);
+						if (target != null) {
+							offset[0] = xm - target.getCenterXM();
+							offset[1] = ym - target.getCenterYM();
+						}
+						break;
+					}
+					case EDIT_OLD_NPC: {
+						NPC target = this.npcs.get(requestNum);
+						if (target != null) {
+							offset[0] = xm - target.getCenterXM();
+							offset[1] = ym - target.getCenterYM();
+						}
+						break;
+					}
+					default: {
+						return;
+					}
+					}
+					System.out.println("Updated to ticket " + lowestTicket[0] + "'s offset: " + offset[0] + ", " + offset[1]);
+				}
+			});
+			
+			System.out.println("Offset: " + offset[0] + ", " + offset[1]);
+			
+			// Now that we have the offset, go offset each.
+			this.groupSelect.forEach((ticketNum, requestType) -> {
+				this.request = requestType;
+				this.requestNum = ticketNum;
+				
+				double[] centerVal = {0, 0};
+				// In order to offset each, we need to (unfortunately) get their personal center values.
+				switch (requestType) {
+				case EDIT_OLD_PLAT: {
+					Platform target = this.plats.get(requestNum);
+					if (target != null) {
+						centerVal[0] = target.getCenterXM();
+						centerVal[1] = target.getCenterYM();
+					}
+					break;
+				}
+				case EDIT_OLD_VINE: {
+					Vine target = this.vines.get(requestNum);
+					if (target != null) {
+						centerVal[0] = target.getCenterXM();
+						centerVal[1] = target.getCenterYM();
+					}
+					break;
+				}
+				case EDIT_OLD_BOULDER: {
+					Boulder target = this.boulders.get(requestNum);
+					if (target != null) {
+						centerVal[0] = target.getCenterXM();
+						centerVal[1] = target.getCenterYM();
+					}
+					break;
+				}
+				case EDIT_OLD_PEG: {
+					Peg target = this.pegs.get(requestNum);
+					if (target != null) {
+						centerVal[0] = target.getCenterXM();
+						centerVal[1] = target.getCenterYM();
+					}
+					break;
+				}
+				case EDIT_OLD_TIP: {
+					TextTip target = this.textTips.get(requestNum);
+					if (target != null) {
+						centerVal[0] = target.getCenterXM();
+						centerVal[1] = target.getCenterYM();
+					}
+					break;
+				}
+				case EDIT_OLD_TRAP: {
+					Trap target = this.traps.get(requestNum);
+					if (target != null) {
+						centerVal[0] = target.getCenterXM();
+						centerVal[1] = target.getCenterYM();
+					}
+					break;
+				}
+				case EDIT_OLD_ATTACK_ZONE: {
+					AttackZone target = this.attackZones.get(requestNum);
+					if (target != null) {
+						centerVal[0] = target.getCenterXM();
+						centerVal[1] = target.getCenterYM();
+					}
+					break;
+				}
+				case EDIT_OLD_NPC: {
+					NPC target = this.npcs.get(requestNum);
+					if (target != null) {
+						centerVal[0] = target.getCenterXM();
+						centerVal[1] = target.getCenterYM();
+					}
+					break;
+				}
+				default: {
+					return;
+				}
+				}
+				
+				System.out.println("Center found: " + centerVal[0] + ", " + centerVal[1]);
+				
+				double newXP = ((centerVal[0] + offset[0]) * this.mToPixel) + this.vpOffset.getX();				
+				double newYP = (this.levelHeightM - (centerVal[1] + offset[1])) * this.mToPixel + this.vpOffset.getY();
+				receiveCoordinates(newXP, newYP);
+			});			
+			break;
+		}
 		case EDIT_OLD_PLAT: {
 			Platform target = this.plats.get(requestNum);
 			if (target != null) {
@@ -647,6 +819,13 @@ public class LevelManager {
 			}
 			if (callingWindow != null) {
 			    callingWindow.updateProperties(zone.getPropertyBook());
+			}
+			break;
+		}
+		case EDIT_OLD_NPC: {
+			NPC npc = this.npcs.get(requestNum);
+			if (npc != null) {
+				npc.setCenter(xm, ym);
 			}
 			break;
 		}
@@ -891,6 +1070,24 @@ public class LevelManager {
 			callingWindow = window;
 		});
 		
+		window.setGroupSelectListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (groupSelect.containsKey(ticket)) {
+					// Remove from the group selection list.
+					groupSelect.remove(ticket);
+					
+				} else {
+					// Add to the group selection list.
+					groupSelect.put(ticket, Request.EDIT_OLD_TRAP);
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+			}
+		});
+		
 		// Make the other properties.
 		window.makeDoubleProperty("Scale",  1.0,  book);
 		window.makeDoubleProperty("density", 1.0,  book);
@@ -923,6 +1120,24 @@ public class LevelManager {
 			request = Request.EDIT_OLD_ATTACK_ZONE;
 			requestNum = ticket;
 			callingWindow = window;
+		});
+		
+		window.setGroupSelectListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (groupSelect.containsKey(ticket)) {
+					// Remove from the group selection list.
+					groupSelect.remove(ticket);
+					
+				} else {
+					// Add to the group selection list.
+					groupSelect.put(ticket, Request.EDIT_OLD_ATTACK_ZONE);
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+			}
 		});
 		
 		// Set up the other properties.
@@ -966,7 +1181,25 @@ public class LevelManager {
 			request = Request.EDIT_OLD_PLAT;
 			requestNum = ticket;	
 	    });
-	
+		
+		window.setGroupSelectListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (groupSelect.containsKey(ticket)) {
+					// Remove from the group selection list.
+					groupSelect.remove(ticket);
+					
+				} else {
+					// Add to the group selection list.
+					groupSelect.put(ticket, Request.EDIT_OLD_PLAT);
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+			}
+		});
+			
 		// Set up platform properties.
 		window.makeDoubleProperty("Scale", 1.0, book);
 		window.makeStringProperty("Image path", plat.getPath(), null);		
@@ -1011,6 +1244,24 @@ public class LevelManager {
 			requestNum = ticket;		
 	    });
 		
+		window.setGroupSelectListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (groupSelect.containsKey(ticket)) {
+					// Remove from the group selection list.
+					groupSelect.remove(ticket);
+					
+				} else {
+					// Add to the group selection list.
+					groupSelect.put(ticket, Request.EDIT_OLD_VINE);
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+			}
+		});
+		
 		// Set up vine properties.		
 		window.makeDoubleProperty("Scale", 1.0, book); 
 		window.makeStringProperty("Image path", vine.getPath(), null);
@@ -1039,9 +1290,27 @@ public class LevelManager {
 		});
 		
 		window.setCenterListener((e) -> {
-			request = Request.EDIT_OLD_VINE;
+			request = Request.EDIT_OLD_NPC;
 			requestNum = ticket;		
      	});
+		
+		window.setGroupSelectListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (groupSelect.containsKey(ticket)) {
+					// Remove from the group selection list.
+					groupSelect.remove(ticket);
+					
+				} else {
+					// Add to the group selection list.
+					groupSelect.put(ticket, Request.EDIT_OLD_NPC);
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+			}
+		});
 		
 		// Set up NPC properties.		
 		window.makeDoubleProperty("Scale", 1.0, book); 
@@ -1108,6 +1377,24 @@ public class LevelManager {
 			requestNum = ticket;		
 	    });
 		
+		window.setGroupSelectListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (groupSelect.containsKey(ticket)) {
+					// Remove from the group selection list.
+					groupSelect.remove(ticket);
+					
+				} else {
+					// Add to the group selection list.
+					groupSelect.put(ticket, Request.EDIT_OLD_BOULDER);
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+			}
+		});
+		
 		// Set up boulder properties.		
 		window.makeDoubleProperty("Scale", 1.0, book); 
 		window.makeBooleanProperty("StartFixed", true, book);
@@ -1141,6 +1428,24 @@ public class LevelManager {
 		window.setCenterListener((e) -> {
 			request = Request.EDIT_OLD_PEG;
 			requestNum = ticket;					
+		});
+		
+		window.setGroupSelectListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (groupSelect.containsKey(ticket)) {
+					// Remove from the group selection list.
+					groupSelect.remove(ticket);
+					
+				} else {
+					// Add to the group selection list.
+					groupSelect.put(ticket, Request.EDIT_OLD_PEG);
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+			}
 		});
 		
 		// Set up peg properties.
@@ -1235,11 +1540,79 @@ public class LevelManager {
 			requestNum = ticket;				
 	    });
 		
+		window.setGroupSelectListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (groupSelect.containsKey(ticket)) {
+					// Remove from the group selection list.
+					groupSelect.remove(ticket);
+					
+				} else {
+					// Add to the group selection list.
+					groupSelect.put(ticket, Request.EDIT_OLD_TIP);
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+			}
+		});
+		
 		// Set up text tip properties.		
 		window.makeStringProperty("text", "", book); 
 		window.makeIntProperty("fontSize", 15, book); 
 		
 		tip.updateProperties(window.getPropertyBook());
+	}
+	
+	/**
+	 * Request everything in the selected group be moved.
+	 */
+	public void groupMove() {
+		this.request = Request.EDIT_GROUP;
+		System.out.println("Set request to EDIT_GROUP");
+	}
+	
+	/**
+	 * Remove everything from the group select group.
+	 */
+	public void deselectAll() {
+		this.groupSelect.clear();
+	}
+	
+	/**
+	 * Select all present editable objects and put them into the group select group.
+	 */
+	public void selectAll() {
+		// Add each list.
+		this.groupSelect.clear();
+		this.plats.forEach((ticket, plat) -> {
+			this.groupSelect.put(ticket, Request.EDIT_OLD_PLAT);
+		});
+		
+		this.vines.forEach((ticket, vine) -> {
+			this.groupSelect.put(ticket, Request.EDIT_OLD_VINE);
+		});
+		
+		this.boulders.forEach((ticket, boulder) -> {
+			this.groupSelect.put(ticket, Request.EDIT_OLD_BOULDER);
+		});
+		this.pegs.forEach((ticket, pegs) -> {
+			this.groupSelect.put(ticket, Request.EDIT_OLD_PEG);
+		});
+		this.npcs.forEach((ticket, npc) -> {
+			this.groupSelect.put(ticket, Request.EDIT_OLD_NPC);
+		});
+		this.textTips.forEach((ticket, tip) -> {
+			this.groupSelect.put(ticket, Request.EDIT_OLD_TIP);
+		});
+		this.attackZones.forEach((ticket, zone) -> {
+			this.groupSelect.put(ticket, Request.EDIT_OLD_ATTACK_ZONE);
+		});
+		this.traps.forEach((ticket, trap) -> {
+			this.groupSelect.put(ticket, Request.EDIT_OLD_TRAP);
+		});
+		
 	}
 	
 	/**

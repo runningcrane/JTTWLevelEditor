@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -126,7 +128,7 @@ public class LayerWindow extends JFrame {
 		
 		// Add a panel that toggles all.
 		JPanel pnlToggle = new JPanel();
-		pnlToggle.setLayout(new GridLayout(2, 3, 0, 0));
+		pnlToggle.setLayout(new GridLayout(3, 3, 0, 0));
 		pnlBack.add(pnlToggle);		
 		
 		for (String type : TYPES) { 
@@ -149,6 +151,54 @@ public class LayerWindow extends JFrame {
 			btnBg.setPreferredSize(dimButton);
 			pnlToggle.add(btnBg);
 		}		
+		
+		// Add the group selection buttons.
+		JButton btnMoveSelected = new JButton("Group move");
+		btnMoveSelected.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				// Tell the level manager to group move.
+				ltlAdapter.groupMove();	
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}			
+		});
+		btnMoveSelected.setPreferredSize(dimButton);
+		pnlToggle.add(btnMoveSelected);
+		
+		JButton btnDeselectAll = new JButton("Deselect all");
+		btnDeselectAll.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				// Tell the level manager to deselect all.
+				ltlAdapter.deselectAll();
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}			
+		});
+		
+		JButton btnSelectAll = new JButton("Select all");
+		btnSelectAll.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				// Tell the level manager to select all.
+				ltlAdapter.selectAll();	
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}			
+		});
 	}
 	
 	public void start() {
