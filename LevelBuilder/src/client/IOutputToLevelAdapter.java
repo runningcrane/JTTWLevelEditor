@@ -1,4 +1,4 @@
-package new_client;
+package client;
 
 import java.awt.Component;
 import java.awt.Graphics;

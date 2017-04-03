@@ -24,9 +24,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.google.gson.GsonBuilder;
-import com.google.gson.Gson;
 
-import new_interactable.PropertyBook;
+import interactable.PropertyBook;
+
+import com.google.gson.Gson;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;

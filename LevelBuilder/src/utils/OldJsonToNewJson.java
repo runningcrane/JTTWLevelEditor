@@ -15,10 +15,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import new_interactable.PropertyBook;
-import new_server.ILevelToControlAdapter;
-import new_server.ILevelToLayerAdapter;
-import new_server.ILevelToOutputAdapter;
+import interactable.PropertyBook;
+import server.ILevelToControlAdapter;
+import server.ILevelToLayerAdapter;
+import server.ILevelToOutputAdapter;
 
 public class OldJsonToNewJson {
 	
@@ -39,7 +39,7 @@ public class OldJsonToNewJson {
 
     	String levelPath = LEVELS_PATH + inputFile;
     	
-    	new_server.LevelManager lm = new new_server.LevelManager(ILevelToControlAdapter.VoidPattern, ILevelToOutputAdapter.VoidPattern, ILevelToLayerAdapter.VoidPattern);
+    	server.LevelManager lm = new server.LevelManager(ILevelToControlAdapter.VoidPattern, ILevelToOutputAdapter.VoidPattern, ILevelToLayerAdapter.VoidPattern);
     	
     	/////////////// LEGACY CODE /////////////////////
     	JSONParser parser = new JSONParser();
@@ -178,7 +178,7 @@ public class OldJsonToNewJson {
 		lm.makeJSON(LEVELS_PATH + outputFile, name, nextName, -1);
     }
     
-    public static void addPlatform(JSONObject plat, new_server.LevelManager lm, boolean polygon) {
+    public static void addPlatform(JSONObject plat, server.LevelManager lm, boolean polygon) {
 		// Collision box array
 		List<Point2D.Double> points = new ArrayList<Point2D.Double>();
 
@@ -257,7 +257,7 @@ public class OldJsonToNewJson {
         lm.setEndPoint(new Point2D.Double(endX,  endY), tick);
     }
     
-    public static void addVine(JSONObject vine, new_server.LevelManager lm) {
+    public static void addVine(JSONObject vine, server.LevelManager lm) {
 		// Further parsing here
 		String path = (String) vine.get("imageName");
 		// Default case.
@@ -329,7 +329,7 @@ public class OldJsonToNewJson {
 		lm.makeInteractable(path, pb, cxm, cym, "Vine");
     }
     
-    public static void addBoulder(JSONObject boulder, new_server.LevelManager lm) {
+    public static void addBoulder(JSONObject boulder, server.LevelManager lm) {
     	// Collision box array
     	ArrayList<Point2D.Double> points = new ArrayList<Point2D.Double>();
 
@@ -396,7 +396,7 @@ public class OldJsonToNewJson {
     	lm.makeBoulder(path, pb, cxm, cym, oldTicket);
     }
     
-    public static void readInPegs(JSONArray pegs, new_server.LevelManager lm) {
+    public static void readInPegs(JSONArray pegs, server.LevelManager lm) {
     	for (Object o : pegs) {
     		JSONObject peg = (JSONObject) o;
     		JSONArray bouldersAffected = (JSONArray)peg.get("bouldersAffected");
@@ -425,7 +425,7 @@ public class OldJsonToNewJson {
     }
     
 	@SuppressWarnings("unchecked")
-	public static void makeRPs(JSONArray list, new_server.LevelManager lm) {
+	public static void makeRPs(JSONArray list, server.LevelManager lm) {
 		list.forEach((obj) -> {
 			JSONObject jsonObj = (JSONObject) obj;
 			double x = (double)jsonObj.get("x");
@@ -434,7 +434,7 @@ public class OldJsonToNewJson {
 		});
 	}
 	
-	public static void setCharacters(JSONObject chars, new_server.LevelManager lm) {
+	public static void setCharacters(JSONObject chars, server.LevelManager lm) {
 		JSONObject monkey = (JSONObject) chars.get("Monkey");
 		// Default case: If monkey not found, don't change the current monkey at
 		// all.

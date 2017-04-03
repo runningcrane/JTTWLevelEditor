@@ -1,4 +1,4 @@
-package new_client;
+package client;
 
 import static utils.Constants.ASSETS_PATH;
 

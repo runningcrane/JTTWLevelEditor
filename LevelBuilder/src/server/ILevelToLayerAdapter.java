@@ -1,6 +1,6 @@
-package new_server;
+package server;
 
-import new_client.EditWindow;
+import client.EditWindow;
 
 public interface ILevelToLayerAdapter {
 

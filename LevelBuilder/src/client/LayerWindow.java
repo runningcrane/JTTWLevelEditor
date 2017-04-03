@@ -1,9 +1,12 @@
-package new_client;
+package client;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -113,11 +116,14 @@ public class LayerWindow extends JFrame {
 	
 	public void initGUI() {		
 		// Make this a BoxY layout. 
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(950, 50, 100, 100);
 		JPanel contentPane = new JPanel();
 		pnlBack = new JPanel();
-		scrPaneScroll = new JScrollPane(pnlBack);
+		scrPaneScroll = new JScrollPane(pnlBack);		
 		scrPaneScroll.setViewportView(pnlBack);
 		scrPaneScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrPaneScroll.getVerticalScrollBar().setUnitIncrement(16);
 		
 		pnlBack.setBorder(new EmptyBorder(5, 5, 5, 5));
 		pnlBack.setLayout(new BoxLayout(pnlBack, BoxLayout.Y_AXIS));
@@ -126,7 +132,7 @@ public class LayerWindow extends JFrame {
 		
 		// Add a panel that toggles all.
 		JPanel pnlToggle = new JPanel();
-		pnlToggle.setLayout(new GridLayout(2, 3, 0, 0));
+		pnlToggle.setLayout(new GridLayout(3, 3, 0, 0));
 		pnlBack.add(pnlToggle);		
 		
 		for (String type : TYPES) { 
@@ -147,8 +153,63 @@ public class LayerWindow extends JFrame {
 				}				
 			}); 			
 			btnBg.setPreferredSize(dimButton);
+			btnBg.setBackground(new Color(143, 214, 248));
 			pnlToggle.add(btnBg);
 		}		
+		
+		// Add the group selection buttons.
+		JButton btnSelectAll = new JButton("Select all");
+		btnSelectAll.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				// Tell the level manager to select all.
+				ltlAdapter.selectAll();	
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}			
+		});
+		btnSelectAll.setPreferredSize(dimButton);
+		btnSelectAll.setBackground(new Color(143, 251, 140));
+		pnlToggle.add(btnSelectAll);
+		
+		JButton btnDeselectAll = new JButton("Deselect all");
+		btnDeselectAll.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				// Tell the level manager to deselect all.
+				ltlAdapter.deselectAll();
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}			
+		});
+		btnDeselectAll.setPreferredSize(dimButton);
+		pnlToggle.add(btnDeselectAll);
+		
+		JButton btnMoveSelected = new JButton("Group move");
+		btnMoveSelected.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				// Tell the level manager to group move.
+				ltlAdapter.groupMove();	
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}			
+		});
+		btnMoveSelected.setPreferredSize(dimButton);
+		btnMoveSelected.setBackground(new Color(248, 143, 151));
+		pnlToggle.add(btnMoveSelected);			
 	}
 	
 	public void start() {

@@ -1,4 +1,4 @@
-package new_interactable;
+package interactable;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

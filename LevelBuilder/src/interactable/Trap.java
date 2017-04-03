@@ -1,4 +1,4 @@
-package new_interactable;
+package interactable;
 
 public class Trap extends AInteractable {
 	// Properties include density, bounciness, friction

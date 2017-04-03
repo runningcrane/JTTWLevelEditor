@@ -1,4 +1,4 @@
-package new_client;
+package client;
 
 /**
  * Adapter from the ControlWindow to the LevelManager.

@@ -1,4 +1,4 @@
-package new_client;
+package client;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import new_interactable.PropertyBook;
+import interactable.PropertyBook;
 
 public class EditWindow extends JPanel {
 
@@ -42,9 +42,19 @@ public class EditWindow extends JPanel {
 	JButton submit;
 	
 	/**
+	 * JButton for recentering.
+	 */
+	JButton center;
+	
+	/**
 	 * JButton for removing this window.
 	 */
-	JButton remove;
+	JButton remove;	
+	
+	/**
+	 * JCheckBox for adding/removing this object to the mass group-move.
+	 */
+	JCheckBox chkGroupSelect;
 	
 	/**
 	 * Map of property ids to the property.
@@ -72,14 +82,22 @@ public class EditWindow extends JPanel {
 		this.submit = new JButton("Submit");
 		add(this.submit);
 		
-		// Make the remove button.
-		JLabel lblBlank = new JLabel();
-		add(lblBlank);
-		this.remove = new JButton("Remove");
-		add(this.remove);
+		// Make the centering button.
+		this.center = new JButton("New center");
+		add(this.center);
 		
-		setLayout(new GridLayout(2,2,0,0));
-		this.twos = 2;
+		// Make the remove button.
+		this.remove = new JButton("Remove");
+		add(this.remove);		
+		
+		// Make the group move checkbox.
+		JLabel groupLabel = new JLabel("");
+		add(groupLabel);
+		this.chkGroupSelect = new JCheckBox("Group select");
+		add(this.chkGroupSelect);
+		
+		setLayout(new GridLayout(3,2,0,0));
+		this.twos = 3;
 	}
 	
 	/**
@@ -103,6 +121,22 @@ public class EditWindow extends JPanel {
 	 */
 	void setRemoveListener(ActionListener listener) {
 		this.remove.addActionListener(listener);
+	}
+	
+	/**
+	 * Set the action lister for telling the LayerManager to change center positions.
+	 * @param listener
+	 */
+	public void setCenterListener(ActionListener listener) {
+		this.center.addActionListener(listener);
+	}
+	
+	/**
+	 * Set the Group selection listener.
+	 * @param type
+	 */
+	public void setGroupSelectListener(FocusListener listener) {
+		this.chkGroupSelect.addFocusListener(listener);		
 	}
 	
 	/**

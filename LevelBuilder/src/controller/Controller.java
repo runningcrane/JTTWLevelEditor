@@ -1,20 +1,20 @@
-package new_controller;
+package controller;
 
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 
-import new_client.IControlToLevelAdapter;
-import new_client.ILayerToLevelAdapter;
-import new_client.IOutputToLevelAdapter;
-import new_client.LayerWindow;
-import new_client.OutputWindow;
-import new_client.ControlWindow;
-import new_client.EditWindow;
-import new_server.LevelManager;
-import new_server.ILevelToLayerAdapter;
-import new_server.ILevelToOutputAdapter;
-import new_server.ILevelToControlAdapter;
+import client.ControlWindow;
+import client.EditWindow;
+import client.IControlToLevelAdapter;
+import client.ILayerToLevelAdapter;
+import client.IOutputToLevelAdapter;
+import client.LayerWindow;
+import client.OutputWindow;
+import server.ILevelToControlAdapter;
+import server.ILevelToLayerAdapter;
+import server.ILevelToOutputAdapter;
+import server.LevelManager;
 
 /**
  * Controller of this MVC system. Start the program here.
@@ -164,6 +164,21 @@ public class Controller {
 			@Override
 			public void removeEntity(int number, String type) {
 				level.removeEntity(number, type);
+			}
+
+			@Override
+			public void groupMove() {
+				level.groupMove();
+			}
+
+			@Override
+			public void deselectAll() {
+				level.deselectAll();
+			}
+
+			@Override
+			public void selectAll() {
+				level.selectAll();
 			}
 
 		});
