@@ -22,4 +22,13 @@ public class Platform extends AInteractable {
 	public Point2D.Double getEndpoint() {
 		return this.endpoint;
 	}
+	
+	public int getZorder() {
+		Integer x = this.getPropertyBook().getIntList().get("Z-order");
+		if (x == null) {
+			return -1;
+		} else {
+			return x;
+		}
+	}
 }

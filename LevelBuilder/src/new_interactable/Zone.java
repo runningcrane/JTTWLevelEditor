@@ -1,6 +1,8 @@
 package new_interactable;
 
-public class AttackZone extends AInteractable {
+import java.awt.geom.Point2D;
+
+public class Zone extends AInteractable {
     // Should have x/y max/min, xvel/yvel max/min,
 	// FireType (ABSOLUTE or RELATIVE), x/y Position if ABSOLUTE,
 	// x/y max/min offset if RELATIVE, and sound name.
@@ -10,9 +12,24 @@ public class AttackZone extends AInteractable {
 	private static final String X_MAX = "xmax";
 	private static final String Y_MAX = "ymax";
 	
-	public AttackZone(int ticket, String imageName) {
+	public Zone(int ticket, String imageName) {
 		this.setTicket(ticket);
 		this.setPath(imageName);
+	}
+	
+	public void setLimits(double xmin, double xmax, double ymin, double ymax) {
+		getPropertyBook().getDoubList().put("xmin",  xmin);
+		getPropertyBook().getDoubList().put("xmax",  xmax);
+		getPropertyBook().getDoubList().put("ymin",  ymin);
+	    getPropertyBook().getDoubList().put("ymax",  ymax);
+	}
+	
+	public Point2D.Double getMinLimit() {
+		return new Point2D.Double(this.getPropertyBook().getDoubList().get(X_MIN), this.getPropertyBook().getDoubList().get(Y_MIN));
+	}
+
+	public Point2D.Double getMaxLimit() {
+		return new Point2D.Double(this.getPropertyBook().getDoubList().get(X_MAX), this.getPropertyBook().getDoubList().get(Y_MAX));
 	}
 	
 	public double getWidth() {

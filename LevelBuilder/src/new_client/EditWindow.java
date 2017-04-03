@@ -332,15 +332,6 @@ public class EditWindow extends JPanel {
 	}
 	
 	/**
-	 * Get the number of JObjects in this EditWindow. Outsiders can use this value
-	 * to set a GridLayout with two columns to the appropriate number of rows.
-	 * @return number of JObjects in this window
-	 */
-	private int getNumberContained() {
-		return this.twos * 2;
-	}
-	
-	/**
 	 * Get the type of editing window this is - for example, a window that edits "Rock".
 	 * @return name of type of editing window
 	 */

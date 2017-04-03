@@ -143,15 +143,6 @@ public class OldJsonToNewJson {
 			boulders.forEach((b) -> addBoulder((JSONObject)b, lm));
 		}
 		
-		/*
-		JSONArray joints = (JSONArray) level.get("boulderJoints");
-		// Default case.
-		if (joints == null) {
-			joints = new JSONArray();
-		}
-		readBoulderJointJSON(joints);
-		*/
-		
 		JSONArray pegs = (JSONArray) level.get("goldenPegs");
 		// Default case.
 		if (pegs == null) {
@@ -195,10 +186,6 @@ public class OldJsonToNewJson {
 		String path = ASSETS_PATH + (String) plat.get("imageName");
 		double cxm = (double) plat.get("centerX");
 		double cym = (double) plat.get("centerY");
-
-		// The width and height are already scaled.
-		double swm = (double) plat.get("imageSizeWidth");
-		double shm = (double) plat.get("imageSizeHeight");
 
 		Double scaleD = (Double) plat.get("scale");
 		double scale;
@@ -351,10 +338,6 @@ public class OldJsonToNewJson {
     	double cxm = (double) boulder.get("centerX");
     	double cym = (double) boulder.get("centerY");
 
-    	// The width and height are already scaled.
-    	double swm = (double) boulder.get("imageSizeWidth");
-    	double shm = (double) boulder.get("imageSizeHeight");
-
     	Double scaleD = (Double) boulder.get("scale");
     	double scale;
     	if (scaleD == null) {
@@ -403,6 +386,7 @@ public class OldJsonToNewJson {
     	PropertyBook pb = new PropertyBook();
     	pb.getDoubList().put("Mass", mass);
     	pb.getDoubList().put("Radius", 1.0);
+        pb.getDoubList().put("Scale",  scale);
     	
     	pb.getCollPoints().addAll(points);
     	pb.getBoolList().put("Polygon collision", polygon);
@@ -426,9 +410,6 @@ public class OldJsonToNewJson {
     			int bTicket = Math.toIntExact((long) o2);
     			int newTicket = lm.getNewBoulderTicketFromOld(bTicket);
     			if (newTicket != -1) {
-    				// TODO: HOW THE HELL DO WE STORE MULTIPLE BOULDERS?
-    			    // ?????
-    				// Giving each a unique id string for now.
     				pb.getIntList().put("Boulder ID " + bNum, newTicket);
     			}
     		}
@@ -437,10 +418,7 @@ public class OldJsonToNewJson {
 			double centerXm = (double)peg.get("centerX");
 			double centerYm = (double)peg.get("centerY");
 			double rotation = (double)peg.get("rotation");
-		    double scale = (double)peg.get("scale");
-			//double imageWidth = (double)peg.get("imageWidth");
-			//double imageHeight = (double)peg.get("imageHeight");			
-			
+
 			pb.getDoubList().put("Rotation", rotation);
 			lm.makeInteractable(ASSETS_PATH + imageName, pb, centerXm, centerYm, "Peg");	
     	}

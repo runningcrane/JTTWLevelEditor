@@ -152,6 +152,11 @@ public class Controller {
 			public void makeAttackZone(String path) {
 				level.setRequest(path, LevelManager.Request.MAKE_ATTACK_ZONE);
 			}
+
+			@Override
+			public void setViewportLimits(double xmin, double xmax, double ymin, double ymax) {
+				level.setViewportLimits(xmin, xmax, ymin, ymax);	
+			}
 		});
 
 		layerWindow = new LayerWindow(new ILayerToLevelAdapter() {
@@ -202,6 +207,12 @@ public class Controller {
 			@Override
 			public void setMToPixel(double mToPixel) {
 				controlWindow.setMToPixel(mToPixel);
+			}
+
+			@Override
+			public void setNewCameraLimits(double xmin, double xmax, double ymin, double ymax) {
+				controlWindow.setNewCameraLimits(xmin, xmax, ymin, ymax);
+				
 			}
 
 		}, new ILevelToOutputAdapter() {

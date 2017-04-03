@@ -1,6 +1,6 @@
 package noninteractable;
 
-public abstract class ANonInteractable implements INonInteractable {
+public abstract class ANonInteractable {
 	/**
 	 * Relative path to file.
 	 */

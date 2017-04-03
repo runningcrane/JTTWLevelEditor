@@ -15,12 +15,35 @@
     "collisionHeight": 0.0
   },
   "eolPoint": {
-    "x": 119.91111111111111,
-    "y": 17.62222222222222
+    "x": 119.12222222222222,
+    "y": 17.81111111111111
   },
-  "eolQuadrant": 0,
+  "eolQuadrant": 4,
   "levelWidthM": 150.0,
   "levelHeightM": 30.0,
+  "viewportZone": {
+    "path": null,
+    "centerXM": 0.0,
+    "centerYM": 0.0,
+    "scale": 0.0,
+    "ticket": 1,
+    "scaledIGWM": 0.0,
+    "scaledIGHM": 0.0,
+    "book": {
+      "intList": {},
+      "doubList": {
+        "ymin": 0.0,
+        "xmin": -3.0,
+        "ymax": 100.0,
+        "xmax": 125.0
+      },
+      "collPointList": [],
+      "edgeFrictionList": [],
+      "floatList": {},
+      "strList": {},
+      "boolList": {}
+    }
+  },
   "respawnPoints": [
     {
       "x": 107.1,

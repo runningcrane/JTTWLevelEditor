@@ -46,7 +46,7 @@ public class ControlWindow extends JFrame {
 			"bgSunny", "bgCloud"
 	};
 	private static final String[] ATTACKZONES = {
-		    "spear", "fireball"	
+		    "spear", "fireball", "tide"
 	};
 	private static final String[] PLATFORMS = {
 			"Pedestal", "blueGround", "canyonR", "canyonL", 
@@ -61,7 +61,8 @@ public class ControlWindow extends JFrame {
 			"cldClear", "cldCloud", "cldStormy", "cldSunset",
 			"cldClearDiagL", "cldCloudDiagL", "cldStormyDiagL", "cldSunsetDiagL",
 			"cldClearDiagR", "cldCloudDiagR", "cldStormyDiagR", "cldSunsetDiagR",
-			"cldClearUp", "cldCloudUp", "cldStormyUp", "cldSunsetUp"
+			"cldClearUp", "cldCloudUp", "cldStormyUp", "cldSunsetUp",
+			"cldClearFloor"
 	};;
 	private static final String[] BOULDERS = {
 			"BoulderA", "BoulderB", "BoulderC", "boulder0", "boulder1", "boulder2", "boulder3",
@@ -86,6 +87,11 @@ public class ControlWindow extends JFrame {
 	private JTextField txtLWidth;
 	private JTextField txtVPHeight;
 	private JTextField txtVPWidth;
+	private JTextField txtVPXMin;
+	private JTextField txtVPYMin;
+	private JTextField txtVPXMax;
+	private JTextField txtVPYMax;
+	
 	private IControlToLevelAdapter ctlAdapter;	
 	private JSlider slMToPixel;
 	
@@ -136,13 +142,13 @@ public class ControlWindow extends JFrame {
 		pnlLevelResize.add(lblTitleLabel);
 		
 		JPanel pnlRControls = new JPanel();
-		pnlRControls.setLayout(new GridLayout(2,4));
+		pnlRControls.setLayout(new GridLayout(4,4));
 		Dimension dimPanel = new Dimension(250, 100);
 		pnlRControls.setPreferredSize(dimPanel);
 		pnlLevelResize.add(pnlRControls);
 		
 		// Level
-		JLabel lblLWidth = new JLabel("LWidth (m):");
+		JLabel lblLWidth = new JLabel("LWidth:");
 		pnlRControls.add(lblLWidth);
 		
 		txtLWidth = new JTextField();
@@ -150,7 +156,7 @@ public class ControlWindow extends JFrame {
 		txtLWidth.setText("20");
 		txtLWidth.setColumns(10);					
 		
-		JLabel lblLHeight = new JLabel("LHeight (m):");
+		JLabel lblLHeight = new JLabel("LHeight:");
 		pnlRControls.add(lblLHeight);
 		
 		txtLHeight = new JTextField();
@@ -159,7 +165,7 @@ public class ControlWindow extends JFrame {
 		txtLHeight.setColumns(10);
 		
 		// VP
-		JLabel lblVPWidth = new JLabel("VPWidth (m):");
+		JLabel lblVPWidth = new JLabel("VPWidth:");
 		pnlRControls.add(lblVPWidth);
 		
 		txtVPWidth = new JTextField();
@@ -167,13 +173,40 @@ public class ControlWindow extends JFrame {
 		txtVPWidth.setText("8");
 		txtVPWidth.setColumns(10);					
 		
-		JLabel lblVPHeight = new JLabel("VPHeight (m):");
+		JLabel lblVPHeight = new JLabel("VPHeight:");
 		pnlRControls.add(lblVPHeight);
 		
 		txtVPHeight = new JTextField();
 		pnlRControls.add(txtVPHeight);
 		txtVPHeight.setText("6");
 		txtVPHeight.setColumns(10);
+		
+		// Viewport Zone (game stuff)
+		JLabel lblVPXMin = new JLabel("Camera X-Min:");
+		JLabel lblVPXMax = new JLabel("Camera X-Max:");
+		JLabel lblVPYMin = new JLabel("Camera Y-Min:");
+		JLabel lblVPYMax = new JLabel("Camera Y-Max:");
+		txtVPXMin = new JTextField();
+		txtVPXMin.setText("0.0");
+		txtVPXMin.setColumns(10);
+		txtVPXMax = new JTextField();
+		txtVPXMax.setText("0.0");
+		txtVPXMax.setColumns(10);
+		txtVPYMin = new JTextField();
+		txtVPYMin.setText("0.0");
+		txtVPYMin.setColumns(10);
+		txtVPYMax = new JTextField();
+		txtVPYMax.setText("0.0");
+		txtVPYMax.setColumns(10);
+		
+		pnlRControls.add(lblVPXMin);
+		pnlRControls.add(txtVPXMin);
+		pnlRControls.add(lblVPXMax);
+		pnlRControls.add(txtVPXMax);
+		pnlRControls.add(lblVPYMin);
+		pnlRControls.add(txtVPYMin);
+		pnlRControls.add(lblVPYMax);
+		pnlRControls.add(txtVPYMax);
 		
 		JLabel lblMToPixel = new JLabel("mToPixel");
 		pnlLevelResize.add(lblMToPixel);
@@ -197,7 +230,6 @@ public class ControlWindow extends JFrame {
 		JPanel pnlControlButtons = new JPanel();
 		pnlControlButtons.setPreferredSize(new Dimension(50,60));
 		pnlBack.add(pnlControlButtons);
-		
 		
 		// Resize
 		JButton btnResizeScreen = new JButton("VP Resize");
@@ -256,6 +288,24 @@ public class ControlWindow extends JFrame {
 				    System.err.println("Don't be a jerk: No negative numbers in level width and height.");
 				}
 			}
+		});
+		
+		JButton btnUpdateViewMaxMin = new JButton("Update Camera Limits");
+		pnlControlButtons.add(btnUpdateViewMaxMin);
+		btnUpdateViewMaxMin.addActionListener((arg0) -> {
+			double xmin, xmax, ymin, ymax;
+			try {
+				xmin = Double.valueOf(txtVPXMin.getText());
+				xmax = Double.valueOf(txtVPXMax.getText());
+				ymin = Double.valueOf(txtVPYMin.getText());
+				ymax = Double.valueOf(txtVPYMax.getText());
+			} catch (NumberFormatException e) {			
+				JOptionPane.showMessageDialog(new JFrame("JOptionPane showMessageDialouge"), 
+						"Camera limits must be numbers");
+				return;
+			}
+			
+			ctlAdapter.setViewportLimits(xmin, xmax, ymin, ymax);
 		});
 		
 		// EOL Panel
@@ -439,7 +489,7 @@ public class ControlWindow extends JFrame {
 		pnlPlatform.add(lblCloudLabel);
 		
 		JPanel pnlClouds = new JPanel();
-		pnlClouds.setLayout(new GridLayout(4,4));
+		pnlClouds.setLayout(new GridLayout(5,4));
 		pnlPlatform.add(pnlClouds);
 
 		// Platform panel - grid
@@ -579,7 +629,6 @@ public class ControlWindow extends JFrame {
 	 */
 	public void start() {
 		setTitle("Controls");
-		//setSize(200, 550);
 		setVisible(true);
 	}
 	
@@ -589,6 +638,13 @@ public class ControlWindow extends JFrame {
 	 */
 	public void setMToPixel(double mToPixel) {
 		slMToPixel.setValue((int)mToPixel - 10);		
+	}
+
+	public void setNewCameraLimits(double xmin, double xmax, double ymin, double ymax) {
+		txtVPXMin.setText(Double.toString(xmin));
+		txtVPXMax.setText(Double.toString(xmax));
+		txtVPYMin.setText(Double.toString(ymin));
+		txtVPYMax.setText(Double.toString(ymax));
 	}
 
 }

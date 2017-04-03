@@ -20,7 +20,7 @@ public class Boulder extends AInteractable {
 	public Boulder(int ticket, String path) {
 		setTicket(ticket);
 		this.setPath(path);		
-	}	
+	}
 	
 	public int getOldTicket() {
 		return this.oldTicket;

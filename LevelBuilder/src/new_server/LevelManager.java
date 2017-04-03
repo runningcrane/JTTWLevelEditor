@@ -22,8 +22,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
@@ -35,7 +37,7 @@ import com.google.gson.GsonBuilder;
 
 import new_client.EditWindow;
 import new_interactable.AInteractable;
-import new_interactable.AttackZone;
+import new_interactable.Zone;
 import new_interactable.Boulder;
 import new_interactable.NPC;
 import new_interactable.Peg;
@@ -46,7 +48,7 @@ import new_interactable.TextTip;
 import new_interactable.Trap;
 import new_interactable.Vine;
 import noninteractable.Background;
-import noninteractable.INonInteractable;
+import noninteractable.ANonInteractable;
 import utils.AnnotationExclusionStrategy;
 import utils.annotations.Exclude;
 
@@ -109,6 +111,8 @@ public class LevelManager {
 	 */
 	private double levelHeightM;
 	
+	private Zone viewportZone;
+	
 	/**
 	 * List of respawn points for the level.
 	 */
@@ -124,7 +128,7 @@ public class LevelManager {
 	private Map<Integer, Peg> pegs = new HashMap<>();
 	private Map<Integer, NPC> npcs = new HashMap<>();
 	private Map<Integer, TextTip> textTips =  new HashMap<>();
-    private Map<Integer, AttackZone> attackZones = new HashMap<>();
+    private Map<Integer, Zone> attackZones = new HashMap<>();
 	private Map<Integer, Trap> traps = new HashMap<>();
     
 	public enum Request {
@@ -162,7 +166,7 @@ public class LevelManager {
 	 * Foreground array.
 	 */
 	@Exclude
-	private ArrayList<INonInteractable> fg = new ArrayList<INonInteractable>();
+	private ArrayList<ANonInteractable> fg = new ArrayList<>();
 	
 	@Exclude
 	private Request request;
@@ -233,6 +237,10 @@ public class LevelManager {
 		this.levelName = "Communism will rise again";
 		this.nextLevelName  = "";
 		this.levelNumber = 0;
+		this.viewportZone = new Zone(ticketer, null);
+		this.viewportZone.setLimits(0.0, 0.0, 0.0, 0.0);
+		
+		ticketer++;
 		
 		// No real reason to put it to 5,8 other than just to initialize it.
 		this.eolPoint = new Point2D.Double(5, 8);
@@ -315,11 +323,20 @@ public class LevelManager {
 		}
 
 		// Draw platforms
-		plats.forEach((number, plat) -> {
+		plats.entrySet().stream().sorted(new Comparator<Map.Entry<Integer, Platform>>() {
+
+			@Override
+			public int compare(Entry<Integer, Platform> o1, Entry<Integer, Platform> o2) {
+				Platform p1 = o1.getValue();
+				Platform p2 = o2.getValue();
+			    return p1.getZorder() - p2.getZorder(); 
+			}
 			
+		}).forEach((e) -> {
+			int number = e.getKey();
+			Platform plat = e.getValue();
 			// Don't draw until the plat's image has been made.
-			if (plat.getRI() != null) {
-				
+			if (plat.getRI() != null) {				
 				/*
 				 * Unfortunately drawImage draws on the top left, not center, so
 				 * adjustments are made. Also unfortunately, cocos uses a different
@@ -470,14 +487,22 @@ public class LevelManager {
 			Point2D.Double ul = getViewportCoordinates(ulxp, ulyp);
 			double width = zone.getWidth() * this.mToPixel;
 			double height = zone.getHeight() * this.mToPixel;
-			g.setColor(Color.BLACK);
+			g.setColor(Color.RED);
 			g.drawRect((int) ul.x, (int)ul.y - (int) height, (int)width, (int)height);
 			
 			Point2D.Double c = getViewportCoordinates((zone.getCenterXM() * this.mToPixel), ((this.levelHeightM - zone.getCenterYM()) * this.mToPixel));
-			
-			g.drawImage(zone.getRI(), (int)c.x,  (int)c.y, null);
+			g.drawImage(zone.getRI(), (int)(c.x - zone.getRI().getWidth() / 2.0),  (int)(c.y - zone.getRI().getHeight() / 2.0), null);
 		});
-
+		
+		// Draw viewport Zone.
+		double ulxp = (viewportZone.getPropertyBook().getDoubList().get("xmin")) * this.mToPixel;
+		double ulyp = (this.levelHeightM - viewportZone.getPropertyBook().getDoubList().get("ymin")) * this.mToPixel;
+		Point2D.Double ul = getViewportCoordinates(ulxp, ulyp);
+		double width = viewportZone.getWidth() * this.mToPixel;
+		double height = viewportZone.getHeight() * this.mToPixel;
+		g.setColor(Color.BLACK);
+		g.drawRect((int) ul.x, (int)ul.y - (int) height, (int)width, (int)height);
+		
 		// Draw EOL
 		g.setColor(Color.GREEN);
 		Point2D.Double vpeol = getViewportCoordinates(this.eolPoint.getX() * this.mToPixel,
@@ -641,12 +666,19 @@ public class LevelManager {
 			break;
 		}
 		case EDIT_OLD_ATTACK_ZONE: {
-			AttackZone zone = this.attackZones.get(requestNum);
+			Zone zone = this.attackZones.get(requestNum);
 			if (zone != null) {
 				zone.setCenter(xm, ym);
 			}
 			if (callingWindow != null) {
 			    callingWindow.updateProperties(zone.getPropertyBook());
+			}
+			break;
+		}
+		case EDIT_OLD_TIP :{
+			TextTip t = this.textTips.get(requestNum);
+			if (t != null) {
+				t.setCenter(xm, ym);
 			}
 			break;
 		}
@@ -801,7 +833,7 @@ public class LevelManager {
 			break;
 		}
 		case "AttackZone" : {
-			obj = new AttackZone(this.ticketer, imageName);
+			obj = new Zone(this.ticketer, imageName);
 			break;
 		}
 		default:
@@ -863,9 +895,9 @@ public class LevelManager {
 			break;
 		}
 		case "AttackZone" : {
-			makeAttackZoneWindow(this.ticketer, (AttackZone)obj, book);
+			makeAttackZoneWindow(this.ticketer, (Zone)obj, book);
 			setImage(obj, path);
-			this.attackZones.put(this.ticketer, (AttackZone)obj);
+			this.attackZones.put(this.ticketer, (Zone)obj);
 			break;
 		}
 		default: 
@@ -881,6 +913,12 @@ public class LevelManager {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "Trap");
 		window.setSubmitListener((arg0) -> {
 			trap.updateProperties(window.getPropertyBook());
+			
+			double scale = window.getPropertyBook().getDoubList().get("Scale");
+			trap.setScale(scale);					
+			
+			// Scale the image now.
+		    trap.setRI(resize(trap.getBI(), trap.getScaledIGWM(), trap.getScaledIGHM()));
 		});
 		
 		window.makeButton("New center",  (e) -> {
@@ -901,7 +939,7 @@ public class LevelManager {
 		trap.updateProperties(window.getPropertyBook());
 	}
 
-	private void makeAttackZoneWindow(int ticket, AttackZone zone, PropertyBook book) {
+	private void makeAttackZoneWindow(int ticket, Zone zone, PropertyBook book) {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "AttackZone");
 		window.setSubmitListener((arg0) -> {
 			zone.updateProperties(window.getPropertyBook());
@@ -924,6 +962,7 @@ public class LevelManager {
 		window.makeStringProperty("soundName", "", book);
 		window.makeBooleanProperty("dynamic", true, book);
 		window.makeStringProperty("FireType", "ABSOLUTE", book); 
+		window.makeBooleanProperty("Deadly", true, book);
 		window.makeDoubleProperty("xmin", 0.0, book); 
 		window.makeDoubleProperty("xmax", 0.0,  book);
 		window.makeDoubleProperty("ymin",  0.0,  book);
@@ -1232,6 +1271,7 @@ public class LevelManager {
 		
 		window.makeStringProperty("text", "", book); 
 		window.makeIntProperty("fontSize", 15, book); 
+		window.makeIntProperty("Z-order",  5,  book);
 		
 		tip.updateProperties(window.getPropertyBook());
 	}
@@ -1247,7 +1287,6 @@ public class LevelManager {
 	}
 	
 	public void changeOffset(double xm, double ym) {
-
 		this.vpOffset = new Point2D.Double(this.vpOffset.getX() + xm * this.mToPixel,
 				this.vpOffset.getY() + ym * this.mToPixel);
 	}
@@ -1515,6 +1554,12 @@ public class LevelManager {
 		this.nextLevelName = old.nextLevelName;
 		this.levelName = old.levelName;
 		this.levelNumber = old.levelNumber;
+		if (old.viewportZone != null) {
+		    this.viewportZone = old.viewportZone;
+		}
+		Point2D.Double min = viewportZone.getMinLimit();
+		Point2D.Double max = viewportZone.getMaxLimit();
+		ltcAdapter.setNewCameraLimits(min.x, max.x, min.y, max.y);
 		ltoAdapter.setLevelName(old.levelName);
 		ltoAdapter.setNextName(old.nextLevelName);
 		ltoAdapter.setLevelNumber(old.levelNumber);
@@ -1588,5 +1633,9 @@ public class LevelManager {
 	
 	public Player getCharacter(String name) {
 		return characters.get(name);
+	}
+
+	public void setViewportLimits(double xmin, double xmax, double ymin, double ymax) {
+		this.viewportZone.setLimits(xmin, xmax, ymin, ymax);		
 	}
 }

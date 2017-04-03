@@ -23,6 +23,11 @@ public interface IControlToLevelAdapter {
 	public void setViewportDimensions(double wm, double hm);
 	
 	/**
+	 * Request to resize the viewport limits (all units in meters).
+	 */
+    public void setViewportLimits(double xmin, double xmax, double ymin, double ymax);
+	
+	/**
 	 * Make present the character and request a new position for them.
 	 */
 	public void toggleMonk();
