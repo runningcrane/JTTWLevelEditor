@@ -9,8 +9,8 @@
     "path": "../assets/bgSunny.png",
     "centerXm": 0.0,
     "centerYm": 0.0,
-    "widthm": 20.0,
-    "heightm": 15.0,
+    "widthm": 150.0,
+    "heightm": 30.0,
     "collisionWidth": 0.0,
     "collisionHeight": 0.0
   },
@@ -21,7 +21,31 @@
   "eolQuadrant": 4,
   "levelWidthM": 20.0,
   "levelHeightM": 15.0,
+  "viewportZone": {
+    "path": null,
+    "centerXM": 0.0,
+    "centerYM": 0.0,
+    "scale": 0.0,
+    "ticket": 1,
+    "scaledIGWM": 0.0,
+    "scaledIGHM": 0.0,
+    "book": {
+      "intList": {},
+      "doubList": {
+        "ymin": 0.0,
+        "xmin": 0.0,
+        "ymax": 20.0,
+        "xmax": 23.0
+      },
+      "collPointList": [],
+      "edgeFrictionList": [],
+      "floatList": {},
+      "strList": {},
+      "boolList": {}
+    }
+  },
   "respawnPoints": [],
+  "groupSelect": {},
   "plats": {
     "1": {
       "endpoint": {
@@ -292,8 +316,8 @@
           "Image path": "../assets/cldSunsetUp.png"
         },
         "boolList": {
-          "Collidable": false,
-          "Polygon collision": false,
+          "Collidable": true,
+          "Polygon collision": true,
           "Moving": false,
           "Climbable": false,
           "Sinkable": false,
@@ -351,8 +375,8 @@
           "Image path": "../assets/cldSunset.png"
         },
         "boolList": {
-          "Collidable": true,
-          "Polygon collision": true,
+          "Collidable": false,
+          "Polygon collision": false,
           "Moving": false,
           "Climbable": false,
           "Sinkable": false,
@@ -591,7 +615,8 @@
       "scaledIGHM": 0.0,
       "book": {
         "intList": {
-          "fontSize": 40
+          "fontSize": 40,
+          "Z-order": 5
         },
         "doubList": {},
         "collPointList": [],
@@ -613,7 +638,8 @@
       "scaledIGHM": 0.0,
       "book": {
         "intList": {
-          "fontSize": 40
+          "fontSize": 40,
+          "Z-order": 5
         },
         "doubList": {},
         "collPointList": [],
@@ -635,7 +661,8 @@
       "scaledIGHM": 0.0,
       "book": {
         "intList": {
-          "fontSize": 40
+          "fontSize": 40,
+          "Z-order": 5
         },
         "doubList": {},
         "collPointList": [],
