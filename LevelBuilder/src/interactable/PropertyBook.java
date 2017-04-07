@@ -10,48 +10,46 @@ public class PropertyBook {
 	/**
 	 * Map of property IDs to integer values.
 	 */
-	Map<String, Integer> intList;
+	Map<String, Integer> intList = new HashMap<>();
 	
 	/**
 	 * Map of property IDs to double values.
 	 */
-	Map<String, Double> doubList;
+	Map<String, Double> doubList = new HashMap<>();
 	
 	/**
 	 * List of Point2D.Double values - collision points, in cocos frame.
 	 */
-	ArrayList<Point2D.Double> collPointList; 
+	ArrayList<Point2D.Double> collPointList = new ArrayList<>(); 
 	
 	/**
 	 * List of friction values for each edge.
 	 * 0 corresponds to the edge between collPoints 0 and 1, etc.
 	 */
-	ArrayList<Double> edgeFrictionList;
+	ArrayList<Double> edgeFrictionList = new ArrayList<>();
+	
+	/**
+	 * List of edges that are deadly.
+	 * True is deadly, false is not.
+	 */
+	ArrayList<Boolean> deadlyEdgeList = new ArrayList<>();
 	
 	/**
 	 * Map of property IDs to float values.
 	 */
-	Map<String, Float> floatList;
+	Map<String, Float> floatList = new HashMap<>();
 	
 	/**
 	 * Map of property IDs to String values.
 	 */
-	Map<String, String> strList;
+	Map<String, String> strList = new HashMap<>();
 	
 	/**
 	 * Map of property IDs to boolean values.
 	 */
-	Map<String, Boolean> boolList;	
+	Map<String, Boolean> boolList = new HashMap<>();	
 	
-	public PropertyBook() {
-		this.intList = new HashMap<>();
-		this.doubList = new HashMap<>();
-		this.collPointList = new ArrayList<>();
-		this.edgeFrictionList = new ArrayList<>();
-		this.floatList = new HashMap<>();
-		this.strList = new HashMap<>();
-		this.boolList = new HashMap<>();
-	}
+	public PropertyBook() {}
 	
 	public Map<String, Integer> getIntList() {
 		return this.intList;
@@ -67,6 +65,10 @@ public class PropertyBook {
 	
 	public ArrayList<Double> getEdgeFrictions() {
 		return this.edgeFrictionList;
+	}
+	
+	public ArrayList<Boolean> getDeadlyEdges() {
+		return this.deadlyEdgeList;
 	}
 	
 	public Map<String, Float> getFloatList() {
@@ -87,11 +89,11 @@ public class PropertyBook {
 	 * those properties will be added.
 	 * @param newBook new book of properties
 	 */
-	public void updateProperties(PropertyBook newBook) {				
+	public void updateProperties(PropertyBook newBook) {
 		getIntList().putAll(newBook.getIntList());
 		getDoubList().putAll(newBook.getDoubList());
 		getFloatList().putAll(newBook.getFloatList());
 		getStringList().putAll(newBook.getStringList());
-		getBoolList().putAll(newBook.getBoolList());;
+		getBoolList().putAll(newBook.getBoolList());
 	}	
 }

@@ -39,6 +39,7 @@
       },
       "collPointList": [],
       "edgeFrictionList": [],
+      "deadlyEdgeList": [],
       "floatList": {},
       "strList": {},
       "boolList": {}
@@ -87,6 +88,7 @@
           }
         ],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/blueGround.png"
@@ -141,6 +143,7 @@
           }
         ],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/blueGround.png"
@@ -155,7 +158,7 @@
         }
       }
     },
-    "4": {
+    "3": {
       "endpoint": {
         "x": 21.764705882352942,
         "y": 1.0
@@ -164,7 +167,7 @@
       "centerXM": 21.764705882352942,
       "centerYM": 1.0,
       "scale": 1.0,
-      "ticket": 4,
+      "ticket": 3,
       "scaledIGWM": 10.0,
       "scaledIGHM": 3.0,
       "book": {
@@ -195,9 +198,75 @@
           }
         ],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/blueGround.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "4": {
+      "endpoint": {
+        "x": 20.38235294117647,
+        "y": 8.764705882352942
+      },
+      "path": "../assets/Thwomp.png",
+      "centerXM": 20.38235294117647,
+      "centerYM": 8.764705882352942,
+      "scale": 1.0,
+      "ticket": 4,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 7.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.46,
+            "y": -3.38
+          },
+          {
+            "x": -1.5,
+            "y": 3.42
+          },
+          {
+            "x": 1.44,
+            "y": 3.3
+          },
+          {
+            "x": 1.38,
+            "y": -3.34
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          true
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/Thwomp.png"
         },
         "boolList": {
           "Collidable": true,
@@ -224,6 +293,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -244,6 +314,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -264,6 +335,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -284,6 +356,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -293,12 +366,12 @@
     }
   },
   "vines": {
-    "3": {
+    "5": {
       "path": "../assets/vine3.png",
       "centerXM": 4.617647058823529,
       "centerYM": 9.0,
       "scale": 1.0,
-      "ticket": 3,
+      "ticket": 5,
       "scaledIGWM": 1.0,
       "scaledIGHM": 5.0,
       "book": {
@@ -321,6 +394,7 @@
           }
         ],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/vine3.png"

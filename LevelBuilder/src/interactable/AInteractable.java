@@ -253,12 +253,17 @@ public abstract class AInteractable {
 	protected void setScaledCoordinates() {
 		this.book.collPointList.clear();
 		this.book.edgeFrictionList.clear();
+		this.book.deadlyEdgeList.clear();
 		this.defaultBook.collPointList.forEach((point) -> {
 			this.book.collPointList.add(new Point2D.Double(point.x * this.scale, point.y * this.scale));
 		});
 		
 		this.defaultBook.edgeFrictionList.forEach((f) -> {
 			this.book.edgeFrictionList.add(f);
+		});
+		
+		this.defaultBook.deadlyEdgeList.forEach((d) -> {
+			this.book.deadlyEdgeList.add(d);
 		});
 	}
 	

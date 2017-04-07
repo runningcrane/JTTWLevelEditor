@@ -77,7 +77,7 @@ public class ControlWindow extends JFrame {
 	};
 	
 	private static final String[] SPECIALS = {
-		    "BuddhaHand", "lvl1Gate", "head", "body", "tail"
+		    "BuddhaHand", "lvl1Gate", "head", "body", "tail", "Thwomp"
 	}; 
 	private static final String[] TRAPS = {
 		    "cage1"
