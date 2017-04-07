@@ -60,8 +60,10 @@ public class CollisionWindow extends JFrame {
 	private JLabel lblHeight;
 	private JLabel lblFriction;
 	private JLabel lblFrictionVal;
+	private JLabel lblAlign;
 	private JButton btnPlatDim;
 	private JButton btnBoulderDim;
+	private JButton btnAlign;
 	private JPanel pnlContent;
 		
 	String name;
@@ -332,7 +334,7 @@ public class CollisionWindow extends JFrame {
 		
 		// Control panel
 		JPanel pnlControls = new JPanel();
-		pnlControls.setLayout(new GridLayout(9,2));
+		pnlControls.setLayout(new GridLayout(10,2));
 		pnlControls.setBackground(UIManager.getColor("inactiveCaption"));
 		contentPane.add(pnlControls, BorderLayout.NORTH);
 		
@@ -481,6 +483,54 @@ public class CollisionWindow extends JFrame {
 		txtRadius.setColumns(10);		
 		txtRadius.setEnabled(false);
 		
+		lblAlign = new JLabel("");		
+		
+		btnAlign = new JButton("Align axis");
+		btnAlign.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// Don't do this unless there are 4 or more points
+				if (points.size() < 4) {
+					return;
+				}				
+				
+				// Over all the points, find the most bottom y, the most left x, most top y, most right x
+				double[] maxims = {Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE};
+				points.forEach((point) -> {
+					// Bottom y
+					if (point.y < maxims[0]) {
+						maxims[0] = point.y;
+					}
+					
+					// Left most x
+					if (point.x < maxims[1]) {
+						maxims[1] = point.x;
+					}
+					
+					// Top y
+					if (point.y > maxims[2]) {
+						maxims[2] = point.y;						
+					}
+					
+					// Right most x
+					if (point.x > maxims[3]) {
+						maxims[3] = point.x;
+					}
+				});
+				
+				// Make four new points
+				points.clear();
+				points.add(new Point2D.Double(maxims[1], maxims[0]));
+				points.add(new Point2D.Double(maxims[1], maxims[2]));
+				points.add(new Point2D.Double(maxims[3], maxims[2]));
+				points.add(new Point2D.Double(maxims[3], maxims[0]));
+				
+				// Repaint.				
+			    pnlContent.repaint();
+			}			
+		});
+		
+		
 		JButton btnOutput = new JButton("Change!");
 		btnOutput.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -518,6 +568,8 @@ public class CollisionWindow extends JFrame {
 		pnlControls.add(btnBoulderDim);
 		pnlControls.add(btnClear);
 		pnlControls.add(btnOutput);
+		pnlControls.add(lblAlign);
+		pnlControls.add(btnAlign);
 		btnBoulderDim.setEnabled(false);
 		
 		JButton btnCenter = new JButton("Center");
