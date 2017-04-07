@@ -489,8 +489,8 @@ public class CollisionWindow extends JFrame {
 		btnAlign.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// Don't do this unless there are 4 or more points
-				if (points.size() < 4) {
+				// Don't do this unless there are 2 or more points
+				if (points.size() < 2) {
 					return;
 				}				
 				
