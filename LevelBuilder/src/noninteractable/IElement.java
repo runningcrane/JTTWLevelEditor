@@ -1,4 +1,4 @@
-package server;
+package noninteractable;
 
 import org.json.simple.JSONObject;
 

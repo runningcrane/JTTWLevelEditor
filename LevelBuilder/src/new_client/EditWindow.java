@@ -15,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import client.OutputWindow.Request;
 import new_interactable.PropertyBook;
 
 public class EditWindow extends JPanel {
