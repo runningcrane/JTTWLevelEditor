@@ -8,8 +8,10 @@ import java.awt.event.FocusListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -342,6 +344,29 @@ public class EditWindow extends JPanel {
 		this.twos++;
 		updateLayout();
 	}
+	
+	public <E extends Enum<E>> void makeEnumProperty(Class<E> e, E defaultValue, PropertyBook pb) {
+    	E actualVal = defaultValue;
+    	if (pb != null && pb.getStringList().get(e.getName()) != null) {
+    		actualVal = Enum.valueOf(e, pb.getStringList().get(e.getName()));
+    	}
+        
+    	JLabel label = new JLabel(e.getName());
+ 
+    	JComboBox<E> box = new JComboBox<E>();
+    	box.setModel(new DefaultComboBoxModel<>(e.getEnumConstants()));
+    	box.setSelectedItem(actualVal);
+    	
+    	box.addActionListener((arg0) -> {
+    		book.getStringList().replace(e.getName(), box.getItemAt(box.getSelectedIndex()).name());
+    	});
+    	add(label);
+    	add(box);
+    	book.getStringList().put(e.getName(), actualVal.name());
+    	
+    	this.twos++;
+    	updateLayout();
+    }
 	
 	/**
 	 * Add a component with an optional label.

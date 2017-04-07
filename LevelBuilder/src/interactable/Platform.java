@@ -3,6 +3,7 @@ package interactable;
 import java.awt.geom.Point2D;
 
 public class Platform extends AInteractable {
+	public enum Type { STATIC, MOVING, HITTING };
 	
 	private Point2D.Double endpoint;
 	/**

@@ -327,14 +327,12 @@ public class LevelManager {
 
 		// Draw platforms
 		plats.entrySet().stream().sorted(new Comparator<Map.Entry<Integer, Platform>>() {
-
 			@Override
 			public int compare(Entry<Integer, Platform> o1, Entry<Integer, Platform> o2) {
 				Platform p1 = o1.getValue();
 				Platform p2 = o2.getValue();
 			    return p1.getZorder() - p2.getZorder(); 
 			}
-			
 		}).forEach((e) -> {
 			int number = e.getKey();
 			Platform plat = e.getValue();
@@ -373,7 +371,8 @@ public class LevelManager {
 				g.drawString(Integer.toString(number), (int) (vplbp.getX()), (int) (vplbp.getY()));
 		
 				// If moveable, show its endpoint and a line to its endpoint.
-				if (plat.getPropertyBook().getBoolList().get("Moving").booleanValue()) {
+				Platform.Type type = Platform.Type.valueOf(plat.getPropertyBook().getStringList().get(Platform.Type.class.getName()));
+				if (type == Platform.Type.MOVING || type == Platform.Type.HITTING) {
 					Point2D.Double endpoint = plat.getEndpoint();
 					Point2D.Double vplbep = getViewportCoordinates(endpoint.getX() * this.mToPixel + 5,
 							(this.levelHeightM - (endpoint.getY())) * this.mToPixel + 10);
@@ -1286,7 +1285,14 @@ public class LevelManager {
 		window.makeDoubleProperty("Scale", 1.0, book);
 		window.makeStringProperty("Image path", plat.getPath(), null);		
 		window.makeBooleanProperty("Disappears", false, book); 		
-		window.makeBooleanProperty("Moving", false, book); 
+		//window.makeBooleanProperty("Moving", false, book); 
+		Platform.Type legacyDefault; 
+		if (book.getBoolList().get("Moving") != null && book.getBoolList().get("Moving").booleanValue()) {
+			legacyDefault = Platform.Type.MOVING;
+		} else {
+			legacyDefault = Platform.Type.STATIC;
+		}
+		window.makeEnumProperty(Platform.Type.class, legacyDefault, book);
 		window.makeButton("Set Endpoint", (e) -> {
 				request = Request.SET_PLAT_ENDPOINT;
 				requestNum = ticket;		
@@ -1295,7 +1301,8 @@ public class LevelManager {
 		// Make the default endpoint.
 		plat.setEndpoint(new Point2D.Double(plat.getCenterXM(), plat.getCenterYM()));
 		
-		window.makeDoubleProperty("Velocity", 1.0, book); 		
+		window.makeDoubleProperty("Velocity", 1.0, book); 	
+		window.makeDoubleProperty("Quick Velocity", 0.0, book);
 		window.makeBooleanProperty("Sinkable", false, book); 		
 		window.makeDoubleProperty("Spring Constant K", 1.0, book);
 		window.makeBooleanProperty("Climbable", false, book); 

@@ -67,6 +67,7 @@
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
+          "Quick Velocity": 0.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
@@ -91,14 +92,14 @@
         "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
+          "interactable.Platform$Type": "STATIC",
           "Image path": "../assets/blueGround.png"
         },
         "boolList": {
           "Collidable": true,
           "Polygon collision": true,
-          "Moving": false,
-          "Climbable": false,
           "Sinkable": false,
+          "Climbable": false,
           "Disappears": false
         }
       }
@@ -122,6 +123,7 @@
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
+          "Quick Velocity": 0.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
@@ -146,14 +148,14 @@
         "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
+          "interactable.Platform$Type": "STATIC",
           "Image path": "../assets/blueGround.png"
         },
         "boolList": {
           "Collidable": true,
           "Polygon collision": true,
-          "Moving": false,
-          "Climbable": false,
           "Sinkable": false,
+          "Climbable": false,
           "Disappears": false
         }
       }
@@ -177,6 +179,7 @@
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
+          "Quick Velocity": 0.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
@@ -201,14 +204,14 @@
         "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
+          "interactable.Platform$Type": "STATIC",
           "Image path": "../assets/blueGround.png"
         },
         "boolList": {
           "Collidable": true,
           "Polygon collision": true,
-          "Moving": false,
-          "Climbable": false,
           "Sinkable": false,
+          "Climbable": false,
           "Disappears": false
         }
       }
@@ -232,6 +235,7 @@
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
+          "Quick Velocity": 5.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
@@ -266,14 +270,14 @@
         ],
         "floatList": {},
         "strList": {
+          "interactable.Platform$Type": "STATIC",
           "Image path": "../assets/Thwomp.png"
         },
         "boolList": {
           "Collidable": true,
           "Polygon collision": true,
-          "Moving": false,
-          "Climbable": false,
           "Sinkable": false,
+          "Climbable": false,
           "Disappears": false
         }
       }
