@@ -16,6 +16,8 @@ To add a new type....
 
 6.5. If you called makeInteractable, add in a case for your new class in it using the new tag made in receiveCoordinates().
 
+6.75. Edit the EDIT_GROUP case in receiveCoordinates() to include the new case.
+
 7. Edit removeEntity() to include the new enums.
 
 8. Edit setMToPixel() to call .setRescaled on all new objects of NewClass.

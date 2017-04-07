@@ -85,4 +85,6 @@ public interface IControlToLevelAdapter {
 	public void removeRP();
 
 	public void makeAttackZone(String string);
+	
+	public void makeMusicZone(String string);
 }

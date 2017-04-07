@@ -40,6 +40,7 @@ import new_client.EditWindow;
 import new_interactable.AInteractable;
 import new_interactable.AttackZone;
 import new_interactable.Boulder;
+import new_interactable.MusicZone;
 import new_interactable.NPC;
 import new_interactable.Peg;
 import new_interactable.Platform;
@@ -129,14 +130,16 @@ public class LevelManager {
 	private Map<Integer, NPC> npcs = new HashMap<>();
 	private Map<Integer, TextTip> textTips =  new HashMap<>();
     private Map<Integer, AttackZone> attackZones = new HashMap<>();
+    private Map<Integer, MusicZone> musicZones = new HashMap<>();
 	private Map<Integer, Trap> traps = new HashMap<>();
     
 	public enum Request {
 		NONE, 
 		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC, MAKE_PEG, MAKE_TIP, 
-		    MAKE_TRAP, MAKE_ATTACK_ZONE,
+		    MAKE_TRAP, MAKE_ATTACK_ZONE, MAKE_MUSIC_ZONE,
 		EDIT_OLD_PLAT, EDIT_OLD_VINE, EDIT_OLD_BOULDER, EDIT_OLD_PEG, 
-		    EDIT_OLD_TIP, EDIT_OLD_TRAP, EDIT_OLD_ATTACK_ZONE, EDIT_OLD_NPC, EDIT_GROUP,
+		    EDIT_OLD_TIP, EDIT_OLD_TRAP, EDIT_OLD_ATTACK_ZONE, EDIT_OLD_MUSIC_ZONE,
+		    EDIT_OLD_NPC, EDIT_GROUP,
 		EDIT_MONK, EDIT_MONKEY, EDIT_PIG, EDIT_SANDY,
 		SET_PLAT_ENDPOINT, MARK_EOL, MARK_EOL_QUADRANT, MARK_RP,
 			REMOVE_RP
@@ -476,7 +479,7 @@ public class LevelManager {
 			}
 		});
 
-		// Draw player characters
+		// Draw player characters.
 		characters.forEach((name, player) -> {
 			if (player.getPropertyBook().getBoolList().get("Present").booleanValue()) {
 				double ulxp = (player.getCenterXM() - player.getInGameWidth() / 2.0) * this.mToPixel;
@@ -486,6 +489,7 @@ public class LevelManager {
 			}
 		});
 		
+		// Draw traps.
 		traps.forEach((num, trap) -> {
 			Point2D.Double c = getViewportCoordinates(((trap.getCenterXM() - trap.getScaledIGWM() / 2.0) * this.mToPixel), (((this.levelHeightM - trap.getCenterYM()) - trap.getScaledIGHM() / 2.0) * this.mToPixel));
 			g.drawImage(trap.getRI(), (int)c.x,  (int)c.y, null);
@@ -504,6 +508,7 @@ public class LevelManager {
 			g.drawString(Integer.toString(num), (int) (vplbp.getX()), (int) (vplbp.getY()));
 		});
 		
+		// Draw attack zones.
 		attackZones.forEach((num, zone) -> {
 			double ulxp = (zone.getPropertyBook().getDoubList().get("xmin")) * this.mToPixel;
 			double ulyp = (this.levelHeightM - zone.getPropertyBook().getDoubList().get("ymin")) * this.mToPixel;
@@ -511,6 +516,31 @@ public class LevelManager {
 			double width = zone.getWidth() * this.mToPixel;
 			double height = zone.getHeight() * this.mToPixel;
 			g.setColor(Color.BLACK);
+			g.drawRect((int) ul.x, (int)ul.y - (int) height, (int)width, (int)height);
+			
+			Point2D.Double c = getViewportCoordinates((zone.getCenterXM() * this.mToPixel), ((this.levelHeightM - zone.getCenterYM()) * this.mToPixel));
+			
+			g.drawImage(zone.getRI(), (int)c.x,  (int)c.y, null);
+			
+			// If part of the group selection, draw a notifying 1m x 1m red box.
+			Point2D.Double vplbp = getViewportCoordinates(zone.getCenterXM() * this.mToPixel + 5,
+					(this.levelHeightM - (zone.getCenterYM() - zone.getInGameHeight() / 2)) * this.mToPixel + 10);
+			if (this.groupSelect.containsKey(num)){
+				g.setColor(new Color(255, 40, 40, 200));				
+				g.fillRect((int) (vplbp.getX() - this.mToPixel/2), (int) (vplbp.getY() - this.mToPixel/2), 
+						(int)this.mToPixel, (int)this.mToPixel);
+			}					
+			
+		});
+		
+		// Draw music zones.
+		musicZones.forEach((num, zone) -> {
+			double ulxp = (zone.getPropertyBook().getDoubList().get("xmin")) * this.mToPixel;
+			double ulyp = (this.levelHeightM - zone.getPropertyBook().getDoubList().get("ymin")) * this.mToPixel;
+			Point2D.Double ul = getViewportCoordinates(ulxp, ulyp);
+			double width = zone.getWidth() * this.mToPixel;
+			double height = zone.getHeight() * this.mToPixel;
+			g.setColor(new Color(86, 57, 117, 200));
 			g.drawRect((int) ul.x, (int)ul.y - (int) height, (int)width, (int)height);
 			
 			Point2D.Double c = getViewportCoordinates((zone.getCenterXM() * this.mToPixel), ((this.levelHeightM - zone.getCenterYM()) * this.mToPixel));
@@ -655,6 +685,9 @@ public class LevelManager {
 			makeInteractable(this.requestPath, null, xm, ym, "AttackZone");
 			break;
 		}
+		case MAKE_MUSIC_ZONE: {
+			makeInteractable(this.requestPath, null, xm, ym, "MusicZone");
+		}
 		case EDIT_GROUP: {
 			// Moves relative to the lowest ticket number.
 			int[] lowestTicket = {Integer.MAX_VALUE};
@@ -715,6 +748,14 @@ public class LevelManager {
 					}
 					case EDIT_OLD_ATTACK_ZONE: {
 						AttackZone target = this.attackZones.get(ticketNum);
+						if (target != null) {
+							offset[0] = xm - target.getCenterXM();
+							offset[1] = ym - target.getCenterYM();
+						}
+						break;
+					}
+					case EDIT_OLD_MUSIC_ZONE: {
+						MusicZone target = this.musicZones.get(ticketNum);
 						if (target != null) {
 							offset[0] = xm - target.getCenterXM();
 							offset[1] = ym - target.getCenterYM();
@@ -800,6 +841,14 @@ public class LevelManager {
 					}
 					break;
 				}
+				case EDIT_OLD_MUSIC_ZONE: {
+					MusicZone target = this.musicZones.get(requestNum);
+					if (target != null) {
+						centerVal[0] = target.getCenterXM();
+						centerVal[1] = target.getCenterYM();
+					}
+					break;
+				}
 				case EDIT_OLD_NPC: {
 					NPC target = this.npcs.get(requestNum);
 					if (target != null) {
@@ -856,6 +905,16 @@ public class LevelManager {
 		}
 		case EDIT_OLD_ATTACK_ZONE: {
 			AttackZone zone = this.attackZones.get(requestNum);
+			if (zone != null) {
+				zone.setCenter(xm, ym);
+			}
+			if (callingWindow != null) {
+			    callingWindow.updateProperties(zone.getPropertyBook());
+			}
+			break;
+		}
+		case EDIT_OLD_MUSIC_ZONE: {
+			MusicZone zone = this.musicZones.get(requestNum);
 			if (zone != null) {
 				zone.setCenter(xm, ym);
 			}
@@ -1025,6 +1084,10 @@ public class LevelManager {
 			obj = new AttackZone(this.ticketer, imageName);
 			break;
 		}
+		case "MusicZone" : {
+			obj = new MusicZone(this.ticketer, imageName);
+			break;
+		}
 		default:
 			System.err.println("Tag does not match any cases");
 			return -1;
@@ -1087,6 +1150,12 @@ public class LevelManager {
 			makeAttackZoneWindow(this.ticketer, (AttackZone)obj, book);
 			setImage(obj, path);
 			this.attackZones.put(this.ticketer, (AttackZone)obj);
+			break;
+		}
+		case "MusicZone" : {
+			makeMusicZoneWindow(this.ticketer, (MusicZone)obj, book);
+			setImage(obj, path);
+			this.musicZones.put(this.ticketer, (MusicZone)obj);
 			break;
 		}
 		default: 
@@ -1199,6 +1268,58 @@ public class LevelManager {
 		window.makeDoubleProperty("xOffsetMax", 0.0, book);
 		window.makeDoubleProperty("yOffsetMin",  0.0,  book);
 		window.makeDoubleProperty("yOffsetMax", 0.0,  book);
+		
+		zone.updateProperties(window.getPropertyBook());
+	}
+	
+	private void makeMusicZoneWindow(int ticket, MusicZone zone, PropertyBook book) {
+		EditWindow window = ltlAdapter.makeEditWindow(ticket, "MusicZone");
+		
+		// Set up the listeners.
+		window.setSubmitListener((arg0) -> {
+			zone.updateProperties(window.getPropertyBook());
+			// Next, update the relevant parts when scaling. Use resize()!
+			double scale = window.getPropertyBook().getDoubList().get("Scale");
+			
+			zone.setScale(scale);					
+				
+			// Scale the image now.
+			zone.setRI(resize(zone.getBI(), zone.getScaledIGWM(), zone.getScaledIGHM()));
+		});
+		
+		window.setCenterListener((e) -> {
+			request = Request.EDIT_OLD_MUSIC_ZONE;
+			requestNum = ticket;
+			callingWindow = window;
+		});
+		
+		window.setGroupSelectListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (groupSelect.containsKey(ticket)) {
+					// Remove from the group selection list.
+					groupSelect.remove(ticket);
+					
+				} else {
+					// Add to the group selection list.
+					groupSelect.put(ticket, Request.EDIT_OLD_MUSIC_ZONE);
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+			}
+		});
+		
+		// Set up the other properties.
+		window.makeDoubleProperty("Scale", 1.0, book);
+		window.makeStringProperty("soundName", "", book);
+		window.makeBooleanProperty("Loop", true, book);
+		window.makeDoubleProperty("Volume", 100, book);
+		window.makeDoubleProperty("xmin", 0.0, book); 
+		window.makeDoubleProperty("xmax", 0.0,  book);
+		window.makeDoubleProperty("ymin",  0.0,  book);
+		window.makeDoubleProperty("ymax",  0.0,  book);		
 		
 		zone.updateProperties(window.getPropertyBook());
 	}
@@ -1727,6 +1848,9 @@ public class LevelManager {
 		case "AttackZone": {
 			this.attackZones.remove(number);
 		}
+		case "MusicZone" : {
+			this.musicZones.remove(number);
+		}
 		}
 	}
 	
@@ -1924,6 +2048,11 @@ public class LevelManager {
 		if (old.attackZones != null) {
 		    old.attackZones.forEach((ticket, zone) -> {
 			    makeInteractable(zone.getPath(), zone.getPropertyBook(), zone.getCenterXM(), zone.getCenterYM(), "AttackZone");
+	    	});
+		}
+		if (old.musicZones != null) {
+		    old.musicZones.forEach((ticket, zone) -> {
+			    makeInteractable(zone.getPath(), zone.getPropertyBook(), zone.getCenterXM(), zone.getCenterYM(), "MusicZone");
 	    	});
 		}
 		

@@ -48,6 +48,9 @@ public class ControlWindow extends JFrame {
 	private static final String[] ATTACKZONES = {
 		    "spear", "fireball"	
 	};
+	private static final String[] MUSICZONES = {
+			"amami"
+	};
 	private static final String[] PLATFORMS = {
 			"Pedestal", "blueGround", "canyonR", "canyonL", 
 			"ForestGround", "Tree1", "Tree2", "paradiserock",
@@ -518,6 +521,15 @@ public class ControlWindow extends JFrame {
 		    btnAttackZone.setPreferredSize(dimButton);
 		    pnlZoneGrid.add(btnAttackZone);
 		    zoneToggleGroup.add(btnAttackZone);
+		}
+		
+		for (String z : MUSICZONES) {
+		    JButton btnMusicZone = new JButton(z);
+		    btnMusicZone.setIcon(new ImageIcon(THUMBNAIL_PATH + z + "Thumbnail.png"));
+		    btnMusicZone.addActionListener((arg0) -> ctlAdapter.makeMusicZone(ASSETS_PATH + z + ".png")); 
+		    btnMusicZone.setPreferredSize(dimButton);
+		    pnlZoneGrid.add(btnMusicZone);
+		    zoneToggleGroup.add(btnMusicZone);
 		}
 		
 		// Traps 

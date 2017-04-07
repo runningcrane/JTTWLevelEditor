@@ -152,6 +152,11 @@ public class Controller {
 			public void makeAttackZone(String path) {
 				level.setRequest(path, LevelManager.Request.MAKE_ATTACK_ZONE);
 			}
+
+			@Override
+			public void makeMusicZone(String path) {
+				level.setRequest(path, LevelManager.Request.MAKE_MUSIC_ZONE);
+			}
 		});
 
 		layerWindow = new LayerWindow(new ILayerToLevelAdapter() {

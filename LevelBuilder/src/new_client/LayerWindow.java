@@ -31,7 +31,7 @@ public class LayerWindow extends JFrame {
 	Dimension dimButton = new Dimension(68, 70);
 	
 	private static final String[] TYPES = {
-			"All", "Platform", "Boulder", "Peg", "Vine", "NPC", "TextTip", "AttackZone"
+			"All", "Platform", "Boulder", "Peg", "Vine", "NPC", "TextTip", "AttackZone", "MusicZone"
 	};;
 		
 	ILayerToLevelAdapter ltlAdapter;
