@@ -9,19 +9,43 @@
     "path": "../assets/bgCloud.png",
     "centerXm": 0.0,
     "centerYm": 0.0,
-    "widthm": 40.0,
+    "widthm": 20.0,
     "heightm": 15.0,
     "collisionWidth": 0.0,
     "collisionHeight": 0.0
   },
   "eolPoint": {
-    "x": 78.60714285714286,
-    "y": 10.642857142857142
+    "x": 71.57142857142857,
+    "y": 10.392857142857142
   },
   "eolQuadrant": 4,
   "levelWidthM": 100.0,
   "levelHeightM": 25.0,
+  "viewportZone": {
+    "path": null,
+    "centerXM": 0.0,
+    "centerYM": 0.0,
+    "scale": 0.0,
+    "ticket": 1,
+    "scaledIGWM": 0.0,
+    "scaledIGHM": 0.0,
+    "book": {
+      "intList": {},
+      "doubList": {
+        "ymin": 1.55,
+        "xmin": 0.0,
+        "ymax": 20.0,
+        "xmax": 80.0
+      },
+      "collPointList": [],
+      "edgeFrictionList": [],
+      "floatList": {},
+      "strList": {},
+      "boolList": {}
+    }
+  },
   "respawnPoints": [],
+  "groupSelect": {},
   "plats": {
     "2": {
       "endpoint": {
@@ -181,8 +205,58 @@
           "Velocity": 1.0,
           "Spring Constant K": 1.0
         },
-        "collPointList": [],
-        "edgeFrictionList": [],
+        "collPointList": [
+          {
+            "x": -1.936,
+            "y": 0.7360000000000001
+          },
+          {
+            "x": -1.328,
+            "y": 1.7760000000000002
+          },
+          {
+            "x": -0.384,
+            "y": 2.288
+          },
+          {
+            "x": 0.8640000000000001,
+            "y": 2.192
+          },
+          {
+            "x": 1.7120000000000002,
+            "y": 1.2640000000000002
+          },
+          {
+            "x": 2.176,
+            "y": 0.30400000000000005
+          },
+          {
+            "x": 2.192,
+            "y": -0.22400000000000003
+          },
+          {
+            "x": 0.992,
+            "y": -0.43200000000000005
+          },
+          {
+            "x": -1.2800000000000002,
+            "y": -0.30400000000000005
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
         "floatList": {},
         "strList": {
           "Image path": "../assets/body.png"
@@ -298,12 +372,12 @@
     },
     "8": {
       "endpoint": {
-        "x": 28.321428571428573,
-        "y": 12.107142857142858
+        "x": 28.535714285714285,
+        "y": 9.5
       },
       "path": "../assets/cldClear.png",
-      "centerXM": 15.321428571428571,
-      "centerYM": 11.75,
+      "centerXM": 20.75,
+      "centerYM": 10.678571428571429,
       "scale": 1.0,
       "ticket": 8,
       "scaledIGWM": 3.0,
@@ -314,7 +388,7 @@
         },
         "doubList": {
           "Scale": 1.0,
-          "Velocity": 1.0,
+          "Velocity": 2.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
@@ -361,8 +435,8 @@
         "y": 10.75
       },
       "path": "../assets/cldClearDiagL.png",
-      "centerXM": 15.321428571428571,
-      "centerYM": 6.142857142857142,
+      "centerXM": 15.428571428571429,
+      "centerYM": 7.321428571428573,
       "scale": 1.0,
       "ticket": 9,
       "scaledIGWM": 3.0,
@@ -373,7 +447,7 @@
         },
         "doubList": {
           "Scale": 1.0,
-          "Velocity": 1.0,
+          "Velocity": 2.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
@@ -420,7 +494,7 @@
         "y": 10.714285714285714
       },
       "path": "../assets/cldClearUp.png",
-      "centerXM": 12.571428571428571,
+      "centerXM": 17.928571428571427,
       "centerYM": 10.535714285714286,
       "scale": 1.0,
       "ticket": 10,
@@ -502,6 +576,100 @@
           "Disappears": false
         }
       }
+    },
+    "11": {
+      "endpoint": {
+        "x": 13.142857142857142,
+        "y": 5.785714285714285
+      },
+      "path": "../assets/cldClearDiagR.png",
+      "centerXM": 13.142857142857142,
+      "centerYM": 5.785714285714285,
+      "scale": 1.0,
+      "ticket": 11,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 2.4,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.3,
+            "y": -0.97
+          },
+          {
+            "x": -1.47,
+            "y": -0.78
+          },
+          {
+            "x": -1.47,
+            "y": -0.43
+          },
+          {
+            "x": -1.29,
+            "y": -0.23
+          },
+          {
+            "x": -0.29,
+            "y": -0.1
+          },
+          {
+            "x": 1.35,
+            "y": -0.17
+          },
+          {
+            "x": 1.49,
+            "y": -0.36
+          },
+          {
+            "x": 1.47,
+            "y": -0.63
+          },
+          {
+            "x": 1.37,
+            "y": -0.89
+          },
+          {
+            "x": 1.2,
+            "y": -0.98
+          },
+          {
+            "x": -0.33,
+            "y": -0.97
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/cldClearDiagR.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Moving": false,
+          "Climbable": false,
+          "Sinkable": false,
+          "Disappears": false
+        }
+      }
     }
   },
   "characters": {
@@ -547,8 +715,8 @@
     },
     "Sandy": {
       "path": "Sandy.png",
-      "centerXM": 77.14285714285714,
-      "centerYM": 5.428571428571427,
+      "centerXM": 68.67857142857143,
+      "centerYM": 0.5,
       "scale": 0.0,
       "ticket": 0,
       "scaledIGWM": 0.0,
@@ -655,40 +823,168 @@
   "npcs": {},
   "textTips": {},
   "attackZones": {
-    "11": {
+    "12": {
       "path": "../assets/fireball.png",
       "centerXM": 31.428571428571427,
       "centerYM": 8.035714285714285,
-      "scale": 0.28,
-      "ticket": 11,
-      "scaledIGWM": 0.8400000000000001,
-      "scaledIGHM": 0.8400000000000001,
+      "scale": 0.38,
+      "ticket": 12,
+      "scaledIGWM": 1.52,
+      "scaledIGHM": 1.52,
       "book": {
         "intList": {},
         "doubList": {
           "ymin": 0.0,
-          "xmin": 12.0,
+          "xmin": 17.0,
           "xVelMin": -200.0,
           "xOffsetMin": 0.0,
-          "Scale": 0.28,
+          "Scale": 0.38,
           "yOffsetMin": 0.0,
           "xVelMax": -100.0,
           "yOffsetMax": 0.0,
-          "ymax": 20.0,
+          "ymax": 10.0,
           "xmax": 35.0,
           "yVelMax": -10.0,
           "xOffsetMax": 0.0,
           "yVelMin": -100.0
         },
-        "collPointList": [],
-        "edgeFrictionList": [],
+        "collPointList": [
+          {
+            "x": 0.17859999999999998,
+            "y": -0.5548
+          },
+          {
+            "x": -0.1824,
+            "y": -0.1482
+          },
+          {
+            "x": 0.1292,
+            "y": 0.342
+          },
+          {
+            "x": 0.49400000000000005,
+            "y": -0.1368
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
         "floatList": {},
         "strList": {
           "FireType": "ABSOLUTE",
           "soundName": "fireball.wav"
         },
         "boolList": {
-          "dynamic": false
+          "dynamic": false,
+          "Deadly": true
+        }
+      }
+    },
+    "13": {
+      "path": "../assets/tide.png",
+      "centerXM": 30.607142857142858,
+      "centerYM": 6.464285714285715,
+      "scale": 1.3,
+      "ticket": 13,
+      "scaledIGWM": 5.2,
+      "scaledIGHM": 5.2,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "ymin": 4.392857142857142,
+          "xmin": 25.107142857142858,
+          "xVelMin": -200.0,
+          "xOffsetMin": 0.0,
+          "Scale": 1.3,
+          "yOffsetMin": 0.0,
+          "xVelMax": -200.0,
+          "yOffsetMax": 0.0,
+          "ymax": 10.357142857142858,
+          "xmax": 36.10714285714286,
+          "yVelMax": 0.0,
+          "xOffsetMax": 0.0,
+          "yVelMin": 0.0
+        },
+        "collPointList": [
+          {
+            "x": -0.5980000000000001,
+            "y": -1.7680000000000002
+          },
+          {
+            "x": -2.4050000000000002,
+            "y": -0.10400000000000001
+          },
+          {
+            "x": -2.587,
+            "y": 0.8190000000000001
+          },
+          {
+            "x": -1.963,
+            "y": 2.21
+          },
+          {
+            "x": -0.39,
+            "y": 2.535
+          },
+          {
+            "x": 0.78,
+            "y": 2.275
+          },
+          {
+            "x": 1.3650000000000002,
+            "y": 1.911
+          },
+          {
+            "x": 1.599,
+            "y": 1.014
+          },
+          {
+            "x": 1.612,
+            "y": 0.22100000000000003
+          },
+          {
+            "x": 1.677,
+            "y": -0.8840000000000001
+          },
+          {
+            "x": 1.677,
+            "y": -1.248
+          },
+          {
+            "x": 1.092,
+            "y": -1.6900000000000002
+          },
+          {
+            "x": 0.24700000000000003,
+            "y": -1.8719999999999999
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "floatList": {},
+        "strList": {
+          "FireType": "ABSOLUTE",
+          "soundName": "tidal_wave.wav"
+        },
+        "boolList": {
+          "dynamic": false,
+          "Deadly": false
         }
       }
     }

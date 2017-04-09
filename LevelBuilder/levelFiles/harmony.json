@@ -1,0 +1,499 @@
+{
+  "VERSION": 2,
+  "levelFileName": "harmony",
+  "levelName": "Harmony",
+  "levelNumber": 8,
+  "nextLevelName": "temple",
+  "mToPixel": 50.0,
+  "bg": {
+    "path": "../assets/bgSunny.png",
+    "centerXm": 0.0,
+    "centerYm": 0.0,
+    "widthm": 20.0,
+    "heightm": 15.0,
+    "collisionWidth": 0.0,
+    "collisionHeight": 0.0
+  },
+  "eolPoint": {
+    "x": 18.04,
+    "y": 7.28
+  },
+  "eolQuadrant": 4,
+  "levelWidthM": 20.0,
+  "levelHeightM": 15.0,
+  "viewportZone": {
+    "path": null,
+    "centerXM": 0.0,
+    "centerYM": 0.0,
+    "scale": 0.0,
+    "ticket": 1,
+    "scaledIGWM": 0.0,
+    "scaledIGHM": 0.0,
+    "book": {
+      "intList": {},
+      "doubList": {
+        "ymin": 0.0,
+        "xmin": 0.0,
+        "ymax": 20.0,
+        "xmax": 40.0
+      },
+      "collPointList": [],
+      "edgeFrictionList": [],
+      "deadlyEdgeList": [],
+      "floatList": {},
+      "strList": {},
+      "boolList": {}
+    }
+  },
+  "respawnPoints": [],
+  "groupSelect": {},
+  "plats": {
+    "2": {
+      "endpoint": {
+        "x": 5.16,
+        "y": 2.08
+      },
+      "path": "../assets/HarmonyRock1.png",
+      "centerXM": 12.76,
+      "centerYM": 4.0600000000000005,
+      "scale": 3.0,
+      "ticket": 2,
+      "scaledIGWM": 36.0,
+      "scaledIGHM": 9.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 3.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -17.669999999999998,
+            "y": -4.41
+          },
+          {
+            "x": -16.919999999999998,
+            "y": -1.32
+          },
+          {
+            "x": -15.54,
+            "y": -0.81
+          },
+          {
+            "x": -12.96,
+            "y": -0.48
+          },
+          {
+            "x": -10.44,
+            "y": -0.33
+          },
+          {
+            "x": -8.459999999999999,
+            "y": -0.12
+          },
+          {
+            "x": -6.39,
+            "y": 0.6900000000000001
+          },
+          {
+            "x": -4.800000000000001,
+            "y": 2.0100000000000002
+          },
+          {
+            "x": -3.9000000000000004,
+            "y": 2.7
+          },
+          {
+            "x": -1.3800000000000001,
+            "y": 2.46
+          },
+          {
+            "x": 0.66,
+            "y": 2.46
+          },
+          {
+            "x": 3.57,
+            "y": 4.11
+          },
+          {
+            "x": 5.43,
+            "y": 4.32
+          },
+          {
+            "x": 7.89,
+            "y": 4.32
+          },
+          {
+            "x": 10.53,
+            "y": 3.54
+          },
+          {
+            "x": 12.78,
+            "y": 2.13
+          },
+          {
+            "x": 15.149999999999999,
+            "y": -0.09
+          },
+          {
+            "x": 16.799999999999997,
+            "y": -2.79
+          },
+          {
+            "x": 16.98,
+            "y": -4.199999999999999
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/HarmonyRock1.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "3": {
+      "endpoint": {
+        "x": 11.56,
+        "y": 1.8599999999999994
+      },
+      "path": "../assets/HarmonyRock2.png",
+      "centerXM": 18.92,
+      "centerYM": 4.199999999999999,
+      "scale": 1.0,
+      "ticket": 3,
+      "scaledIGWM": 12.0,
+      "scaledIGHM": 10.0,
+      "book": {
+        "intList": {
+          "Z-order": 3
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -6.0,
+            "y": -4.86
+          },
+          {
+            "x": -5.34,
+            "y": -3.22
+          },
+          {
+            "x": -3.92,
+            "y": -1.72
+          },
+          {
+            "x": -2.1,
+            "y": -0.4
+          },
+          {
+            "x": -0.42,
+            "y": 0.8
+          },
+          {
+            "x": 0.82,
+            "y": 1.74
+          },
+          {
+            "x": 1.76,
+            "y": 2.98
+          },
+          {
+            "x": 2.7,
+            "y": 4.4
+          },
+          {
+            "x": 3.26,
+            "y": 4.96
+          },
+          {
+            "x": 4.08,
+            "y": 3.82
+          },
+          {
+            "x": 4.92,
+            "y": 1.52
+          },
+          {
+            "x": 5.52,
+            "y": -0.76
+          },
+          {
+            "x": 5.92,
+            "y": -3.5
+          },
+          {
+            "x": 5.92,
+            "y": -4.86
+          }
+        ],
+        "edgeFrictionList": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "deadlyEdgeList": [
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/HarmonyRock2.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "4": {
+      "endpoint": {
+        "x": 17.68,
+        "y": 2.460000000000001
+      },
+      "path": "../assets/HarmonyRock3.png",
+      "centerXM": 17.68,
+      "centerYM": 2.460000000000001,
+      "scale": 0.2,
+      "ticket": 4,
+      "scaledIGWM": 2.0,
+      "scaledIGHM": 2.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 0.2,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -0.992,
+            "y": -0.976
+          },
+          {
+            "x": -0.9199999999999999,
+            "y": -0.248
+          },
+          {
+            "x": -0.7040000000000001,
+            "y": 0.11200000000000002
+          },
+          {
+            "x": -0.45599999999999996,
+            "y": 0.584
+          },
+          {
+            "x": -0.24,
+            "y": 0.8560000000000001
+          },
+          {
+            "x": -0.08000000000000002,
+            "y": 0.976
+          },
+          {
+            "x": 0.2,
+            "y": 0.8160000000000001
+          },
+          {
+            "x": 0.392,
+            "y": 0.48
+          },
+          {
+            "x": 0.784,
+            "y": -0.072
+          },
+          {
+            "x": 0.9359999999999999,
+            "y": -0.792
+          },
+          {
+            "x": 0.968,
+            "y": -0.968
+          }
+        ],
+        "edgeFrictionList": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "deadlyEdgeList": [
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/HarmonyRock3.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    }
+  },
+  "characters": {
+    "Monkey": {
+      "path": "Monkey.png",
+      "centerXM": 0.5,
+      "centerYM": 6.0600000000000005,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": true
+        }
+      }
+    },
+    "Piggy": {
+      "path": "Piggy.png",
+      "centerXM": 2.24,
+      "centerYM": 5.880000000000001,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": true
+        }
+      }
+    },
+    "Sandy": {
+      "path": "Sandy.png",
+      "centerXM": 2.8,
+      "centerYM": 6.18,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": true
+        }
+      }
+    },
+    "Monk": {
+      "path": "Monk.png",
+      "centerXM": 1.3,
+      "centerYM": 6.279999999999999,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": true
+        }
+      }
+    }
+  },
+  "vines": {},
+  "boulders": {},
+  "pegs": {},
+  "npcs": {},
+  "textTips": {},
+  "attackZones": {},
+  "traps": {}
+}

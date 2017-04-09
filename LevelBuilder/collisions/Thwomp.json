@@ -1,0 +1,41 @@
+{
+  "intList": {},
+  "doubList": {
+    "widthm": 3.0,
+    "zoomLevel": 0.5,
+    "heightm": 7.0
+  },
+  "collPointList": [
+    {
+      "x": -1.46,
+      "y": -3.38
+    },
+    {
+      "x": -1.5,
+      "y": 3.42
+    },
+    {
+      "x": 1.44,
+      "y": 3.3
+    },
+    {
+      "x": 1.38,
+      "y": -3.34
+    }
+  ],
+  "edgeFrictionList": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "deadlyEdgeList": [
+    false,
+    false, 
+    false,
+    true
+  ],
+  "floatList": {},
+  "strList": {},
+  "boolList": {}
+}

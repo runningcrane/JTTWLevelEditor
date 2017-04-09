@@ -24,9 +24,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.google.gson.GsonBuilder;
-import com.google.gson.Gson;
 
-import new_interactable.PropertyBook;
+import interactable.PropertyBook;
+
+import com.google.gson.Gson;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -48,7 +49,6 @@ import static utils.Constants.*;
  * @author melindacrane
  */
 public class CollisionWindow extends JFrame {
-
 	private static final long serialVersionUID = -1482793564160863642L;
 	private JPanel contentPane;
 	private JTextField txtName;
@@ -61,20 +61,23 @@ public class CollisionWindow extends JFrame {
 	private JLabel lblFriction;
 	private JLabel lblFrictionVal;
 	private JLabel lblAlign;
+	private JLabel lblDeathVal;
 	private JButton btnPlatDim;
 	private JButton btnBoulderDim;
 	private JButton btnAlign;
 	private JPanel pnlContent;
 		
-	String name;
-	private double imgWidth;
-	private double imgHeight;
-	private double zoomLevel;
+	String name = "";
+	private double imgWidth = 3;
+	private double imgHeight = 3;
+	private double zoomLevel = 1;
 	private double mass;
 	private double radius;
 	private double currentFriction = 0.0;
+	private boolean currentDeadly = false;
 	private ArrayList<Point2D.Double> points = new ArrayList<>();
 	private ArrayList<Double> edgeFrics = new ArrayList<>();
+	private ArrayList<Boolean> deathEdges = new ArrayList<>();
 	
 	private BufferedImage image;
 	private ImageIcon rescaledImage;
@@ -84,21 +87,14 @@ public class CollisionWindow extends JFrame {
 	 */
 	private Point2D.Double vpOffset;
 	
-	private double offset;
-	private double mToPixel;
+	private double offset = 1.5;
+	private double mToPixel = 100;
 	private JTextField txtHeight;
 	private JTextField txtWidth;
 	
 	public CollisionWindow() {
-		this.mToPixel = 100;
-		this.name = "";
-		this.imgWidth = 3;
-		this.imgHeight = 3;
-		this.zoomLevel = 1;
-
 		// Viewport stuff
-		this.vpOffset = new Point2D.Double(0, 0);
-		this.offset = 1.5;				
+		this.vpOffset = new Point2D.Double(0, 0);			
 		
 		initGUI();
 	}
@@ -184,8 +180,8 @@ public class CollisionWindow extends JFrame {
 			width = this.image.getWidth() / this.mToPixel;
 		} else {
 			width = widthD.doubleValue();
-			txtWidth.setText(Double.toString(width));
 		}
+		txtWidth.setText(Double.toString(width));
 			
 		Double heightD = book.getDoubList().get("heightm");
 		double height;
@@ -194,8 +190,8 @@ public class CollisionWindow extends JFrame {
 			height = this.image.getHeight() / this.mToPixel;
 		} else {
 			height = heightD.doubleValue();
-			txtHeight.setText(Double.toString(height));
 		}
+		txtHeight.setText(Double.toString(height));
 				
 		ArrayList<Point2D.Double> points = new ArrayList<>();
 		// Check if null.		
@@ -205,6 +201,10 @@ public class CollisionWindow extends JFrame {
 		
 		for (Double d : book.getEdgeFrictions()) {
 		    this.edgeFrics.add(d);
+		}
+		
+		for (Boolean b : book.getDeadlyEdges()) {
+			this.deathEdges.add(b);
 		}
 		
 		// Set shared fields.
@@ -300,8 +300,10 @@ public class CollisionWindow extends JFrame {
 		});
 		
 		this.edgeFrics.forEach((f) -> book.getEdgeFrictions().add(f));
+		this.deathEdges.forEach((d) -> book.getDeadlyEdges().add(d));
 		// Make sure the last friction (between point n and point 1) is the current friction.
 		book.getEdgeFrictions().add(currentFriction);
+		book.getDeadlyEdges().add(currentDeadly);
 		
 		if (this.name.toLowerCase().contains("boulder")) {
 			book.getDoubList().put("radius", this.radius);
@@ -364,10 +366,14 @@ public class CollisionWindow extends JFrame {
 					
 				case '5':
 					currentFriction = 0.5;
+					// Because no other keys besides the numbers work. Arrgrgrh.
+					currentDeadly = false;
 					break;
 					
 				case '6':
 					currentFriction = 0.6;
+					// Because no other keys besides the numbers work. Arrgrgrh.
+					currentDeadly = true;
 					break;
 					
 				case '7':
@@ -390,6 +396,7 @@ public class CollisionWindow extends JFrame {
 					return false;
 				}
 				lblFrictionVal.setText(Double.toString(currentFriction));
+				lblDeathVal.setText(Boolean.toString(currentDeadly));
 				pnlControls.repaint();
 				return true;
 			}
@@ -460,10 +467,15 @@ public class CollisionWindow extends JFrame {
 		pnlControls.add(txtHeight);
 		txtHeight.setColumns(10);
 		
-		lblFriction = new JLabel("Friciton");
+		lblFriction = new JLabel("Friction:");
 		lblFrictionVal = new JLabel("0");
 		pnlControls.add(lblFriction);
 		pnlControls.add(lblFrictionVal);
+		
+		JLabel lblDeath = new JLabel("Deadly:");
+		lblDeathVal = new JLabel("False");
+		pnlControls.add(lblDeath);
+		pnlControls.add(lblDeathVal);
 		
 		lblMass = new JLabel("Mass:");
 		pnlControls.add(lblMass);
@@ -544,6 +556,7 @@ public class CollisionWindow extends JFrame {
 				// Remove all made points and edge values.
 				points.clear();
 				edgeFrics.clear();
+				deathEdges.clear();
 				pnlContent.repaint();
 			}
 		});

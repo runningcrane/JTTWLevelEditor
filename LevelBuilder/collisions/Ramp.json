@@ -7,22 +7,25 @@
   },
   "collPointList": [
     {
-      "x": -7.5,
-      "y": -5.0
-    },
-    {
       "x": 7.3,
-      "y": 4.0
+      "y": -5.2
     },
     {
-      "x": 7.5,
-      "y": -4.8
+      "x": 7.1,
+      "y": 4.6
+    },
+    {
+      "x": -7.5,
+      "y": -4.6
     }
   ],
   "edgeFrictionList": [
-    1.0,
+    0.0,
     0.0,
     0.0
+  ],
+  "deadlyEdgeList": [
+    false
   ],
   "floatList": {},
   "strList": {},

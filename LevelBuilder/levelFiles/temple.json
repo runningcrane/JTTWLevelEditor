@@ -1,0 +1,1250 @@
+{
+  "VERSION": 2,
+  "levelFileName": "temple",
+  "levelName": "The Golden Temple",
+  "levelNumber": 9,
+  "nextLevelName": "bodhi",
+  "mToPixel": 28.0,
+  "bg": {
+    "path": "../assets/bgSunny.png",
+    "centerXm": 0.0,
+    "centerYm": 0.0,
+    "widthm": 20.0,
+    "heightm": 15.0,
+    "collisionWidth": 0.0,
+    "collisionHeight": 0.0
+  },
+  "eolPoint": {
+    "x": 53.5,
+    "y": 14.142857142857142
+  },
+  "eolQuadrant": 4,
+  "levelWidthM": 70.0,
+  "levelHeightM": 30.0,
+  "viewportZone": {
+    "path": null,
+    "centerXM": 0.0,
+    "centerYM": 0.0,
+    "scale": 0.0,
+    "ticket": 1,
+    "scaledIGWM": 0.0,
+    "scaledIGHM": 0.0,
+    "book": {
+      "intList": {},
+      "doubList": {
+        "ymin": 2.6,
+        "xmin": 0.0,
+        "ymax": 30.0,
+        "xmax": 70.0
+      },
+      "collPointList": [],
+      "edgeFrictionList": [],
+      "deadlyEdgeList": [],
+      "floatList": {},
+      "strList": {},
+      "boolList": {}
+    }
+  },
+  "respawnPoints": [],
+  "groupSelect": {},
+  "plats": {
+    "1": {
+      "endpoint": {
+        "x": 1.16,
+        "y": 1.2400000000000002
+      },
+      "path": "../assets/Pedestal.png",
+      "centerXM": 1.6785714285714286,
+      "centerYM": 2.928571428571427,
+      "scale": 1.0,
+      "ticket": 1,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.48,
+            "y": -0.46
+          },
+          {
+            "x": -1.5,
+            "y": 0.47
+          },
+          {
+            "x": 1.47,
+            "y": 0.49
+          },
+          {
+            "x": 1.41,
+            "y": -0.47
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/Pedestal.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "2": {
+      "endpoint": {
+        "x": 5.2,
+        "y": 3.039999999999999
+      },
+      "path": "../assets/Pedestal.png",
+      "centerXM": 5.071428571428571,
+      "centerYM": 3.1428571428571423,
+      "scale": 1.0,
+      "ticket": 2,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.48,
+            "y": -0.46
+          },
+          {
+            "x": -1.5,
+            "y": 0.47
+          },
+          {
+            "x": 1.47,
+            "y": 0.49
+          },
+          {
+            "x": 1.41,
+            "y": -0.47
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/Pedestal.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "3": {
+      "endpoint": {
+        "x": 8.54,
+        "y": 3.8599999999999994
+      },
+      "path": "../assets/platform.png",
+      "centerXM": 32.535714285714285,
+      "centerYM": 3.178571428571429,
+      "scale": 1.0,
+      "ticket": 3,
+      "scaledIGWM": 50.0,
+      "scaledIGHM": 1.0,
+      "book": {
+        "intList": {
+          "Z-order": 7
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -24.94,
+            "y": -0.5
+          },
+          {
+            "x": -24.94,
+            "y": 0.42
+          },
+          {
+            "x": 24.94,
+            "y": 0.42
+          },
+          {
+            "x": 24.94,
+            "y": -0.4
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/platform.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "4": {
+      "endpoint": {
+        "x": 32.642857142857146,
+        "y": 4.2857142857142865
+      },
+      "path": "../assets/platform2.png",
+      "centerXM": 32.67857142857143,
+      "centerYM": 4.107142857142858,
+      "scale": 1.0,
+      "ticket": 4,
+      "scaledIGWM": 46.0,
+      "scaledIGHM": 1.0,
+      "book": {
+        "intList": {
+          "Z-order": 6
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -22.92,
+            "y": -0.58
+          },
+          {
+            "x": -22.96,
+            "y": 0.42
+          },
+          {
+            "x": 22.96,
+            "y": 0.42
+          },
+          {
+            "x": 22.92,
+            "y": -0.54
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/platform2.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "5": {
+      "endpoint": {
+        "x": 32.607142857142854,
+        "y": 5.178571428571429
+      },
+      "path": "../assets/platform3.png",
+      "centerXM": 32.642857142857146,
+      "centerYM": 5.071428571428571,
+      "scale": 1.0,
+      "ticket": 5,
+      "scaledIGWM": 42.0,
+      "scaledIGHM": 1.0,
+      "book": {
+        "intList": {
+          "Z-order": 5
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -20.92,
+            "y": -0.58
+          },
+          {
+            "x": -20.96,
+            "y": 0.42
+          },
+          {
+            "x": 20.8,
+            "y": 0.42
+          },
+          {
+            "x": 20.84,
+            "y": -0.54
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/platform3.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "6": {
+      "endpoint": {
+        "x": 13.785714285714286,
+        "y": 12.0
+      },
+      "path": "../assets/endcolumn.png",
+      "centerXM": 13.571428571428571,
+      "centerYM": 10.428571428571427,
+      "scale": 1.0,
+      "ticket": 6,
+      "scaledIGWM": 1.0,
+      "scaledIGHM": 10.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -0.3,
+            "y": -4.96
+          },
+          {
+            "x": -0.5,
+            "y": 3.88
+          },
+          {
+            "x": -0.02,
+            "y": 4.94
+          },
+          {
+            "x": 0.44,
+            "y": 3.88
+          },
+          {
+            "x": 0.38,
+            "y": -4.98
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/endcolumn.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": false,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "7": {
+      "endpoint": {
+        "x": 22.857142857142858,
+        "y": 10.5
+      },
+      "path": "../assets/CrushColumn.png",
+      "centerXM": 22.75,
+      "centerYM": 13.5,
+      "scale": 1.0,
+      "ticket": 7,
+      "scaledIGWM": 1.3,
+      "scaledIGHM": 10.0,
+      "book": {
+        "intList": {
+          "Z-order": 6
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 2.0,
+          "Pause time": 2.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -0.59,
+            "y": -4.94
+          },
+          {
+            "x": -0.53,
+            "y": 1.6
+          },
+          {
+            "x": -0.05,
+            "y": 2.6
+          },
+          {
+            "x": 0.49,
+            "y": 1.52
+          },
+          {
+            "x": 0.39,
+            "y": -4.96
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "HITTING",
+          "Image path": "../assets/CrushColumn.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "8": {
+      "endpoint": {
+        "x": 29.964285714285715,
+        "y": 9.964285714285715
+      },
+      "path": "../assets/CrushColumn.png",
+      "centerXM": 29.928571428571427,
+      "centerYM": 13.678571428571427,
+      "scale": 1.0,
+      "ticket": 8,
+      "scaledIGWM": 1.3,
+      "scaledIGHM": 10.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 4.0,
+          "Pause time": 3.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -0.59,
+            "y": -4.94
+          },
+          {
+            "x": -0.53,
+            "y": 1.6
+          },
+          {
+            "x": -0.05,
+            "y": 2.6
+          },
+          {
+            "x": 0.49,
+            "y": 1.52
+          },
+          {
+            "x": 0.39,
+            "y": -4.96
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "HITTING",
+          "Image path": "../assets/CrushColumn.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "9": {
+      "endpoint": {
+        "x": 36.892857142857146,
+        "y": 10.178571428571427
+      },
+      "path": "../assets/CrushColumn.png",
+      "centerXM": 36.642857142857146,
+      "centerYM": 13.678571428571427,
+      "scale": 1.0,
+      "ticket": 9,
+      "scaledIGWM": 1.3,
+      "scaledIGHM": 10.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 0.6,
+          "Quick Velocity": 8.0,
+          "Pause time": 4.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -0.59,
+            "y": -4.94
+          },
+          {
+            "x": -0.53,
+            "y": 1.6
+          },
+          {
+            "x": -0.05,
+            "y": 2.6
+          },
+          {
+            "x": 0.49,
+            "y": 1.52
+          },
+          {
+            "x": 0.39,
+            "y": -4.96
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "HITTING",
+          "Image path": "../assets/CrushColumn.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "10": {
+      "endpoint": {
+        "x": 42.92857142857143,
+        "y": 10.035714285714285
+      },
+      "path": "../assets/CrushColumn.png",
+      "centerXM": 42.92857142857143,
+      "centerYM": 15.071428571428571,
+      "scale": 1.0,
+      "ticket": 10,
+      "scaledIGWM": 1.3,
+      "scaledIGHM": 10.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 10.0,
+          "Pause time": 2.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -0.59,
+            "y": -4.94
+          },
+          {
+            "x": -0.53,
+            "y": 1.6
+          },
+          {
+            "x": -0.05,
+            "y": 2.6
+          },
+          {
+            "x": 0.49,
+            "y": 1.52
+          },
+          {
+            "x": 0.39,
+            "y": -4.96
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "HITTING",
+          "Image path": "../assets/CrushColumn.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "11": {
+      "endpoint": {
+        "x": 51.714285714285715,
+        "y": 10.392857142857142
+      },
+      "path": "../assets/endcolumn.png",
+      "centerXM": 51.714285714285715,
+      "centerYM": 10.392857142857142,
+      "scale": 1.0,
+      "ticket": 11,
+      "scaledIGWM": 1.0,
+      "scaledIGHM": 10.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -0.3,
+            "y": -4.96
+          },
+          {
+            "x": -0.5,
+            "y": 3.88
+          },
+          {
+            "x": -0.02,
+            "y": 4.94
+          },
+          {
+            "x": 0.44,
+            "y": 3.88
+          },
+          {
+            "x": 0.38,
+            "y": -4.98
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/endcolumn.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": false,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "12": {
+      "endpoint": {
+        "x": 18.142857142857142,
+        "y": 13.964285714285715
+      },
+      "path": "../assets/Crowning.png",
+      "centerXM": 18.142857142857142,
+      "centerYM": 13.964285714285715,
+      "scale": 1.0,
+      "ticket": 12,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 3.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.48,
+            "y": -1.48
+          },
+          {
+            "x": -1.48,
+            "y": 1.45
+          },
+          {
+            "x": 1.49,
+            "y": 1.49
+          },
+          {
+            "x": 1.49,
+            "y": -1.5
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/Crowning.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": false,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "13": {
+      "endpoint": {
+        "x": 26.571428571428573,
+        "y": 14.035714285714286
+      },
+      "path": "../assets/Crowning.png",
+      "centerXM": 26.571428571428573,
+      "centerYM": 14.035714285714286,
+      "scale": 1.0,
+      "ticket": 13,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 3.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.48,
+            "y": -1.48
+          },
+          {
+            "x": -1.48,
+            "y": 1.45
+          },
+          {
+            "x": 1.49,
+            "y": 1.49
+          },
+          {
+            "x": 1.49,
+            "y": -1.5
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/Crowning.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": false,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "14": {
+      "endpoint": {
+        "x": 33.607142857142854,
+        "y": 14.321428571428571
+      },
+      "path": "../assets/Crowning.png",
+      "centerXM": 33.607142857142854,
+      "centerYM": 14.321428571428571,
+      "scale": 1.0,
+      "ticket": 14,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 3.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.48,
+            "y": -1.48
+          },
+          {
+            "x": -1.48,
+            "y": 1.45
+          },
+          {
+            "x": 1.49,
+            "y": 1.49
+          },
+          {
+            "x": 1.49,
+            "y": -1.5
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/Crowning.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": false,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "15": {
+      "endpoint": {
+        "x": 39.67857142857143,
+        "y": 14.285714285714286
+      },
+      "path": "../assets/Crowning.png",
+      "centerXM": 39.67857142857143,
+      "centerYM": 14.285714285714286,
+      "scale": 1.0,
+      "ticket": 15,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 3.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.48,
+            "y": -1.48
+          },
+          {
+            "x": -1.48,
+            "y": 1.45
+          },
+          {
+            "x": 1.49,
+            "y": 1.49
+          },
+          {
+            "x": 1.49,
+            "y": -1.5
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/Crowning.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": false,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "16": {
+      "endpoint": {
+        "x": 46.75,
+        "y": 14.392857142857142
+      },
+      "path": "../assets/Crowning.png",
+      "centerXM": 46.75,
+      "centerYM": 14.392857142857142,
+      "scale": 1.0,
+      "ticket": 16,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 3.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -1.48,
+            "y": -1.48
+          },
+          {
+            "x": -1.48,
+            "y": 1.45
+          },
+          {
+            "x": 1.49,
+            "y": 1.49
+          },
+          {
+            "x": 1.49,
+            "y": -1.5
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/Crowning.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": false,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    }
+  },
+  "characters": {
+    "Monkey": {
+      "path": "Monkey.png",
+      "centerXM": 0.4642857142857143,
+      "centerYM": 5.25,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": true
+        }
+      }
+    },
+    "Piggy": {
+      "path": "Piggy.png",
+      "centerXM": 1.8928571428571428,
+      "centerYM": 5.285714285714285,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": true
+        }
+      }
+    },
+    "Sandy": {
+      "path": "Sandy.png",
+      "centerXM": 2.5357142857142856,
+      "centerYM": 5.178571428571427,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": true
+        }
+      }
+    },
+    "Monk": {
+      "path": "Monk.png",
+      "centerXM": 1.25,
+      "centerYM": 5.392857142857142,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": true
+        }
+      }
+    }
+  },
+  "vines": {},
+  "boulders": {},
+  "pegs": {},
+  "npcs": {},
+  "textTips": {},
+  "attackZones": {},
+  "traps": {}
+}

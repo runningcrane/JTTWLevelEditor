@@ -21,7 +21,32 @@
   "eolQuadrant": 4,
   "levelWidthM": 20.0,
   "levelHeightM": 15.0,
+  "viewportZone": {
+    "path": null,
+    "centerXM": 0.0,
+    "centerYM": 0.0,
+    "scale": 0.0,
+    "ticket": 1,
+    "scaledIGWM": 0.0,
+    "scaledIGHM": 0.0,
+    "book": {
+      "intList": {},
+      "doubList": {
+        "ymin": 5.0,
+        "xmin": -6.0,
+        "ymax": 20.0,
+        "xmax": 23.0
+      },
+      "collPointList": [],
+      "edgeFrictionList": [],
+      "deadlyEdgeList": [],
+      "floatList": {},
+      "strList": {},
+      "boolList": {}
+    }
+  },
   "respawnPoints": [],
+  "groupSelect": {},
   "plats": {
     "1": {
       "endpoint": {
@@ -42,37 +67,42 @@
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
           {
-            "x": -7.5,
-            "y": -5.0
-          },
-          {
             "x": 7.3,
-            "y": 4.0
+            "y": -5.2
           },
           {
-            "x": 7.5,
-            "y": -4.8
+            "x": 7.1,
+            "y": 4.6
+          },
+          {
+            "x": -7.5,
+            "y": -4.6
           }
         ],
         "edgeFrictionList": [
-          1.0,
+          0.0,
           0.0,
           0.0
         ],
+        "deadlyEdgeList": [
+          false
+        ],
         "floatList": {},
         "strList": {
+          "interactable.Platform$Type": "STATIC",
           "Image path": "../assets/Ramp.png"
         },
         "boolList": {
           "Collidable": true,
           "Polygon collision": true,
-          "Moving": false,
-          "Climbable": false,
           "Sinkable": false,
+          "Climbable": false,
           "Disappears": false
         }
       }
@@ -96,37 +126,42 @@
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
           {
-            "x": -7.5,
-            "y": -5.0
-          },
-          {
             "x": 7.3,
-            "y": 4.0
+            "y": -5.2
           },
           {
-            "x": 7.5,
-            "y": -4.8
+            "x": 7.1,
+            "y": 4.6
+          },
+          {
+            "x": -7.5,
+            "y": -4.6
           }
         ],
         "edgeFrictionList": [
-          1.0,
+          0.0,
           0.0,
           0.0
         ],
+        "deadlyEdgeList": [
+          false
+        ],
         "floatList": {},
         "strList": {
+          "interactable.Platform$Type": "STATIC",
           "Image path": "../assets/Ramp.png"
         },
         "boolList": {
           "Collidable": true,
           "Polygon collision": true,
-          "Moving": false,
-          "Climbable": false,
           "Sinkable": false,
+          "Climbable": false,
           "Disappears": false
         }
       }
@@ -146,6 +181,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -166,6 +202,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -186,6 +223,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -206,6 +244,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
