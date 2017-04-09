@@ -68,6 +68,7 @@
           "Scale": 1.0,
           "Velocity": 1.0,
           "Quick Velocity": 0.0,
+          "Pause time": 0.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
@@ -124,6 +125,7 @@
           "Scale": 1.0,
           "Velocity": 1.0,
           "Quick Velocity": 0.0,
+          "Pause time": 0.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
@@ -180,6 +182,7 @@
           "Scale": 1.0,
           "Velocity": 1.0,
           "Quick Velocity": 0.0,
+          "Pause time": 0.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
@@ -218,12 +221,12 @@
     },
     "4": {
       "endpoint": {
-        "x": 20.38235294117647,
-        "y": 8.764705882352942
+        "x": 20.441176470588236,
+        "y": 5.4411764705882355
       },
       "path": "../assets/Thwomp.png",
-      "centerXM": 20.38235294117647,
-      "centerYM": 8.764705882352942,
+      "centerXM": 20.558823529411764,
+      "centerYM": 8.705882352941178,
       "scale": 1.0,
       "ticket": 4,
       "scaledIGWM": 3.0,
@@ -236,6 +239,7 @@
           "Scale": 1.0,
           "Velocity": 1.0,
           "Quick Velocity": 5.0,
+          "Pause time": 3.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
@@ -270,7 +274,7 @@
         ],
         "floatList": {},
         "strList": {
-          "interactable.Platform$Type": "STATIC",
+          "interactable.Platform$Type": "HITTING",
           "Image path": "../assets/Thwomp.png"
         },
         "boolList": {

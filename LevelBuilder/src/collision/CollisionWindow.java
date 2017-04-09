@@ -506,6 +506,7 @@ public class CollisionWindow extends JFrame {
 				// Remove all made points and edge values.
 				points.clear();
 				edgeFrics.clear();
+				deathEdges.clear();
 				pnlContent.repaint();
 			}
 		});

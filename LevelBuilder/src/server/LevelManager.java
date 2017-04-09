@@ -1285,9 +1285,8 @@ public class LevelManager {
 		window.makeDoubleProperty("Scale", 1.0, book);
 		window.makeStringProperty("Image path", plat.getPath(), null);		
 		window.makeBooleanProperty("Disappears", false, book); 		
-		//window.makeBooleanProperty("Moving", false, book); 
 		Platform.Type legacyDefault; 
-		if (book.getBoolList().get("Moving") != null && book.getBoolList().get("Moving").booleanValue()) {
+		if (book != null && book.getBoolList().get("Moving") != null && book.getBoolList().get("Moving").booleanValue()) {
 			legacyDefault = Platform.Type.MOVING;
 		} else {
 			legacyDefault = Platform.Type.STATIC;
@@ -1303,6 +1302,7 @@ public class LevelManager {
 		
 		window.makeDoubleProperty("Velocity", 1.0, book); 	
 		window.makeDoubleProperty("Quick Velocity", 0.0, book);
+		window.makeDoubleProperty("Pause time", 0.0, book);
 		window.makeBooleanProperty("Sinkable", false, book); 		
 		window.makeDoubleProperty("Spring Constant K", 1.0, book);
 		window.makeBooleanProperty("Climbable", false, book); 
@@ -1355,7 +1355,7 @@ public class LevelManager {
 		window.makeDoubleProperty("Scale", 1.0, book); 
 		window.makeStringProperty("Image path", vine.getPath(), null);
 		window.makeDoubleProperty("Arc Length (deg)", 180, book);
-		window.makeDoubleProperty("Velocity", 1.0, book); 
+		window.makeDoubleProperty("Velocity", 1.0, book);
 		window.makeDoubleProperty("Width", 1.0, book);
 		window.makeDoubleProperty("Length", 5.0,  book);
 		

@@ -49,13 +49,16 @@ public class ControlWindow extends JFrame {
 		    "spear", "fireball", "tide"
 	};
 	private static final String[] PLATFORMS = {
-			"Pedestal", "blueGround", "canyonR", "canyonL", 
+			"Pedestal", "blueGround", "ground", "tree", "platform", "platform2", "platform3", "canyonR", "canyonL", 
 			"ForestGround", "Tree1", "Tree2", "paradiserock",
-			"Ramp", "arEast", "land", "Shore", "sea"
+			"Ramp", "arEast", "land", "Shore", "sea", "platformFull"
 	};
 	private static final String[] ROCKS = {
 			"Rock1", "Rock2", "Rock3", "Rock4", "Rock5", 
-			"lvl1Rock1", "lvl1Rock2", "lvl1Rock3", "lvl1Rock4"
+			"lvl1Rock1", "lvl1Rock2", "lvl1Rock3", "lvl1Rock4",
+			"HarmonyRock1", "HarmonyRock2","HarmonyRock3", "HarmonyRock4",
+			"HarmonyRock5", "HarmonyRock6","HarmonyRock7","HarmonyRock8",
+			"HarmonyRock9","HarmonyRock10","HarmonyRock11","HarmonyRock12"
 	};
 	private static final String[] CLOUDS = {
 			"cldClear", "cldCloud", "cldStormy", "cldSunset",
@@ -77,7 +80,7 @@ public class ControlWindow extends JFrame {
 	};
 	
 	private static final String[] SPECIALS = {
-		    "BuddhaHand", "lvl1Gate", "head", "body", "tail", "Thwomp"
+		    "BuddhaHand", "lvl1Gate", "HarmonyBridge", "endcolumn", "CrushColumn", "Crowning", "head", "body", "tail", "Thwomp"
 	}; 
 	private static final String[] TRAPS = {
 		    "cage1"
