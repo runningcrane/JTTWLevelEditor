@@ -60,11 +60,7 @@ public class CollisionWindow extends JFrame {
 	private JLabel lblHeight;
 	private JLabel lblFriction;
 	private JLabel lblFrictionVal;
-	private JLabel lblAlign;
-	private JLabel lblDeathVal;
-	private JButton btnPlatDim;
 	private JButton btnBoulderDim;
-	private JButton btnAlign;
 	private JPanel pnlContent;
 		
 	String name = "";
@@ -75,6 +71,8 @@ public class CollisionWindow extends JFrame {
 	private double radius;
 	private double currentFriction = 0.0;
 	private boolean currentDeadly = false;
+	private boolean snapToAxis = false;
+	private Point2D.Double lastPoint = null;
 	private ArrayList<Point2D.Double> points = new ArrayList<>();
 	private ArrayList<Double> edgeFrics = new ArrayList<>();
 	private ArrayList<Boolean> deathEdges = new ArrayList<>();
@@ -246,7 +244,7 @@ public class CollisionWindow extends JFrame {
 			this.radius = radius;
 			
 			// Draw the rescaled boulder.
-			rescaleBoulder();
+			rescaleImage();
 			
 		} else {
 			// Set the plat-related objects visible.
@@ -255,32 +253,19 @@ public class CollisionWindow extends JFrame {
 			this.btnBoulderDim.setEnabled(false);							
 			
 			// Resize it to match the zoom level and given default width, heights.
-			rescalePlat();
+			rescaleImage();
 		}										
 		
 		// Update screen.
 		this.repaint();
 	}
 	
-	public void rescalePlat() {		
+	public void rescaleImage() {		
 		// Rescale the loaded image.
 		if (this.image != null) {
-			System.out.println(this.mToPixel + ", " + this.zoomLevel + ", " + this.imgWidth);
 			this.rescaledImage = new ImageIcon(this.image.getScaledInstance((int)(this.imgWidth * this.mToPixel * this.zoomLevel), 
 					(int)(this.imgHeight * this.mToPixel * this.zoomLevel), java.awt.Image.SCALE_SMOOTH));
 		}
-		
-		// Redraw.
-		this.repaint();
-	}
-	
-	public void rescaleBoulder() {
-		if (this.image != null) {
-			this.rescaledImage = new ImageIcon(this.image.getScaledInstance((int)(this.imgWidth * this.mToPixel * this.zoomLevel), 
-					(int)(this.imgHeight * this.mToPixel * this.zoomLevel), java.awt.Image.SCALE_SMOOTH));
-		}
-		
-		// Redraw.
 		this.repaint();
 	}
 	
@@ -336,10 +321,9 @@ public class CollisionWindow extends JFrame {
 		
 		// Control panel
 		JPanel pnlControls = new JPanel();
-		pnlControls.setLayout(new GridLayout(10,2));
+		pnlControls.setLayout(new GridLayout(12,2));
 		pnlControls.setBackground(UIManager.getColor("inactiveCaption"));
 		contentPane.add(pnlControls, BorderLayout.NORTH);
-		
 		
 		KeyEventDispatcher d = new KeyEventDispatcher() {
             @Override
@@ -366,14 +350,10 @@ public class CollisionWindow extends JFrame {
 					
 				case '5':
 					currentFriction = 0.5;
-					// Because no other keys besides the numbers work. Arrgrgrh.
-					currentDeadly = false;
 					break;
 					
 				case '6':
 					currentFriction = 0.6;
-					// Because no other keys besides the numbers work. Arrgrgrh.
-					currentDeadly = true;
 					break;
 					
 				case '7':
@@ -396,7 +376,6 @@ public class CollisionWindow extends JFrame {
 					return false;
 				}
 				lblFrictionVal.setText(Double.toString(currentFriction));
-				lblDeathVal.setText(Boolean.toString(currentDeadly));
 				pnlControls.repaint();
 				return true;
 			}
@@ -421,18 +400,18 @@ public class CollisionWindow extends JFrame {
 		JSlider slider = new JSlider();
 		slider.setSnapToTicks(true);
 		slider.setValue(100);
-		slider.setMajorTickSpacing(25);
+		slider.setMajorTickSpacing(20);
 		slider.setMaximum(200);
 		slider.addChangeListener(new ChangeListener() {
 		      public void stateChanged(ChangeEvent event) {
 		        int value = slider.getValue();			        
 		        zoomLevel = (value == 0) ? 0.05 : value / 100.0;		       
-		        rescalePlat();		        
+		        rescaleImage();		        
 		      }
 		    });
 		pnlControls.add(slider);
 		
-		btnPlatDim = new JButton("Change dimensions");
+		JButton btnPlatDim = new JButton("Change dimensions");
 		btnPlatDim.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Double pwidth = Double.parseDouble(txtWidth.getText());
@@ -445,7 +424,7 @@ public class CollisionWindow extends JFrame {
 					imgHeight = pheight.doubleValue();
 				}
 				
-				rescalePlat();
+				rescaleImage();
 				
 			}
 		});
@@ -472,11 +451,6 @@ public class CollisionWindow extends JFrame {
 		pnlControls.add(lblFriction);
 		pnlControls.add(lblFrictionVal);
 		
-		JLabel lblDeath = new JLabel("Deadly:");
-		lblDeathVal = new JLabel("False");
-		pnlControls.add(lblDeath);
-		pnlControls.add(lblDeathVal);
-		
 		lblMass = new JLabel("Mass:");
 		pnlControls.add(lblMass);
 		
@@ -495,60 +469,26 @@ public class CollisionWindow extends JFrame {
 		txtRadius.setColumns(10);		
 		txtRadius.setEnabled(false);
 		
-		lblAlign = new JLabel("");		
+		JLabel lblAlign = new JLabel("");		
 		
-		btnAlign = new JButton("Align axis");
-		btnAlign.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// Don't do this unless there are 2 or more points
-				if (points.size() < 2) {
-					return;
-				}				
-				
-				// Over all the points, find the most bottom y, the most left x, most top y, most right x
-				double[] maxims = {Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE};
-				points.forEach((point) -> {
-					// Bottom y
-					if (point.y < maxims[0]) {
-						maxims[0] = point.y;
-					}
-					
-					// Left most x
-					if (point.x < maxims[1]) {
-						maxims[1] = point.x;
-					}
-					
-					// Top y
-					if (point.y > maxims[2]) {
-						maxims[2] = point.y;						
-					}
-					
-					// Right most x
-					if (point.x > maxims[3]) {
-						maxims[3] = point.x;
-					}
-				});
-				
-				// Make four new points
-				points.clear();
-				points.add(new Point2D.Double(maxims[1], maxims[0]));
-				points.add(new Point2D.Double(maxims[1], maxims[2]));
-				points.add(new Point2D.Double(maxims[3], maxims[2]));
-				points.add(new Point2D.Double(maxims[3], maxims[0]));
-				
-				// Repaint.				
-			    pnlContent.repaint();
-			}			
+		JButton btnAlign = new JButton("Align axis");
+		btnAlign.addActionListener((arg0) -> {
+				snapToAxis = !snapToAxis;
+				lblAlign.setText(Boolean.toString(snapToAxis));		
 		});
 		
+		JLabel lblDeathVal = new JLabel("false");
+		JButton btnDeath = new JButton("Toggle Deadly");
+		btnDeath.addActionListener((arg0) -> {
+			currentDeadly = !currentDeadly;
+			lblDeathVal.setText(Boolean.toString(currentDeadly));
+		});
+		
+		pnlControls.add(btnDeath);
+		pnlControls.add(lblDeathVal);
 		
 		JButton btnOutput = new JButton("Change!");
-		btnOutput.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				outputJSON();
-			}
-		});
+		btnOutput.addActionListener((e) ->  outputJSON());
 		
 		JButton btnClear = new JButton("Clear Points");
 		btnClear.addActionListener(new ActionListener() {
@@ -562,8 +502,7 @@ public class CollisionWindow extends JFrame {
 		});
 		
 		btnBoulderDim = new JButton("Change properties");
-		btnBoulderDim.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		btnBoulderDim.addActionListener((arg0) -> {
 				Double pmass = Double.parseDouble(txtMass.getText());
 				if (pmass != null) {
 					mass = pmass.doubleValue();
@@ -574,15 +513,14 @@ public class CollisionWindow extends JFrame {
 					radius = pradius.doubleValue();
 				}
 				
-				rescaleBoulder();
+				rescaleImage();
 				
-			}
 		});
 		pnlControls.add(btnBoulderDim);
 		pnlControls.add(btnClear);
-		pnlControls.add(btnOutput);
-		pnlControls.add(lblAlign);
 		pnlControls.add(btnAlign);
+		pnlControls.add(lblAlign);
+		pnlControls.add(btnOutput);
 		btnBoulderDim.setEnabled(false);
 		
 		JButton btnCenter = new JButton("Center");
@@ -698,10 +636,23 @@ public class CollisionWindow extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 			    int xp = e.getX();
 			    int yp = e.getY();
-			    points.add(new Point2D.Double((xp - vpOffset.x)/zoomLevel, (yp - vpOffset.y)/zoomLevel));
+			    Point2D.Double newPoint = new Point2D.Double((xp - vpOffset.x)/zoomLevel, (yp - vpOffset.y)/zoomLevel);
+			    if (snapToAxis && points.size() > 1) {
+			    	double diffX = Math.abs(lastPoint.x - newPoint.x);
+			    	double diffY = Math.abs(lastPoint.y - newPoint.y);
+			    	if (diffX < diffY) {
+			    		// Snap to y-axis.
+			    		newPoint.x = lastPoint.x;
+			    	} else {
+			    		newPoint.y = lastPoint.y;
+			    	}
+			    }
+			    points.add(newPoint);
 			    if (points.size() > 1) {
 			    	edgeFrics.add(currentFriction);
+			    	deathEdges.add(currentDeadly);
 			    }
+			    lastPoint = newPoint;
 			    pnlContent.repaint();
 		    }
 

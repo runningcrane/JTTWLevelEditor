@@ -55,11 +55,8 @@ public class LayerWindow extends JFrame {
 		JSeparator jsep = new JSeparator(SwingConstants.HORIZONTAL);
 		
 		// Set its removal action listener.
-		window.setRemoveListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				removeEditWindow(number);
-			}			
+		window.setRemoveListener((arg0) -> {
+				removeEditWindow(number);	
 		});
 		
 		// Add it to our known lists.		
@@ -167,10 +164,7 @@ public class LayerWindow extends JFrame {
 			}
 
 			@Override
-			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
-				
-			}			
+			public void focusLost(FocusEvent e) {}			
 		});
 		btnSelectAll.setPreferredSize(dimButton);
 		btnSelectAll.setBackground(new Color(143, 251, 140));
@@ -185,10 +179,7 @@ public class LayerWindow extends JFrame {
 			}
 
 			@Override
-			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
-				
-			}			
+			public void focusLost(FocusEvent e) {}			
 		});
 		btnDeselectAll.setPreferredSize(dimButton);
 		pnlToggle.add(btnDeselectAll);
@@ -202,10 +193,7 @@ public class LayerWindow extends JFrame {
 			}
 
 			@Override
-			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
-				
-			}			
+			public void focusLost(FocusEvent e) {	}			
 		});
 		btnMoveSelected.setPreferredSize(dimButton);
 		btnMoveSelected.setBackground(new Color(248, 143, 151));

@@ -9,7 +9,7 @@
     "path": "../assets/bgSunny.png",
     "centerXm": 0.0,
     "centerYm": 0.0,
-    "widthm": 20.0,
+    "widthm": 28.0,
     "heightm": 15.0,
     "collisionWidth": 0.0,
     "collisionHeight": 0.0
@@ -21,7 +21,32 @@
   "eolQuadrant": 4,
   "levelWidthM": 40.0,
   "levelHeightM": 15.0,
+  "viewportZone": {
+    "path": null,
+    "centerXM": 0.0,
+    "centerYM": 0.0,
+    "scale": 0.0,
+    "ticket": 1,
+    "scaledIGWM": 0.0,
+    "scaledIGHM": 0.0,
+    "book": {
+      "intList": {},
+      "doubList": {
+        "ymin": 0.0,
+        "xmin": 0.0,
+        "ymax": 15.0,
+        "xmax": 28.0
+      },
+      "collPointList": [],
+      "edgeFrictionList": [],
+      "deadlyEdgeList": [],
+      "floatList": {},
+      "strList": {},
+      "boolList": {}
+    }
+  },
   "respawnPoints": [],
+  "groupSelect": {},
   "plats": {
     "18": {
       "endpoint": {
@@ -42,37 +67,50 @@
         "doubList": {
           "Scale": 4.0,
           "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
           {
-            "x": -20.0,
+            "x": 20.0,
             "y": -6.04
+          },
+          {
+            "x": 19.96,
+            "y": 5.52
           },
           {
             "x": -19.96,
-            "y": 5.44
+            "y": 5.52
           },
           {
-            "x": 20.04,
-            "y": 5.6
-          },
-          {
-            "x": 20.0,
-            "y": -6.04
+            "x": -19.96,
+            "y": -5.96
           }
         ],
-        "edgeFrictionList": [],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false
+        ],
         "floatList": {},
         "strList": {
+          "interactable.Platform$Type": "STATIC",
           "Image path": "../assets/blueGround.png"
         },
         "boolList": {
           "Collidable": true,
           "Polygon collision": true,
-          "Moving": false,
-          "Climbable": false,
           "Sinkable": false,
+          "Climbable": false,
           "Disappears": false
         }
       }
@@ -96,62 +134,122 @@
         "doubList": {
           "Scale": 1.0,
           "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
           {
-            "x": -0.93,
-            "y": -3.46
+            "x": 1.23,
+            "y": -3.5
           },
           {
-            "x": -0.91,
-            "y": -1.04
-          },
-          {
-            "x": -1.11,
-            "y": 0.52
-          },
-          {
-            "x": -1.17,
-            "y": 1.42
+            "x": 0.87,
+            "y": -2.74
           },
           {
             "x": 0.85,
-            "y": 1.48
+            "y": -1.44
           },
           {
-            "x": 0.99,
-            "y": 1.06
+            "x": 1.01,
+            "y": 1.2
           },
           {
-            "x": 0.93,
-            "y": -1.56
+            "x": 0.65,
+            "y": 1.86
           },
           {
-            "x": 1.25,
-            "y": -3.48
+            "x": 0.43,
+            "y": 2.0066666666666664
+          },
+          {
+            "x": 0.3233333333333334,
+            "y": 2.353333333333333
+          },
+          {
+            "x": -0.21,
+            "y": 2.353333333333333
+          },
+          {
+            "x": -0.3833333333333333,
+            "y": 3.313333333333333
+          },
+          {
+            "x": -0.8233333333333335,
+            "y": 3.313333333333333
+          },
+          {
+            "x": -0.73,
+            "y": 1.7933333333333334
+          },
+          {
+            "x": -1.13,
+            "y": 1.38
+          },
+          {
+            "x": -1.13,
+            "y": 0.54
+          },
+          {
+            "x": -0.69,
+            "y": -0.5266666666666668
+          },
+          {
+            "x": -1.25,
+            "y": -2.3
+          },
+          {
+            "x": -0.9433333333333332,
+            "y": -3.5266666666666664
           }
         ],
         "edgeFrictionList": [
           0.0,
           0.0,
           0.0,
+          0.0,
+          0.0,
+          0.0,
           1.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
           0.0,
           0.0,
           0.0,
           0.0
         ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
         "floatList": {},
         "strList": {
+          "interactable.Platform$Type": "STATIC",
           "Image path": "../assets/Rock1.png"
         },
         "boolList": {
           "Collidable": true,
           "Polygon collision": true,
-          "Moving": false,
-          "Climbable": false,
           "Sinkable": false,
+          "Climbable": false,
           "Disappears": false
         }
       }
@@ -171,6 +269,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -191,6 +290,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -211,6 +311,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -231,6 +332,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -289,6 +391,7 @@
           }
         ],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/boulder4.png"
@@ -351,6 +454,7 @@
           }
         ],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/boulder5.png"
@@ -425,6 +529,7 @@
           }
         ],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/boulder6.png"
@@ -495,6 +600,7 @@
           }
         ],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/boulder7.png"
@@ -553,6 +659,7 @@
           }
         ],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/boulder8.png"
@@ -607,6 +714,7 @@
           }
         ],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/boulder9.png"
@@ -669,6 +777,7 @@
           }
         ],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/BoulderA.png"
@@ -759,6 +868,7 @@
           }
         ],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/BoulderB.png"
@@ -829,6 +939,7 @@
           }
         ],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/boulder0.png"
@@ -899,6 +1010,7 @@
           }
         ],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/boulder1.png"
@@ -961,6 +1073,7 @@
           }
         ],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/boulder2.png"
@@ -1023,6 +1136,7 @@
           }
         ],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/boulder3.png"
@@ -1081,6 +1195,7 @@
           }
         ],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/BoulderC.png"
@@ -1095,60 +1210,10 @@
   "pegs": {
     "16": {
       "path": "../assets/peg.png",
-      "centerXM": 14.9,
-      "centerYM": 3.7249999999999996,
-      "scale": 0.4,
-      "ticket": 16,
-      "scaledIGWM": 1.2000000000000002,
-      "scaledIGHM": 1.2000000000000002,
-      "book": {
-        "intList": {
-          "old boulder 9": 9
-        },
-        "doubList": {
-          "Scale": 0.4,
-          "Rotation (deg)": 130.0
-        },
-        "collPointList": [],
-        "edgeFrictionList": [],
-        "floatList": {},
-        "strList": {
-          "Image path": "../assets/peg.png"
-        },
-        "boolList": {}
-      }
-    },
-    "17": {
-      "path": "../assets/peg.png",
-      "centerXM": 5.4,
-      "centerYM": 4.199999999999999,
-      "scale": 0.4,
-      "ticket": 17,
-      "scaledIGWM": 1.2000000000000002,
-      "scaledIGHM": 1.2000000000000002,
-      "book": {
-        "intList": {
-          "old boulder 13": 13
-        },
-        "doubList": {
-          "Scale": 0.4,
-          "Rotation (deg)": 60.0
-        },
-        "collPointList": [],
-        "edgeFrictionList": [],
-        "floatList": {},
-        "strList": {
-          "Image path": "../assets/peg.png"
-        },
-        "boolList": {}
-      }
-    },
-    "14": {
-      "path": "../assets/peg.png",
       "centerXM": 16.55,
       "centerYM": 7.075,
       "scale": 0.5,
-      "ticket": 14,
+      "ticket": 16,
       "scaledIGWM": 1.5,
       "scaledIGHM": 1.5,
       "book": {
@@ -1161,6 +1226,7 @@
         },
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/peg.png"
@@ -1168,18 +1234,18 @@
         "boolList": {}
       }
     },
-    "15": {
+    "17": {
       "path": "../assets/peg.png",
       "centerXM": 19.25,
       "centerYM": 9.25,
       "scale": 0.4,
-      "ticket": 15,
+      "ticket": 17,
       "scaledIGWM": 1.2000000000000002,
       "scaledIGHM": 1.2000000000000002,
       "book": {
         "intList": {
+          "old boulder 10": 10,
           "old boulder 11": 11,
-          "boulder7": 10,
           "old boulder 6": 6,
           "old boulder 12": 12,
           "old boulder 5": 5,
@@ -1193,6 +1259,59 @@
         },
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/peg.png"
+        },
+        "boolList": {}
+      }
+    },
+    "14": {
+      "path": "../assets/peg.png",
+      "centerXM": 14.9,
+      "centerYM": 3.7249999999999996,
+      "scale": 0.4,
+      "ticket": 14,
+      "scaledIGWM": 1.2000000000000002,
+      "scaledIGHM": 1.2000000000000002,
+      "book": {
+        "intList": {
+          "old boulder 9": 9
+        },
+        "doubList": {
+          "Scale": 0.4,
+          "Rotation (deg)": 130.0
+        },
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/peg.png"
+        },
+        "boolList": {}
+      }
+    },
+    "15": {
+      "path": "../assets/peg.png",
+      "centerXM": 5.4,
+      "centerYM": 4.199999999999999,
+      "scale": 0.4,
+      "ticket": 15,
+      "scaledIGWM": 1.2000000000000002,
+      "scaledIGHM": 1.2000000000000002,
+      "book": {
+        "intList": {
+          "old boulder 13": 13
+        },
+        "doubList": {
+          "Scale": 0.4,
+          "Rotation (deg)": 60.0
+        },
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "Image path": "../assets/peg.png"
@@ -1219,6 +1338,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "text": "Hit the pegs with \u0027s\u0027"
@@ -1242,6 +1362,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "text": "Press \u0027A\u0027 to control all"

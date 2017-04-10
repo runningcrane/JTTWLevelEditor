@@ -1,1 +1,41 @@
-{"intList":{},"doubList":{"zoomLevel":1.0,"widthm":10.0,"heightm":3.0},"collPointList":[{"x":-5.0,"y":-1.51},{"x":-4.99,"y":1.36},{"x":5.01,"y":1.4},{"x":5.0,"y":-1.51}],"floatList":{},"strList":{},"boolList":{}}
+{
+  "intList": {},
+  "doubList": {
+    "widthm": 10.0,
+    "zoomLevel": 1.0,
+    "heightm": 3.0
+  },
+  "collPointList": [
+    {
+      "x": 5.0,
+      "y": -1.51
+    },
+    {
+      "x": 4.99,
+      "y": 1.38
+    },
+    {
+      "x": -4.99,
+      "y": 1.38
+    },
+    {
+      "x": -4.99,
+      "y": -1.49
+    }
+  ],
+  "edgeFrictionList": [
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "deadlyEdgeList": [
+    false,
+    false,
+    false,
+    false
+  ],
+  "floatList": {},
+  "strList": {},
+  "boolList": {}
+}

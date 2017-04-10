@@ -1,1 +1,71 @@
-{"intList":{},"doubList":{"zoomLevel":0.5,"widthm":3.0,"heightm":5.0},"collPointList":[{"x":-0.92,"y":-1.04},{"x":-1.4,"y":-0.32},{"x":-1.44,"y":0.28},{"x":-0.2,"y":0.06},{"x":1.2,"y":0.08},{"x":0.74,"y":-1.26}],"floatList":{},"strList":{},"boolList":{}}
+{
+  "intList": {},
+  "doubList": {
+    "widthm": 3.0,
+    "zoomLevel": 0.5,
+    "heightm": 5.0
+  },
+  "collPointList": [
+    {
+      "x": 0.76,
+      "y": -1.26
+    },
+    {
+      "x": 1.04,
+      "y": -0.78
+    },
+    {
+      "x": 1.16,
+      "y": 0.06
+    },
+    {
+      "x": 1.42,
+      "y": 0.74
+    },
+    {
+      "x": -0.12,
+      "y": -0.06
+    },
+    {
+      "x": -1.02,
+      "y": 0.7
+    },
+    {
+      "x": -1.48,
+      "y": 0.66
+    },
+    {
+      "x": -1.42,
+      "y": -0.3
+    },
+    {
+      "x": -0.86,
+      "y": -1.24
+    }
+  ],
+  "edgeFrictionList": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "deadlyEdgeList": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "floatList": {},
+  "strList": {},
+  "boolList": {}
+}

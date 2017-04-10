@@ -48,10 +48,13 @@ public class ControlWindow extends JFrame {
 	private static final String[] ATTACKZONES = {
 		    "spear", "fireball", "tide"
 	};
+	private static final String[] QUICKSAND = {
+			"quicksand1", "quicksand2", "quicksand3"
+	};
 	private static final String[] PLATFORMS = {
 			"Pedestal", "blueGround", "ground", "tree", "platform", "platform2", "platform3", "canyonR", "canyonL", 
 			"ForestGround", "Tree1", "Tree2", "paradiserock",
-			"Ramp", "arEast", "land", "Shore", "sea", "platformFull"
+			"Ramp", "arEast", "land", "Shore", "sea", "platformFull", "pigground"
 	};
 	private static final String[] ROCKS = {
 			"Rock1", "Rock2", "Rock3", "Rock4", "Rock5", 
@@ -72,7 +75,7 @@ public class ControlWindow extends JFrame {
 			"boulder4", "boulder5", "boulder6", "boulder7", "boulder8", "boulder9"
 	};
 	private static final String[] VINES = {
-			"vine1", "vine2", "vine3"
+			"vine1", "vine2", "vine3", "pigvine1", "pigvine2", "pigvine3", "twine1", "twine2", "twine3"
 	};
 	
 	private static final String[] PEGS = {
@@ -571,6 +574,26 @@ public class ControlWindow extends JFrame {
 		    btnAttackZone.setPreferredSize(dimButton);
 		    pnlZoneGrid.add(btnAttackZone);
 		    zoneToggleGroup.add(btnAttackZone);
+		}
+		
+		JPanel pnlSand = new JPanel();
+		pnlSand.setLayout(new BoxLayout(pnlSand, BoxLayout.Y_AXIS));
+		pnlBack.add(pnlSand);
+		JLabel lblSand = new JLabel("<html><b>Sand</b></html>");
+		pnlSand.add(lblSand);
+
+		ButtonGroup sandToggleGroup = new ButtonGroup();
+		JPanel pnlSandGrid = new JPanel();
+		pnlSandGrid.setLayout(new GridLayout(3,3));
+		pnlSand.add(pnlSandGrid);
+		
+		for (String q : QUICKSAND) {
+		    JButton btnAttackZone = new JButton(q);
+		    btnAttackZone.setIcon(new ImageIcon(THUMBNAIL_PATH + q + "Thumbnail.png"));
+		    btnAttackZone.addActionListener((arg0) -> ctlAdapter.makeQuicksand(ASSETS_PATH + q + ".png")); 
+		    btnAttackZone.setPreferredSize(dimButton);
+		    pnlSandGrid.add(btnAttackZone);
+		    sandToggleGroup.add(btnAttackZone);
 		}
 		
 		// Traps 

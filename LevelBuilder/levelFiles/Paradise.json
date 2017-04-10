@@ -9,8 +9,8 @@
     "path": "../assets/bgSunny.png",
     "centerXm": 0.0,
     "centerYm": 0.0,
-    "widthm": 150.0,
-    "heightm": 30.0,
+    "widthm": 20.0,
+    "heightm": 15.0,
     "collisionWidth": 0.0,
     "collisionHeight": 0.0
   },
@@ -39,6 +39,7 @@
       },
       "collPointList": [],
       "edgeFrictionList": [],
+      "deadlyEdgeList": [],
       "floatList": {},
       "strList": {},
       "boolList": {}
@@ -66,49 +67,74 @@
         "doubList": {
           "Scale": 3.0,
           "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
           {
-            "x": -1.23,
-            "y": -4.38
+            "x": 2.46,
+            "y": -3.18
+          },
+          {
+            "x": 3.93,
+            "y": -0.51
+          },
+          {
+            "x": 4.4399999999999995,
+            "y": 0.63
+          },
+          {
+            "x": -4.4399999999999995,
+            "y": 0.51
+          },
+          {
+            "x": -3.9000000000000004,
+            "y": -0.78
           },
           {
             "x": -3.4499999999999997,
-            "y": -2.2800000000000002
+            "y": -2.2199999999999998
           },
           {
-            "x": -4.41,
-            "y": -0.15000000000000002
+            "x": -1.23,
+            "y": -4.32
           },
           {
-            "x": -4.41,
-            "y": 0.48
-          },
-          {
-            "x": 4.47,
-            "y": 0.54
-          },
-          {
-            "x": 2.43,
-            "y": -3.1500000000000004
-          },
-          {
-            "x": 0.39,
-            "y": -4.59
+            "x": 0.42000000000000004,
+            "y": -4.4399999999999995
           }
         ],
-        "edgeFrictionList": [],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
         "floatList": {},
         "strList": {
+          "interactable.Platform$Type": "STATIC",
           "Image path": "../assets/paradiserock.png"
         },
         "boolList": {
           "Collidable": true,
           "Polygon collision": true,
-          "Moving": false,
-          "Climbable": false,
           "Sinkable": false,
+          "Climbable": false,
           "Disappears": false
         }
       }
@@ -121,35 +147,37 @@
       "path": "../assets/cldSunset.png",
       "centerXM": 11.647058823529411,
       "centerYM": 8.382352941176471,
-      "scale": 1.0,
+      "scale": 1.3,
       "ticket": 2,
-      "scaledIGWM": 2.0,
-      "scaledIGHM": 1.0,
+      "scaledIGWM": 2.6,
+      "scaledIGHM": 1.3,
       "book": {
         "intList": {
           "Z-order": 4
         },
         "doubList": {
-          "Scale": 1.0,
+          "Scale": 1.3,
           "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
           {
-            "x": -0.87,
-            "y": -0.36
+            "x": 0.9775999999999999,
+            "y": -0.5564
           },
           {
-            "x": -0.87,
-            "y": 0.12
+            "x": 0.9359999999999999,
+            "y": 0.35880000000000006
           },
           {
-            "x": 0.816,
-            "y": 0.11600000000000002
+            "x": -0.9047999999999999,
+            "y": 0.35880000000000006
           },
           {
-            "x": 0.696,
-            "y": -0.4040000000000001
+            "x": -0.9047999999999999,
+            "y": -0.5772
           }
         ],
         "edgeFrictionList": [
@@ -158,16 +186,22 @@
           0.0,
           0.0
         ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false
+        ],
         "floatList": {},
         "strList": {
+          "interactable.Platform$Type": "STATIC",
           "Image path": "../assets/cldSunset.png"
         },
         "boolList": {
           "Collidable": true,
           "Polygon collision": true,
-          "Moving": false,
-          "Climbable": false,
           "Sinkable": false,
+          "Climbable": false,
           "Disappears": false
         }
       }
@@ -180,55 +214,52 @@
       "path": "../assets/cldSunsetDiagL.png",
       "centerXM": 13.823529411764707,
       "centerYM": 9.205882352941178,
-      "scale": 1.0,
+      "scale": 1.3,
       "ticket": 3,
-      "scaledIGWM": 2.0,
-      "scaledIGHM": 1.0,
+      "scaledIGWM": 2.6,
+      "scaledIGHM": 1.3,
       "book": {
         "intList": {
           "Z-order": 4
         },
         "doubList": {
-          "Scale": 1.0,
+          "Scale": 1.3,
           "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
           {
-            "x": -0.9466666666666668,
-            "y": -0.42
+            "x": 1.1873333333333336,
+            "y": -0.39
           },
           {
-            "x": -1.0,
-            "y": -0.3066666666666667
+            "x": 1.2913333333333334,
+            "y": -0.19066666666666673
           },
           {
-            "x": -0.9666666666666667,
-            "y": -0.1666666666666667
+            "x": 1.1093333333333335,
+            "y": 0.13
           },
           {
-            "x": -0.8066666666666668,
-            "y": -0.026666666666666644
+            "x": -1.1873333333333334,
+            "y": 0.052000000000000005
           },
           {
-            "x": 0.8933333333333334,
-            "y": -0.02
+            "x": -1.274,
+            "y": -0.24266666666666672
           },
           {
-            "x": 0.9866666666666666,
-            "y": -0.20666666666666672
+            "x": -1.274,
+            "y": -0.4853333333333333
           },
           {
-            "x": 0.38666666666666655,
-            "y": -0.3866666666666667
-          },
-          {
-            "x": -0.28,
-            "y": -0.4533333333333333
+            "x": -1.1093333333333333,
+            "y": -0.5893333333333334
           }
         ],
         "edgeFrictionList": [
-          0.0,
           0.0,
           0.0,
           1.0,
@@ -237,16 +268,25 @@
           0.0,
           0.0
         ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
         "floatList": {},
         "strList": {
+          "interactable.Platform$Type": "STATIC",
           "Image path": "../assets/cldSunsetDiagL.png"
         },
         "boolList": {
           "Collidable": true,
           "Polygon collision": true,
-          "Moving": false,
-          "Climbable": false,
           "Sinkable": false,
+          "Climbable": false,
           "Disappears": false
         }
       }
@@ -259,47 +299,45 @@
       "path": "../assets/cldSunsetUp.png",
       "centerXM": 16.264705882352942,
       "centerYM": 12.235294117647058,
-      "scale": 1.0,
+      "scale": 1.2,
       "ticket": 4,
-      "scaledIGWM": 2.0,
-      "scaledIGHM": 1.5,
+      "scaledIGWM": 2.4,
+      "scaledIGHM": 1.7999999999999998,
       "book": {
         "intList": {
           "Z-order": 4
         },
         "doubList": {
-          "Scale": 1.0,
+          "Scale": 1.2,
           "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
           {
-            "x": -0.84,
-            "y": -0.59
+            "x": 0.8160000000000001,
+            "y": -0.864
           },
           {
-            "x": -1.01,
-            "y": -0.37
+            "x": 1.152,
+            "y": -0.564
           },
           {
-            "x": -0.97,
-            "y": -0.15
+            "x": 1.176,
+            "y": -0.156
           },
           {
-            "x": 0.98,
-            "y": -0.22
+            "x": -1.116,
+            "y": -0.144
           },
           {
-            "x": 0.9,
-            "y": -0.57
+            "x": -1.212,
+            "y": -0.384
           },
           {
-            "x": 0.63,
-            "y": -0.72
-          },
-          {
-            "x": -0.36,
-            "y": -0.7
+            "x": -0.9959999999999999,
+            "y": -0.6839999999999999
           }
         ],
         "edgeFrictionList": [
@@ -308,19 +346,26 @@
           1.0,
           0.0,
           0.0,
-          0.0,
           0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
         ],
         "floatList": {},
         "strList": {
+          "interactable.Platform$Type": "STATIC",
           "Image path": "../assets/cldSunsetUp.png"
         },
         "boolList": {
           "Collidable": true,
           "Polygon collision": true,
-          "Moving": false,
-          "Climbable": false,
           "Sinkable": false,
+          "Climbable": false,
           "Disappears": false
         }
       }
@@ -333,35 +378,37 @@
       "path": "../assets/cldSunset.png",
       "centerXM": 19.705882352941178,
       "centerYM": 13.176470588235293,
-      "scale": 1.0,
+      "scale": 1.4,
       "ticket": 5,
-      "scaledIGWM": 2.0,
-      "scaledIGHM": 1.0,
+      "scaledIGWM": 2.8,
+      "scaledIGHM": 1.4,
       "book": {
         "intList": {
           "Z-order": 4
         },
         "doubList": {
-          "Scale": 1.0,
+          "Scale": 1.4,
           "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
           {
-            "x": -0.87,
-            "y": -0.36
+            "x": 1.0527999999999997,
+            "y": -0.5992
           },
           {
-            "x": -0.87,
-            "y": 0.12
+            "x": 1.008,
+            "y": 0.3864
           },
           {
-            "x": 0.816,
-            "y": 0.11600000000000002
+            "x": -0.9743999999999998,
+            "y": 0.3864
           },
           {
-            "x": 0.696,
-            "y": -0.4040000000000001
+            "x": -0.9743999999999998,
+            "y": -0.6216
           }
         ],
         "edgeFrictionList": [
@@ -370,16 +417,22 @@
           0.0,
           0.0
         ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false
+        ],
         "floatList": {},
         "strList": {
+          "interactable.Platform$Type": "STATIC",
           "Image path": "../assets/cldSunset.png"
         },
         "boolList": {
           "Collidable": false,
           "Polygon collision": false,
-          "Moving": false,
-          "Climbable": false,
           "Sinkable": false,
+          "Climbable": false,
           "Disappears": false
         }
       }
@@ -392,47 +445,45 @@
       "path": "../assets/cldSunsetUp.png",
       "centerXM": -0.2647058823529412,
       "centerYM": 14.0,
-      "scale": 2.7,
+      "scale": 1.8,
       "ticket": 6,
-      "scaledIGWM": 5.4,
-      "scaledIGHM": 4.050000000000001,
+      "scaledIGWM": 3.6,
+      "scaledIGHM": 2.7,
       "book": {
         "intList": {
           "Z-order": 4
         },
         "doubList": {
-          "Scale": 2.7,
+          "Scale": 1.8,
           "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
           {
-            "x": -2.2680000000000002,
-            "y": -1.593
+            "x": 1.2240000000000002,
+            "y": -1.296
           },
           {
-            "x": -2.7270000000000003,
-            "y": -0.999
+            "x": 1.728,
+            "y": -0.846
           },
           {
-            "x": -2.619,
-            "y": -0.405
+            "x": 1.764,
+            "y": -0.234
           },
           {
-            "x": 2.646,
-            "y": -0.5940000000000001
+            "x": -1.6740000000000002,
+            "y": -0.216
           },
           {
-            "x": 2.43,
-            "y": -1.539
+            "x": -1.818,
+            "y": -0.5760000000000001
           },
           {
-            "x": 1.701,
-            "y": -1.944
-          },
-          {
-            "x": -0.972,
-            "y": -1.89
+            "x": -1.494,
+            "y": -1.026
           }
         ],
         "edgeFrictionList": [
@@ -441,19 +492,26 @@
           1.0,
           0.0,
           0.0,
-          0.0,
           0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
         ],
         "floatList": {},
         "strList": {
+          "interactable.Platform$Type": "STATIC",
           "Image path": "../assets/cldSunsetUp.png"
         },
         "boolList": {
           "Collidable": false,
           "Polygon collision": false,
-          "Moving": false,
-          "Climbable": false,
           "Sinkable": false,
+          "Climbable": false,
           "Disappears": false
         }
       }
@@ -477,24 +535,26 @@
         "doubList": {
           "Scale": 1.4,
           "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
           "Spring Constant K": 1.0
         },
         "collPointList": [
           {
-            "x": -1.218,
-            "y": -0.504
+            "x": 1.0527999999999997,
+            "y": -0.5992
           },
           {
-            "x": -1.218,
-            "y": 0.16799999999999998
+            "x": 1.008,
+            "y": 0.3864
           },
           {
-            "x": 1.1423999999999999,
-            "y": 0.16240000000000002
+            "x": -0.9743999999999998,
+            "y": 0.3864
           },
           {
-            "x": 0.9743999999999998,
-            "y": -0.5656000000000001
+            "x": -0.9743999999999998,
+            "y": -0.6216
           }
         ],
         "edgeFrictionList": [
@@ -503,16 +563,22 @@
           0.0,
           0.0
         ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false
+        ],
         "floatList": {},
         "strList": {
+          "interactable.Platform$Type": "STATIC",
           "Image path": "../assets/cldSunset.png"
         },
         "boolList": {
           "Collidable": false,
           "Polygon collision": false,
-          "Moving": false,
-          "Climbable": false,
           "Sinkable": false,
+          "Climbable": false,
           "Disappears": false
         }
       }
@@ -532,6 +598,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -552,6 +619,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -572,6 +640,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -592,6 +661,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {},
         "boolList": {
@@ -621,6 +691,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "text": "Move with the arrow keys"
@@ -644,6 +715,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "text": "Jump with Space"
@@ -667,6 +739,7 @@
         "doubList": {},
         "collPointList": [],
         "edgeFrictionList": [],
+        "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
           "text": "Hold to go higher"
@@ -676,5 +749,6 @@
     }
   },
   "attackZones": {},
-  "traps": {}
+  "traps": {},
+  "quicksand": {}
 }
