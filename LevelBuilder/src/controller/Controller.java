@@ -157,6 +157,11 @@ public class Controller {
 			public void setViewportLimits(double xmin, double xmax, double ymin, double ymax) {
 				level.setViewportLimits(xmin, xmax, ymin, ymax);	
 			}
+
+			@Override
+			public void makeQuicksand(String path) {
+				level.setRequest(path, LevelManager.Request.MAKE_QUICKSAND);	
+			}
 		});
 
 		layerWindow = new LayerWindow(new ILayerToLevelAdapter() {

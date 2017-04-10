@@ -133,14 +133,15 @@ public class LevelManager {
 	private Map<Integer, TextTip> textTips =  new HashMap<>();
     private Map<Integer, Zone> attackZones = new HashMap<>();
 	private Map<Integer, Trap> traps = new HashMap<>();
+	private Map<Integer, Zone> quicksand = new HashMap<>();
     
 	public enum Request {
 		NONE, 
 		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC, MAKE_PEG, MAKE_TIP, 
-		    MAKE_TRAP, MAKE_ATTACK_ZONE,
+		    MAKE_TRAP, MAKE_ATTACK_ZONE, MAKE_QUICKSAND,
 		EDIT_OLD_PLAT, EDIT_OLD_VINE, EDIT_OLD_BOULDER, EDIT_OLD_PEG, 
 		    EDIT_OLD_TIP, EDIT_OLD_TRAP, EDIT_OLD_ATTACK_ZONE, EDIT_OLD_NPC, EDIT_GROUP,
-		EDIT_MONK, EDIT_MONKEY, EDIT_PIG, EDIT_SANDY,
+		EDIT_MONK, EDIT_MONKEY, EDIT_PIG, EDIT_SANDY, EDIT_OLD_QUICKSAND,
 		SET_PLAT_ENDPOINT, MARK_EOL, MARK_EOL_QUADRANT, MARK_RP,
 			REMOVE_RP
 	}
@@ -542,6 +543,20 @@ public class LevelManager {
 			}					
 		});
 		
+		quicksand.forEach((num, zone) -> {
+			Point2D.Double c = getViewportCoordinates((zone.getCenterXM() * this.mToPixel), ((this.levelHeightM - zone.getCenterYM()) * this.mToPixel));
+			g.drawImage(zone.getRI(), (int)(c.x - zone.getRI().getWidth() / 2.0),  (int)(c.y - zone.getRI().getHeight() / 2.0), null);
+
+			// If part of the group selection, draw a notifying 1m x 1m red box.
+			Point2D.Double vplbp = getViewportCoordinates(zone.getCenterXM() * this.mToPixel + 5,
+					(this.levelHeightM - (zone.getCenterYM() - zone.getInGameHeight() / 2)) * this.mToPixel + 10);
+			if (this.groupSelect.containsKey(num)){
+				g.setColor(new Color(255, 40, 40, 200));				
+				g.fillRect((int) (vplbp.getX() - this.mToPixel/2), (int) (vplbp.getY() - this.mToPixel/2), 
+						(int)this.mToPixel, (int)this.mToPixel);
+			}					
+		});
+		
 		// Draw viewport Zone.
 		double ulxp = (viewportZone.getPropertyBook().getDoubList().get("xmin")) * this.mToPixel;
 		double ulyp = (this.levelHeightM - viewportZone.getPropertyBook().getDoubList().get("ymin")) * this.mToPixel;
@@ -616,8 +631,10 @@ public class LevelManager {
 				
 				g.setColor(Color.BLACK);
 				Font f = new Font(Font.DIALOG, Font.PLAIN, 15);
+				int textWidth = g.getFontMetrics(f).stringWidth(textTip.getString());
+				int textHeight = g.getFontMetrics(f).getHeight();
 				g.setFont(f);
-				g.drawString(textTip.getString(), (int)point.x - textTip.getSize() / 2, (int)point.y - textTip.getSize() / 2);
+				g.drawString(textTip.getString(), (int)point.x - textWidth / 2, (int)point.y - textHeight / 2);
 			}
 		});
 		g.setFont(old); 
@@ -678,6 +695,10 @@ public class LevelManager {
 			makeInteractable(this.requestPath, null, xm, ym, "AttackZone");
 			break;
 		}
+		case MAKE_QUICKSAND: {
+			makeInteractable(this.requestPath, null, xm, ym, "Quicksand");
+			break;
+		}
 		case EDIT_GROUP: {
 			// Moves relative to the lowest ticket number.
 			int[] lowestTicket = {Integer.MAX_VALUE};
@@ -687,74 +708,51 @@ public class LevelManager {
 			this.groupSelect.forEach((ticketNum, requestType) -> {
 				if (ticketNum < lowestTicket[0]) {
 					lowestTicket[0] = ticketNum;
+					AInteractable target;
 					switch (requestType) {
 					case EDIT_OLD_PLAT: {
-						Platform target = this.plats.get(ticketNum);
-						if (target != null) {
-							offset[0] = xm - target.getCenterXM();
-							offset[1] = ym - target.getCenterYM();
-						}
+						target = this.plats.get(ticketNum);
 						break;
 					}
 					case EDIT_OLD_VINE: {
-						Vine target = this.vines.get(ticketNum);
-						if (target != null) {
-							offset[0] = xm - target.getCenterXM();
-							offset[1] = ym - target.getCenterYM();
-						}
+						target = this.vines.get(ticketNum);
 						break;
 					}
 					case EDIT_OLD_BOULDER: {
-						Boulder target = this.boulders.get(ticketNum);
-						if (target != null) {
-							offset[0] = xm - target.getCenterXM();
-							offset[1] = ym - target.getCenterYM();
-						}
+						target = this.boulders.get(ticketNum);
 						break;
 					}
 					case EDIT_OLD_PEG: {
-						Peg target = this.pegs.get(ticketNum);
-						if (target != null) {
-							offset[0] = xm - target.getCenterXM();
-							offset[1] = ym - target.getCenterYM();
-						}
+						target = this.pegs.get(ticketNum);
 						break;
 					}
 					case EDIT_OLD_TIP: {
-						TextTip target = this.textTips.get(ticketNum);
-						if (target != null) {
-							offset[0] = xm - target.getCenterXM();
-							offset[1] = ym - target.getCenterYM();
-						}
+						target = this.textTips.get(ticketNum);
 						break;
 					}
 					case EDIT_OLD_TRAP: {
-						Trap target = this.traps.get(ticketNum);
-						if (target != null) {
-							offset[0] = xm - target.getCenterXM();
-							offset[1] = ym - target.getCenterYM();
-						}
+						target = this.traps.get(ticketNum);
 						break;
 					}
 					case EDIT_OLD_ATTACK_ZONE: {
-						Zone target = this.attackZones.get(ticketNum);
-						if (target != null) {
-							offset[0] = xm - target.getCenterXM();
-							offset[1] = ym - target.getCenterYM();
-						}
+						target = this.attackZones.get(ticketNum);
+						break;
+					}
+					case EDIT_OLD_QUICKSAND: {
+						target = this.quicksand.get(ticketNum);
 						break;
 					}
 					case EDIT_OLD_NPC: {
-						NPC target = this.npcs.get(ticketNum);
-						if (target != null) {
-							offset[0] = xm - target.getCenterXM();
-							offset[1] = ym - target.getCenterYM();
-						}
+						target = this.npcs.get(ticketNum);
 						break;
 					}
 					default: {
 						return;
 					}
+					}
+					if (target != null) {
+						offset[0] = xm - target.getCenterXM();
+						offset[1] = ym - target.getCenterYM();
 					}
 				}
 			});
@@ -764,76 +762,53 @@ public class LevelManager {
 				this.request = requestType;
 				this.requestNum = ticketNum;
 				
-				double[] centerVal = {0, 0};
+				AInteractable target;
 				// In order to offset each, we need to (unfortunately) get their personal center values.
 				switch (requestType) {
 				case EDIT_OLD_PLAT: {
-					Platform target = this.plats.get(requestNum);
-					if (target != null) {
-						centerVal[0] = target.getCenterXM();
-						centerVal[1] = target.getCenterYM();
-					}
+					target = this.plats.get(requestNum);
 					break;
 				}
 				case EDIT_OLD_VINE: {
-					Vine target = this.vines.get(requestNum);
-					if (target != null) {
-						centerVal[0] = target.getCenterXM();
-						centerVal[1] = target.getCenterYM();
-					}
+					target = this.vines.get(requestNum);
 					break;
 				}
 				case EDIT_OLD_BOULDER: {
-					Boulder target = this.boulders.get(requestNum);
-					if (target != null) {
-						centerVal[0] = target.getCenterXM();
-						centerVal[1] = target.getCenterYM();
-					}
+					target = this.boulders.get(requestNum);
 					break;
 				}
 				case EDIT_OLD_PEG: {
-					Peg target = this.pegs.get(requestNum);
-					if (target != null) {
-						centerVal[0] = target.getCenterXM();
-						centerVal[1] = target.getCenterYM();
-					}
+					target = this.pegs.get(requestNum);
 					break;
 				}
 				case EDIT_OLD_TIP: {
-					TextTip target = this.textTips.get(requestNum);
-					if (target != null) {
-						centerVal[0] = target.getCenterXM();
-						centerVal[1] = target.getCenterYM();
-					}
+					target = this.textTips.get(requestNum);
 					break;
 				}
 				case EDIT_OLD_TRAP: {
-					Trap target = this.traps.get(requestNum);
-					if (target != null) {
-						centerVal[0] = target.getCenterXM();
-						centerVal[1] = target.getCenterYM();
-					}
+                    target = this.traps.get(requestNum);
 					break;
 				}
 				case EDIT_OLD_ATTACK_ZONE: {
-					Zone target = this.attackZones.get(requestNum);
-					if (target != null) {
-						centerVal[0] = target.getCenterXM();
-						centerVal[1] = target.getCenterYM();
-					}
+					target = this.attackZones.get(requestNum);
 					break;
 				}
 				case EDIT_OLD_NPC: {
-					NPC target = this.npcs.get(requestNum);
-					if (target != null) {
-						centerVal[0] = target.getCenterXM();
-						centerVal[1] = target.getCenterYM();
-					}
+					target = this.npcs.get(requestNum);
+					break;
+				}
+				case EDIT_OLD_QUICKSAND: {
+					target = this.quicksand.get(ticketNum);
 					break;
 				}
 				default: {
 					return;
 				}
+				}
+				double[] centerVal = {0, 0};
+				if (target != null) {
+					centerVal[0] = target.getCenterXM();
+					centerVal[1] = target.getCenterYM();
 				}
 				
 				double newXP = ((centerVal[0] + offset[0]) * this.mToPixel) + this.vpOffset.getX();				
@@ -902,6 +877,14 @@ public class LevelManager {
 			}
 			break;
 		}
+		case EDIT_OLD_QUICKSAND: {
+			Zone z = this.quicksand.get(requestNum);
+			if (z != null) {
+				z.setCenter(xm, ym);
+			}
+			break;
+		}
+		
 		case EDIT_MONK: {
 			this.characters.get("Monk").setCenter(xm, ym);
 			break;
@@ -1056,8 +1039,12 @@ public class LevelManager {
 			obj = new Zone(this.ticketer, imageName);
 			break;
 		}
+		case "Quicksand": {
+			obj = new Zone(this.ticketer, imageName);
+			break;
+		}
 		default:
-			System.err.println("Tag does not match any cases");
+			System.err.println("Tag, " + type + ", does not match any cases");
 			return -1;
 		}
 		
@@ -1120,8 +1107,15 @@ public class LevelManager {
 			this.attackZones.put(this.ticketer, (Zone)obj);
 			break;
 		}
+		case "Quicksand" : {
+			makeQuicksandWindow(this.ticketer, (Zone)obj, book);
+			setImage(obj, path);
+			this.quicksand.put(this.ticketer, (Zone)obj);
+			break;
+		}
 		default: 
-			System.err.println("Tag does not match any cases");
+			System.err.println("Tag, " + type + ", does not match any cases");
+			break;
 		}									
 		
 		// Increase the ticket count.
@@ -1129,6 +1123,55 @@ public class LevelManager {
 		return tick;
 	}
 	
+	private void makeQuicksandWindow(int ticket, Zone zone, PropertyBook book) {
+        EditWindow window = ltlAdapter.makeEditWindow(ticket, "Quicksand");
+		
+		// Set up the listeners.
+		window.setSubmitListener((arg0) -> {
+			zone.updateProperties(window.getPropertyBook());
+			// Next, update the relevant parts when scaling. Use resize()!
+			double scale = window.getPropertyBook().getDoubList().get("Scale");
+			
+			zone.setScale(scale);					
+				
+			// Scale the image now.
+			zone.setRI(resize(zone.getBI(), zone.getScaledIGWM(), zone.getScaledIGHM()));
+		});
+		
+		window.setCenterListener((e) -> {
+			request = Request.EDIT_OLD_QUICKSAND;
+			requestNum = ticket;
+			callingWindow = window;
+		});
+		
+		window.setGroupSelectListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (groupSelect.containsKey(ticket)) {
+					// Remove from the group selection list.
+					groupSelect.remove(ticket);
+					
+				} else {
+					// Add to the group selection list.
+					groupSelect.put(ticket, Request.EDIT_OLD_QUICKSAND);
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+			}
+		});
+		
+		// Set up the other properties.
+		window.makeDoubleProperty("Scale", 1.0, book);
+		window.makeStringProperty("soundName", "", book);
+		window.makeDoubleProperty("sinkVel", 0.0,  book);
+		window.makeDoubleProperty("recoveryVel", 0.0,  book);
+        window.makeDoubleProperty("Z-order", 3, book);
+		
+		zone.updateProperties(window.getPropertyBook());
+	}
+
 	private void makeTrapEditWindow(int ticket, Trap trap, PropertyBook book) {
 		EditWindow window = ltlAdapter.makeEditWindow(ticket, "Trap");
 		
@@ -1479,9 +1522,7 @@ public class LevelManager {
 				}
 			}
 			@Override
-			public void focusLost(FocusEvent e) {
-				
-			}
+			public void focusLost(FocusEvent e) {	}
 		});
 		
 		// Set up boulder properties.		
@@ -1699,6 +1740,9 @@ public class LevelManager {
 		this.attackZones.forEach((ticket, zone) -> {
 			this.groupSelect.put(ticket, Request.EDIT_OLD_ATTACK_ZONE);
 		});
+		this.quicksand.forEach((ticket, zone) -> {
+			this.groupSelect.put(ticket, Request.EDIT_OLD_QUICKSAND);
+		});
 		this.traps.forEach((ticket, trap) -> {
 			this.groupSelect.put(ticket, Request.EDIT_OLD_TRAP);
 		});
@@ -1733,6 +1777,7 @@ public class LevelManager {
 		this.pegs.clear();
 		this.attackZones.clear();
 		this.traps.clear();
+		this.quicksand.clear();
 		
 		// By the way, they all need to be removed from the LayerWindow as well.
 		this.ltlAdapter.clear();
@@ -1772,6 +1817,11 @@ public class LevelManager {
 		}
 		case "AttackZone": {
 			this.attackZones.remove(number);
+			break;
+		}
+		case "Quicksand": {
+			this.quicksand.remove(number);
+			break;
 		}
 		}
 	}
@@ -1971,6 +2021,11 @@ public class LevelManager {
 		    old.attackZones.forEach((ticket, zone) -> {
 			    makeInteractable(zone.getPath(), zone.getPropertyBook(), zone.getCenterXM(), zone.getCenterYM(), "AttackZone");
 	    	});
+		}
+		if (old.quicksand != null) {
+			old.quicksand.forEach((ticket, zone) -> {
+				makeInteractable(zone.getPath(), zone.getPropertyBook(), zone.getCenterXM(), zone.getCenterYM(), "Quicksand");
+			});
 		}
 		
 		// Update the boulders to have their old tickets match their new.

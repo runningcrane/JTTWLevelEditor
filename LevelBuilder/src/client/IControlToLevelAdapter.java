@@ -90,4 +90,6 @@ public interface IControlToLevelAdapter {
 	public void removeRP();
 
 	public void makeAttackZone(String string);
+
+	public void makeQuicksand(String string);
 }
