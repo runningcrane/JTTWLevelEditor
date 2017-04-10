@@ -1,7 +1,7 @@
 {
   "VERSION": 2,
   "levelFileName": "temple",
-  "levelName": "The Golden Temple",
+  "levelName": "Golden Temple",
   "levelNumber": 9,
   "nextLevelName": "bodhi",
   "mToPixel": 28.0,
@@ -34,7 +34,7 @@
       "doubList": {
         "ymin": 2.6,
         "xmin": 0.0,
-        "ymax": 30.0,
+        "ymax": 25.0,
         "xmax": 70.0
       },
       "collPointList": [],
@@ -391,8 +391,8 @@
         "y": 12.0
       },
       "path": "../assets/endcolumn.png",
-      "centerXM": 13.571428571428571,
-      "centerYM": 10.428571428571427,
+      "centerXM": 13.107142857142858,
+      "centerYM": 10.392857142857142,
       "scale": 1.0,
       "ticket": 6,
       "scaledIGWM": 1.0,
@@ -460,11 +460,11 @@
     },
     "7": {
       "endpoint": {
-        "x": 22.857142857142858,
-        "y": 10.5
+        "x": 18.892857142857142,
+        "y": 9.75
       },
       "path": "../assets/CrushColumn.png",
-      "centerXM": 22.75,
+      "centerXM": 19.0,
       "centerYM": 13.5,
       "scale": 1.0,
       "ticket": 7,
@@ -483,27 +483,92 @@
         },
         "collPointList": [
           {
-            "x": -0.59,
-            "y": -4.94
+            "x": -0.55,
+            "y": -4.983333333333333
           },
           {
-            "x": -0.53,
-            "y": 1.6
+            "x": -0.36,
+            "y": -4.97
           },
           {
-            "x": -0.05,
-            "y": 2.6
+            "x": 0.2,
+            "y": -4.97
           },
           {
-            "x": 0.49,
-            "y": 1.52
+            "x": 0.36,
+            "y": -4.96
+          },
+          {
+            "x": 0.33,
+            "y": -3.24
+          },
+          {
+            "x": 0.19,
+            "y": -2.99
+          },
+          {
+            "x": 0.63,
+            "y": -1.74
+          },
+          {
+            "x": 0.57,
+            "y": -0.84
+          },
+          {
+            "x": 0.3,
+            "y": 0.7
+          },
+          {
+            "x": 0.29,
+            "y": 1.3
           },
           {
             "x": 0.39,
-            "y": -4.96
+            "y": 2.12
+          },
+          {
+            "x": 0.0,
+            "y": 2.62
+          },
+          {
+            "x": -0.41,
+            "y": 1.88
+          },
+          {
+            "x": -0.32,
+            "y": 0.72
+          },
+          {
+            "x": -0.55,
+            "y": -0.78
+          },
+          {
+            "x": -0.67,
+            "y": -1.77
+          },
+          {
+            "x": -0.3,
+            "y": -2.95
+          },
+          {
+            "x": -0.52,
+            "y": -3.34
           }
         ],
         "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
           0.0,
           0.0,
           0.0,
@@ -512,10 +577,23 @@
         ],
         "deadlyEdgeList": [
           false,
+          true,
           false,
           false,
           false,
-          true
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
         ],
         "floatList": {},
         "strList": {
@@ -533,12 +611,12 @@
     },
     "8": {
       "endpoint": {
-        "x": 29.964285714285715,
-        "y": 9.964285714285715
+        "x": 30.892857142857142,
+        "y": 9.464285714285715
       },
       "path": "../assets/CrushColumn.png",
-      "centerXM": 29.928571428571427,
-      "centerYM": 13.678571428571427,
+      "centerXM": 30.964285714285715,
+      "centerYM": 13.107142857142858,
       "scale": 1.0,
       "ticket": 8,
       "scaledIGWM": 1.3,
@@ -556,27 +634,92 @@
         },
         "collPointList": [
           {
-            "x": -0.59,
-            "y": -4.94
+            "x": -0.55,
+            "y": -4.983333333333333
           },
           {
-            "x": -0.53,
-            "y": 1.6
+            "x": -0.36,
+            "y": -4.97
           },
           {
-            "x": -0.05,
-            "y": 2.6
+            "x": 0.2,
+            "y": -4.97
           },
           {
-            "x": 0.49,
-            "y": 1.52
+            "x": 0.36,
+            "y": -4.96
+          },
+          {
+            "x": 0.33,
+            "y": -3.24
+          },
+          {
+            "x": 0.19,
+            "y": -2.99
+          },
+          {
+            "x": 0.63,
+            "y": -1.74
+          },
+          {
+            "x": 0.57,
+            "y": -0.84
+          },
+          {
+            "x": 0.3,
+            "y": 0.7
+          },
+          {
+            "x": 0.29,
+            "y": 1.3
           },
           {
             "x": 0.39,
-            "y": -4.96
+            "y": 2.12
+          },
+          {
+            "x": 0.0,
+            "y": 2.62
+          },
+          {
+            "x": -0.41,
+            "y": 1.88
+          },
+          {
+            "x": -0.32,
+            "y": 0.72
+          },
+          {
+            "x": -0.55,
+            "y": -0.78
+          },
+          {
+            "x": -0.67,
+            "y": -1.77
+          },
+          {
+            "x": -0.3,
+            "y": -2.95
+          },
+          {
+            "x": -0.52,
+            "y": -3.34
           }
         ],
         "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
           0.0,
           0.0,
           0.0,
@@ -585,10 +728,23 @@
         ],
         "deadlyEdgeList": [
           false,
+          true,
           false,
           false,
           false,
-          true
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
         ],
         "floatList": {},
         "strList": {
@@ -606,12 +762,12 @@
     },
     "9": {
       "endpoint": {
-        "x": 36.892857142857146,
-        "y": 10.178571428571427
+        "x": 37.17857142857143,
+        "y": 9.642857142857142
       },
       "path": "../assets/CrushColumn.png",
-      "centerXM": 36.642857142857146,
-      "centerYM": 13.678571428571427,
+      "centerXM": 37.107142857142854,
+      "centerYM": 12.964285714285715,
       "scale": 1.0,
       "ticket": 9,
       "scaledIGWM": 1.3,
@@ -629,27 +785,92 @@
         },
         "collPointList": [
           {
-            "x": -0.59,
-            "y": -4.94
+            "x": -0.55,
+            "y": -4.983333333333333
           },
           {
-            "x": -0.53,
-            "y": 1.6
+            "x": -0.36,
+            "y": -4.97
           },
           {
-            "x": -0.05,
-            "y": 2.6
+            "x": 0.2,
+            "y": -4.97
           },
           {
-            "x": 0.49,
-            "y": 1.52
+            "x": 0.36,
+            "y": -4.96
+          },
+          {
+            "x": 0.33,
+            "y": -3.24
+          },
+          {
+            "x": 0.19,
+            "y": -2.99
+          },
+          {
+            "x": 0.63,
+            "y": -1.74
+          },
+          {
+            "x": 0.57,
+            "y": -0.84
+          },
+          {
+            "x": 0.3,
+            "y": 0.7
+          },
+          {
+            "x": 0.29,
+            "y": 1.3
           },
           {
             "x": 0.39,
-            "y": -4.96
+            "y": 2.12
+          },
+          {
+            "x": 0.0,
+            "y": 2.62
+          },
+          {
+            "x": -0.41,
+            "y": 1.88
+          },
+          {
+            "x": -0.32,
+            "y": 0.72
+          },
+          {
+            "x": -0.55,
+            "y": -0.78
+          },
+          {
+            "x": -0.67,
+            "y": -1.77
+          },
+          {
+            "x": -0.3,
+            "y": -2.95
+          },
+          {
+            "x": -0.52,
+            "y": -3.34
           }
         ],
         "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
           0.0,
           0.0,
           0.0,
@@ -658,10 +879,23 @@
         ],
         "deadlyEdgeList": [
           false,
+          true,
           false,
           false,
           false,
-          true
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
         ],
         "floatList": {},
         "strList": {
@@ -702,27 +936,92 @@
         },
         "collPointList": [
           {
-            "x": -0.59,
-            "y": -4.94
+            "x": -0.55,
+            "y": -4.983333333333333
           },
           {
-            "x": -0.53,
-            "y": 1.6
+            "x": -0.36,
+            "y": -4.97
           },
           {
-            "x": -0.05,
-            "y": 2.6
+            "x": 0.2,
+            "y": -4.97
           },
           {
-            "x": 0.49,
-            "y": 1.52
+            "x": 0.36,
+            "y": -4.96
+          },
+          {
+            "x": 0.33,
+            "y": -3.24
+          },
+          {
+            "x": 0.19,
+            "y": -2.99
+          },
+          {
+            "x": 0.63,
+            "y": -1.74
+          },
+          {
+            "x": 0.57,
+            "y": -0.84
+          },
+          {
+            "x": 0.3,
+            "y": 0.7
+          },
+          {
+            "x": 0.29,
+            "y": 1.3
           },
           {
             "x": 0.39,
-            "y": -4.96
+            "y": 2.12
+          },
+          {
+            "x": 0.0,
+            "y": 2.62
+          },
+          {
+            "x": -0.41,
+            "y": 1.88
+          },
+          {
+            "x": -0.32,
+            "y": 0.72
+          },
+          {
+            "x": -0.55,
+            "y": -0.78
+          },
+          {
+            "x": -0.67,
+            "y": -1.77
+          },
+          {
+            "x": -0.3,
+            "y": -2.95
+          },
+          {
+            "x": -0.52,
+            "y": -3.34
           }
         ],
         "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
           0.0,
           0.0,
           0.0,
@@ -731,10 +1030,23 @@
         ],
         "deadlyEdgeList": [
           false,
+          true,
           false,
           false,
           false,
-          true
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
         ],
         "floatList": {},
         "strList": {
@@ -756,8 +1068,8 @@
         "y": 10.392857142857142
       },
       "path": "../assets/endcolumn.png",
-      "centerXM": 51.714285714285715,
-      "centerYM": 10.392857142857142,
+      "centerXM": 48.75,
+      "centerYM": 10.178571428571427,
       "scale": 1.0,
       "ticket": 11,
       "scaledIGWM": 1.0,
@@ -829,18 +1141,18 @@
         "y": 13.964285714285715
       },
       "path": "../assets/Crowning.png",
-      "centerXM": 18.142857142857142,
-      "centerYM": 13.964285714285715,
-      "scale": 1.0,
+      "centerXM": 16.107142857142858,
+      "centerYM": 13.285714285714285,
+      "scale": 2.0,
       "ticket": 12,
-      "scaledIGWM": 3.0,
-      "scaledIGHM": 3.0,
+      "scaledIGWM": 6.0,
+      "scaledIGHM": 6.0,
       "book": {
         "intList": {
-          "Z-order": 4
+          "Z-order": 3
         },
         "doubList": {
-          "Scale": 1.0,
+          "Scale": 2.0,
           "Velocity": 1.0,
           "Quick Velocity": 0.0,
           "Pause time": 0.0,
@@ -848,20 +1160,20 @@
         },
         "collPointList": [
           {
-            "x": -1.48,
-            "y": -1.48
+            "x": -2.96,
+            "y": -2.96
           },
           {
-            "x": -1.48,
-            "y": 1.45
+            "x": -2.96,
+            "y": 2.9
           },
           {
-            "x": 1.49,
-            "y": 1.49
+            "x": 2.98,
+            "y": 2.98
           },
           {
-            "x": 1.49,
-            "y": -1.5
+            "x": 2.98,
+            "y": -3.0
           }
         ],
         "edgeFrictionList": [
@@ -895,18 +1207,18 @@
         "y": 14.035714285714286
       },
       "path": "../assets/Crowning.png",
-      "centerXM": 26.571428571428573,
-      "centerYM": 14.035714285714286,
-      "scale": 1.0,
+      "centerXM": 22.071428571428573,
+      "centerYM": 13.285714285714285,
+      "scale": 2.0,
       "ticket": 13,
-      "scaledIGWM": 3.0,
-      "scaledIGHM": 3.0,
+      "scaledIGWM": 6.0,
+      "scaledIGHM": 6.0,
       "book": {
         "intList": {
           "Z-order": 4
         },
         "doubList": {
-          "Scale": 1.0,
+          "Scale": 2.0,
           "Velocity": 1.0,
           "Quick Velocity": 0.0,
           "Pause time": 0.0,
@@ -914,20 +1226,20 @@
         },
         "collPointList": [
           {
-            "x": -1.48,
-            "y": -1.48
+            "x": -2.96,
+            "y": -2.96
           },
           {
-            "x": -1.48,
-            "y": 1.45
+            "x": -2.96,
+            "y": 2.9
           },
           {
-            "x": 1.49,
-            "y": 1.49
+            "x": 2.98,
+            "y": 2.98
           },
           {
-            "x": 1.49,
-            "y": -1.5
+            "x": 2.98,
+            "y": -3.0
           }
         ],
         "edgeFrictionList": [
@@ -961,18 +1273,18 @@
         "y": 14.321428571428571
       },
       "path": "../assets/Crowning.png",
-      "centerXM": 33.607142857142854,
-      "centerYM": 14.321428571428571,
-      "scale": 1.0,
+      "centerXM": 28.107142857142858,
+      "centerYM": 13.25,
+      "scale": 2.0,
       "ticket": 14,
-      "scaledIGWM": 3.0,
-      "scaledIGHM": 3.0,
+      "scaledIGWM": 6.0,
+      "scaledIGHM": 6.0,
       "book": {
         "intList": {
-          "Z-order": 4
+          "Z-order": 3
         },
         "doubList": {
-          "Scale": 1.0,
+          "Scale": 2.0,
           "Velocity": 1.0,
           "Quick Velocity": 0.0,
           "Pause time": 0.0,
@@ -980,20 +1292,20 @@
         },
         "collPointList": [
           {
-            "x": -1.48,
-            "y": -1.48
+            "x": -2.96,
+            "y": -2.96
           },
           {
-            "x": -1.48,
-            "y": 1.45
+            "x": -2.96,
+            "y": 2.9
           },
           {
-            "x": 1.49,
-            "y": 1.49
+            "x": 2.98,
+            "y": 2.98
           },
           {
-            "x": 1.49,
-            "y": -1.5
+            "x": 2.98,
+            "y": -3.0
           }
         ],
         "edgeFrictionList": [
@@ -1027,18 +1339,18 @@
         "y": 14.285714285714286
       },
       "path": "../assets/Crowning.png",
-      "centerXM": 39.67857142857143,
-      "centerYM": 14.285714285714286,
-      "scale": 1.0,
+      "centerXM": 34.142857142857146,
+      "centerYM": 13.214285714285715,
+      "scale": 2.0,
       "ticket": 15,
-      "scaledIGWM": 3.0,
-      "scaledIGHM": 3.0,
+      "scaledIGWM": 6.0,
+      "scaledIGHM": 6.0,
       "book": {
         "intList": {
-          "Z-order": 4
+          "Z-order": 3
         },
         "doubList": {
-          "Scale": 1.0,
+          "Scale": 2.0,
           "Velocity": 1.0,
           "Quick Velocity": 0.0,
           "Pause time": 0.0,
@@ -1046,20 +1358,20 @@
         },
         "collPointList": [
           {
-            "x": -1.48,
-            "y": -1.48
+            "x": -2.96,
+            "y": -2.96
           },
           {
-            "x": -1.48,
-            "y": 1.45
+            "x": -2.96,
+            "y": 2.9
           },
           {
-            "x": 1.49,
-            "y": 1.49
+            "x": 2.98,
+            "y": 2.98
           },
           {
-            "x": 1.49,
-            "y": -1.5
+            "x": 2.98,
+            "y": -3.0
           }
         ],
         "edgeFrictionList": [
@@ -1093,18 +1405,18 @@
         "y": 14.392857142857142
       },
       "path": "../assets/Crowning.png",
-      "centerXM": 46.75,
-      "centerYM": 14.392857142857142,
-      "scale": 1.0,
+      "centerXM": 40.107142857142854,
+      "centerYM": 13.142857142857142,
+      "scale": 2.0,
       "ticket": 16,
-      "scaledIGWM": 3.0,
-      "scaledIGHM": 3.0,
+      "scaledIGWM": 6.0,
+      "scaledIGHM": 6.0,
       "book": {
         "intList": {
-          "Z-order": 4
+          "Z-order": 3
         },
         "doubList": {
-          "Scale": 1.0,
+          "Scale": 2.0,
           "Velocity": 1.0,
           "Quick Velocity": 0.0,
           "Pause time": 0.0,
@@ -1112,20 +1424,237 @@
         },
         "collPointList": [
           {
-            "x": -1.48,
-            "y": -1.48
+            "x": -2.96,
+            "y": -2.96
           },
           {
-            "x": -1.48,
-            "y": 1.45
+            "x": -2.96,
+            "y": 2.9
           },
           {
-            "x": 1.49,
-            "y": 1.49
+            "x": 2.98,
+            "y": 2.98
           },
           {
-            "x": 1.49,
-            "y": -1.5
+            "x": 2.98,
+            "y": -3.0
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/Crowning.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": false,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "17": {
+      "endpoint": {
+        "x": 25.035714285714285,
+        "y": 9.642857142857142
+      },
+      "path": "../assets/CrushColumn.png",
+      "centerXM": 24.857142857142858,
+      "centerYM": 13.142857142857142,
+      "scale": 1.0,
+      "ticket": 17,
+      "scaledIGWM": 1.3,
+      "scaledIGHM": 10.0,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 3.0,
+          "Pause time": 1.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -0.55,
+            "y": -4.983333333333333
+          },
+          {
+            "x": -0.36,
+            "y": -4.97
+          },
+          {
+            "x": 0.2,
+            "y": -4.97
+          },
+          {
+            "x": 0.36,
+            "y": -4.96
+          },
+          {
+            "x": 0.33,
+            "y": -3.24
+          },
+          {
+            "x": 0.19,
+            "y": -2.99
+          },
+          {
+            "x": 0.63,
+            "y": -1.74
+          },
+          {
+            "x": 0.57,
+            "y": -0.84
+          },
+          {
+            "x": 0.3,
+            "y": 0.7
+          },
+          {
+            "x": 0.29,
+            "y": 1.3
+          },
+          {
+            "x": 0.39,
+            "y": 2.12
+          },
+          {
+            "x": 0.0,
+            "y": 2.62
+          },
+          {
+            "x": -0.41,
+            "y": 1.88
+          },
+          {
+            "x": -0.32,
+            "y": 0.72
+          },
+          {
+            "x": -0.55,
+            "y": -0.78
+          },
+          {
+            "x": -0.67,
+            "y": -1.77
+          },
+          {
+            "x": -0.3,
+            "y": -2.95
+          },
+          {
+            "x": -0.52,
+            "y": -3.34
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "HITTING",
+          "Image path": "../assets/CrushColumn.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "18": {
+      "endpoint": {
+        "x": 46.92857142857143,
+        "y": 13.285714285714285
+      },
+      "path": "../assets/Crowning.png",
+      "centerXM": 45.892857142857146,
+      "centerYM": 13.142857142857142,
+      "scale": 2.0,
+      "ticket": 18,
+      "scaledIGWM": 6.0,
+      "scaledIGHM": 6.0,
+      "book": {
+        "intList": {
+          "Z-order": 3
+        },
+        "doubList": {
+          "Scale": 2.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -2.96,
+            "y": -2.96
+          },
+          {
+            "x": -2.96,
+            "y": 2.9
+          },
+          {
+            "x": 2.98,
+            "y": 2.98
+          },
+          {
+            "x": 2.98,
+            "y": -3.0
           }
         ],
         "edgeFrictionList": [
@@ -1246,5 +1775,6 @@
   "npcs": {},
   "textTips": {},
   "attackZones": {},
-  "traps": {}
+  "traps": {},
+  "quicksand": {}
 }

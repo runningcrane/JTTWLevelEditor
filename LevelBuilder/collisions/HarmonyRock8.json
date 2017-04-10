@@ -1,0 +1,83 @@
+{
+  "intList": {},
+  "doubList": {
+    "widthm": 12.0,
+    "zoomLevel": 1.0,
+    "heightm": 3.0
+  },
+  "collPointList": [
+    {
+      "x": 6.0,
+      "y": -1.49
+    },
+    {
+      "x": 5.24,
+      "y": -0.6
+    },
+    {
+      "x": 3.62,
+      "y": 0.05
+    },
+    {
+      "x": 0.89,
+      "y": 0.48
+    },
+    {
+      "x": -0.9,
+      "y": 1.31
+    },
+    {
+      "x": -1.57,
+      "y": 1.21
+    },
+    {
+      "x": -2.54,
+      "y": 1.47
+    },
+    {
+      "x": -3.0,
+      "y": 1.4
+    },
+    {
+      "x": -3.72,
+      "y": 1.5
+    },
+    {
+      "x": -4.27,
+      "y": 1.26
+    },
+    {
+      "x": -5.93,
+      "y": -1.45
+    }
+  ],
+  "edgeFrictionList": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "deadlyEdgeList": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "floatList": {},
+  "strList": {},
+  "boolList": {}
+}
