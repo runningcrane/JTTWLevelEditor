@@ -55,11 +55,6 @@ public class CollisionWindow extends JFrame {
 	private JTextField txtName;
 	private JTextField txtMass;
 	private JTextField txtRadius;
-	private JLabel lblMass;
-	private JLabel lblRadius;
-	private JLabel lblWidth;
-	private JLabel lblHeight;
-	private JLabel lblFriction;
 	private JLabel lblFrictionVal;
 	private JButton btnBoulderDim;
 	private JPanel pnlContent;
@@ -126,6 +121,9 @@ public class CollisionWindow extends JFrame {
 	public void clear() {
 		this.zoomLevel = 1;
 		this.points.clear();
+		this.backburner.clear();
+		this.edgeFrics.clear();
+		this.deathEdges.clear();
 		this.vpOffset = new Point2D.Double(0, 0);
 		this.repaint();
 	}
@@ -336,53 +334,16 @@ public class CollisionWindow extends JFrame {
 		KeyEventDispatcher d = new KeyEventDispatcher() {
 			@Override
 			public boolean dispatchKeyEvent(KeyEvent e) {
-				if (!e.isControlDown()) {
+				if (!e.isControlDown() || e.getKeyCode() > '9' || e.getKeyCode() < '0') {
 					return false;
 				}
-				switch (e.getKeyCode()) {
-				case '1':
+				int code = e.getKeyCode() - '0';
+				if (code == 1) {
 					currentFriction = 1.0;
-					break;
-
-				case '2':
-					currentFriction = 0.2;
-					break;
-
-				case '3':
-					currentFriction = 0.3;
-					break;
-
-				case '4':
-					currentFriction = 0.4;
-					break;
-
-				case '5':
-					currentFriction = 0.5;
-					break;
-
-				case '6':
-					currentFriction = 0.6;
-					break;
-
-				case '7':
-					currentFriction = 0.7;
-					break;
-
-				case '8':
-					currentFriction = 0.8;
-					break;
-
-				case '9':
-					currentFriction = 0.9;
-					break;
-
-				case '0':
-					currentFriction = 0.0;
-					break;
-
-				default:
-					return false;
+				} else {
+					currentFriction = code * 0.1;
 				}
+				System.out.println("CurrentFriction is " + currentFriction);
 				lblFrictionVal.setText(Double.toString(currentFriction));
 				pnlControls.repaint();
 				return true;
@@ -437,39 +398,31 @@ public class CollisionWindow extends JFrame {
 			}
 		});
 		pnlControls.add(btnPlatDim);
-
-		lblWidth = new JLabel("Width:");
-		pnlControls.add(lblWidth);
-
+		
+		pnlControls.add(new JLabel("Width:"));
 		txtWidth = new JTextField();
 		txtWidth.setText("3");
 		pnlControls.add(txtWidth);
 		txtWidth.setColumns(10);
 
-		lblHeight = new JLabel("Height:");
-		pnlControls.add(lblHeight);
-
+		pnlControls.add(new JLabel("Height:"));
 		txtHeight = new JTextField();
 		txtHeight.setText("3");
 		pnlControls.add(txtHeight);
 		txtHeight.setColumns(10);
 
-		lblFriction = new JLabel("Friction:");
 		lblFrictionVal = new JLabel("0");
-		pnlControls.add(lblFriction);
+		pnlControls.add( new JLabel("Friction:"));
 		pnlControls.add(lblFrictionVal);
 
-		lblMass = new JLabel("Mass:");
-		pnlControls.add(lblMass);
-
+		pnlControls.add(new JLabel("Mass:"));
 		txtMass = new JTextField();
 		txtMass.setText("1000");
 		pnlControls.add(txtMass);
 		txtMass.setColumns(10);
 		txtMass.setEnabled(false);
 
-		lblRadius = new JLabel("Radius:");
-		pnlControls.add(lblRadius);
+		pnlControls.add(new JLabel("Radius:"));
 
 		txtRadius = new JTextField();
 		txtRadius.setText("3");
@@ -679,15 +632,14 @@ public class CollisionWindow extends JFrame {
 
 					// Don't remove if nothing was found.
 					if (closest.x != -1) {
-						// Don't remove unless the click was close enough to the
-						// label.
+						// Don't remove unless they clicked close to the label.
 						if (distance < 7) {
-							points.remove(closest);
+							points.set(index, new Point2D.Double(-1 * Integer.MAX_VALUE, -1 * Integer.MAX_VALUE));
 							
 							// Add this point to the backburner.
-							backburner.add(index);
+							backburner.add(index);							
 							System.out.println("Added " + index + " to the backburner!");
-							
+
 							// If the point was also the last point, update the last point.
 							lastPoint = points.get(points.size() - 1);
 						}
@@ -709,10 +661,12 @@ public class CollisionWindow extends JFrame {
 					
 					// Before adding, check backburner for points to replace.
 					if (!backburner.isEmpty()){
-						int index = backburner.remove(0);
+						int index = backburner.remove(0);						
+						
 						System.out.println("Took " + index + " off the backburner.");
-						points.add(index, newPoint);
-						lastPoint = points.get(points.size() - 1);
+						points.set(index, newPoint);
+						lastPoint = points.get(points.size() - 1);						
+						System.out.println("Most recent index is " + index + "\n");
 					} else {
 						points.add(newPoint);
 						lastPoint = newPoint;
@@ -775,11 +729,14 @@ public class CollisionWindow extends JFrame {
 
 		// The center of the image is treated as (0,0). Do in terms of mToPixel.
 		this.points.forEach((point) -> {
-			System.out.println("Swing point: " + point.x + ", " + point.y);
-			double cX = (point.x - center.x) / this.mToPixel;
-			double cY = (center.y - point.y) / this.mToPixel;
-			System.out.println("Cocos point: " + cX + ", " + cY);
-			correctedPoints.add(new Point2D.Double(cX, cY));
+			// If the point is (-MAXINT, -MAXINT), ignore it.
+			if (point.x != -1 * Integer.MAX_VALUE) { 				 
+				System.out.println("Swing point: " + point.x + ", " + point.y);
+				double cX = (point.x - center.x) / this.mToPixel;
+				double cY = (center.y - point.y) / this.mToPixel;
+				System.out.println("Cocos point: " + cX + ", " + cY);
+				correctedPoints.add(new Point2D.Double(cX, cY));
+			}
 		});
 		return correctedPoints;
 	}
