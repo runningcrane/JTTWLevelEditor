@@ -3528,7 +3528,7 @@
         }
       }
     },
-    "53": {
+    "46": {
       "endpoint": {
         "x": 80.98387096774194,
         "y": 14.790322580645162
@@ -3537,7 +3537,7 @@
       "centerXM": 80.98387096774194,
       "centerYM": 14.790322580645162,
       "scale": 1.0,
-      "ticket": 53,
+      "ticket": 46,
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
@@ -3595,7 +3595,7 @@
         }
       }
     },
-    "54": {
+    "47": {
       "endpoint": {
         "x": 82.62903225806451,
         "y": 14.85483870967742
@@ -3604,7 +3604,7 @@
       "centerXM": 82.62903225806451,
       "centerYM": 14.85483870967742,
       "scale": 1.0,
-      "ticket": 54,
+      "ticket": 47,
       "scaledIGWM": 3.0,
       "scaledIGHM": 2.5,
       "book": {
@@ -3894,12 +3894,12 @@
         "boolList": {}
       }
     },
-    "46": {
+    "52": {
       "path": "../assets/vine3.png",
       "centerXM": 27.410256410256405,
       "centerYM": 21.705128205128204,
       "scale": 1.0,
-      "ticket": 46,
+      "ticket": 52,
       "scaledIGWM": 1.0,
       "scaledIGHM": 5.0,
       "book": {
@@ -3930,12 +3930,12 @@
         "boolList": {}
       }
     },
-    "47": {
+    "53": {
       "path": "../assets/vine2.png",
       "centerXM": 54.38461538461539,
       "centerYM": 21.474358974358974,
       "scale": 1.0,
-      "ticket": 47,
+      "ticket": 53,
       "scaledIGWM": 1.0,
       "scaledIGHM": 5.0,
       "book": {
@@ -3972,12 +3972,12 @@
   "npcs": {},
   "textTips": {},
   "attackZones": {
-    "52": {
+    "54": {
       "path": "../assets/spear.png",
       "centerXM": 69.3225806451613,
       "centerYM": 16.096774193548388,
       "scale": 1.0,
-      "ticket": 52,
+      "ticket": 54,
       "scaledIGWM": 1.8,
       "scaledIGHM": 0.3,
       "book": {
@@ -4016,7 +4016,7 @@
         "floatList": {},
         "strList": {
           "FireType": "RELATIVE",
-          "soundName": "spear.wav"
+          "soundName": "Spear.wav"
         },
         "boolList": {
           "dynamic": false,
