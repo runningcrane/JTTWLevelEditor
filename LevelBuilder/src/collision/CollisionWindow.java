@@ -16,6 +16,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -126,6 +127,7 @@ public class CollisionWindow extends JFrame {
 	public void clear() {
 		this.zoomLevel = 1;
 		this.points.clear();
+		this.backburner.clear();
 		this.vpOffset = new Point2D.Double(0, 0);
 		this.repaint();
 	}
@@ -679,10 +681,13 @@ public class CollisionWindow extends JFrame {
 						// Don't remove unless the click was close enough to the
 						// label.
 						if (distance[0] < 2) {
-							points.remove(closest[0]);
+							points.set(index[0], new Point2D.Double(-1 * Integer.MAX_VALUE, -1 * Integer.MAX_VALUE));
 							
 							// Add this point to the backburner.
-							backburner.add(index[0]);
+							backburner.add(index[0]);							
+							
+							// Increment the backburner of everyone above.
+							
 							System.out.println("Added " + index[0] + " to the backburner!");
 							
 							// If the point was also the last point, update the last point.
@@ -706,10 +711,12 @@ public class CollisionWindow extends JFrame {
 					
 					// Before adding, check backburner for points to replace.
 					if (!backburner.isEmpty()){
-						int index = backburner.remove(0);
+						int index = backburner.remove(0);						
+						
 						System.out.println("Took " + index + " off the backburner.");
-						points.add(index, newPoint);
-						lastPoint = points.get(points.size() - 1);
+						points.set(index, newPoint);
+						lastPoint = points.get(points.size() - 1);						
+						System.out.println("Most recent index is " + index + "\n");
 					} else {
 						points.add(newPoint);
 						lastPoint = newPoint;
@@ -772,11 +779,14 @@ public class CollisionWindow extends JFrame {
 
 		// The center of the image is treated as (0,0). Do in terms of mToPixel.
 		this.points.forEach((point) -> {
-			System.out.println("Swing point: " + point.x + ", " + point.y);
-			double cX = (point.x - center.x) / this.mToPixel;
-			double cY = (center.y - point.y) / this.mToPixel;
-			System.out.println("Cocos point: " + cX + ", " + cY);
-			correctedPoints.add(new Point2D.Double(cX, cY));
+			// If the point is (-MAXINT, -MAXINT), ignore it.
+			if (point.x != -1 * Integer.MAX_VALUE) { 				 
+				System.out.println("Swing point: " + point.x + ", " + point.y);
+				double cX = (point.x - center.x) / this.mToPixel;
+				double cY = (center.y - point.y) / this.mToPixel;
+				System.out.println("Cocos point: " + cX + ", " + cY);
+				correctedPoints.add(new Point2D.Double(cX, cY));
+			}
 		});
 		return correctedPoints;
 	}
