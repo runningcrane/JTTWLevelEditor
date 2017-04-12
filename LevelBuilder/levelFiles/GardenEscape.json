@@ -34,7 +34,7 @@
       "doubList": {
         "ymin": 0.0,
         "xmin": -3.0,
-        "ymax": 100.0,
+        "ymax": 33.0,
         "xmax": 125.0
       },
       "collPointList": [],
@@ -3157,7 +3157,7 @@
         }
       }
     },
-    "47": {
+    "41": {
       "endpoint": {
         "x": 106.2741935483871,
         "y": 7.56451612903226
@@ -3166,7 +3166,7 @@
       "centerXM": 106.2741935483871,
       "centerYM": 7.56451612903226,
       "scale": 1.0,
-      "ticket": 47,
+      "ticket": 41,
       "scaledIGWM": 3.0,
       "scaledIGHM": 2.4,
       "book": {
@@ -3260,7 +3260,7 @@
         }
       }
     },
-    "48": {
+    "42": {
       "endpoint": {
         "x": 109.11290322580645,
         "y": 7.79032258064516
@@ -3269,7 +3269,7 @@
       "centerXM": 109.11290322580645,
       "centerYM": 7.79032258064516,
       "scale": 2.0,
-      "ticket": 48,
+      "ticket": 42,
       "scaledIGWM": 6.0,
       "scaledIGHM": 3.0,
       "book": {
@@ -3327,7 +3327,7 @@
         }
       }
     },
-    "49": {
+    "43": {
       "endpoint": {
         "x": 60.435483870967744,
         "y": 6.951612903225808
@@ -3336,7 +3336,7 @@
       "centerXM": 60.435483870967744,
       "centerYM": 6.951612903225808,
       "scale": 1.0,
-      "ticket": 49,
+      "ticket": 43,
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
@@ -3394,7 +3394,7 @@
         }
       }
     },
-    "50": {
+    "44": {
       "endpoint": {
         "x": 59.53225806451613,
         "y": 7.951612903225808
@@ -3403,7 +3403,7 @@
       "centerXM": 59.53225806451613,
       "centerYM": 7.951612903225808,
       "scale": 1.0,
-      "ticket": 50,
+      "ticket": 44,
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
@@ -3461,7 +3461,7 @@
         }
       }
     },
-    "51": {
+    "45": {
       "endpoint": {
         "x": 58.403225806451616,
         "y": 6.983870967741936
@@ -3470,7 +3470,141 @@
       "centerXM": 58.403225806451616,
       "centerYM": 6.983870967741936,
       "scale": 1.0,
-      "ticket": 51,
+      "ticket": 45,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 2.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": 1.15,
+            "y": -1.16
+          },
+          {
+            "x": 1.19,
+            "y": 0.46
+          },
+          {
+            "x": -1.17,
+            "y": 0.46
+          },
+          {
+            "x": -1.17,
+            "y": -1.07
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/cldCloudUp.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": false,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "53": {
+      "endpoint": {
+        "x": 80.98387096774194,
+        "y": 14.790322580645162
+      },
+      "path": "../assets/cldCloudDiagL.png",
+      "centerXM": 80.98387096774194,
+      "centerYM": 14.790322580645162,
+      "scale": 1.0,
+      "ticket": 53,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": 1.18,
+            "y": -0.6
+          },
+          {
+            "x": 1.17,
+            "y": 0.27
+          },
+          {
+            "x": -1.23,
+            "y": 0.27
+          },
+          {
+            "x": -1.23,
+            "y": -0.6
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/cldCloudDiagL.png"
+        },
+        "boolList": {
+          "Collidable": false,
+          "Polygon collision": false,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "54": {
+      "endpoint": {
+        "x": 82.62903225806451,
+        "y": 14.85483870967742
+      },
+      "path": "../assets/cldCloudUp.png",
+      "centerXM": 82.62903225806451,
+      "centerYM": 14.85483870967742,
+      "scale": 1.0,
+      "ticket": 54,
       "scaledIGWM": 3.0,
       "scaledIGHM": 2.5,
       "book": {
@@ -3616,84 +3750,12 @@
     }
   },
   "vines": {
-    "41": {
-      "path": "../assets/vine3.png",
-      "centerXM": 27.410256410256405,
-      "centerYM": 21.705128205128204,
-      "scale": 1.0,
-      "ticket": 41,
-      "scaledIGWM": 1.0,
-      "scaledIGHM": 5.0,
-      "book": {
-        "intList": {},
-        "doubList": {
-          "Scale": 1.0,
-          "Length": 7.0,
-          "Velocity": -2.0,
-          "Width": 0.7,
-          "Arc Length (deg)": 180.0
-        },
-        "collPointList": [
-          {
-            "x": 0.06,
-            "y": -2.5
-          },
-          {
-            "x": -0.04,
-            "y": 2.41
-          }
-        ],
-        "edgeFrictionList": [],
-        "deadlyEdgeList": [],
-        "floatList": {},
-        "strList": {
-          "Image path": "../assets/vine3.png"
-        },
-        "boolList": {}
-      }
-    },
-    "42": {
-      "path": "../assets/vine2.png",
-      "centerXM": 54.38461538461539,
-      "centerYM": 21.474358974358974,
-      "scale": 1.0,
-      "ticket": 42,
-      "scaledIGWM": 1.0,
-      "scaledIGHM": 5.0,
-      "book": {
-        "intList": {},
-        "doubList": {
-          "Scale": 1.0,
-          "Length": 7.0,
-          "Velocity": 0.2,
-          "Width": 0.7,
-          "Arc Length (deg)": 180.0
-        },
-        "collPointList": [
-          {
-            "x": -0.13,
-            "y": -2.32
-          },
-          {
-            "x": 0.09,
-            "y": 2.38
-          }
-        ],
-        "edgeFrictionList": [],
-        "deadlyEdgeList": [],
-        "floatList": {},
-        "strList": {
-          "Image path": "../assets/vine2.png"
-        },
-        "boolList": {}
-      }
-    },
-    "43": {
+    "48": {
       "path": "../assets/vine3.png",
       "centerXM": 86.33333333333331,
       "centerYM": 28.705128205128204,
       "scale": 1.0,
-      "ticket": 43,
+      "ticket": 48,
       "scaledIGWM": 1.0,
       "scaledIGHM": 5.0,
       "book": {
@@ -3724,12 +3786,12 @@
         "boolList": {}
       }
     },
-    "44": {
+    "49": {
       "path": "../assets/vine2.png",
       "centerXM": 23.692307692307693,
       "centerYM": 18.346153846153847,
       "scale": 1.0,
-      "ticket": 44,
+      "ticket": 49,
       "scaledIGWM": 1.0,
       "scaledIGHM": 5.0,
       "book": {
@@ -3760,12 +3822,12 @@
         "boolList": {}
       }
     },
-    "45": {
+    "50": {
       "path": "../assets/vine1.png",
       "centerXM": 95.3076923076923,
       "centerYM": 19.666666666666664,
       "scale": 1.0,
-      "ticket": 45,
+      "ticket": 50,
       "scaledIGWM": 1.0,
       "scaledIGHM": 5.0,
       "book": {
@@ -3796,12 +3858,12 @@
         "boolList": {}
       }
     },
-    "46": {
+    "51": {
       "path": "../assets/vine3.png",
       "centerXM": 18.076923076923077,
       "centerYM": 18.628205128205128,
       "scale": 1.0,
-      "ticket": 46,
+      "ticket": 51,
       "scaledIGWM": 1.0,
       "scaledIGHM": 5.0,
       "book": {
@@ -3831,12 +3893,138 @@
         },
         "boolList": {}
       }
+    },
+    "46": {
+      "path": "../assets/vine3.png",
+      "centerXM": 27.410256410256405,
+      "centerYM": 21.705128205128204,
+      "scale": 1.0,
+      "ticket": 46,
+      "scaledIGWM": 1.0,
+      "scaledIGHM": 5.0,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Scale": 1.0,
+          "Length": 7.0,
+          "Velocity": -2.0,
+          "Width": 0.7,
+          "Arc Length (deg)": 180.0
+        },
+        "collPointList": [
+          {
+            "x": 0.06,
+            "y": -2.5
+          },
+          {
+            "x": -0.04,
+            "y": 2.41
+          }
+        ],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/vine3.png"
+        },
+        "boolList": {}
+      }
+    },
+    "47": {
+      "path": "../assets/vine2.png",
+      "centerXM": 54.38461538461539,
+      "centerYM": 21.474358974358974,
+      "scale": 1.0,
+      "ticket": 47,
+      "scaledIGWM": 1.0,
+      "scaledIGHM": 5.0,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Scale": 1.0,
+          "Length": 7.0,
+          "Velocity": 0.2,
+          "Width": 0.7,
+          "Arc Length (deg)": 180.0
+        },
+        "collPointList": [
+          {
+            "x": -0.13,
+            "y": -2.32
+          },
+          {
+            "x": 0.09,
+            "y": 2.38
+          }
+        ],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/vine2.png"
+        },
+        "boolList": {}
+      }
     }
   },
   "boulders": {},
   "pegs": {},
   "npcs": {},
   "textTips": {},
-  "attackZones": {},
-  "traps": {}
+  "attackZones": {
+    "52": {
+      "path": "../assets/spear.png",
+      "centerXM": 69.3225806451613,
+      "centerYM": 16.096774193548388,
+      "scale": 1.0,
+      "ticket": 52,
+      "scaledIGWM": 1.8,
+      "scaledIGHM": 0.3,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "ymin": 0.0,
+          "xmin": 0.0,
+          "xVelMin": 300.0,
+          "xOffsetMin": -850.0,
+          "Scale": 1.0,
+          "yOffsetMin": 600.0,
+          "xVelMax": 550.0,
+          "yOffsetMax": 100.0,
+          "ymax": 30.0,
+          "xmax": 100.0,
+          "yVelMax": 0.0,
+          "xOffsetMax": -850.0,
+          "yVelMin": -200.0
+        },
+        "collPointList": [
+          {
+            "x": 0.5133333333333334,
+            "y": 0.08333333333333331
+          },
+          {
+            "x": 0.8933333333333334,
+            "y": -0.05
+          },
+          {
+            "x": 0.54,
+            "y": -0.18333333333333335
+          }
+        ],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {
+          "FireType": "RELATIVE",
+          "soundName": "spear.wav"
+        },
+        "boolList": {
+          "dynamic": false,
+          "Deadly": true
+        }
+      }
+    }
+  },
+  "traps": {},
+  "quicksand": {}
 }
