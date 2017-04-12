@@ -547,6 +547,10 @@ public class LevelManager {
 			Point2D.Double c = getViewportCoordinates((zone.getCenterXM() * this.mToPixel), ((this.levelHeightM - zone.getCenterYM()) * this.mToPixel));
 			g.drawImage(zone.getRI(), (int)(c.x - zone.getRI().getWidth() / 2.0),  (int)(c.y - zone.getRI().getHeight() / 2.0), null);
 
+			// Draw the label on top of it. In the center, maybe?
+			g.setColor(Color.MAGENTA);				
+			g.fillOval((int) (c.x - 7), (int) (c.y + 7), 15, 15);
+	
 			// If part of the group selection, draw a notifying 1m x 1m red box.
 			Point2D.Double vplbp = getViewportCoordinates(zone.getCenterXM() * this.mToPixel + 5,
 					(this.levelHeightM - (zone.getCenterYM() - zone.getInGameHeight() / 2)) * this.mToPixel + 10);
@@ -1368,7 +1372,7 @@ public class LevelManager {
 				vine.setScale(scale);					
 				
 				// Scale the image now.
-				vine.setRI(resize(vine.getBI(), vine.getScaledIGWM(), vine.getScaledIGHM()));		
+				vine.setRI(resize(vine.getBI(), vine.getPropertyBook().getDoubList().get("Width"), vine.getPropertyBook().getDoubList().get("Length")));		
 		});
 		
 		window.setCenterListener((e) -> {

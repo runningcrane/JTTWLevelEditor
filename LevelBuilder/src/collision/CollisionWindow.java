@@ -652,38 +652,41 @@ public class CollisionWindow extends JFrame {
 				double ym = (yp - vpOffset.y) / zoomLevel;
 
 				// If right-mouse click, remove a point.
+				System.out.println("Mouse Event: " + e.getButton() + ", is right? " + SwingUtilities.isRightMouseButton(e) + ", is left? " + SwingUtilities.isLeftMouseButton(e));
+				
 				if (SwingUtilities.isRightMouseButton(e)) {
-					Point2D.Double[] closest = new Point2D.Double[] { new Point2D.Double(-1, -1) };
-					double[] distance = new double[] { Double.MAX_VALUE };
-					int index[] = {-1};
-					int iter[] = {0};
+					Point2D.Double closest = new Point2D.Double(-1, -1);
+					double distance = Double.MAX_VALUE;
+					int index = -1;
+					int iter = 0;
 
-					points.forEach((point) -> {
+					for(Point2D.Double point : points) {
 						// Calculate distance from the point to the clicked
 						// point.
 						double xDiff = Math.abs(point.x - xm);
 						double yDiff = Math.abs(point.y - ym);
 						double tempDist = Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
-						if (tempDist < distance[0]) {
+						if (tempDist < distance) {
 							// Closer point found. Update.
-							distance[0] = tempDist;
-							closest[0] = point;
-							index[0] = iter[0]; 
+							distance = tempDist;
+							closest = point;
+							index = iter; 
 						}				
-						iter[0]++;
-					});
-										
+						iter++;
+					}
+					
+					System.out.println("Distance: " + distance + ", index: " + index + ", iter: " + iter + ", point:" + closest);
 
 					// Don't remove if nothing was found.
-					if (closest[0].x != -1) {
+					if (closest.x != -1) {
 						// Don't remove unless the click was close enough to the
 						// label.
-						if (distance[0] < 2) {
-							points.remove(closest[0]);
+						if (distance < 7) {
+							points.remove(closest);
 							
 							// Add this point to the backburner.
-							backburner.add(index[0]);
-							System.out.println("Added " + index[0] + " to the backburner!");
+							backburner.add(index);
+							System.out.println("Added " + index + " to the backburner!");
 							
 							// If the point was also the last point, update the last point.
 							lastPoint = points.get(points.size() - 1);

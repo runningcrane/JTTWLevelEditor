@@ -54,7 +54,7 @@ public class ControlWindow extends JFrame {
 	private static final String[] PLATFORMS = {
 			"Pedestal", "blueGround", "ground", "tree", "platform", "platform2", "platform3", "canyonR", "canyonL", 
 			"ForestGround", "Tree1", "Tree2", "paradiserock",
-			"Ramp", "arEast", "land", "Shore", "sea", "platformFull", "pigground"
+			"Ramp", "arEast", "land", "Shore", "sea", "platformFull", "groundGreed"
 	};
 	private static final String[] ROCKS = {
 			"Rock1", "Rock2", "Rock3", "Rock4", "Rock5", 
@@ -69,7 +69,7 @@ public class ControlWindow extends JFrame {
 			"cldClearDiagR", "cldCloudDiagR", "cldStormyDiagR", "cldSunsetDiagR",
 			"cldClearUp", "cldCloudUp", "cldStormyUp", "cldSunsetUp",
 			"cldClearFloor"
-	};;
+	};
 	private static final String[] BOULDERS = {
 			"BoulderA", "BoulderB", "BoulderC", "boulder0", "boulder1", "boulder2", "boulder3",
 			"boulder4", "boulder5", "boulder6", "boulder7", "boulder8", "boulder9"
@@ -77,11 +77,9 @@ public class ControlWindow extends JFrame {
 	private static final String[] VINES = {
 			"vine1", "vine2", "vine3", "pigvine1", "pigvine2", "pigvine3", "twine1", "twine2", "twine3"
 	};
-	
 	private static final String[] PEGS = {
 			"peg"
 	};
-	
 	private static final String[] SPECIALS = {
 		    "BuddhaHand", "lvl1Gate", "HarmonyBridge", "endcolumn", "CrushColumn", "Crowning", "head", "body", "tail", "Thwomp"
 	}; 
@@ -372,9 +370,9 @@ public class ControlWindow extends JFrame {
 		pnlBackground.add(lblBackground);	
 		
 		// Background panel - grid		
-		JPanel pnlGrid = new JPanel();
-		pnlGrid.setLayout(new GridLayout(1,3));
-		pnlBackground.add(pnlGrid);
+		JPanel pnlBackgroundGrid = new JPanel();
+		pnlBackgroundGrid.setLayout(new GridLayout(1,3));
+		pnlBackground.add(pnlBackgroundGrid);
 
 		// Background panel - radio buttons
 		ButtonGroup bgRadGroup = new ButtonGroup();
@@ -384,7 +382,7 @@ public class ControlWindow extends JFrame {
 			btnBg.addActionListener((arg0) -> ctlAdapter.setBg(ASSETS_PATH + bg + ".png")); 
 			btnBg.setIcon(new ImageIcon(THUMBNAIL_PATH + bg + "Thumbnail.png"));
 			btnBg.setPreferredSize(dimButton);
-			pnlGrid.add(btnBg);
+			pnlBackgroundGrid.add(btnBg);
 			bgRadGroup.add(btnBg);
 		}
 
@@ -467,7 +465,7 @@ public class ControlWindow extends JFrame {
 
 		ButtonGroup vineToggleGroup = new ButtonGroup();
 		JPanel pnlVineGrid = new JPanel();
-		pnlVineGrid.setLayout(new GridLayout(1,3));
+		pnlVineGrid.setLayout(new GridLayout(3,3));
 		pnlVines.add(pnlVineGrid);
 	
 		for (String vine : VINES) {
@@ -488,7 +486,7 @@ public class ControlWindow extends JFrame {
 		pnlPlatform.add(lblRockLabel);
 		
 		JPanel pnlRocks = new JPanel();
-		pnlRocks.setLayout(new GridLayout(3,4));
+		pnlRocks.setLayout(new GridLayout(7,3));
 		pnlPlatform.add(pnlRocks);
 		
 		JLabel lblCloudLabel = new JLabel("<html><b>Clouds</b></html>");
@@ -504,7 +502,7 @@ public class ControlWindow extends JFrame {
 		pnlPlatform.add(lblPlatLabel);
 		
 		JPanel pnlPlatGrid = new JPanel();
-		pnlPlatGrid.setLayout(new GridLayout(2,4));
+		pnlPlatGrid.setLayout(new GridLayout(5,4));
 		pnlPlatform.add(pnlPlatGrid);
 		
 		// Platform panel - toggle buttons
@@ -541,7 +539,8 @@ public class ControlWindow extends JFrame {
 		JLabel lblSpecialsLabel = new JLabel("<html><b>Special</b></html>");
 		pnlPlatform.add(lblSpecialsLabel);
 
-		JPanel pnlSpecials = new JPanel();		
+		JPanel pnlSpecials = new JPanel();	
+		pnlSpecials.setLayout(new GridLayout(5,4));
 		pnlPlatform.add(pnlSpecials);
 			
 		// Special images
