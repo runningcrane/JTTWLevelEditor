@@ -3,6 +3,7 @@
   "levelFileName": "harmony",
   "levelName": "Harmony",
   "levelNumber": 8,
+  "endQuote": "Different party members move at different speeds.",
   "nextLevelName": "temple",
   "mToPixel": 28.0,
   "bg": {
@@ -2743,7 +2744,7 @@
         }
       }
     },
-    "24": {
+    "22": {
       "endpoint": {
         "x": 50.67857142857143,
         "y": 8.035714285714285
@@ -2752,7 +2753,7 @@
       "centerXM": 51.5,
       "centerYM": 7.857142857142857,
       "scale": 0.5,
-      "ticket": 24,
+      "ticket": 22,
       "scaledIGWM": 7.0,
       "scaledIGHM": 1.5,
       "book": {
@@ -2958,34 +2959,10 @@
   "pegs": {},
   "npcs": {},
   "textTips": {
-    "22": {
+    "23": {
       "path": "",
       "centerXM": 28.035714285714285,
       "centerYM": 11.535714285714285,
-      "scale": 0.0,
-      "ticket": 22,
-      "scaledIGWM": 0.0,
-      "scaledIGHM": 0.0,
-      "book": {
-        "intList": {
-          "fontSize": 40,
-          "Z-order": 5
-        },
-        "doubList": {},
-        "collPointList": [],
-        "edgeFrictionList": [],
-        "deadlyEdgeList": [],
-        "floatList": {},
-        "strList": {
-          "text": "Use \u0027D\u0027 activate Piggy\u0027s power stance!"
-        },
-        "boolList": {}
-      }
-    },
-    "23": {
-      "path": "",
-      "centerXM": 26.821428571428573,
-      "centerYM": 10.714285714285715,
       "scale": 0.0,
       "ticket": 23,
       "scaledIGWM": 0.0,
@@ -3001,7 +2978,7 @@
         "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
-          "text": "Jump on him and press \u0027D\u0027 again to be thrown way up!"
+          "text": "Use \u0027D\u0027 to throw characters with Piggy!"
         },
         "boolList": {}
       }

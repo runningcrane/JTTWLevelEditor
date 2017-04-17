@@ -3,14 +3,15 @@
   "levelFileName": "Greed",
   "levelName": "Greed",
   "levelNumber": 6,
+  "endQuote": "Remember that \u0027A\u0027 will call your companions to follow you.",
   "nextLevelName": "Harmony",
   "mToPixel": 43.0,
   "bg": {
     "path": "../assets/bgSunny.png",
     "centerXm": 0.0,
     "centerYm": 0.0,
-    "widthm": 20.0,
-    "heightm": 15.0,
+    "widthm": 100.0,
+    "heightm": 25.0,
     "collisionWidth": 0.0,
     "collisionHeight": 0.0
   },
@@ -636,67 +637,69 @@
           1.0,
           1.0,
           1.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
           0.0,
           0.0
         ],
         "deadlyEdgeList": [
+          false,
           false,
           false,
           false,
@@ -1117,8 +1120,8 @@
   "characters": {
     "Monkey": {
       "path": "Monkey.png",
-      "centerXM": 1.4,
-      "centerYM": 5.02,
+      "centerXM": 2.302325581395349,
+      "centerYM": 5.2441860465116275,
       "scale": 0.0,
       "ticket": 0,
       "scaledIGWM": 0.0,
@@ -1203,8 +1206,8 @@
   "vines": {
     "2": {
       "path": "../assets/pigvine1.png",
-      "centerXM": 26.86,
-      "centerYM": 14.94,
+      "centerXM": 9.465116279069768,
+      "centerYM": 15.151162790697674,
       "scale": 1.0,
       "ticket": 2,
       "scaledIGWM": 1.0,
@@ -1213,10 +1216,10 @@
         "intList": {},
         "doubList": {
           "Scale": 1.0,
-          "Length": 11.0,
-          "Velocity": 1.0,
+          "Length": 11.8,
+          "Velocity": 0.0,
           "Width": 1.0,
-          "Arc Length (deg)": 180.0
+          "Arc Length (deg)": 0.0
         },
         "collPointList": [
           {
@@ -1247,8 +1250,8 @@
     },
     "3": {
       "path": "../assets/pigvine3.png",
-      "centerXM": 8.186046511627907,
-      "centerYM": 14.953488372093023,
+      "centerXM": 8.046511627906977,
+      "centerYM": 15.127906976744185,
       "scale": 1.0,
       "ticket": 3,
       "scaledIGWM": 1.0,
@@ -1257,10 +1260,10 @@
         "intList": {},
         "doubList": {
           "Scale": 1.0,
-          "Length": 11.0,
-          "Velocity": 1.0,
+          "Length": 11.5,
+          "Velocity": 0.0,
           "Width": 1.0,
-          "Arc Length (deg)": 180.0
+          "Arc Length (deg)": 0.0
         },
         "collPointList": [
           {
@@ -1315,8 +1318,8 @@
     },
     "4": {
       "path": "../assets/pigvine3.png",
-      "centerXM": 17.6046511627907,
-      "centerYM": 14.906976744186046,
+      "centerXM": 11.255813953488373,
+      "centerYM": 15.151162790697674,
       "scale": 1.0,
       "ticket": 4,
       "scaledIGWM": 1.0,
@@ -1325,10 +1328,10 @@
         "intList": {},
         "doubList": {
           "Scale": 1.0,
-          "Length": 11.0,
-          "Velocity": 1.0,
+          "Length": 11.5,
+          "Velocity": 0.0,
           "Width": 1.0,
-          "Arc Length (deg)": 180.0
+          "Arc Length (deg)": 0.0
         },
         "collPointList": [
           {
@@ -1380,21 +1383,595 @@
         },
         "boolList": {}
       }
+    },
+    "5": {
+      "path": "../assets/twine1.png",
+      "centerXM": 16.441860465116278,
+      "centerYM": 15.127906976744185,
+      "scale": 1.0,
+      "ticket": 5,
+      "scaledIGWM": 1.0,
+      "scaledIGHM": 5.0,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Scale": 1.0,
+          "Length": 12.0,
+          "Velocity": 0.0,
+          "Width": 1.0,
+          "Arc Length (deg)": 0.0
+        },
+        "collPointList": [
+          {
+            "x": 0.23,
+            "y": 0.72
+          },
+          {
+            "x": 0.41,
+            "y": 1.01
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/twine1.png"
+        },
+        "boolList": {}
+      }
+    },
+    "6": {
+      "path": "../assets/pigvine3.png",
+      "centerXM": 17.906976744186046,
+      "centerYM": 15.151162790697674,
+      "scale": 1.0,
+      "ticket": 6,
+      "scaledIGWM": 1.0,
+      "scaledIGHM": 5.0,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Scale": 1.0,
+          "Length": 12.0,
+          "Velocity": 0.0,
+          "Width": 1.0,
+          "Arc Length (deg)": 0.0
+        },
+        "collPointList": [
+          {
+            "x": -0.35,
+            "y": 1.09
+          },
+          {
+            "x": 0.14,
+            "y": 1.3
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/pigvine3.png"
+        },
+        "boolList": {}
+      }
+    },
+    "7": {
+      "path": "../assets/twine3.png",
+      "centerXM": 18.96511627906977,
+      "centerYM": 15.05813953488372,
+      "scale": 1.0,
+      "ticket": 7,
+      "scaledIGWM": 1.0,
+      "scaledIGHM": 5.0,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Scale": 1.0,
+          "Length": 12.5,
+          "Velocity": 0.0,
+          "Width": 1.0,
+          "Arc Length (deg)": 0.0
+        },
+        "collPointList": [
+          {
+            "x": 0.08,
+            "y": 0.19
+          },
+          {
+            "x": 0.25,
+            "y": 0.45
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/twine3.png"
+        },
+        "boolList": {}
+      }
+    },
+    "8": {
+      "path": "../assets/twine1.png",
+      "centerXM": 23.872093023255815,
+      "centerYM": 15.220930232558139,
+      "scale": 1.0,
+      "ticket": 8,
+      "scaledIGWM": 1.0,
+      "scaledIGHM": 5.0,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Scale": 1.0,
+          "Length": 12.5,
+          "Velocity": 0.0,
+          "Width": 1.0,
+          "Arc Length (deg)": 0.0
+        },
+        "collPointList": [
+          {
+            "x": 0.23,
+            "y": 0.72
+          },
+          {
+            "x": 0.41,
+            "y": 1.01
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/twine1.png"
+        },
+        "boolList": {}
+      }
+    },
+    "9": {
+      "path": "../assets/twine2.png",
+      "centerXM": 25.593023255813954,
+      "centerYM": 15.244186046511627,
+      "scale": 1.0,
+      "ticket": 9,
+      "scaledIGWM": 1.0,
+      "scaledIGHM": 5.0,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Scale": 1.0,
+          "Length": 12.5,
+          "Velocity": 0.0,
+          "Width": 1.0,
+          "Arc Length (deg)": 0.0
+        },
+        "collPointList": [
+          {
+            "x": 0.1,
+            "y": 0.31
+          },
+          {
+            "x": 0.23,
+            "y": 0.52
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/twine2.png"
+        },
+        "boolList": {}
+      }
+    },
+    "10": {
+      "path": "../assets/twine3.png",
+      "centerXM": 27.151162790697676,
+      "centerYM": 15.127906976744185,
+      "scale": 1.0,
+      "ticket": 10,
+      "scaledIGWM": 1.0,
+      "scaledIGHM": 5.0,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Scale": 1.0,
+          "Length": 12.5,
+          "Velocity": 0.0,
+          "Width": 1.0,
+          "Arc Length (deg)": 0.0
+        },
+        "collPointList": [
+          {
+            "x": 0.08,
+            "y": 0.19
+          },
+          {
+            "x": 0.25,
+            "y": 0.45
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/twine3.png"
+        },
+        "boolList": {}
+      }
+    },
+    "11": {
+      "path": "../assets/twine1.png",
+      "centerXM": 28.546511627906977,
+      "centerYM": 15.05813953488372,
+      "scale": 1.0,
+      "ticket": 11,
+      "scaledIGWM": 1.0,
+      "scaledIGHM": 5.0,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Scale": 1.0,
+          "Length": 12.7,
+          "Velocity": 0.0,
+          "Width": 1.0,
+          "Arc Length (deg)": 0.0
+        },
+        "collPointList": [
+          {
+            "x": 0.23,
+            "y": 0.72
+          },
+          {
+            "x": 0.41,
+            "y": 1.01
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/twine1.png"
+        },
+        "boolList": {}
+      }
+    },
+    "12": {
+      "path": "../assets/twine1.png",
+      "centerXM": 30.5,
+      "centerYM": 15.127906976744185,
+      "scale": 1.0,
+      "ticket": 12,
+      "scaledIGWM": 1.0,
+      "scaledIGHM": 5.0,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Scale": 1.0,
+          "Length": 12.9,
+          "Velocity": 0.0,
+          "Width": 1.0,
+          "Arc Length (deg)": 0.0
+        },
+        "collPointList": [
+          {
+            "x": 0.23,
+            "y": 0.72
+          },
+          {
+            "x": 0.41,
+            "y": 1.01
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "Image path": "../assets/twine1.png"
+        },
+        "boolList": {}
+      }
     }
   },
   "boulders": {},
   "pegs": {},
   "npcs": {},
-  "textTips": {},
+  "textTips": {
+    "13": {
+      "path": "",
+      "centerXM": 27.697674418604652,
+      "centerYM": 4.209302325581396,
+      "scale": 0.0,
+      "ticket": 13,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {
+          "fontSize": 40,
+          "Z-order": 5
+        },
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {
+          "text": "\"Help me Monkey!\""
+        },
+        "boolList": {}
+      }
+    },
+    "14": {
+      "path": "",
+      "centerXM": 3.9767441860465116,
+      "centerYM": 6.395348837209303,
+      "scale": 0.0,
+      "ticket": 14,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {
+          "fontSize": 40,
+          "Z-order": 5
+        },
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {
+          "text": "The Patient are rewarded."
+        },
+        "boolList": {}
+      }
+    },
+    "15": {
+      "path": "",
+      "centerXM": 5.046511627906977,
+      "centerYM": 6.046511627906977,
+      "scale": 0.0,
+      "ticket": 15,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {
+          "fontSize": 40,
+          "Z-order": 5
+        },
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {
+          "text": "The impatient are taught to be patient."
+        },
+        "boolList": {}
+      }
+    }
+  },
   "attackZones": {},
   "traps": {},
   "quicksand": {
-    "5": {
+    "16": {
+      "path": "../assets/quicksand3.png",
+      "centerXM": 27.593023255813954,
+      "centerYM": 1.8255813953488378,
+      "scale": 0.7,
+      "ticket": 16,
+      "scaledIGWM": 8.399999999999999,
+      "scaledIGHM": 1.75,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Scale": 0.7,
+          "recoveryVel": 0.5,
+          "sinkVel": 1.0,
+          "Z-order": 6.0
+        },
+        "collPointList": [
+          {
+            "x": 1.9133333333333336,
+            "y": -0.8283333333333333
+          },
+          {
+            "x": 3.43,
+            "y": -0.5249999999999999
+          },
+          {
+            "x": 3.955,
+            "y": -0.175
+          },
+          {
+            "x": 4.153333333333334,
+            "y": 0.315
+          },
+          {
+            "x": 3.8733333333333344,
+            "y": 0.48999999999999994
+          },
+          {
+            "x": 2.52,
+            "y": 0.5833333333333333
+          },
+          {
+            "x": 1.9249999999999998,
+            "y": 0.7
+          },
+          {
+            "x": 0.8166666666666671,
+            "y": 0.6766666666666665
+          },
+          {
+            "x": 0.1866666666666672,
+            "y": 0.6066666666666666
+          },
+          {
+            "x": -0.7816666666666663,
+            "y": 0.8633333333333333
+          },
+          {
+            "x": -3.8033333333333332,
+            "y": 0.7233333333333332
+          },
+          {
+            "x": -4.118333333333333,
+            "y": 0.5366666666666666
+          },
+          {
+            "x": -4.118333333333333,
+            "y": 0.1283333333333333
+          },
+          {
+            "x": -2.8699999999999997,
+            "y": -0.5133333333333333
+          },
+          {
+            "x": -1.0616666666666663,
+            "y": -0.735
+          },
+          {
+            "x": 0.5833333333333336,
+            "y": -0.8166666666666669
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "soundName": ""
+        },
+        "boolList": {}
+      }
+    },
+    "17": {
       "path": "../assets/quicksand1.png",
       "centerXM": 9.918604651162791,
       "centerYM": 2.0,
       "scale": 0.75,
-      "ticket": 5,
+      "ticket": 17,
       "scaledIGWM": 6.0,
       "scaledIGHM": 1.875,
       "book": {
@@ -1514,12 +2091,12 @@
         "boolList": {}
       }
     },
-    "6": {
+    "18": {
       "path": "../assets/quicksand2.png",
       "centerXM": 17.46511627906977,
       "centerYM": 1.7558139534883725,
       "scale": 0.9,
-      "ticket": 6,
+      "ticket": 18,
       "scaledIGWM": 5.4,
       "scaledIGHM": 2.25,
       "book": {
@@ -1594,131 +2171,6 @@
           {
             "x": 1.359,
             "y": -1.08
-          }
-        ],
-        "edgeFrictionList": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "deadlyEdgeList": [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        "floatList": {},
-        "strList": {
-          "soundName": ""
-        },
-        "boolList": {}
-      }
-    },
-    "7": {
-      "path": "../assets/quicksand3.png",
-      "centerXM": 27.593023255813954,
-      "centerYM": 1.8255813953488378,
-      "scale": 0.7,
-      "ticket": 7,
-      "scaledIGWM": 8.399999999999999,
-      "scaledIGHM": 1.75,
-      "book": {
-        "intList": {},
-        "doubList": {
-          "Scale": 0.7,
-          "recoveryVel": 0.5,
-          "sinkVel": 1.0,
-          "Z-order": 6.0
-        },
-        "collPointList": [
-          {
-            "x": 1.9133333333333336,
-            "y": -0.8283333333333333
-          },
-          {
-            "x": 3.43,
-            "y": -0.5249999999999999
-          },
-          {
-            "x": 3.955,
-            "y": -0.175
-          },
-          {
-            "x": 4.153333333333334,
-            "y": 0.315
-          },
-          {
-            "x": 3.8733333333333344,
-            "y": 0.48999999999999994
-          },
-          {
-            "x": 2.52,
-            "y": 0.5833333333333333
-          },
-          {
-            "x": 1.9249999999999998,
-            "y": 0.7
-          },
-          {
-            "x": 0.8166666666666671,
-            "y": 0.6766666666666665
-          },
-          {
-            "x": 0.1866666666666672,
-            "y": 0.6066666666666666
-          },
-          {
-            "x": -0.7816666666666663,
-            "y": 0.8633333333333333
-          },
-          {
-            "x": -3.8033333333333332,
-            "y": 0.7233333333333332
-          },
-          {
-            "x": -4.118333333333333,
-            "y": 0.5366666666666666
-          },
-          {
-            "x": -4.118333333333333,
-            "y": 0.1283333333333333
-          },
-          {
-            "x": -2.8699999999999997,
-            "y": -0.5133333333333333
-          },
-          {
-            "x": -1.0616666666666663,
-            "y": -0.735
-          },
-          {
-            "x": 0.5833333333333336,
-            "y": -0.8166666666666669
           }
         ],
         "edgeFrictionList": [

@@ -3,13 +3,14 @@
   "levelFileName": "dragon",
   "levelName": "Truce",
   "levelNumber": 5,
+  "endQuote": "If you ever get stuck, use \u0027r\u0027.",
   "nextLevelName": "Greed",
   "mToPixel": 28.0,
   "bg": {
     "path": "../assets/bgCloud.png",
     "centerXm": 0.0,
     "centerYm": 0.0,
-    "widthm": 20.0,
+    "widthm": 40.0,
     "heightm": 15.0,
     "collisionWidth": 0.0,
     "collisionHeight": 0.0
@@ -50,6 +51,188 @@
   "plats": {
     "2": {
       "endpoint": {
+        "x": 10.107142857142858,
+        "y": 11.392857142857142
+      },
+      "path": "../assets/cldClearDiagR.png",
+      "centerXM": 10.107142857142858,
+      "centerYM": 11.392857142857142,
+      "scale": 1.0,
+      "ticket": 2,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 2.4,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": 1.23,
+            "y": -0.99
+          },
+          {
+            "x": 1.39,
+            "y": -0.81
+          },
+          {
+            "x": 1.5,
+            "y": -0.51
+          },
+          {
+            "x": 1.43,
+            "y": -0.24
+          },
+          {
+            "x": 1.08,
+            "y": -0.06
+          },
+          {
+            "x": -1.33,
+            "y": -0.27
+          },
+          {
+            "x": -1.5,
+            "y": -0.49
+          },
+          {
+            "x": -1.48,
+            "y": -0.79
+          },
+          {
+            "x": -1.27,
+            "y": -1.02
+          },
+          {
+            "x": -0.96,
+            "y": -1.01
+          },
+          {
+            "x": -0.55,
+            "y": -0.64
+          },
+          {
+            "x": -0.18,
+            "y": -1.15
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/cldClearDiagR.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "3": {
+      "endpoint": {
+        "x": 14.071428571428571,
+        "y": 10.857142857142858
+      },
+      "path": "../assets/cldClearDiagL.png",
+      "centerXM": 14.071428571428571,
+      "centerYM": 10.857142857142858,
+      "scale": 1.0,
+      "ticket": 3,
+      "scaledIGWM": 3.0,
+      "scaledIGHM": 1.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": 1.11,
+            "y": -0.6
+          },
+          {
+            "x": 1.08,
+            "y": 0.34
+          },
+          {
+            "x": -1.3,
+            "y": 0.34
+          },
+          {
+            "x": -1.3,
+            "y": -0.66
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/cldClearDiagL.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "4": {
+      "endpoint": {
         "x": 2.19,
         "y": 10.32
       },
@@ -57,7 +240,7 @@
       "centerXM": 17.285714285714285,
       "centerYM": 3.428571428571429,
       "scale": 3.3,
-      "ticket": 2,
+      "ticket": 4,
       "scaledIGWM": 33.0,
       "scaledIGHM": 3.9599999999999995,
       "book": {
@@ -139,7 +322,7 @@
         }
       }
     },
-    "3": {
+    "5": {
       "endpoint": {
         "x": 35.75,
         "y": 3.571428571428573
@@ -148,7 +331,7 @@
       "centerXM": 48.464285714285715,
       "centerYM": 3.178571428571427,
       "scale": 3.0,
-      "ticket": 3,
+      "ticket": 5,
       "scaledIGWM": 42.0,
       "scaledIGHM": 3.5999999999999996,
       "book": {
@@ -184,7 +367,7 @@
         }
       }
     },
-    "4": {
+    "6": {
       "endpoint": {
         "x": 35.392857142857146,
         "y": 5.214285714285715
@@ -193,7 +376,7 @@
       "centerXM": 32.5,
       "centerYM": 6.178571428571427,
       "scale": 2.0,
-      "ticket": 4,
+      "ticket": 6,
       "scaledIGWM": 6.0,
       "scaledIGHM": 8.0,
       "book": {
@@ -224,7 +407,7 @@
         }
       }
     },
-    "5": {
+    "7": {
       "endpoint": {
         "x": 38.42857142857143,
         "y": 4.25
@@ -233,7 +416,7 @@
       "centerXM": 37.57142857142857,
       "centerYM": 4.25,
       "scale": 1.6,
-      "ticket": 5,
+      "ticket": 7,
       "scaledIGWM": 8.0,
       "scaledIGHM": 4.800000000000001,
       "book": {
@@ -314,7 +497,7 @@
         }
       }
     },
-    "6": {
+    "8": {
       "endpoint": {
         "x": 41.535714285714285,
         "y": 4.5
@@ -323,12 +506,12 @@
       "centerXM": 43.57142857142857,
       "centerYM": 6.035714285714285,
       "scale": 1.6,
-      "ticket": 6,
+      "ticket": 8,
       "scaledIGWM": 4.0,
       "scaledIGHM": 7.359999999999999,
       "book": {
         "intList": {
-          "Z-order": 4
+          "Z-order": 2
         },
         "doubList": {
           "Scale": 1.6,
@@ -405,7 +588,7 @@
         }
       }
     },
-    "7": {
+    "9": {
       "endpoint": {
         "x": 72.46428571428571,
         "y": 3.5357142857142847
@@ -414,7 +597,7 @@
       "centerXM": 74.21428571428571,
       "centerYM": 3.2142857142857153,
       "scale": 3.0,
-      "ticket": 7,
+      "ticket": 9,
       "scaledIGWM": 18.0,
       "scaledIGHM": 3.5999999999999996,
       "book": {
@@ -538,7 +721,7 @@
         }
       }
     },
-    "8": {
+    "10": {
       "endpoint": {
         "x": 30.035714285714285,
         "y": 8.571428571428573
@@ -547,7 +730,7 @@
       "centerXM": 20.75,
       "centerYM": 10.678571428571429,
       "scale": 1.0,
-      "ticket": 8,
+      "ticket": 10,
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
@@ -605,16 +788,16 @@
         }
       }
     },
-    "9": {
+    "11": {
       "endpoint": {
         "x": 15.214285714285714,
         "y": 10.75
       },
       "path": "../assets/cldClearDiagL.png",
-      "centerXM": 14.821428571428571,
+      "centerXM": 7.071428571428571,
       "centerYM": 14.607142857142858,
       "scale": 1.0,
-      "ticket": 9,
+      "ticket": 11,
       "scaledIGWM": 3.0,
       "scaledIGHM": 1.5,
       "book": {
@@ -672,7 +855,7 @@
         }
       }
     },
-    "10": {
+    "12": {
       "endpoint": {
         "x": 13.071428571428571,
         "y": 10.714285714285714
@@ -681,7 +864,7 @@
       "centerXM": 17.928571428571427,
       "centerYM": 10.535714285714286,
       "scale": 1.0,
-      "ticket": 10,
+      "ticket": 12,
       "scaledIGWM": 3.0,
       "scaledIGHM": 2.5,
       "book": {
@@ -857,12 +1040,12 @@
     }
   },
   "vines": {
-    "11": {
+    "13": {
       "path": "../assets/pigvine1.png",
-      "centerXM": 15.464285714285714,
+      "centerXM": 7.107142857142857,
       "centerYM": 14.607142857142858,
       "scale": 1.0,
-      "ticket": 11,
+      "ticket": 13,
       "scaledIGWM": 1.0,
       "scaledIGHM": 5.0,
       "book": {
@@ -970,12 +1153,60 @@
   "pegs": {},
   "npcs": {},
   "textTips": {
-    "12": {
+    "16": {
+      "path": "",
+      "centerXM": 10.928571428571429,
+      "centerYM": 10.142857142857142,
+      "scale": 0.0,
+      "ticket": 16,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {
+          "fontSize": 40,
+          "Z-order": 5
+        },
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {
+          "text": "Your companion will follow you with \u0027A\u0027"
+        },
+        "boolList": {}
+      }
+    },
+    "14": {
+      "path": "",
+      "centerXM": 26.678571428571427,
+      "centerYM": 7.714285714285715,
+      "scale": 0.0,
+      "ticket": 14,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {
+          "fontSize": 40,
+          "Z-order": 5
+        },
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {
+          "text": "Monk can be a peacemaker."
+        },
+        "boolList": {}
+      }
+    },
+    "15": {
       "path": "",
       "centerXM": 11.392857142857142,
       "centerYM": 8.785714285714285,
       "scale": 0.0,
-      "ticket": 12,
+      "ticket": 15,
       "scaledIGWM": 0.0,
       "scaledIGHM": 0.0,
       "book": {
@@ -993,39 +1224,15 @@
         },
         "boolList": {}
       }
-    },
-    "13": {
-      "path": "",
-      "centerXM": 8.535714285714286,
-      "centerYM": 9.5,
-      "scale": 0.0,
-      "ticket": 13,
-      "scaledIGWM": 0.0,
-      "scaledIGHM": 0.0,
-      "book": {
-        "intList": {
-          "fontSize": 40,
-          "Z-order": 5
-        },
-        "doubList": {},
-        "collPointList": [],
-        "edgeFrictionList": [],
-        "deadlyEdgeList": [],
-        "floatList": {},
-        "strList": {
-          "text": "Call your companion with \u0027S\u0027"
-        },
-        "boolList": {}
-      }
     }
   },
   "attackZones": {
-    "14": {
+    "17": {
       "path": "../assets/fireball.png",
       "centerXM": 31.428571428571427,
       "centerYM": 8.035714285714285,
       "scale": 0.38,
-      "ticket": 14,
+      "ticket": 17,
       "scaledIGWM": 1.52,
       "scaledIGHM": 1.52,
       "book": {
@@ -1086,12 +1293,12 @@
         }
       }
     },
-    "15": {
+    "18": {
       "path": "../assets/tide.png",
       "centerXM": 30.607142857142858,
       "centerYM": 6.464285714285715,
       "scale": 1.3,
-      "ticket": 15,
+      "ticket": 18,
       "scaledIGWM": 5.2,
       "scaledIGHM": 5.2,
       "book": {

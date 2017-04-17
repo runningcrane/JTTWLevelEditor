@@ -77,6 +77,11 @@ public class LevelManager {
 	private int levelNumber;
 	
 	/**
+	 * The text to display after this level is finished.
+	 */
+	private String endQuote;
+	
+	/**
 	 * Name of the level after this level.
 	 */
 	private String nextLevelName;
@@ -2040,6 +2045,7 @@ public class LevelManager {
 		// Tell output window what the level names are, etc.
 		this.levelFileName = old.levelFileName;
 		this.nextLevelName = old.nextLevelName;
+		this.endQuote = old.endQuote;
 		this.levelName = old.levelName;
 		this.levelNumber = old.levelNumber;
 		if (old.viewportZone != null) {
@@ -2050,6 +2056,7 @@ public class LevelManager {
 		ltcAdapter.setNewCameraLimits(min.x, max.x, min.y, max.y);
 		ltoAdapter.setLevelName(old.levelName);
 		ltoAdapter.setNextName(old.nextLevelName);
+		ltoAdapter.setEndQuote(old.endQuote);
 		ltoAdapter.setLevelNumber(old.levelNumber);
 		ltoAdapter.setLevelFile(old.levelFileName);
 		
@@ -2063,10 +2070,12 @@ public class LevelManager {
 	 * @param levelName
 	 *            name of the level
 	 * @param nextName name of the next level
+	 * @param endQuote 
 	 */
-	public void makeJSON(String levelFile, String levelName, String nextName, int levelNumber) {
+	public void makeJSON(String levelFile, String levelName, String nextName, String endQuote, int levelNumber) {
 		this.levelFileName = levelFile;
 		this.levelName = levelName;
+		this.endQuote = endQuote;
 		this.nextLevelName = nextName;	
 		this.levelNumber = levelNumber;
 		

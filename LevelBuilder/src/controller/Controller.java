@@ -196,8 +196,8 @@ public class Controller {
 			}
 
 			@Override
-			public void makeJSON(String levelFile, String levelName, String nextName, int levelNumber) {
-				level.makeJSON(levelFile, levelName, nextName, levelNumber);
+			public void makeJSON(String levelFile, String levelName, String nextName, String endQuote, int levelNumber) {
+				level.makeJSON(levelFile, levelName, nextName, endQuote, levelNumber);
 			}
 
 			@Override
@@ -265,6 +265,11 @@ public class Controller {
 			@Override
 			public void setLevelNumber(int levelNumber) {
 				outputWindow.setLevelNumber(levelNumber);
+			}
+
+			@Override
+			public void setEndQuote(String endQuote) {
+				outputWindow.setEndQuote(endQuote);
 			}
 
 		}, new ILevelToLayerAdapter() {

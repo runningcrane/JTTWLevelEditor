@@ -3,6 +3,7 @@
   "levelFileName": "Paradise",
   "levelName": "Paradise",
   "levelNumber": 0,
+  "endQuote": "Your Journey Continues...",
   "nextLevelName": "Freedom",
   "mToPixel": 34.0,
   "bg": {
@@ -582,6 +583,73 @@
           "Disappears": false
         }
       }
+    },
+    "8": {
+      "endpoint": {
+        "x": 4.764705882352941,
+        "y": 7.794117647058823
+      },
+      "path": "../assets/cldSunset.png",
+      "centerXM": 4.764705882352941,
+      "centerYM": 7.794117647058823,
+      "scale": 1.0,
+      "ticket": 8,
+      "scaledIGWM": 2.0,
+      "scaledIGHM": 1.0,
+      "book": {
+        "intList": {
+          "Z-order": 5
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": 0.7519999999999999,
+            "y": -0.428
+          },
+          {
+            "x": 0.72,
+            "y": 0.276
+          },
+          {
+            "x": -0.696,
+            "y": 0.276
+          },
+          {
+            "x": -0.696,
+            "y": -0.44400000000000006
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/cldSunset.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
     }
   },
   "characters": {
@@ -675,12 +743,12 @@
   "pegs": {},
   "npcs": {},
   "textTips": {
-    "8": {
+    "9": {
       "path": "",
       "centerXM": 2.8823529411764706,
       "centerYM": 10.823529411764707,
       "scale": 0.0,
-      "ticket": 8,
+      "ticket": 9,
       "scaledIGWM": 0.0,
       "scaledIGHM": 0.0,
       "book": {
@@ -699,12 +767,12 @@
         "boolList": {}
       }
     },
-    "9": {
+    "10": {
       "path": "",
       "centerXM": 9.352941176470589,
       "centerYM": 10.558823529411764,
       "scale": 0.0,
-      "ticket": 9,
+      "ticket": 10,
       "scaledIGWM": 0.0,
       "scaledIGHM": 0.0,
       "book": {
@@ -723,12 +791,12 @@
         "boolList": {}
       }
     },
-    "10": {
+    "11": {
       "path": "",
       "centerXM": 13.411764705882353,
       "centerYM": 12.264705882352942,
       "scale": 0.0,
-      "ticket": 10,
+      "ticket": 11,
       "scaledIGWM": 0.0,
       "scaledIGHM": 0.0,
       "book": {

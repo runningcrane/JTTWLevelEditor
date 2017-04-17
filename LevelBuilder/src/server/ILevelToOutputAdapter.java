@@ -37,9 +37,14 @@ public interface ILevelToOutputAdapter {
 	 * @param levelNumber
 	 */
 	public void setLevelNumber(int levelNumber);
+
+	/**
+	 * Set flavor text for the end-of-level quote or help text.
+	 * @param endQuote
+	 */
+	public void setEndQuote(String endQuote);
 	
 	public static ILevelToOutputAdapter VoidPattern = new ILevelToOutputAdapter() {
-
 		@Override
 		public void setDimensions(int wm, int hm) {}
 
@@ -57,5 +62,8 @@ public interface ILevelToOutputAdapter {
 
 		@Override
 		public void setLevelNumber(int levelNumber) {}
+
+		@Override
+		public void setEndQuote(String endQuote) {}
 	};
 }

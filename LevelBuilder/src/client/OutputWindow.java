@@ -37,9 +37,10 @@ public class OutputWindow extends JFrame {
 	private JLabel lblCurLevel;
 
 	private JTextField txtOutputPath;
-	private JTextField txtName;
+	private JTextField txtTitle;
 	private JTextField txtNumber;
 	private JTextField txtNextLevel;
+	private JTextField txtEndLevelQuote;
 	private JTextField txtInputPath;
 	
 	private double offset;
@@ -92,18 +93,27 @@ public class OutputWindow extends JFrame {
 		btnMakeJSON.addActionListener((e) ->
 				otlAdapter.makeJSON(
 						txtOutputPath.getText(),
-						txtName.getText(),
+						txtTitle.getText(),
 						txtNextLevel.getText(),
+						txtEndLevelQuote.getText(),
 						Integer.parseInt(txtNumber.getText())));
 		pnlControls.add(btnMakeJSON);
 		
 		JLabel lblName = new JLabel("Level Name");
 		pnlControls.add(lblName);
-		txtName = new JTextField();
-		txtName.setText("My Level");
-		pnlControls.add(txtName);
-		txtName.setColumns(10);
+		txtTitle = new JTextField();
+		txtTitle.setText("My Level");
+		pnlControls.add(txtTitle);
+		txtTitle.setColumns(10);
 		
+		pnlControls.add(new JLabel(""));
+		
+		JLabel lblQuote = new JLabel("End Quote");
+		pnlControls.add(lblQuote);
+		txtEndLevelQuote = new JTextField();
+		txtEndLevelQuote.setText("Your Journey Continues...");
+		txtEndLevelQuote.setColumns(10);
+		pnlControls.add(txtEndLevelQuote);
 		pnlControls.add(new JLabel(""));
 		
 		JLabel lblNextName = new JLabel("Next Level File");
@@ -262,7 +272,7 @@ public class OutputWindow extends JFrame {
 	 * @param name name of the level, sans .json
 	 */
 	public void setLevelName(String name) {
-		this.txtName.setText(name);
+		this.txtTitle.setText(name);
 	}
 	
 	/**
@@ -286,5 +296,9 @@ public class OutputWindow extends JFrame {
 
 	public void setLevelNumber(int levelNumber) {
 		this.txtNumber.setText(Integer.toString(levelNumber));
+	}
+
+	public void setEndQuote(String endQuote) {
+		this.txtEndLevelQuote.setText(endQuote);
 	}	
 }

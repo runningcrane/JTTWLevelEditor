@@ -17,7 +17,7 @@ public interface IOutputToLevelAdapter {
 	 * @param levelName name of the level
 	 * @param nextName name of the next level
 	 */
-	public void makeJSON(String levelFile, String levelName, String nextName, int levelNumber);
+	public void makeJSON(String levelFile, String levelName, String nextName, String endQuote, int levelNumber);
 	
 	/**
 	 * Recreate a level from its JSON.

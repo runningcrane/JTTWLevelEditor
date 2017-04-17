@@ -3,6 +3,7 @@
   "levelFileName": "GardenEscape",
   "levelName": "Flight",
   "levelNumber": 3,
+  "endQuote": "1000\u0027s of years later...",
   "nextLevelName": "Breakout",
   "mToPixel": 31.0,
   "bg": {
@@ -157,8 +158,8 @@
         "y": 6.545454545454547
       },
       "path": "../assets/cldCloud.png",
-      "centerXM": 5.048387096774194,
-      "centerYM": 6.532258064516128,
+      "centerXM": 6.161290322580645,
+      "centerYM": 6.677419354838708,
       "scale": 1.0,
       "ticket": 2,
       "scaledIGWM": 3.0,
@@ -206,7 +207,7 @@
         ],
         "floatList": {},
         "strList": {
-          "interactable.Platform$Type": "MOVING",
+          "interactable.Platform$Type": "STATIC",
           "Image path": "../assets/cldCloud.png"
         },
         "boolList": {
@@ -3666,8 +3667,8 @@
   "characters": {
     "Monkey": {
       "path": "Monkey.png",
-      "centerXM": 111.6774193548387,
-      "centerYM": 20.516129032258064,
+      "centerXM": 5.967741935483871,
+      "centerYM": 8.70967741935484,
       "scale": 0.0,
       "ticket": 0,
       "scaledIGWM": 0.0,

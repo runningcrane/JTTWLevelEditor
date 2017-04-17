@@ -3,6 +3,7 @@
   "levelFileName": "temple",
   "levelName": "Golden Temple",
   "levelNumber": 9,
+  "endQuote": "...",
   "nextLevelName": "bodhi",
   "mToPixel": 28.0,
   "bg": {

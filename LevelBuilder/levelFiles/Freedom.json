@@ -3,6 +3,7 @@
   "levelFileName": "Freedom",
   "levelName": "Freedom",
   "levelNumber": 1,
+  "endQuote": "Press \u003cEsc\u003e to access the menu at any time.",
   "nextLevelName": "SecretGarden",
   "mToPixel": 34.0,
   "bg": {
@@ -1037,8 +1038,8 @@
         "y": 0.0
       },
       "path": "../assets/cldClear.png",
-      "centerXM": 21.225,
-      "centerYM": 4.200000000000003,
+      "centerXM": 21.176470588235293,
+      "centerYM": 5.411764705882355,
       "scale": 1.0,
       "ticket": 13,
       "scaledIGWM": 3.0,
@@ -4539,7 +4540,7 @@
         "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
-          "text": "Swing with arrow keys!"
+          "text": "Swing with left and right!"
         },
         "boolList": {}
       }
@@ -4563,7 +4564,7 @@
         "deadlyEdgeList": [],
         "floatList": {},
         "strList": {
-          "text": "Climb with up and down"
+          "text": "Climb with up and down!"
         },
         "boolList": {}
       }

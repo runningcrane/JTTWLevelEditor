@@ -3,14 +3,15 @@
   "levelFileName": "Breakout",
   "levelName": "Breakout",
   "levelNumber": 4,
+  "endQuote": "Your party must reach the end as one to finish.",
   "nextLevelName": "dragon",
   "mToPixel": 40.0,
   "bg": {
     "path": "../assets/bgSunny.png",
     "centerXm": 0.0,
     "centerYm": 0.0,
-    "widthm": 20.0,
-    "heightm": 15.0,
+    "widthm": 150.0,
+    "heightm": 30.0,
     "collisionWidth": 0.0,
     "collisionHeight": 0.0
   },
@@ -54,18 +55,18 @@
         "y": 0.0
       },
       "path": "../assets/blueGround.png",
-      "centerXM": 19.675,
-      "centerYM": -3.1999999999999993,
-      "scale": 4.0,
+      "centerXM": 11.475,
+      "centerYM": -1.125,
+      "scale": 2.5,
       "ticket": 18,
-      "scaledIGWM": 40.0,
-      "scaledIGHM": 12.0,
+      "scaledIGWM": 25.0,
+      "scaledIGHM": 7.5,
       "book": {
         "intList": {
           "Z-order": 4
         },
         "doubList": {
-          "Scale": 4.0,
+          "Scale": 2.5,
           "Velocity": 1.0,
           "Quick Velocity": 0.0,
           "Pause time": 0.0,
@@ -73,20 +74,20 @@
         },
         "collPointList": [
           {
-            "x": 20.0,
-            "y": -6.04
+            "x": 12.5,
+            "y": -3.775
           },
           {
-            "x": 19.96,
-            "y": 5.52
+            "x": 12.475000000000001,
+            "y": 3.4499999999999997
           },
           {
-            "x": -19.96,
-            "y": 5.52
+            "x": -12.475000000000001,
+            "y": 3.4499999999999997
           },
           {
-            "x": -19.96,
-            "y": -5.96
+            "x": -12.475000000000001,
+            "y": -3.725
           }
         ],
         "edgeFrictionList": [
@@ -129,7 +130,7 @@
       "scaledIGHM": 7.0,
       "book": {
         "intList": {
-          "Z-order": 4
+          "Z-order": 2
         },
         "doubList": {
           "Scale": 1.0,
@@ -244,6 +245,145 @@
         "strList": {
           "interactable.Platform$Type": "STATIC",
           "Image path": "../assets/Rock1.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "20": {
+      "endpoint": {
+        "x": 26.6,
+        "y": 0.025000000000000355
+      },
+      "path": "../assets/blueGround.png",
+      "centerXM": 27.1,
+      "centerYM": -0.75,
+      "scale": 1.0,
+      "ticket": 20,
+      "scaledIGWM": 10.0,
+      "scaledIGHM": 3.0,
+      "book": {
+        "intList": {
+          "Z-order": 3
+        },
+        "doubList": {
+          "Scale": 1.0,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": 5.0,
+            "y": -1.51
+          },
+          {
+            "x": 4.99,
+            "y": 1.38
+          },
+          {
+            "x": -4.99,
+            "y": 1.38
+          },
+          {
+            "x": -4.99,
+            "y": -1.49
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/blueGround.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
+    },
+    "21": {
+      "endpoint": {
+        "x": 23.95,
+        "y": 1.25
+      },
+      "path": "../assets/Rock2.png",
+      "centerXM": 24.15,
+      "centerYM": 1.0250000000000004,
+      "scale": 0.5,
+      "ticket": 21,
+      "scaledIGWM": 1.25,
+      "scaledIGHM": 3.5,
+      "book": {
+        "intList": {
+          "Z-order": 5
+        },
+        "doubList": {
+          "Scale": 0.5,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": -0.545,
+            "y": -1.74
+          },
+          {
+            "x": -0.465,
+            "y": 1.06
+          },
+          {
+            "x": -0.235,
+            "y": 1.29
+          },
+          {
+            "x": 0.345,
+            "y": 1.28
+          },
+          {
+            "x": 0.635,
+            "y": -0.75
+          },
+          {
+            "x": 0.615,
+            "y": -1.74
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/Rock2.png"
         },
         "boolList": {
           "Collidable": true,
@@ -1322,12 +1462,12 @@
   },
   "npcs": {},
   "textTips": {
-    "20": {
+    "22": {
       "path": "",
       "centerXM": 2.825,
       "centerYM": 5.35,
       "scale": 0.0,
-      "ticket": 20,
+      "ticket": 22,
       "scaledIGWM": 0.0,
       "scaledIGHM": 0.0,
       "book": {
@@ -1346,12 +1486,12 @@
         "boolList": {}
       }
     },
-    "21": {
+    "23": {
       "path": "",
       "centerXM": 19.35,
       "centerYM": 7.9,
       "scale": 0.0,
-      "ticket": 21,
+      "ticket": 23,
       "scaledIGWM": 0.0,
       "scaledIGHM": 0.0,
       "book": {
