@@ -15,8 +15,8 @@
     "collisionHeight": 0.0
   },
   "eolPoint": {
-    "x": 19.12162162162162,
-    "y": 6.621621621621621
+    "x": 16.256756756756758,
+    "y": 6.445945945945946
   },
   "eolQuadrant": 4,
   "levelWidthM": 28.0,
@@ -132,16 +132,16 @@
         }
       }
     },
-    "4": {
+    "2": {
       "endpoint": {
         "x": 22.986486486486488,
         "y": 7.662162162162162
       },
       "path": "../assets/tree.png",
-      "centerXM": 23.0,
-      "centerYM": 5.837837837837839,
+      "centerXM": 21.83783783783784,
+      "centerYM": 5.662162162162161,
       "scale": 2.0,
-      "ticket": 4,
+      "ticket": 2,
       "scaledIGWM": 8.0,
       "scaledIGHM": 12.0,
       "book": {
@@ -364,5 +364,6 @@
   "npcs": {},
   "textTips": {},
   "attackZones": {},
-  "traps": {}
+  "traps": {},
+  "quicksand": {}
 }
