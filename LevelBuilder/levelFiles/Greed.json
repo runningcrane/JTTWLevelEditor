@@ -10,8 +10,8 @@
     "path": "../assets/bgSunny.png",
     "centerXm": 0.0,
     "centerYm": 0.0,
-    "widthm": 100.0,
-    "heightm": 25.0,
+    "widthm": 20.0,
+    "heightm": 15.0,
     "collisionWidth": 0.0,
     "collisionHeight": 0.0
   },
@@ -1767,8 +1767,8 @@
   "textTips": {
     "13": {
       "path": "",
-      "centerXM": 27.697674418604652,
-      "centerYM": 4.209302325581396,
+      "centerXM": 7.755813953488372,
+      "centerYM": 6.546511627906977,
       "scale": 0.0,
       "ticket": 13,
       "scaledIGWM": 0.0,
@@ -1785,54 +1785,6 @@
         "floatList": {},
         "strList": {
           "text": "\"Help me Monkey!\""
-        },
-        "boolList": {}
-      }
-    },
-    "14": {
-      "path": "",
-      "centerXM": 3.9767441860465116,
-      "centerYM": 6.395348837209303,
-      "scale": 0.0,
-      "ticket": 14,
-      "scaledIGWM": 0.0,
-      "scaledIGHM": 0.0,
-      "book": {
-        "intList": {
-          "fontSize": 40,
-          "Z-order": 5
-        },
-        "doubList": {},
-        "collPointList": [],
-        "edgeFrictionList": [],
-        "deadlyEdgeList": [],
-        "floatList": {},
-        "strList": {
-          "text": "The Patient are rewarded."
-        },
-        "boolList": {}
-      }
-    },
-    "15": {
-      "path": "",
-      "centerXM": 5.046511627906977,
-      "centerYM": 6.046511627906977,
-      "scale": 0.0,
-      "ticket": 15,
-      "scaledIGWM": 0.0,
-      "scaledIGHM": 0.0,
-      "book": {
-        "intList": {
-          "fontSize": 40,
-          "Z-order": 5
-        },
-        "doubList": {},
-        "collPointList": [],
-        "edgeFrictionList": [],
-        "deadlyEdgeList": [],
-        "floatList": {},
-        "strList": {
-          "text": "The impatient are taught to be patient."
         },
         "boolList": {}
       }
