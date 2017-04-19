@@ -145,10 +145,10 @@ public class LevelManager {
 		MAKE_PLATFORM, MAKE_VINE, MAKE_BOULDER, MAKE_NPC, MAKE_PEG, MAKE_TIP, 
 		    MAKE_TRAP, MAKE_ATTACK_ZONE, MAKE_QUICKSAND,
 		EDIT_OLD_PLAT, EDIT_OLD_VINE, EDIT_OLD_BOULDER, EDIT_OLD_PEG, 
-		    EDIT_OLD_TIP, EDIT_OLD_TRAP, EDIT_OLD_ATTACK_ZONE, EDIT_OLD_NPC, EDIT_GROUP,
-		EDIT_MONK, EDIT_MONKEY, EDIT_PIG, EDIT_SANDY, EDIT_OLD_QUICKSAND,
+		    EDIT_OLD_TIP, EDIT_OLD_TRAP, EDIT_OLD_ATTACK_ZONE, EDIT_OLD_NPC, EDIT_OLD_QUICKSAND, EDIT_GROUP,
+		EDIT_MONK, EDIT_MONKEY, EDIT_PIG, EDIT_SANDY,EDIT_DRAGON, 
 		SET_PLAT_ENDPOINT, MARK_EOL, MARK_EOL_QUADRANT, MARK_RP,
-			REMOVE_RP
+			REMOVE_RP,
 	}
 	
 	//////// Members that aren't serialized into the level JSON file. ////////////
@@ -277,9 +277,9 @@ public class LevelManager {
 		this.levelHeightM = 15;
 
 		// Set up the player characters.
-		String[] players = {"Monkey", "Monk", "Piggy", "Sandy"};
+		String[] players = {"Monkey", "Monk", "Piggy", "Sandy", "Dragon"};
 		
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 5; i++) {
 			String path = players[i] + ".png";
 			Player player = new Player(path);
 			BufferedImage playerBI;
@@ -290,16 +290,23 @@ public class LevelManager {
 				e.printStackTrace();
 				return;
 			}
-			player.getDefaultPropertyBook().getDoubList().put("widthm", 0.7);
-			player.getDefaultPropertyBook().getDoubList().put("heightm", 1.7);
+			
+			double height = 1.7;
+			double width = 0.7;
+			if (players[i] == "Dragon") {
+				height = 8;
+				width = 16;
+			}
+			player.getDefaultPropertyBook().getDoubList().put("widthm", width);
+			player.getDefaultPropertyBook().getDoubList().put("heightm", height);
 			player.setBI(playerBI);
-			player.setRI(resize(playerBI, 0.7, 1.7));
-			player.getDefaultPropertyBook().getDoubList().put("widthm", 0.7);
-			player.getDefaultPropertyBook().getDoubList().put("heightm",  1.7);
+			player.setRI(resize(playerBI, width, height));
+			player.getDefaultPropertyBook().getDoubList().put("widthm", width);
+		    player.getDefaultPropertyBook().getDoubList().put("heightm",  height);
 			player.setCenter(0, 0);
 			player.getPropertyBook().getBoolList().put("Present", false);
 			characters.put(players[i], player);
-		}		
+		}
 	}
 	
 	/**
@@ -910,6 +917,11 @@ public class LevelManager {
 			this.characters.get("Sandy").setCenter(xm, ym);
 			break;
 		}
+		case EDIT_DRAGON: {
+			this.characters.get("Dragon").setCenter(xm, ym);
+			break;
+		}
+		
 		case SET_PLAT_ENDPOINT: {
 			this.plats.get(this.requestNum).setEndpoint(new Point2D.Double(xm, ym));
 			break;
@@ -1888,7 +1900,13 @@ public class LevelManager {
 		// Unfortunately this requires resetting ALL of the rescaled images.
 		this.plats.forEach(
 				(ticket, plat) -> plat.setRI(resize(plat.getBI(), plat.getScaledIGWM(), plat.getScaledIGHM())));
-		this.characters.forEach((name, player) -> player.setRI(resize(player.getBI(), 0.7, 1.7)));		
+		this.characters.forEach((name, player) -> {
+			if (name != "Dragon") {
+			    player.setRI(resize(player.getBI(), 0.7, 1.7));
+			} else {
+				 player.setRI(resize(player.getBI(), 16, 8));
+			}
+		});		
 		this.vines.forEach((ticket, vine) -> vine
 				.setRI(resize(vine.getBI(), vine.getScaledIGWM(), vine.getScaledIGHM())));
 		this.boulders.forEach((ticket, boulder) -> boulder

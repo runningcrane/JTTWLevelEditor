@@ -397,13 +397,14 @@ public class ControlWindow extends JFrame {
 		
 		// Player panel - icons
 		JPanel pnlCharGrid = new JPanel();
-		pnlCharGrid.setLayout(new GridLayout(2,2));
+		pnlCharGrid.setLayout(new GridLayout(3,2));
 		pnlPlayer.add(pnlCharGrid);
 		
 		ImageIcon iiMonkey = new ImageIcon(THUMBNAIL_PATH + "MonkeyThumbnail.png");				
 		ImageIcon iiMonk = new ImageIcon(THUMBNAIL_PATH + "MonkThumbnail.png");				
 		ImageIcon iiPig = new ImageIcon(THUMBNAIL_PATH + "PigThumbnail.png");	
 		ImageIcon iiSandy = new ImageIcon(THUMBNAIL_PATH + "SandyThumbnail.png");
+		ImageIcon iiDragon = new ImageIcon(THUMBNAIL_PATH + "DragonThumbnail.png");
 		
 		// Player panel - toggle buttons
 		ButtonGroup charToggleGroup = new ButtonGroup();														
@@ -442,15 +443,18 @@ public class ControlWindow extends JFrame {
 		charToggleGroup.add(tglPig);
 		
 		JToggleButton tglSandy = new JToggleButton("Sandy");
-		tglSandy.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ctlAdapter.toggleSandy();
-			}
-		});
+		tglSandy.addActionListener((arg0) ->ctlAdapter.toggleSandy());
 		tglSandy.setIcon(iiSandy);
 		tglSandy.setPreferredSize(dimButton);
 		pnlCharGrid.add(tglSandy);
 		charToggleGroup.add(tglSandy);
+		
+		JToggleButton tglDragon = new JToggleButton("Dragon");
+		tglDragon.addActionListener((arg0) -> ctlAdapter.toggleDragon());
+		tglDragon.setIcon(iiDragon);
+		tglDragon.setPreferredSize(dimButton);
+		pnlCharGrid.add(tglDragon);
+		charToggleGroup.add(tglDragon);
 		
 		JPanel pnlForeground = new JPanel();
 		pnlBack.add(pnlForeground, BorderLayout.EAST);

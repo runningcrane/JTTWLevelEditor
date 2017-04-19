@@ -117,6 +117,11 @@ public class Controller {
 			public void toggleSandy() {
 				level.togglePlayer("Sandy", LevelManager.Request.EDIT_SANDY);
 			}
+			
+			@Override
+			public void toggleDragon() {
+				level.togglePlayer("Dragon", LevelManager.Request.EDIT_DRAGON);
+			}
 
 			@Override
 			public void markRP() {

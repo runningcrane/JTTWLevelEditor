@@ -46,6 +46,11 @@ public interface IControlToLevelAdapter {
 	 * Make present the character and request a new position for them.
 	 */
 	public void toggleSandy();
+
+	/**
+	 * Make present the NPC dragon and request a new position for them.
+	 */
+	public void toggleDragon();
 	
 	/**
 	 * Request to change background of OutputWindow.

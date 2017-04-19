@@ -1340,8 +1340,8 @@
         "y": 12.142857142857142
       },
       "path": "../assets/cldClearUp.png",
-      "centerXM": 53.67857142857143,
-      "centerYM": 14.142857142857142,
+      "centerXM": 54.142857142857146,
+      "centerYM": 14.857142857142858,
       "scale": 1.0,
       "ticket": 8,
       "scaledIGWM": 3.0,
@@ -2894,6 +2894,27 @@
         "strList": {},
         "boolList": {
           "Present": true
+        }
+      }
+    },
+    "Dragon": {
+      "path": "Dragon.png",
+      "centerXM": 0.0,
+      "centerYM": 0.0,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": false
         }
       }
     }
