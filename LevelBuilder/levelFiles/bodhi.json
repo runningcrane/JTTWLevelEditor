@@ -501,6 +501,145 @@
           "Disappears": false
         }
       }
+    },
+    "4": {
+      "endpoint": {
+        "x": -16.445945945945947,
+        "y": 5.716216216216216
+      },
+      "path": "../assets/Rock1.png",
+      "centerXM": -16.89189189189189,
+      "centerYM": 5.918918918918919,
+      "scale": 1.5,
+      "ticket": 4,
+      "scaledIGWM": 3.75,
+      "scaledIGHM": 10.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.5,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": 1.845,
+            "y": -5.25
+          },
+          {
+            "x": 1.305,
+            "y": -4.11
+          },
+          {
+            "x": 1.275,
+            "y": -2.16
+          },
+          {
+            "x": 1.5150000000000001,
+            "y": 1.7999999999999998
+          },
+          {
+            "x": 0.9750000000000001,
+            "y": 2.79
+          },
+          {
+            "x": 0.645,
+            "y": 3.01
+          },
+          {
+            "x": 0.4850000000000001,
+            "y": 3.5299999999999994
+          },
+          {
+            "x": -0.315,
+            "y": 3.5299999999999994
+          },
+          {
+            "x": -0.575,
+            "y": 4.97
+          },
+          {
+            "x": -1.2350000000000003,
+            "y": 4.97
+          },
+          {
+            "x": -1.095,
+            "y": 2.6900000000000004
+          },
+          {
+            "x": -1.6949999999999998,
+            "y": 2.07
+          },
+          {
+            "x": -1.6949999999999998,
+            "y": 0.81
+          },
+          {
+            "x": -1.035,
+            "y": -0.7900000000000003
+          },
+          {
+            "x": -1.875,
+            "y": -3.4499999999999997
+          },
+          {
+            "x": -1.4149999999999998,
+            "y": -5.289999999999999
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/Rock1.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
     }
   },
   "characters": {

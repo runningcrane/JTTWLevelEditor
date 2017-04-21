@@ -2444,8 +2444,8 @@
           "Image path": "../assets/ForestGround.png"
         },
         "boolList": {
-          "Collidable": true,
-          "Polygon collision": true,
+          "Collidable": false,
+          "Polygon collision": false,
           "Sinkable": false,
           "Climbable": false,
           "Disappears": false
@@ -3662,6 +3662,145 @@
           "Disappears": false
         }
       }
+    },
+    "48": {
+      "endpoint": {
+        "x": -6.612903225806452,
+        "y": 3.741935483870968
+      },
+      "path": "../assets/Rock1.png",
+      "centerXM": -5.161290322580645,
+      "centerYM": 5.0,
+      "scale": 1.5,
+      "ticket": 48,
+      "scaledIGWM": 3.75,
+      "scaledIGHM": 10.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.5,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": 1.845,
+            "y": -5.25
+          },
+          {
+            "x": 1.305,
+            "y": -4.11
+          },
+          {
+            "x": 1.275,
+            "y": -2.16
+          },
+          {
+            "x": 1.5150000000000001,
+            "y": 1.7999999999999998
+          },
+          {
+            "x": 0.9750000000000001,
+            "y": 2.79
+          },
+          {
+            "x": 0.645,
+            "y": 3.01
+          },
+          {
+            "x": 0.4850000000000001,
+            "y": 3.5299999999999994
+          },
+          {
+            "x": -0.315,
+            "y": 3.5299999999999994
+          },
+          {
+            "x": -0.575,
+            "y": 4.97
+          },
+          {
+            "x": -1.2350000000000003,
+            "y": 4.97
+          },
+          {
+            "x": -1.095,
+            "y": 2.6900000000000004
+          },
+          {
+            "x": -1.6949999999999998,
+            "y": 2.07
+          },
+          {
+            "x": -1.6949999999999998,
+            "y": 0.81
+          },
+          {
+            "x": -1.035,
+            "y": -0.7900000000000003
+          },
+          {
+            "x": -1.875,
+            "y": -3.4499999999999997
+          },
+          {
+            "x": -1.4149999999999998,
+            "y": -5.289999999999999
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/Rock1.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
     }
   },
   "characters": {
@@ -3748,15 +3887,36 @@
           "Present": false
         }
       }
+    },
+    "Dragon": {
+      "path": "Dragon.png",
+      "centerXM": 0.0,
+      "centerYM": 0.0,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": false
+        }
+      }
     }
   },
   "vines": {
-    "48": {
+    "49": {
       "path": "../assets/vine3.png",
       "centerXM": 86.33333333333331,
       "centerYM": 28.705128205128204,
       "scale": 1.0,
-      "ticket": 48,
+      "ticket": 49,
       "scaledIGWM": 1.0,
       "scaledIGHM": 5.0,
       "book": {
@@ -3787,12 +3947,12 @@
         "boolList": {}
       }
     },
-    "49": {
+    "50": {
       "path": "../assets/vine2.png",
       "centerXM": 23.692307692307693,
       "centerYM": 18.346153846153847,
       "scale": 1.0,
-      "ticket": 49,
+      "ticket": 50,
       "scaledIGWM": 1.0,
       "scaledIGHM": 5.0,
       "book": {
@@ -3823,12 +3983,12 @@
         "boolList": {}
       }
     },
-    "50": {
+    "51": {
       "path": "../assets/vine1.png",
       "centerXM": 95.3076923076923,
       "centerYM": 19.666666666666664,
       "scale": 1.0,
-      "ticket": 50,
+      "ticket": 51,
       "scaledIGWM": 1.0,
       "scaledIGHM": 5.0,
       "book": {
@@ -3859,12 +4019,12 @@
         "boolList": {}
       }
     },
-    "51": {
+    "52": {
       "path": "../assets/vine3.png",
       "centerXM": 18.076923076923077,
       "centerYM": 18.628205128205128,
       "scale": 1.0,
-      "ticket": 51,
+      "ticket": 52,
       "scaledIGWM": 1.0,
       "scaledIGHM": 5.0,
       "book": {
@@ -3895,12 +4055,12 @@
         "boolList": {}
       }
     },
-    "52": {
+    "53": {
       "path": "../assets/vine3.png",
       "centerXM": 27.410256410256405,
       "centerYM": 21.705128205128204,
       "scale": 1.0,
-      "ticket": 52,
+      "ticket": 53,
       "scaledIGWM": 1.0,
       "scaledIGHM": 5.0,
       "book": {
@@ -3931,12 +4091,12 @@
         "boolList": {}
       }
     },
-    "53": {
+    "54": {
       "path": "../assets/vine2.png",
       "centerXM": 54.38461538461539,
       "centerYM": 21.474358974358974,
       "scale": 1.0,
-      "ticket": 53,
+      "ticket": 54,
       "scaledIGWM": 1.0,
       "scaledIGHM": 5.0,
       "book": {
@@ -3973,12 +4133,12 @@
   "npcs": {},
   "textTips": {},
   "attackZones": {
-    "54": {
+    "55": {
       "path": "../assets/spear.png",
       "centerXM": 69.3225806451613,
       "centerYM": 16.096774193548388,
       "scale": 1.0,
-      "ticket": 54,
+      "ticket": 55,
       "scaledIGWM": 1.8,
       "scaledIGHM": 0.3,
       "book": {

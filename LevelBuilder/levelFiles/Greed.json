@@ -1115,6 +1115,145 @@
           "Disappears": false
         }
       }
+    },
+    "17": {
+      "endpoint": {
+        "x": -0.5,
+        "y": 4.7441860465116275
+      },
+      "path": "../assets/Rock1.png",
+      "centerXM": -0.5581395348837209,
+      "centerYM": 5.895348837209303,
+      "scale": 1.5,
+      "ticket": 17,
+      "scaledIGWM": 3.75,
+      "scaledIGHM": 10.5,
+      "book": {
+        "intList": {
+          "Z-order": 4
+        },
+        "doubList": {
+          "Scale": 1.5,
+          "Velocity": 1.0,
+          "Quick Velocity": 0.0,
+          "Pause time": 0.0,
+          "Spring Constant K": 1.0
+        },
+        "collPointList": [
+          {
+            "x": 1.845,
+            "y": -5.25
+          },
+          {
+            "x": 1.305,
+            "y": -4.11
+          },
+          {
+            "x": 1.275,
+            "y": -2.16
+          },
+          {
+            "x": 1.5150000000000001,
+            "y": 1.7999999999999998
+          },
+          {
+            "x": 0.9750000000000001,
+            "y": 2.79
+          },
+          {
+            "x": 0.645,
+            "y": 3.01
+          },
+          {
+            "x": 0.4850000000000001,
+            "y": 3.5299999999999994
+          },
+          {
+            "x": -0.315,
+            "y": 3.5299999999999994
+          },
+          {
+            "x": -0.575,
+            "y": 4.97
+          },
+          {
+            "x": -1.2350000000000003,
+            "y": 4.97
+          },
+          {
+            "x": -1.095,
+            "y": 2.6900000000000004
+          },
+          {
+            "x": -1.6949999999999998,
+            "y": 2.07
+          },
+          {
+            "x": -1.6949999999999998,
+            "y": 0.81
+          },
+          {
+            "x": -1.035,
+            "y": -0.7900000000000003
+          },
+          {
+            "x": -1.875,
+            "y": -3.4499999999999997
+          },
+          {
+            "x": -1.4149999999999998,
+            "y": -5.289999999999999
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "interactable.Platform$Type": "STATIC",
+          "Image path": "../assets/Rock1.png"
+        },
+        "boolList": {
+          "Collidable": true,
+          "Polygon collision": true,
+          "Sinkable": false,
+          "Climbable": false,
+          "Disappears": false
+        }
+      }
     }
   },
   "characters": {
@@ -1199,6 +1338,27 @@
         "strList": {},
         "boolList": {
           "Present": true
+        }
+      }
+    },
+    "Dragon": {
+      "path": "Dragon.png",
+      "centerXM": 0.0,
+      "centerYM": 0.0,
+      "scale": 0.0,
+      "ticket": 0,
+      "scaledIGWM": 0.0,
+      "scaledIGHM": 0.0,
+      "book": {
+        "intList": {},
+        "doubList": {},
+        "collPointList": [],
+        "edgeFrictionList": [],
+        "deadlyEdgeList": [],
+        "floatList": {},
+        "strList": {},
+        "boolList": {
+          "Present": false
         }
       }
     }
@@ -1794,11 +1954,136 @@
   "traps": {},
   "quicksand": {
     "16": {
+      "path": "../assets/quicksand2.png",
+      "centerXM": 17.46511627906977,
+      "centerYM": 1.7558139534883725,
+      "scale": 0.9,
+      "ticket": 16,
+      "scaledIGWM": 5.4,
+      "scaledIGHM": 2.25,
+      "book": {
+        "intList": {},
+        "doubList": {
+          "Scale": 0.9,
+          "recoveryVel": 0.5,
+          "sinkVel": 1.0,
+          "Z-order": 6.0
+        },
+        "collPointList": [
+          {
+            "x": 2.205,
+            "y": -1.098
+          },
+          {
+            "x": 2.385,
+            "y": -0.873
+          },
+          {
+            "x": 2.682,
+            "y": -0.07200000000000001
+          },
+          {
+            "x": 2.322,
+            "y": 0.378
+          },
+          {
+            "x": 1.791,
+            "y": 0.684
+          },
+          {
+            "x": 0.9900000000000001,
+            "y": 0.801
+          },
+          {
+            "x": -0.108,
+            "y": 0.6930000000000001
+          },
+          {
+            "x": -0.882,
+            "y": 0.9630000000000001
+          },
+          {
+            "x": -1.4669999999999999,
+            "y": 1.116
+          },
+          {
+            "x": -2.322,
+            "y": 0.9720000000000001
+          },
+          {
+            "x": -2.664,
+            "y": 0.666
+          },
+          {
+            "x": -2.592,
+            "y": 0.20700000000000002
+          },
+          {
+            "x": -1.71,
+            "y": -0.5850000000000001
+          },
+          {
+            "x": -0.774,
+            "y": -0.846
+          },
+          {
+            "x": 0.162,
+            "y": -0.873
+          },
+          {
+            "x": 1.359,
+            "y": -1.08
+          }
+        ],
+        "edgeFrictionList": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "deadlyEdgeList": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "floatList": {},
+        "strList": {
+          "soundName": ""
+        },
+        "boolList": {}
+      }
+    },
+    "14": {
       "path": "../assets/quicksand3.png",
       "centerXM": 27.593023255813954,
       "centerYM": 1.8255813953488378,
       "scale": 0.7,
-      "ticket": 16,
+      "ticket": 14,
       "scaledIGWM": 8.399999999999999,
       "scaledIGHM": 1.75,
       "book": {
@@ -1918,12 +2203,12 @@
         "boolList": {}
       }
     },
-    "17": {
+    "15": {
       "path": "../assets/quicksand1.png",
       "centerXM": 9.918604651162791,
       "centerYM": 2.0,
       "scale": 0.75,
-      "ticket": 17,
+      "ticket": 15,
       "scaledIGWM": 6.0,
       "scaledIGHM": 1.875,
       "book": {
@@ -1998,131 +2283,6 @@
           {
             "x": 0.8474999999999999,
             "y": -0.7725
-          }
-        ],
-        "edgeFrictionList": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "deadlyEdgeList": [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        "floatList": {},
-        "strList": {
-          "soundName": ""
-        },
-        "boolList": {}
-      }
-    },
-    "18": {
-      "path": "../assets/quicksand2.png",
-      "centerXM": 17.46511627906977,
-      "centerYM": 1.7558139534883725,
-      "scale": 0.9,
-      "ticket": 18,
-      "scaledIGWM": 5.4,
-      "scaledIGHM": 2.25,
-      "book": {
-        "intList": {},
-        "doubList": {
-          "Scale": 0.9,
-          "recoveryVel": 0.5,
-          "sinkVel": 1.0,
-          "Z-order": 6.0
-        },
-        "collPointList": [
-          {
-            "x": 2.205,
-            "y": -1.098
-          },
-          {
-            "x": 2.385,
-            "y": -0.873
-          },
-          {
-            "x": 2.682,
-            "y": -0.07200000000000001
-          },
-          {
-            "x": 2.322,
-            "y": 0.378
-          },
-          {
-            "x": 1.791,
-            "y": 0.684
-          },
-          {
-            "x": 0.9900000000000001,
-            "y": 0.801
-          },
-          {
-            "x": -0.108,
-            "y": 0.6930000000000001
-          },
-          {
-            "x": -0.882,
-            "y": 0.9630000000000001
-          },
-          {
-            "x": -1.4669999999999999,
-            "y": 1.116
-          },
-          {
-            "x": -2.322,
-            "y": 0.9720000000000001
-          },
-          {
-            "x": -2.664,
-            "y": 0.666
-          },
-          {
-            "x": -2.592,
-            "y": 0.20700000000000002
-          },
-          {
-            "x": -1.71,
-            "y": -0.5850000000000001
-          },
-          {
-            "x": -0.774,
-            "y": -0.846
-          },
-          {
-            "x": 0.162,
-            "y": -0.873
-          },
-          {
-            "x": 1.359,
-            "y": -1.08
           }
         ],
         "edgeFrictionList": [
